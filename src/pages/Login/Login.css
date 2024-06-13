@@ -1,0 +1,19 @@
+.login-container {
+    background-image: url('logo.png'); 
+    background-size: cover;
+}
+
+.card-login {
+    width: 400px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.card .card-header {
+    background-color: #572364;
+    color: #fff;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+

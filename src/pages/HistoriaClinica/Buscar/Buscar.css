@@ -1,0 +1,35 @@
+.bg-custom-purple {
+    background-color: #756098;
+    /* Código hexadecimal para el color morado */
+}
+
+.bg-custom-purplebarck {
+    background-color: #311d52;
+    /* Código hexadecimal para el color morado */
+}
+
+.bg-table {
+    background-color: #ffb4fb;
+    /* Código hexadecimal para el color morado */
+    font-size: small;
+    font-family:'Trebuchet MS', sans-serif;
+    color: black;
+}
+
+.bg-formTable {
+    background-color: white;
+    /* Código hexadecimal para el color morado */
+    text-align: center;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th,
+td {
+    border: solid 1px rgb(168, 168, 168) !important; 
+    padding: 7px !important;
+}
+
+letter {
+    color: #fb45f2;
+}
