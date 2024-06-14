@@ -7,11 +7,14 @@ import { Toast, ToastBody, ToastHeader } from 'reactstrap';
 export const AgregarHistoria = () => {
 
     const { register: registerPaciente, handleSubmit: handleSubmitPaciente, formState: { errors: errorsPaciente }, reset } = useForm();
-    const { register: registerAntecPer, handleSubmit: handleSubmitAntPer, formState: { errors: errorsAntPer }, reset: resetAntPer, setValue } = useForm();
+    const { register: registerAntecPer, handleSubmit: handleSubmitAntPer, formState: { errors: errorsAntPer }, setValue } = useForm();
+    const { register: registerAntecPerPat, handleSubmit: handleSubmitAntPerPat, formState: { errors: errorsAntPerPat }, setValue: setValueAntPer } = useForm();
+
     const [showToast, setShowToast] = useState(false);
     const [toastBody, setToastBody] = useState('');
     const [numExp, setNumExp] = useState('');
 
+    //POST PACIENTE - DATOS PERSONALES
     const onSubmitPaciente = handleSubmitPaciente(async (data) => {
         try {
 
@@ -32,11 +35,11 @@ export const AgregarHistoria = () => {
         }
     });
 
+    // POST ANTECEDENTES PERSONALES
     const onSubmitAntPersonales = handleSubmitAntPer(async (data) => {
 
         try {
 
-            console.log(data);
             const transformedData = {
                 ...data,
                 histEmbarazo: data.histEmbarazo === 'true',
@@ -63,14 +66,9 @@ export const AgregarHistoria = () => {
                 cigarrosDia: Number(data.cigarrosDia),
             };
 
-            console.log(transformedData);
-            
-        
             const response = await axios.post('https://localhost:7106/api/bdtbantecedentespersonale/post', transformedData);
 
-            console.log(response.data);
-
-            setToastBody('Antecedente creado exitosamente!');
+            setToastBody('Antecedente Personal creado exitosamente!');
             setShowToast(true);
 
         } catch (error) {
@@ -82,6 +80,48 @@ export const AgregarHistoria = () => {
 
     });
 
+    // POST ANTECEDENTES PERSONALES PATERNALES
+    const onSubmitAntPersonalesPat = handleSubmitAntPerPat(async (data) => {
+
+        try {
+
+            const transformedData = {
+                ...data,
+                alergiaAli: data.alergiaAli === 'true',
+                alergiaMed: data.alergiaMed === 'true',
+                anemia: data.anemia === 'true',
+                cacerut: data.cacerut === 'true',
+                camDer: data.camDer === 'true',
+                camIzq: data.camIzq === 'true',
+                cardiopatia: data.cardiopatia === 'true',
+                cirugias: data.cirugias === 'true',
+                diabetes: data.diabetes === 'true',
+                extirpacion: data.extirpacion === 'true',
+                fibrodenoma: data.fibrodenoma === 'true',
+                hepatopatias: data.hepatopatias === 'true',
+                hipertension: data.hipertension === 'true',
+                matriz: data.matriz === 'true',
+                nefropatia: data.nefropatia === 'true',
+                vif: data.vif === 'true',
+                vih: data.vih === 'true',
+            }
+
+            console.log(transformedData);
+
+            const response = await axios.post('https://localhost:7106/api/bdtbaantecedentepatper/post', transformedData)
+
+            setToastBody('Antecedente Paterno Personal creado!');
+            setShowToast(true);
+
+        } catch (error) {
+            setToastBody(`Error al crear Antecedente: ${error}`);
+            setShowToast(true);
+        }
+    });
+
+
+
+    // QUITA LA ALERTA DESPUES DE 3 SEGUNDOS
     useEffect(() => {
         if (showToast) {
             const timer = setTimeout(() => {
@@ -94,9 +134,15 @@ export const AgregarHistoria = () => {
         }
     }, [showToast]);
 
+    // OBTIENE EL DATO NUMEXPEDIENTE DE DATOS PERSONALES PARA USARLO
+    // EN ANTECEDENTES PERSONALES
     useEffect(() => {
         setValue('numExpediente', numExp);
     }, [numExp, setValue]);
+
+    useEffect(() => {
+        setValueAntPer('numExpediente', numExp);
+    }, [numExp, setValueAntPer])
 
 
     return (
@@ -109,6 +155,12 @@ export const AgregarHistoria = () => {
                     </li>
                     <li className="nav-item" role="presentation">
                         <a className="nav-link" id="AP-tab" data-bs-toggle="tab" role="tab" href="#AP" aria-controls="AP" aria-selected="false">Antecedentes Personales</a>
+                    </li>
+                    <li className="nav-item" role="presentation">
+                        <a className="nav-link" id="APP-tab" data-bs-toggle="tab" role="tab" href="#APP" aria-controls="APP" aria-selected="false">Antecedentes Patológicos Personales</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="APF-tab" data-bs-toggle="tab" role="tab" href="#APF" aria-controls="APF" aria-selected="false">Antecedentes Patológicos Familiares</a>
                     </li>
                 </ul>
 
@@ -417,7 +469,7 @@ export const AgregarHistoria = () => {
                         </div>
                     </div>
 
-                    {/*Antecedentes Personaels*/}
+                    {/*Antecedentes Personales*/}
                     <div className="tab-pane fade" id="AP" role="tabpanel" aria-labelledby="AP-tab">
                         <div className="container-fluid mt-3">
                             <form onSubmit={onSubmitAntPersonales}>
@@ -893,12 +945,534 @@ export const AgregarHistoria = () => {
 
                                 </div>
                                 <div className="d-grid gap-2 d-md-flex justify-content-md-end mt-5">
-                                    <button className="btn btn-primary btn-save me-md-2" type="submit">Guardar</button>
+                                    <button className="btn btn-success btn-save me-md-2" type="submit">Guardar</button>
                                     <button type="reset" className="btn btn-danger">Cancelar</button>
                                 </div>
                             </form>
                         </div>
 
+                    </div>
+
+                    {/*Antecedentes Personales Paternales*/}
+                    <div className="tab-pane fade" id="APP" role="tabpanel" aria-labelledby="APP-tab">
+                        <div className="container-fluid mt-3">
+                            <form onSubmit={onSubmitAntPersonalesPat}>
+                                <div className="row g-4">
+                                    <div className="col-sm-2">
+                                        <label htmlFor="expediente" className="form-label">Núm. Expediente*</label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            value={numExp}
+                                            title="El Núm. Expediente debe tener 5 números, un guión (-) y el año al final"
+                                            {...registerAntecPerPat('numExpediente')}
+                                            readOnly
+                                        />
+                                    </div>
+                                    <div className="col-sm-2">
+                                        <label htmlFor="fibroadenoma" className="form-label">Fibroadenoma*</label>
+
+                                        <div className="d-flex align-items-center justify-content-center gap-3">
+                                            <div className="form-check">
+                                                <input value={true} {...registerAntecPerPat('fibrodenoma', { required: true })} id="fibro_si" name="fibrodenoma" type="radio" className="form-check-input" required />
+                                                <label className="form-check-label" htmlFor="fibro_si">Si</label>
+                                            </div>
+                                            <div className="form-check">
+                                                <input value={false} {...registerAntecPerPat('fibrodenoma', { required: true })} id="fibro_no" name="fibrodenoma" type="radio" className="form-check-input" required />
+                                                <label className="form-check-label" htmlFor="fibro_no">No</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-sm-2">
+                                        <label htmlFor="Ca_mama_izq" className="form-label">Ca Mama Izq*</label>
+
+                                        <div className="d-flex align-items-center justify-content-center gap-3">
+                                            <div className="form-check">
+                                                <input value={true} {...registerAntecPerPat('camIzq', { required: true })} id="Ca_mama_izq_si" name="camIzq" type="radio" className="form-check-input" required />
+                                                <label className="form-check-label" htmlFor="Ca_mama_izq_si">Si</label>
+                                            </div>
+                                            <div className="form-check">
+                                                <input value={false} {...registerAntecPerPat('camIzq', { required: true })} id="Ca_mama_izq_no" name="camIzq" type="radio" className="form-check-input" required />
+                                                <label className="form-check-label" htmlFor="Ca_mama_izq_no">No</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-sm-2">
+                                        <label htmlFor="Ca_mama_der" className="form-label">Ca Mama Der*</label>
+
+                                        <div className="d-flex align-items-center justify-content-center gap-3">
+                                            <div className="form-check">
+                                                <input value={true} {...registerAntecPerPat('camDer', { required: true })} id="Ca_mama_der_si" name="camDer" type="radio" className="form-check-input" required />
+                                                <label className="form-check-label" htmlFor="Ca_mama_der_si">Si</label>
+                                            </div>
+                                            <div className="form-check">
+                                                <input value={false} {...registerAntecPerPat('camDer', { required: true })} id="Ca_mama_der_no" name="camDer" type="radio" className="form-check-input" required />
+                                                <label className="form-check-label" htmlFor="Ca_mama_der_no">No</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-sm-2">
+                                        <label htmlFor="Ca_cervico_uterino" className="form-label">Ca Cervico Uterino*</label>
+
+                                        <div className="d-flex align-items-center justify-content-center gap-3">
+                                            <div className="form-check">
+                                                <input value={true} {...registerAntecPerPat('cacerut', { required: true })} id="Ca_cervico_uterino_si" name="cacerut" type="radio" className="form-check-input" required />
+                                                <label className="form-check-label" htmlFor="Ca_cervico_uterino_si">Si</label>
+                                            </div>
+                                            <div className="form-check">
+                                                <input value={false} {...registerAntecPerPat('cacerut', { required: true })} id="Ca_cervico_uterino_no" name="cacerut" type="radio" className="form-check-input" required />
+                                                <label className="form-check-label" htmlFor="Ca_cervico_uterino_no">No</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-sm-2">
+                                        <label htmlFor="matriz" className="form-label">¿Aún conserva su matriz?*</label>
+
+                                        <div className="d-flex align-items-center justify-content-center gap-3">
+                                            <div className="form-check">
+                                                <input value={true} {...registerAntecPerPat('matriz', { required: true })} id="matriz_si" name="matriz" type="radio" className="form-check-input" required />
+                                                <label className="form-check-label" htmlFor="matriz_si">Si</label>
+                                            </div>
+                                            <div className="form-check">
+                                                <input value={false} {...registerAntecPerPat('matriz', { required: true })} id="matriz_no" name="matriz" type="radio" className="form-check-input" required />
+                                                <label className="form-check-label" htmlFor="matriz_no">No</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-sm-2">
+                                        <label htmlFor="extirpacion" className="form-label">Extirpación Qx Ovario*</label>
+
+                                        <div className="d-flex align-items-center justify-content-center gap-3">
+                                            <div className="form-check">
+                                                <input value={true} {...registerAntecPerPat('extirpacion', { required: true })} id="extirpacion_si" name="extirpacion" type="radio" className="form-check-input" required />
+                                                <label className="form-check-label" htmlFor="extirpacion_si">Si</label>
+                                            </div>
+                                            <div className="form-check">
+                                                <input value={false} {...registerAntecPerPat('extirpacion', { required: true })} id="extirpacion_no" name="extirpacion" type="radio" className="form-check-input" required />
+                                                <label className="form-check-label" htmlFor="extirpacion_no">No</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-sm-2">
+                                        <label htmlFor="ITS" className="form-label">ITS</label>
+
+                                        <select {...registerAntecPerPat('its', { required: true })} defaultValue={"Ninguna"} className="form-select" id="its">
+                                            <option value="">Menú de selección</option>
+                                            <option value="Ninguna">Ninguna</option>
+                                            <option value="Clamidia">Clamidia</option>
+                                            <option value="Condilomas">Condilomas</option>
+                                            <option value="Garnerela Vaginal">Garnerela Vaginal</option>
+                                            <option value="Gonorrea">Gonorrea</option>
+                                            <option value="Herpes">Herpes</option>
+                                            <option value="Monilias">Monilias</option>
+                                            <option value="VIH-SIDA">VIH-SIDA</option>
+                                            <option value="Sifilis">Sifilis</option>
+                                            <option value="Tricomonas">Tricomonas</option>
+                                            <option value="Otras">Otras</option>
+                                        </select>
+
+                                    </div>
+
+                                    <div className="col-sm-2">
+                                        <label htmlFor="VIH" className="form-label">VIH*</label>
+
+                                        <div className="d-flex align-items-center justify-content-center gap-3">
+                                            <div className="form-check">
+                                                <input value={true} {...registerAntecPerPat('vih', { required: true })} id="VIH_si" name="vih" type="radio" className="form-check-input" required />
+                                                <label className="form-check-label" htmlFor="VIH_si">Si</label>
+                                            </div>
+                                            <div className="form-check">
+                                                <input value={false} {...registerAntecPerPat('vih', { required: true })} id="VIH_no" name="vih" type="radio" className="form-check-input" required />
+                                                <label className="form-check-label" htmlFor="VIH_no">No</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div className="col-sm-2">
+                                        <label htmlFor="VIF" className="form-label">VIF*</label>
+
+                                        <div className="d-flex align-items-center justify-content-center gap-3">
+                                            <div className="form-check">
+                                                <input value={true} {...registerAntecPerPat('vif', { required: true })} id="VIF_si" name="vif" type="radio" className="form-check-input" required />
+                                                <label className="form-check-label" htmlFor="VIF_si">Si</label>
+                                            </div>
+                                            <div className="form-check">
+                                                <input value={false} {...registerAntecPerPat('vif', { required: true })} id="VIF_no" name="vif" type="radio" className="form-check-input" required />
+                                                <label className="form-check-label" htmlFor="VIF_no">No</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-sm-2">
+                                        <label htmlFor="diabetes" className="form-label">Diabetes*</label>
+
+                                        <div className="d-flex align-items-center justify-content-center gap-3">
+                                            <div className="form-check">
+                                                <input value={true} {...registerAntecPerPat('diabetes', { required: true })} id="diabetes_si" name="diabetes" type="radio" className="form-check-input" required />
+                                                <label className="form-check-label" htmlFor="diabetes_si">Si</label>
+                                            </div>
+                                            <div className="form-check">
+                                                <input value={false} {...registerAntecPerPat('diabetes', { required: true })} id="diabetes_no" name="diabetes" type="radio" className="form-check-input" required />
+                                                <label className="form-check-label" htmlFor="diabetes_no">No</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-sm-2">
+                                        <label htmlFor="cardiopatia" className="form-label">Cardiopatía*</label>
+
+                                        <div className="d-flex align-items-center justify-content-center gap-3">
+                                            <div className="form-check">
+                                                <input value={true} {...registerAntecPerPat('cardiopatia', { required: true })} id="cardiopatia_si" name="cardiopatia" type="radio" className="form-check-input" required />
+                                                <label className="form-check-label" htmlFor="cardiopatia_si">Si</label>
+                                            </div>
+                                            <div className="form-check">
+                                                <input value={false} {...registerAntecPerPat('cardiopatia', { required: true })} id="cardiopatia_no" name="cardiopatia" type="radio" className="form-check-input" required />
+                                                <label className="form-check-label" htmlFor="cardiopatia_no">No</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div className="col-sm-2">
+                                        <label htmlFor="hipertension" className="form-label">Hipertensión*</label>
+
+                                        <div className="d-flex align-items-center justify-content-center gap-3">
+                                            <div className="form-check">
+                                                <input value={true} {...registerAntecPerPat('hipertension', { required: true })} id="hipertension_si" name="hipertension" type="radio" className="form-check-input" required />
+                                                <label className="form-check-label" htmlFor="hipertension_si">Si</label>
+                                            </div>
+                                            <div className="form-check">
+                                                <input value={false} {...registerAntecPerPat('hipertension', { required: true })} id="hipertension_no" name="hipertension" type="radio" className="form-check-input" required />
+                                                <label className="form-check-label" htmlFor="hipertension_no">No</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div className="col-sm-2">
+                                        <label htmlFor="hepatopatias" className="form-label">Hepatopatías*</label>
+
+                                        <div className="d-flex align-items-center justify-content-center gap-3">
+                                            <div className="form-check">
+                                                <input value={true} {...registerAntecPerPat('hepatopatias', { required: true })} id="hepatopatias_si" name="hepatopatias" type="radio" className="form-check-input" required />
+                                                <label className="form-check-label" htmlFor="hepatopatias_si">Si</label>
+                                            </div>
+                                            <div className="form-check">
+                                                <input value={false} {...registerAntecPerPat('hepatopatias', { required: true })} id="hepatopatias_no" name="hepatopatias" type="radio" className="form-check-input" required />
+                                                <label className="form-check-label" htmlFor="hepatopatias_no">No</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div className="col-sm-2">
+                                        <label htmlFor="nefropatias" className="form-label">Nefropatías*</label>
+
+                                        <div className="d-flex align-items-center justify-content-center gap-3">
+                                            <div className="form-check">
+                                                <input value={true} {...registerAntecPerPat('nefropatia', { required: true })} id="nefropatias_si" name="nefropatia" type="radio" className="form-check-input" required />
+                                                <label className="form-check-label" htmlFor="nefropatias_si">Si</label>
+                                            </div>
+                                            <div className="form-check">
+                                                <input value={false} {...registerAntecPerPat('nefropatia', { required: true })} id="nefropatias_no" name="nefropatia" type="radio" className="form-check-input" required />
+                                                <label className="form-check-label" htmlFor="nefropatias_no">No</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div className="col-sm-2">
+                                        <label htmlFor="cirugias" className="form-label">Cirugías*</label>
+
+                                        <div className="d-flex align-items-center justify-content-center gap-3">
+                                            <div className="form-check">
+                                                <input value={true} {...registerAntecPerPat('cirugias', { required: true })} id="cirugias_si" name="cirugias" type="radio" className="form-check-input" />
+                                                <label className="form-check-label" htmlFor="cirugias_si">Si</label>
+                                            </div>
+                                            <div className="form-check">
+                                                <input value={false} {...registerAntecPerPat('cirugias', { required: true })} id="cirugias_no" name="cirugias" type="radio" className="form-check-input" />
+                                                <label className="form-check-label" htmlFor="cirugias_no">No</label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div className="col-sm-2">
+                                        <label htmlFor="anemia" className="form-label">Anemia*</label>
+
+                                        <div className="d-flex align-items-center justify-content-center gap-3">
+                                            <div className="form-check">
+                                                <input value={true} {...registerAntecPerPat('anemia', { required: true })} id="anemia_si" name="anemia" type="radio" className="form-check-input" required />
+                                                <label className="form-check-label" htmlFor="anemia_si">Si</label>
+                                            </div>
+                                            <div className="form-check">
+                                                <input value={false} {...registerAntecPerPat('anemia', { required: true })} id="anemia_no" name="anemia" type="radio" className="form-check-input" required />
+                                                <label className="form-check-label" htmlFor="anemia_no">No</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div className="col-sm-2">
+                                        <label htmlFor="alergia_medi" className="form-label">Alergia a medicamentos*</label>
+
+                                        <div className="d-flex align-items-center justify-content-center gap-3">
+                                            <div className="form-check">
+                                                <input value={true} {...registerAntecPerPat('alergiaMed', { required: true })} id="alergia_medi_si" name="alergiaMed" type="radio" className="form-check-input" required />
+                                                <label className="form-check-label" htmlFor="alergia_medi_si">Si</label>
+                                            </div>
+                                            <div className="form-check">
+                                                <input value={false} {...registerAntecPerPat('alergiaMed', { required: true })} id="alergia_medi_si" name="alergiaMed" type="radio" className="form-check-input" required />
+                                                <label className="form-check-label" htmlFor="alergia_medi_no">No</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div className="col-sm-2">
+                                        <label htmlFor="alergia_ali" className="form-label">Alergia a alimentos*</label>
+
+                                        <div className="d-flex align-items-center justify-content-center gap-3">
+                                            <div className="form-check">
+                                                <input value={true} {...registerAntecPerPat('alergiaAli', { required: true })} id="alergia_ali_si" name="alergiaAli" type="radio" className="form-check-input" required />
+                                                <label className="form-check-label" htmlFor="alergia_ali_si">Si</label>
+                                            </div>
+                                            <div className="form-check">
+                                                <input value={false} {...registerAntecPerPat('alergiaAli', { required: true })} id="alergia_ali_no" name="alergiaAli" type="radio" className="form-check-input" required />
+                                                <label className="form-check-label" htmlFor="alergia_ali_no">No</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div className="col-sm-12">
+                                        <label htmlFor="Observaciones" className="form-label">Observaciones</label>
+                                        <input type="text" maxLength="140" className="form-control" id="Observaciones" />
+                                    </div>
+
+
+                                    <div className="d-grid gap-2 d-md-flex justify-content-md-end mt-5">
+                                        <button className="btn btn-success btn-save me-md-2" type="submit">Guardar</button>
+                                        <button type="reset" className="btn btn-danger">Cancelar</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    {/*Antecedentes Patologicos Familiares*/}
+                    <div class="tab-pane fade" id="APF" role="tabpanel" aria-labelledby="APF-tab">
+                        <div class="container-fluid mt-3">
+                            <form>
+                                <div class="row g-3">
+                                    <div class="col-sm-2">
+                                        <label for="Ca_de_Mama" class="form-label">Ca de Mama*</label>
+
+                                        <div class="form-check">
+                                            <input id="Ca_de_Mama_si" name="Ca_de_Mama" type="radio" class="form-check-input" required />
+                                            <label class="form-check-label" for="Ca_de_Mama_si">Si</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input id="Ca_de_Mama_no" name="Ca_de_Mama" type="radio" class="form-check-input" required />
+                                            <label class="form-check-label" for="Ca_de_Mama_no">No</label>
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <label for="parentesco_ca_mama" class="form-label">Parentesco</label>
+                                        <input type="text" maxlength="20" class="form-control" id="parentesco_ca_mama" />
+                                    </div>
+
+
+
+
+                                    <div class="col-sm-2">
+                                        <label for="Ca_de_colon" class="form-label">Ca de Colon*</label>
+
+                                        <div class="form-check">
+                                            <input id="Ca_de_colon_si" name="Ca_de_colon" type="radio" class="form-check-input" required />
+                                            <label class="form-check-label" for="Ca_de_colon_si">Si</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input id="Ca_de_colon_no" name="Ca_de_colon" type="radio" class="form-check-input" required />
+                                            <label class="form-check-label" for="Ca_de_colon_no">No</label>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="col-sm-2">
+                                        <label for="parentesco_CA_Colon" class="form-label">Parentesco</label>
+                                        <input type="text" maxlength="20" class="form-control" id="parentesco_CA_Colon" />
+                                    </div>
+
+
+                                    <div class="col-sm-2">
+                                        <label for="APF_diabetes" class="form-label">Diabetes*</label>
+
+                                        <div class="form-check">
+                                            <input id="diabet_si" name="APF_diabetes" type="radio" class="form-check-input" required />
+                                            <label class="form-check-label" for="diabet_si">Si</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input id="diabet_no" name="APF_diabetes" type="radio" class="form-check-input" required />
+                                            <label class="form-check-label" for="diabet_no">No</label>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="col-sm-2">
+                                        <label for="parentesco_diabetes" class="form-label">Parentesco</label>
+                                        <input type="text" maxlength="20" class="form-control" id="parentesco_diabetes" />
+                                    </div>
+
+
+                                    <div class="col-sm-2">
+                                        <label for="Ca_CU" class="form-label">Ca de CU*</label>
+
+                                        <div class="form-check">
+                                            <input id="Ca_CU_si" name="Ca_CU" type="radio" class="form-check-input" required />
+                                            <label class="form-check-label" for="Ca_CU_si">Si</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input id="Ca_CU_no" name="Ca_CU" type="radio" class="form-check-input" required />
+                                            <label class="form-check-label" for="Ca_CU_no">No</label>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="col-sm-2">
+                                        <label for="parentesco_Ca_CU" class="form-label">Parentesco</label>
+                                        <input type="text" maxlength="20" class="form-control" id="parentesco_Ca_CU" />
+                                    </div>
+
+
+                                    <div class="col-sm-2">
+                                        <label for="APF_hipertension" class="form-label">Hipertensión*</label>
+
+                                        <div class="form-check">
+                                            <input id="APF_hipertension_si" name="APF_hipertension" type="radio" class="form-check-input" required />
+                                            <label class="form-check-label" for="APF_hipertension_si">Si</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input id="APF_hipertension_no" name="APF_hipertension" type="radio" class="form-check-input" required />
+                                            <label class="form-check-label" for="APF_hipertension_no">No</label>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="col-sm-2">
+                                        <label for="parentesco_hipert" class="form-label">Parentesco</label>
+                                        <input type="text" maxlength="20" class="form-control" id="parentesco_hipert" />
+                                    </div>
+
+
+                                    <div class="col-sm-2">
+                                        <label for="Enf_card" class="form-label">Enf. Cardíacas*</label>
+
+                                        <div class="form-check">
+                                            <input id="Enf_card_si" name="Enf_card" type="radio" class="form-check-input" required />
+                                            <label class="form-check-label" for="Enf_card_si">Si</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input id="Enf_card_no" name="Enf_card" type="radio" class="form-check-input" required />
+                                            <label class="form-check-label" for="Enf_card_no">No</label>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="col-sm-2">
+                                        <label for="parentesco_enf_card" class="form-label">Parentesco</label>
+                                        <input type="text" maxlength="20" class="form-control" id="parentesco_enf_card" />
+                                    </div>
+
+
+                                    <div class="col-sm-2">
+                                        <label for="Ca_ovario" class="form-label">Ca de Ovario*</label>
+
+                                        <div class="form-check">
+                                            <input id="Ca_ovario_si" name="Ca_ovario" type="radio" class="form-check-input" required />
+                                            <label class="form-check-label" for="Ca_ovario_si">Si</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input id="Ca_ovario_no" name="Ca_ovario" type="radio" class="form-check-input" required />
+                                            <label class="form-check-label" for="Ca_ovario_no">No</label>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="col-sm-2">
+                                        <label for="parentesco_Ca_ovario" class="form-label">Parentesco</label>
+                                        <input type="text" maxlength="20" class="form-control" id="parentesco_Ca_ovario" />
+                                    </div>
+
+
+                                    <div class="col-sm-2">
+                                        <label for="Hepatitis" class="form-label">Hepatitis*</label>
+
+                                        <div class="form-check">
+                                            <input id="Hepatitis_si" name="Hepatitis" type="radio" class="form-check-input" required />
+                                            <label class="form-check-label" for="Hepatitis_si">Si</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input id="Hepatitis_no" name="Hepatitis" type="radio" class="form-check-input" required />
+                                            <label class="form-check-label" for="Hepatitis_no">No</label>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="col-sm-2">
+                                        <label for="parentesco_Hepatitis" class="form-label">Parentesco</label>
+                                        <input type="text" maxlength="20" class="form-control" id="parentesco_Hepatitis" />
+                                    </div>
+
+
+                                    <div class="col-sm-2">
+                                        <label for="Enf_ren" class="form-label">Enf. Renales*</label>
+
+                                        <div class="form-check">
+                                            <input id="Enf_ren_si" name="Enf_ren" type="radio" class="form-check-input" required />
+                                            <label class="form-check-label" for="Enf_ren_si">Si</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input id="Enf_ren_no" name="Enf_ren" type="radio" class="form-check-input" required />
+                                            <label class="form-check-label" for="Enf_ren_no">No</label>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="col-sm-2">
+                                        <label for="parentesco_Enf_ren" class="form-label">Parentesco</label>
+                                        <input type="text" maxlength="20" class="form-control" id="parentesco_Enf_ren" />
+                                    </div>
+
+
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-5">
+                                        <button class="btn btn-primary btn-save me-md-2" type="submit">Guardar</button>
+                                        <button type="reset" class="btn btn-danger">Cancelar</button>
+                                    </div>
+
+
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
 
