@@ -6,9 +6,10 @@ import { Toast, ToastBody, ToastHeader } from 'reactstrap';
 
 export const AgregarHistoria = () => {
 
-    const { register: registerPaciente, handleSubmit: handleSubmitPaciente, formState: { errors: errorsPaciente }, reset } = useForm();
-    const { register: registerAntecPer, handleSubmit: handleSubmitAntPer, formState: { errors: errorsAntPer }, setValue } = useForm();
-    const { register: registerAntecPerPat, handleSubmit: handleSubmitAntPerPat, formState: { errors: errorsAntPerPat }, setValue: setValueAntPer } = useForm();
+    const { register: registerPaciente, handleSubmit: handleSubmitPaciente, reset } = useForm();
+    const { register: registerAntecPer, handleSubmit: handleSubmitAntPer, setValue } = useForm();
+    const { register: registerAntecPerPat, handleSubmit: handleSubmitAntPerPat, setValue: setValueAntPer } = useForm();
+    const { register: registerAntecPatFam, handleSubmit: handleSubmitAntecPatFam, setValue: setValueAntPatFam } = useForm();
 
     const [showToast, setShowToast] = useState(false);
     const [toastBody, setToastBody] = useState('');
@@ -119,7 +120,41 @@ export const AgregarHistoria = () => {
         }
     });
 
+    // POST ANTECEDENTES PATOLOGICOS FAMILIARES
+    const onSubmitAntPatFam = handleSubmitAntecPatFam(async (data) => {
 
+        try {
+
+            console.log(data);
+
+            const transformedData = {
+                ...data,
+                caColon: data.caColon === 'true',
+                caCu: data.caCu === 'true',
+                caMama: data.caMama === 'true',
+                caOvario: data.caOvario === 'true',
+                diabetes: data.diabetes === 'true',
+                enfCardiacas: data.enfCardiacas === 'true',
+                enfRenales: data.enfRenales === 'true',
+                hepatitis: data.hepatitis === 'true',
+                hipertension: data.hipertension === 'true',
+            }
+
+            console.log(transformedData);
+
+            await axios.post('https://localhost:7106/api/bdtbantecedentepatfam/post', transformedData);
+
+            setToastBody('Antecedente Patologico Fam creado!');
+            setShowToast(true);
+
+        } catch (error) {
+
+            setToastBody(`Error al crear Antecedente: ${error}`);
+            setShowToast(true);
+
+        }
+
+    });
 
     // QUITA LA ALERTA DESPUES DE 3 SEGUNDOS
     useEffect(() => {
@@ -142,8 +177,12 @@ export const AgregarHistoria = () => {
 
     useEffect(() => {
         setValueAntPer('numExpediente', numExp);
-    }, [numExp, setValueAntPer])
+    }, [numExp, setValueAntPer]);
 
+    useEffect(() => {
+        setValueAntPatFam('numExpediente', numExp);
+    }, [numExp, setValueAntPatFam]);
+    
 
     return (
         <>
@@ -1271,49 +1310,43 @@ export const AgregarHistoria = () => {
                     {/*Antecedentes Patologicos Familiares*/}
                     <div class="tab-pane fade" id="APF" role="tabpanel" aria-labelledby="APF-tab">
                         <div class="container-fluid mt-3">
-                            <form>
+                            <form onSubmit={onSubmitAntPatFam}>
                                 <div class="row g-3">
                                     <div class="col-sm-2">
                                         <label for="Ca_de_Mama" class="form-label">Ca de Mama*</label>
 
                                         <div class="form-check">
-                                            <input id="Ca_de_Mama_si" name="Ca_de_Mama" type="radio" class="form-check-input" required />
+                                            <input value={true} {...registerAntecPatFam('caMama', { required: true })} id="Ca_de_Mama_si" name="caMama" type="radio" class="form-check-input" required />
                                             <label class="form-check-label" for="Ca_de_Mama_si">Si</label>
                                         </div>
                                         <div class="form-check">
-                                            <input id="Ca_de_Mama_no" name="Ca_de_Mama" type="radio" class="form-check-input" required />
+                                            <input value={false} {...registerAntecPatFam('caMama', { required: true })} id="Ca_de_Mama_no" name="caMama" type="radio" class="form-check-input" required />
                                             <label class="form-check-label" for="Ca_de_Mama_no">No</label>
                                         </div>
-
-
                                     </div>
 
                                     <div class="col-sm-2">
                                         <label for="parentesco_ca_mama" class="form-label">Parentesco</label>
-                                        <input type="text" maxlength="20" class="form-control" id="parentesco_ca_mama" />
+                                        <input {...registerAntecPatFam('camParentesco', { required: true })} name="camParentesco" type="text" maxlength="20" class="form-control" id="parentesco_ca_mama" />
                                     </div>
-
-
-
 
                                     <div class="col-sm-2">
                                         <label for="Ca_de_colon" class="form-label">Ca de Colon*</label>
 
                                         <div class="form-check">
-                                            <input id="Ca_de_colon_si" name="Ca_de_colon" type="radio" class="form-check-input" required />
+                                            <input value={true} {...registerAntecPatFam('caColon', { required: true })} id="Ca_de_colon_si" name="caColon" type="radio" class="form-check-input" required />
                                             <label class="form-check-label" for="Ca_de_colon_si">Si</label>
                                         </div>
                                         <div class="form-check">
-                                            <input id="Ca_de_colon_no" name="Ca_de_colon" type="radio" class="form-check-input" required />
+                                            <input value={false} {...registerAntecPatFam('caColon', { required: true })} id="Ca_de_colon_no" name="caColon" type="radio" class="form-check-input" required />
                                             <label class="form-check-label" for="Ca_de_colon_no">No</label>
                                         </div>
 
                                     </div>
 
-
                                     <div class="col-sm-2">
                                         <label for="parentesco_CA_Colon" class="form-label">Parentesco</label>
-                                        <input type="text" maxlength="20" class="form-control" id="parentesco_CA_Colon" />
+                                        <input {...registerAntecPatFam('cacoParentesco', { required: true })} name="cacoParentesco" type="text" maxlength="20" class="form-control" id="parentesco_CA_Colon" />
                                     </div>
 
 
@@ -1321,11 +1354,11 @@ export const AgregarHistoria = () => {
                                         <label for="APF_diabetes" class="form-label">Diabetes*</label>
 
                                         <div class="form-check">
-                                            <input id="diabet_si" name="APF_diabetes" type="radio" class="form-check-input" required />
+                                            <input value={true} {...registerAntecPatFam('diabetes', { required: true })} id="diabet_si" name="diabetes" type="radio" class="form-check-input" required />
                                             <label class="form-check-label" for="diabet_si">Si</label>
                                         </div>
                                         <div class="form-check">
-                                            <input id="diabet_no" name="APF_diabetes" type="radio" class="form-check-input" required />
+                                            <input value={false} {...registerAntecPatFam('diabetes', { required: true })} id="diabet_no" name="diabetes" type="radio" class="form-check-input" required />
                                             <label class="form-check-label" for="diabet_no">No</label>
                                         </div>
 
@@ -1334,7 +1367,7 @@ export const AgregarHistoria = () => {
 
                                     <div class="col-sm-2">
                                         <label for="parentesco_diabetes" class="form-label">Parentesco</label>
-                                        <input type="text" maxlength="20" class="form-control" id="parentesco_diabetes" />
+                                        <input {...registerAntecPatFam('diabetesParentesco', { required: true })} type="text" maxlength="20" class="form-control" id="parentesco_diabetes" />
                                     </div>
 
 
@@ -1342,20 +1375,19 @@ export const AgregarHistoria = () => {
                                         <label for="Ca_CU" class="form-label">Ca de CU*</label>
 
                                         <div class="form-check">
-                                            <input id="Ca_CU_si" name="Ca_CU" type="radio" class="form-check-input" required />
+                                            <input value={true} {...registerAntecPatFam('caCu', { required: true })} id="Ca_CU_si" name="caCu" type="radio" class="form-check-input" required />
                                             <label class="form-check-label" for="Ca_CU_si">Si</label>
                                         </div>
                                         <div class="form-check">
-                                            <input id="Ca_CU_no" name="Ca_CU" type="radio" class="form-check-input" required />
+                                            <input value={false} {...registerAntecPatFam('caCu', { required: true })} id="Ca_CU_no" name="caCu" type="radio" class="form-check-input" required />
                                             <label class="form-check-label" for="Ca_CU_no">No</label>
                                         </div>
 
                                     </div>
 
-
                                     <div class="col-sm-2">
                                         <label for="parentesco_Ca_CU" class="form-label">Parentesco</label>
-                                        <input type="text" maxlength="20" class="form-control" id="parentesco_Ca_CU" />
+                                        <input {...registerAntecPatFam('cacuParentesco', { required: true })} type="text" maxlength="20" class="form-control" id="parentesco_Ca_CU" />
                                     </div>
 
 
@@ -1363,20 +1395,19 @@ export const AgregarHistoria = () => {
                                         <label for="APF_hipertension" class="form-label">Hipertensión*</label>
 
                                         <div class="form-check">
-                                            <input id="APF_hipertension_si" name="APF_hipertension" type="radio" class="form-check-input" required />
+                                            <input value={true} {...registerAntecPatFam('hipertension', { required: true })} id="APF_hipertension_si" name="hipertension" type="radio" class="form-check-input" required />
                                             <label class="form-check-label" for="APF_hipertension_si">Si</label>
                                         </div>
                                         <div class="form-check">
-                                            <input id="APF_hipertension_no" name="APF_hipertension" type="radio" class="form-check-input" required />
+                                            <input value={false} {...registerAntecPatFam('hipertension', { required: true })} id="APF_hipertension_no" name="hipertension" type="radio" class="form-check-input" required />
                                             <label class="form-check-label" for="APF_hipertension_no">No</label>
                                         </div>
 
                                     </div>
 
-
                                     <div class="col-sm-2">
                                         <label for="parentesco_hipert" class="form-label">Parentesco</label>
-                                        <input type="text" maxlength="20" class="form-control" id="parentesco_hipert" />
+                                        <input {...registerAntecPatFam('hipertensionParentesco', { required: true })} type="text" maxlength="20" class="form-control" id="parentesco_hipert" />
                                     </div>
 
 
@@ -1384,20 +1415,19 @@ export const AgregarHistoria = () => {
                                         <label for="Enf_card" class="form-label">Enf. Cardíacas*</label>
 
                                         <div class="form-check">
-                                            <input id="Enf_card_si" name="Enf_card" type="radio" class="form-check-input" required />
+                                            <input value={true} {...registerAntecPatFam('enfCardiacas', { required: true })} id="Enf_card_si" name="enfCardiacas" type="radio" class="form-check-input" required />
                                             <label class="form-check-label" for="Enf_card_si">Si</label>
                                         </div>
                                         <div class="form-check">
-                                            <input id="Enf_card_no" name="Enf_card" type="radio" class="form-check-input" required />
+                                            <input value={false} {...registerAntecPatFam('enfCardiacas', { required: true })} id="Enf_card_no" name="enfCardiacas" type="radio" class="form-check-input" required />
                                             <label class="form-check-label" for="Enf_card_no">No</label>
                                         </div>
 
                                     </div>
 
-
                                     <div class="col-sm-2">
                                         <label for="parentesco_enf_card" class="form-label">Parentesco</label>
-                                        <input type="text" maxlength="20" class="form-control" id="parentesco_enf_card" />
+                                        <input {...registerAntecPatFam('enfcarParentesco', { required: true })} type="text" maxlength="20" class="form-control" id="parentesco_enf_card" />
                                     </div>
 
 
@@ -1405,11 +1435,11 @@ export const AgregarHistoria = () => {
                                         <label for="Ca_ovario" class="form-label">Ca de Ovario*</label>
 
                                         <div class="form-check">
-                                            <input id="Ca_ovario_si" name="Ca_ovario" type="radio" class="form-check-input" required />
+                                            <input value={true} {...registerAntecPatFam('caOvario', { required: true })} id="Ca_ovario_si" name="caOvario" type="radio" class="form-check-input" required />
                                             <label class="form-check-label" for="Ca_ovario_si">Si</label>
                                         </div>
                                         <div class="form-check">
-                                            <input id="Ca_ovario_no" name="Ca_ovario" type="radio" class="form-check-input" required />
+                                            <input value={false} {...registerAntecPatFam('caOvario', { required: true })} id="Ca_ovario_no" name="caOvario" type="radio" class="form-check-input" required />
                                             <label class="form-check-label" for="Ca_ovario_no">No</label>
                                         </div>
 
@@ -1418,28 +1448,26 @@ export const AgregarHistoria = () => {
 
                                     <div class="col-sm-2">
                                         <label for="parentesco_Ca_ovario" class="form-label">Parentesco</label>
-                                        <input type="text" maxlength="20" class="form-control" id="parentesco_Ca_ovario" />
+                                        <input {...registerAntecPatFam('caovaParentesco', { required: true })} type="text" maxlength="20" class="form-control" id="parentesco_Ca_ovario" />
                                     </div>
-
 
                                     <div class="col-sm-2">
                                         <label for="Hepatitis" class="form-label">Hepatitis*</label>
 
                                         <div class="form-check">
-                                            <input id="Hepatitis_si" name="Hepatitis" type="radio" class="form-check-input" required />
+                                            <input value={true} {...registerAntecPatFam('hepatitis', { required: true })} id="Hepatitis_si" name="hepatitis" type="radio" class="form-check-input" required />
                                             <label class="form-check-label" for="Hepatitis_si">Si</label>
                                         </div>
                                         <div class="form-check">
-                                            <input id="Hepatitis_no" name="Hepatitis" type="radio" class="form-check-input" required />
+                                            <input value={false} {...registerAntecPatFam('hepatitis', { required: true })} id="Hepatitis_no" name="hepatitis" type="radio" class="form-check-input" required />
                                             <label class="form-check-label" for="Hepatitis_no">No</label>
                                         </div>
 
                                     </div>
 
-
                                     <div class="col-sm-2">
                                         <label for="parentesco_Hepatitis" class="form-label">Parentesco</label>
-                                        <input type="text" maxlength="20" class="form-control" id="parentesco_Hepatitis" />
+                                        <input {...registerAntecPatFam('hepatitisParentesco', { required: true })} type="text" maxlength="20" class="form-control" id="parentesco_Hepatitis" />
                                     </div>
 
 
@@ -1447,20 +1475,31 @@ export const AgregarHistoria = () => {
                                         <label for="Enf_ren" class="form-label">Enf. Renales*</label>
 
                                         <div class="form-check">
-                                            <input id="Enf_ren_si" name="Enf_ren" type="radio" class="form-check-input" required />
+                                            <input value={true} {...registerAntecPatFam('enfRenales', { required: true })} id="Enf_ren_si" name="enfRenales" type="radio" class="form-check-input" required />
                                             <label class="form-check-label" for="Enf_ren_si">Si</label>
                                         </div>
                                         <div class="form-check">
-                                            <input id="Enf_ren_no" name="Enf_ren" type="radio" class="form-check-input" required />
+                                            <input value={true} {...registerAntecPatFam('enfRenales', { required: true })} id="Enf_ren_no" name="enfRenales" type="radio" class="form-check-input" required />
                                             <label class="form-check-label" for="Enf_ren_no">No</label>
                                         </div>
 
                                     </div>
 
-
                                     <div class="col-sm-2">
                                         <label for="parentesco_Enf_ren" class="form-label">Parentesco</label>
-                                        <input type="text" maxlength="20" class="form-control" id="parentesco_Enf_ren" />
+                                        <input {...registerAntecPatFam('enfrenParentesco', { required: true })} type="text" maxlength="20" class="form-control" id="parentesco_Enf_ren" />
+                                    </div>
+
+                                    <div className="col-sm-2">
+                                        <label htmlFor="expediente" className="form-label">Núm. Expediente*</label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            value={numExp}
+                                            title="El Núm. Expediente debe tener 5 números, un guión (-) y el año al final"
+                                            {...registerAntecPatFam('numExpediente')}
+                                            readOnly
+                                        />
                                     </div>
 
 
@@ -1474,6 +1513,7 @@ export const AgregarHistoria = () => {
                             </form>
                         </div>
                     </div>
+
                 </div>
 
                 <Toast isOpen={showToast} className="position-fixed top-0 end-0 m-3">
