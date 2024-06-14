@@ -37,12 +37,41 @@ export const AgregarHistoria = () => {
         try {
 
             console.log(data);
-            // const response = await axios.post('https://localhost:7106/api/bdtantecedentespersonales/post', data);
+            const transformedData = {
+                ...data,
+                histEmbarazo: data.histEmbarazo === 'true',
+                lactancia: data.lactancia === 'true',
+                embarazo: data.embarazo === 'true',
+                mamografia: data.mamografia === 'true',
+                pap: data.pap === 'true',
+                papAlterado: data.papAlterado === 'true',
+                reempHormonal: data.reempHormonal === 'true',
+                fuma: data.fuma === 'true',
+                estadoPareja: data.estadoPareja === 'true',
+                crioterapia: data.crioterapia === 'true',
+                biopasis: data.biopasis === 'true',
+                menstruacion: Number(data.menstruacion),
+                vidaSexual: Number(data.vidaSexual),
+                compSexuales: Number(data.compSexuales),
+                gestas: Number(data.gestas),
+                partos: Number(data.partos),
+                abortos: Number(data.abortos),
+                cesarea: Number(data.cesarea),
+                sa: Number(data.sa),
+                histPap: Number(data.histPap),
+                menopausia: Number(data.menopausia),
+                cigarrosDia: Number(data.cigarrosDia),
+            };
 
-            // console.log(response.data);
+            console.log(transformedData);
+            
+        
+            const response = await axios.post('https://localhost:7106/api/bdtbantecedentespersonale/post', transformedData);
 
-            // setToastBody('Antecedente creado exitosamente!');
-            // setShowToast(true);
+            console.log(response.data);
+
+            setToastBody('Antecedente creado exitosamente!');
+            setShowToast(true);
 
         } catch (error) {
 
@@ -67,8 +96,8 @@ export const AgregarHistoria = () => {
 
     useEffect(() => {
         setValue('numExpediente', numExp);
-      }, [numExp, setValue]);
-    
+    }, [numExp, setValue]);
+
 
     return (
         <>
@@ -85,7 +114,7 @@ export const AgregarHistoria = () => {
 
                 <div className="tab-content" id="myTabContent">
                     {/*Datos Generales - Paciente*/}
-                    <div className="tab-pane fade show active" id="DG" role="tabpanel" aria-labelledby="DG-tab">
+                    <div className="tab-pane show active" id="DG" role="tabpanel" aria-labelledby="DG-tab">
                         <div className="container-fluid mt-3">
                             <form onSubmit={onSubmitPaciente}>
                                 <div className="row g-3">
@@ -186,7 +215,7 @@ export const AgregarHistoria = () => {
                                     <div className="col-sm-3">
                                         <label htmlFor="escolaridad" className="form-label">Escolaridad*</label>
                                         <select defaultValue="Bachiller" className="form-select" id="escolaridad" {...registerPaciente("escolaridad", { required: true })}>
-                                            <option value="Bachiller">Menu de Selección</option>
+                                            <option value="">Menu de Selección</option>
                                             <option value="Bachiller">Bachiller</option>
                                             <option value="Primaria completa">Primaria completa</option>
                                             <option value="Primaria incompleta">Primaria incompleta</option>
@@ -393,48 +422,48 @@ export const AgregarHistoria = () => {
                         <div className="container-fluid mt-3">
                             <form onSubmit={onSubmitAntPersonales}>
                                 <div className="row g-3">
-                                <div className="col-sm-2">
+                                    <div className="col-sm-2">
                                         <label htmlFor="expediente" className="form-label">Núm. Expediente*</label>
                                         <input
                                             type="text"
                                             className="form-control"
-                                            value={numExp} 
+                                            value={numExp}
                                             title="El Núm. Expediente debe tener 5 números, un guión (-) y el año al final"
-                                            {...registerAntecPer('numExpediente', { required: true})}
+                                            {...registerAntecPer('numExpediente')}
                                             readOnly
                                         />
                                     </div>
                                     <div className="col-sm-2">
                                         <label htmlFor="p_menstruacion" className="form-label">Primera menstruación</label>
-                                        <input 
-                                            type="number" 
-                                            min="8" 
-                                            className="form-control" 
-                                            id="p_menstruacion" 
+                                        <input
+                                            type="number"
+                                            min="8"
+                                            className="form-control"
+                                            id="p_menstruacion"
                                             placeholder="PM en años"
-                                            {...registerAntecPer('menstruacion')} 
+                                            {...registerAntecPer('menstruacion')}
                                         />
                                     </div>
 
                                     <div className="col-sm-2">
                                         <label htmlFor="vidasexual" className="form-label">Inicio vida sexual</label>
-                                        <input 
-                                            type="number" 
-                                            min="1" 
-                                            className="form-control" 
-                                            id="vidasexual" 
-                                            placeholder="IVS en años" 
+                                        <input
+                                            type="number"
+                                            min="1"
+                                            className="form-control"
+                                            id="vidasexual"
+                                            placeholder="IVS en años"
                                             {...registerAntecPer('vidaSexual')}
                                         />
                                     </div>
 
                                     <div className="col-sm-2">
                                         <label htmlFor="Compa_S" className="form-label">Compañeros sexuales</label>
-                                        <input 
-                                            type="number"  
-                                            min="0" 
-                                            className="form-control" 
-                                            id="Compa_S" 
+                                        <input
+                                            type="number"
+                                            min="0"
+                                            className="form-control"
+                                            id="Compa_S"
                                             {...registerAntecPer('compSexuales')}
                                         />
                                     </div>
@@ -443,7 +472,7 @@ export const AgregarHistoria = () => {
                                         <label htmlFor="MAC" className="form-label">MAC</label>
 
                                         <select defaultValue="Condón" className="form-select" id="MAC" {...registerAntecPer('mac')}>
-                                            <option selected>Menú de selección</option>
+                                            <option value="">Menú de selección</option>
                                             <option value="1">Condón</option>
                                             <option value="2">DIU - Nuevo</option>
                                             <option value="3">DIU - Subsecuente</option>
@@ -466,23 +495,23 @@ export const AgregarHistoria = () => {
                                     <div className="col-sm-2">
                                         <label htmlFor="embarazada" className="form-label">¿Has estado embarazada?*</label>
                                         <div className="form-check">
-                                            <input 
-                                                id="si" 
-                                                value={true}
-                                                name="embarazada" 
-                                                type="radio" 
-                                                className="form-check-input" 
-                                                {...registerAntecPer('histEmbarazo', { required: true})}
+                                            <input
+                                                id="si"
+                                                value="true"
+                                                name="embarazada"
+                                                type="radio"
+                                                className="form-check-input"
+                                                {...registerAntecPer('histEmbarazo', { required: true })}
                                             />
                                             <label className="form-check-label" htmlFor="si">Si</label>
                                         </div>
                                         <div className="form-check">
-                                            <input 
-                                                id="no" 
-                                                name="embarazada" 
-                                                value={false}
-                                                type="radio" 
-                                                className="form-check-input" 
+                                            <input
+                                                id="no"
+                                                name="embarazada"
+                                                value="false"
+                                                type="radio"
+                                                className="form-check-input"
                                                 {...registerAntecPer('histEmbarazo')}
                                             />
                                             <label className="form-check-label" htmlFor="no">No</label>
@@ -491,82 +520,95 @@ export const AgregarHistoria = () => {
 
                                     <div className="col-sm-1">
                                         <label htmlFor="gestas" className="form-label">Gestas</label>
-                                        <input 
-                                            type="number" 
-                                            min="0" 
-                                            max="50" 
-                                            className="form-control" 
-                                            id="gestas" 
+                                        <input
+                                            type="number"
+                                            min="0"
+                                            max="50"
+                                            className="form-control"
+                                            id="gestas"
                                             {...registerAntecPer('gestas')}
                                         />
                                     </div>
 
                                     <div className="col-sm-1">
                                         <label htmlFor="partos" className="form-label">Partos</label>
-                                        <input 
-                                            type="number" 
-                                            min="0" 
-                                            max="50" 
-                                            className="form-control" 
-                                            id="partos" 
+                                        <input
+                                            type="number"
+                                            min="0"
+                                            max="50"
+                                            className="form-control"
+                                            id="partos"
                                             {...registerAntecPer('partos')}
                                         />
                                     </div>
 
                                     <div className="col-sm-1">
                                         <label htmlFor="abortos" className="form-label">Abortos</label>
-                                        <input 
-                                            type="number" 
-                                            min="0" 
-                                            max="50" 
-                                            className="form-control" 
-                                            id="abortos" 
+                                        <input
+                                            type="number"
+                                            min="0"
+                                            max="50"
+                                            className="form-control"
+                                            id="abortos"
                                             {...registerAntecPer('abortos')}
                                         />
                                     </div>
 
                                     <div className="col-sm-1">
                                         <label htmlFor="cesarea" className="form-label">Cesárea</label>
-                                        <input 
-                                            type="number" 
-                                            min="0" 
-                                            max="50" 
-                                            className="form-control" 
-                                            id="cesarea" 
+                                        <input
+                                            type="number"
+                                            min="0"
+                                            max="50"
+                                            className="form-control"
+                                            id="cesarea"
                                             {...registerAntecPer('cesarea')}
                                         />
                                     </div>
 
                                     <div className="col-sm-2">
                                         <label htmlFor="FUM" className="form-label">FUM*</label>
-                                        <input 
-                                            type="date" 
-                                            className="form-control" 
-                                            id="FUM" 
+                                        <input
+                                            type="date"
+                                            className="form-control"
+                                            id="FUM"
                                             {...registerAntecPer('fum', { required: true })}
                                         />
                                     </div>
 
                                     <div className="col-sm-1">
                                         <label htmlFor="SA" className="form-label">SA</label>
-                                        <input 
-                                            className="form-control" 
-                                            type="text" 
+                                        <input
+                                            className="form-control"
+                                            type="number"
                                             title="Este campo es de sólo lectura"
                                             {...registerAntecPer('sa')}
-                                            />
+                                        />
                                     </div>
 
                                     <div className="col-sm-2">
                                         <label htmlFor="lactancia" className="form-label">Lactancia materna*</label>
 
                                         <div className="form-check">
-                                            <input 
-                                                id="lac_si" name="lactancia" type="radio" className="form-check-input" required />
+                                            <input
+                                                id="lac_si"
+                                                name="lactancia"
+                                                type="radio"
+                                                value={true}
+                                                className="form-check-input"
+                                                {...registerAntecPer('lactancia', { required: true })}
+                                            />
                                             <label className="form-check-label" htmlFor="lac_si">Si</label>
                                         </div>
                                         <div className="form-check">
-                                            <input id="lac_no" name="lactancia" type="radio" className="form-check-input" required />
+                                            <input
+                                                id="lac_no"
+                                                name="lactancia"
+                                                type="radio"
+                                                className="form-check-input"
+                                                value={false}
+                                                {...registerAntecPer('lactancia', { required: true })}
+                                            />
                                             <label className="form-check-label" htmlFor="lac_no">No</label>
                                         </div>
                                     </div>
@@ -574,11 +616,25 @@ export const AgregarHistoria = () => {
                                     <div className="col-sm-2">
                                         <label htmlFor="esta_emb" className="form-label">¿Está embarazada?*</label>
                                         <div className="form-check">
-                                            <input id="emb_si" name="esta_emb" type="radio" className="form-check-input" required />
+                                            <input
+                                                id="emb_si"
+                                                name="esta_emb"
+                                                type="radio"
+                                                className="form-check-input"
+                                                value={true}
+                                                {...registerAntecPer('embarazo', { required: true })}
+                                            />
                                             <label className="form-check-label" htmlFor="emb_si">Si</label>
                                         </div>
                                         <div className="form-check">
-                                            <input id="emb_no" name="esta_emb" type="radio" className="form-check-input" required />
+                                            <input
+                                                id="emb_no"
+                                                name="esta_emb"
+                                                type="radio"
+                                                className="form-check-input"
+                                                value={false}
+                                                {...registerAntecPer('embarazo', { required: true })}
+                                            />
                                             <label className="form-check-label" htmlFor="emb_no">No</label>
                                         </div>
                                     </div>
@@ -586,11 +642,25 @@ export const AgregarHistoria = () => {
                                     <div className="col-sm-2">
                                         <label htmlFor="mamografia" className="form-label">¿Mamografía al día?*</label>
                                         <div className="form-check">
-                                            <input id="mamografia_si" name="mamografia" type="radio" className="form-check-input" required />
+                                            <input
+                                                id="mamografia_si"
+                                                name="mamografia"
+                                                type="radio"
+                                                className="form-check-input"
+                                                value={true}
+                                                {...registerAntecPer('mamografia', { required: true })}
+                                            />
                                             <label className="form-check-label" htmlFor="mamografia_si">Si</label>
                                         </div>
                                         <div className="form-check">
-                                            <input id="mamografia_no" name="mamografia" type="radio" className="form-check-input" required />
+                                            <input
+                                                id="mamografia_no"
+                                                name="mamografia"
+                                                type="radio"
+                                                className="form-check-input"
+                                                value={false}
+                                                {...registerAntecPer('mamografia', { required: true })}
+                                            />
                                             <label className="form-check-label" htmlFor="mamografia_no">No</label>
                                         </div>
                                     </div>
@@ -598,11 +668,25 @@ export const AgregarHistoria = () => {
                                     <div className="col-sm-2">
                                         <label htmlFor="pap_dia" className="form-label">¿PAP al día?*</label>
                                         <div className="form-check">
-                                            <input id="pap_si" name="pap_dia" type="radio" className="form-check-input" required />
+                                            <input
+                                                id="pap_si"
+                                                name="pap_dia"
+                                                type="radio"
+                                                className="form-check-input"
+                                                value={true}
+                                                {...registerAntecPer('pap', { required: true })}
+                                            />
                                             <label className="form-check-label" htmlFor="pap_si">Si</label>
                                         </div>
                                         <div className="form-check">
-                                            <input id="pap_no" name="pap_dia" type="radio" className="form-check-input" required />
+                                            <input
+                                                id="pap_no"
+                                                name="pap_dia"
+                                                type="radio"
+                                                className="form-check-input"
+                                                value={false}
+                                                {...registerAntecPer('pap', { required: true })}
+                                            />
                                             <label className="form-check-label" htmlFor="pap_no">No</label>
                                         </div>
                                     </div>
@@ -610,32 +694,73 @@ export const AgregarHistoria = () => {
                                     <div className="col-sm-2">
                                         <label htmlFor="pap_alterado" className="form-label">¿PAP alterado?*</label>
                                         <div className="form-check">
-                                            <input id="pap_alt_si" name="pap_alterado" type="radio" className="form-check-input" required />
+                                            <input
+                                                id="pap_alt_si"
+                                                name="pap_alterado"
+                                                type="radio"
+                                                className="form-check-input"
+                                                value={true}
+                                                {...registerAntecPer('papAlterado', { required: true })}
+                                            />
                                             <label className="form-check-label" htmlFor="pap_alt_si">Si</label>
                                         </div>
                                         <div className="form-check">
-                                            <input id="pap_alt_no" name="pap_alterado" type="radio" className="form-check-input" required />
+                                            <input
+                                                id="pap_alt_no"
+                                                name="pap_alterado"
+                                                type="radio"
+                                                className="form-check-input"
+                                                value={false}
+                                                {...registerAntecPer('papAlterado', { required: true })}
+                                            />
                                             <label className="form-check-label" htmlFor="pap_alt_no">No</label>
                                         </div>
                                     </div>
 
                                     <div className="col-sm-1">
                                         <label htmlFor="ult_pap" className="form-label">Último PAP</label>
-                                        <input type="number" min="1" className="form-control" id="ult_pap" placeholder="Meses" />
+                                        <input
+                                            type="number"
+                                            min="1"
+                                            className="form-control"
+                                            id="ult_pap"
+                                            placeholder="Meses"
+                                            {...registerAntecPer('histPap')}
+                                        />
                                     </div>
                                     <div className="col-sm-2">
                                         <label htmlFor="menopausia" className="form-label">Edad de Menopausia</label>
-                                        <input type="number" min="40" className="form-control" id="menopausia" placeholder="Años" />
+                                        <input
+                                            type="number"
+                                            min="40"
+                                            className="form-control"
+                                            id="menopausia" placeholder="Años"
+                                            {...registerAntecPer('menopausia')}
+                                        />
                                     </div>
 
                                     <div className="col-sm-3">
                                         <label htmlFor="TRH" className="form-label">¿Terapia Reemplazo Hormonal?*</label>
                                         <div className="form-check">
-                                            <input id="TRH_si" name="TRH" type="radio" className="form-check-input" required />
+                                            <input
+                                                id="TRH_si"
+                                                name="TRH"
+                                                type="radio"
+                                                className="form-check-input"
+                                                value={true}
+                                                {...registerAntecPer('reempHormonal', { required: true })}
+                                            />
                                             <label className="form-check-label" htmlFor="TRH_si">Si</label>
                                         </div>
                                         <div className="form-check">
-                                            <input id="TRH_no" name="TRH" type="radio" className="form-check-input" required />
+                                            <input
+                                                id="TRH_no"
+                                                name="TRH"
+                                                type="radio"
+                                                className="form-check-input"
+                                                value={false}
+                                                {...registerAntecPer('reempHormonal', { required: true })}
+                                            />
                                             <label className="form-check-label" htmlFor="TRH_no">No</label>
                                         </div>
                                     </div>
@@ -643,45 +768,127 @@ export const AgregarHistoria = () => {
                                     <div className="col-sm-1">
                                         <label htmlFor="fuma" className="form-label">¿Fuma?*</label>
                                         <div className="form-check">
-                                            <input id="fuma_si" name="fuma" type="radio" className="form-check-input" required />
+                                            <input
+                                                id="fuma_si"
+                                                name="fuma"
+                                                type="radio"
+                                                className="form-check-input"
+                                                value={true}
+                                                {...registerAntecPer('fuma', { required: true })}
+                                            />
                                             <label className="form-check-label" htmlFor="fuma_si">Si</label>
                                         </div>
                                         <div className="form-check">
-                                            <input id="fuma_no" name="fuma" type="radio" className="form-check-input" required />
+                                            <input
+                                                id="fuma_no"
+                                                name="fuma"
+                                                type="radio"
+                                                className="form-check-input"
+                                                value={false}
+                                                {...registerAntecPer('fuma', { required: true })}
+                                            />
                                             <label className="form-check-label" htmlFor="fuma_no">No</label>
                                         </div>
                                     </div>
 
                                     <div className="col-sm-2">
                                         <label htmlFor="cigarros" className="form-label">Cantidad de cigarros por día</label>
-                                        <input type="number" min="1" className="form-control" id="cigarros" />
+                                        <input
+                                            type="number"
+                                            min="1"
+                                            className="form-control"
+                                            id="cigarros"
+                                            value={true}
+                                            {...registerAntecPer('cigarrosDia')}
+                                        />
                                     </div>
 
                                     <div className="col-sm-3">
                                         <label htmlFor="compania" className="form-label">¿Actualmente está sola o acompañada?*</label>
                                         <div className="form-check">
-                                            <input id="sola" name="compania" type="radio" className="form-check-input" required />
+                                            <input
+                                                id="sola"
+                                                name="compania"
+                                                type="radio"
+                                                className="form-check-input"
+                                                value={true}
+                                                {...registerAntecPer('estadoPareja', { required: true })}
+                                            />
                                             <label className="form-check-label" htmlFor="sola">Sola</label>
                                         </div>
                                         <div className="form-check">
-                                            <input id="acompaniada" name="compania" type="radio" className="form-check-input" required />
+                                            <input
+                                                id="acompaniada"
+                                                name="compania"
+                                                type="radio"
+                                                className="form-check-input"
+                                                value={false}
+                                                {...registerAntecPer('estadoPareja', { required: true })}
+                                            />
                                             <label className="form-check-label" htmlFor="acompaniada">Acompañada</label>
                                         </div>
                                     </div>
 
                                     <div className="col-sm-2">
                                         <label htmlFor="F_hijo" className="form-label">Fecha Nac. último hijo</label>
-                                        <input type="date" className="form-control" id="F_hijo" />
+                                        <input
+                                            type="date"
+                                            className="form-control"
+                                            id="F_hijo"
+                                            {...registerAntecPer('fecNacHijo')}
+                                        />
                                     </div>
 
                                     <div className="col-sm-2">
                                         <label htmlFor="crioterapia" className="form-label">Crioterapia</label>
-                                        <input type="text" maxLength="15" className="form-control" id="crioterapia" />
+                                        <div className="form-check">
+                                            <input
+                                                id="si"
+                                                name="crioterapia"
+                                                type="radio"
+                                                className="form-check-input"
+                                                value={true}
+                                                {...registerAntecPer('crioterapia')}
+                                            />
+                                            <label className="form-check-label" htmlFor="crioterapia">Si</label>
+                                        </div>
+                                        <div className="form-check">
+                                            <input
+                                                id="no"
+                                                name="crioterapia"
+                                                type="radio"
+                                                className="form-check-input"
+                                                value={false}
+                                                {...registerAntecPer('crioterapia')}
+                                            />
+                                            <label className="form-check-label" htmlFor="crioterapia">No</label>
+                                        </div>
                                     </div>
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="Biopsias" className="form-label">Biopsias por colposcopia</label>
-                                        <input type="text" maxLength="15" className="form-control" id="Biopsias" />
+                                        <label htmlFor="biopasis" className="form-label">Biopsias por colposcopia</label>
+                                        <div className="form-check">
+                                            <input
+                                                id="si"
+                                                name="biopasis"
+                                                type="radio"
+                                                className="form-check-input"
+                                                value={true}
+                                                {...registerAntecPer('biopasis', { required: true })}
+                                            />
+                                            <label className="form-check-label" htmlFor="biopasis">Si</label>
+                                        </div>
+                                        <div className="form-check">
+                                            <input
+                                                id="no"
+                                                name="biopasis"
+                                                type="radio"
+                                                className="form-check-input"
+                                                value={false}
+                                                {...registerAntecPer('biopasis', { required: true })}
+                                            />
+                                            <label className="form-check-label" htmlFor="biopasis">No</label>
+                                        </div>
                                     </div>
 
                                 </div>

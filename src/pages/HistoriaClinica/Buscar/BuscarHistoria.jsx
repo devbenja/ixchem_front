@@ -182,7 +182,7 @@ export const BuscarHistoria = () => {
                                             <td>{ data && data.escolaridad }</td>
                                             <td>{ data && data.profesion }</td>
                                             <td>{ data && data.direccion }</td>
-                                            <td>{ data && data.departamento }</td>
+                                            <td>{ data && data.codDepartamento }</td>
                                         </tr>
                                     </tbody>
                                 </table>
