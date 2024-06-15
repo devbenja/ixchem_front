@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }) => {
 
         try {
 
-            const response = await axios.post('https://localhost:7157/api/usuarios/login', data);
+            const response = await axios.post('https://localhost:7106/api/bdtbusuario/login', data);
 
             setUser(response.data);
             setIsAuth(true);
