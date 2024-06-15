@@ -44,11 +44,14 @@ export const BuscarHistoria = () => {
 
     return (
         <>
+            <div className='container-fluid'>
+                <h4>Buscar Historia Clinica</h4>
+            </div>
             <form onSubmit={handleSearchSubmit} className="container mt-3 p-3">
                 <div className="row g-3">
                     <div className="col-sm-3">
                         <select className="form-select" value={searchType} onChange={(e) => setSearchType(e.target.value)}>
-                            <option value="">Seleccionar...</option>
+                            <option value="">Seleccionar Opcion...</option>
                             <option value="opcion_expediente">Número de expediente</option>
                             <option value="opcion_cedula">Cédula de identidad</option>
                         </select>

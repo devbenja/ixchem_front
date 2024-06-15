@@ -4,7 +4,7 @@ import { Table, Button, Input, Space } from 'antd';
 import { EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import { Modal, Form } from 'react-bootstrap';
 
-export const ListaProblemas = () => {
+export const NotaEvolucion = () => {
     const [problemas, setProblemas] = useState([]);
     const [loading, setLoading] = useState(true);
     const [errors, setErrors] = useState(null);
@@ -35,23 +35,9 @@ export const ListaProblemas = () => {
 
     const createProblema = async (problema) => {
         try {
-
-            console.log(problema);
-
-            const convertedData = {
-                ...problema,
-                activo: problema.activo === 'true',
-                resuelto: problema.resuelto === 'true',
-                numeroNota: Number(problema.numeroNota)
-            }
-
-            const response = await axios.post('https://localhost:7106/api/bdtblistaproblema/post', convertedData);
-
-            console.log(response.data)
-
+            const response = await axios.post('https://localhost:7157/api/problemas', problema);
             setProblemas([...problemas, response.data]);
             setModalVisible(false);
-
         } catch (error) {
             setErrors(error.response ? error.response.data : 'Error creating data');
         }
@@ -165,14 +151,14 @@ export const ListaProblemas = () => {
     return (
         <div className="container">
             <div className='d-flex align-items-center justify-content-between'>
-                <h4>Lista de Problemas</h4>
+                <h4>Notas de Evolucion</h4>
                 <Button
                     type="primary"
                     icon={<PlusOutlined />}
                     onClick={() => setModalVisible(true)}
                     className="mb-3"
                 >
-                    Crear Problema
+                    Crear Nota Evolucion
                 </Button>
             </div>
             {errors && <p className="text-danger">{errors}</p>}
@@ -198,35 +184,35 @@ export const ListaProblemas = () => {
                     <Form onSubmit={handleSubmit}>
                         <Form.Group controlId="numeroNota">
                             <Form.Label>Número de Nota</Form.Label>
-                            <Form.Control type="text" name="numeroNota" defaultValue={editProblema ? editProblema.numeroNota : ''} onChange={handleFormChange} required />
+                            <Form.Control type="text" name="numeroNota" defaultValue={editProblema ? editProblema.numeroNota : ''} onChange={handleFormChange} />
                         </Form.Group>
                         <Form.Group className='mt-2' controlId="fecha">
                             <Form.Label>Fecha</Form.Label>
-                            <Form.Control type="date" name="fecha" defaultValue={editProblema ? editProblema.fecha : ''} onChange={handleFormChange} required />
+                            <Form.Control type="date" name="fecha" defaultValue={editProblema ? editProblema.fecha : ''} onChange={handleFormChange} />
                         </Form.Group>
                         <Form.Group className='mt-2' controlId="nombreProblema">
                             <Form.Label>Nombre del Problema</Form.Label>
-                            <Form.Control type="text" name="nombreProblema" defaultValue={editProblema ? editProblema.nombreProblema : ''} onChange={handleFormChange} required />
+                            <Form.Control type="text" name="nombreProblema" defaultValue={editProblema ? editProblema.nombreProblema : ''} onChange={handleFormChange} />
                         </Form.Group>
                         <div className='d-flex align-items-center justify-content-between mt-2'>
                             <Form.Group controlId="activo">
                                 <Form.Label>Activo</Form.Label>
                                 <div className='d-flex gap-2'>
-                                    <Form.Check type="radio" name="activo" value="true" label="Sí" defaultChecked={editProblema ? editProblema.activo : false} onChange={handleFormChange} required />
-                                    <Form.Check type="radio" name="activo" value="false" label="No" defaultChecked={editProblema ? !editProblema.activo : true} onChange={handleFormChange} required />
+                                    <Form.Check type="radio" name="activo" value="true" label="Sí" defaultChecked={editProblema ? editProblema.activo : false} onChange={handleFormChange} />
+                                    <Form.Check type="radio" name="activo" value="false" label="No" defaultChecked={editProblema ? !editProblema.activo : true} onChange={handleFormChange} />
                                 </div>
                             </Form.Group>
                             <Form.Group controlId="resuelto">
                                 <Form.Label>Resuelto</Form.Label>
                                 <div className='d-flex gap-2'>
-                                    <Form.Check type="radio" name="resuelto" value="true" label="Sí" defaultChecked={editProblema ? editProblema.resuelto : false} onChange={handleFormChange} required />
-                                    <Form.Check type="radio" name="resuelto" value="false" label="No" defaultChecked={editProblema ? !editProblema.resuelto : true} onChange={handleFormChange} required />
+                                    <Form.Check type="radio" name="resuelto" value="true" label="Sí" defaultChecked={editProblema ? editProblema.resuelto : false} onChange={handleFormChange} />
+                                    <Form.Check type="radio" name="resuelto" value="false" label="No" defaultChecked={editProblema ? !editProblema.resuelto : true} onChange={handleFormChange} />
                                 </div>
                             </Form.Group>
                         </div>
                         <Form.Group className='mt-2' controlId="numExpediente">
                             <Form.Label>Número de Expediente</Form.Label>
-                            <Form.Control type="text" name="numExpediente" defaultValue={editProblema ? editProblema.numExpediente : ''} onChange={handleFormChange} required />
+                            <Form.Control type="text" name="numExpediente" defaultValue={editProblema ? editProblema.numExpediente : ''} onChange={handleFormChange} />
                         </Form.Group>
 
                         <div className='d-flex gap-2 mt-3'>

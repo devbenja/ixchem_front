@@ -5,7 +5,37 @@
     padding: 0;
     border: none;
     list-style: none;
+    text-decoration: none;
     outline: none;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
+}
+
+.sidebar {
+    color: #fff;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.logo-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    border-radius: 50%;
+}
+
+.menu-bar {
+    height: 100vh;
+    display: flex; 
+    flex-direction: column;
+    gap: 15px; 
+    position: relative;
 }

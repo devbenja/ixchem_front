@@ -211,8 +211,11 @@ export const AgregarHistoria = () => {
 
     return (
         <>
-            <div className="container-fluid mt-3">
-                <p className="text-body-secondary text-small">Los datos con asterisco (*) son obligatorios</p>
+            <div className="container-fluid">
+                <div className="d-flex align-items-center justify-content-between mb-3">
+                    <h4>Agregar Historia Clinica</h4>
+                    <p className="text-body-secondary text-smaller">Los datos con asterisco (*) son obligatorios</p>
+                </div>
                 <ul className="nav nav-tabs" id="myTab" role="tablist">
                     <li className="nav-item" role="presentation">
                         <a className="nav-link active" id="DG-tab" data-bs-toggle="tab" href="#DG" role="tab" aria-controls="DG" aria-selected="true">Datos Generales</a>
@@ -230,7 +233,6 @@ export const AgregarHistoria = () => {
                         <a className="nav-link" id="Motivo-tab" data-bs-toggle="tab" role="tab" href="#Motivo" aria-controls="Motivo" aria-selected="false">Información</a>
                     </li>
                 </ul>
-
                 <div className="tab-content" id="myTabContent">
                     {/*Datos Generales - Paciente*/}
                     <div className="tab-pane show active" id="DG" role="tabpanel" aria-labelledby="DG-tab">
@@ -527,7 +529,7 @@ export const AgregarHistoria = () => {
 
                                 </div>
 
-                                <div className="d-grid gap-2 d-md-flex justify-content-md-end mt-5">
+                                <div className="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
                                     <button className="btn btn-success btn-save me-md-2" type="submit" >Guardar</button>
                                     <button type="reset" className="btn btn-danger">Cancelar</button>
                                 </div>

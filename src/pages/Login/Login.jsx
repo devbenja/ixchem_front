@@ -17,7 +17,7 @@ export const Login = () => {
             const user = await login(data);
 
             if (user) {
-                navigate('/');
+                navigate('/home');
             }
             
         } catch (error) {
