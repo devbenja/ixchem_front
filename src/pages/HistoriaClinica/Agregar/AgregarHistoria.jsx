@@ -10,6 +10,7 @@ export const AgregarHistoria = () => {
     const { register: registerAntecPer, handleSubmit: handleSubmitAntPer, setValue } = useForm();
     const { register: registerAntecPerPat, handleSubmit: handleSubmitAntPerPat, setValue: setValueAntPer } = useForm();
     const { register: registerAntecPatFam, handleSubmit: handleSubmitAntecPatFam, setValue: setValueAntPatFam } = useForm();
+    const { register: registerInformacion, handleSubmit: handleSubmitInformacion, setValue: setValueInfo } = useForm();
 
     const [showToast, setShowToast] = useState(false);
     const [toastBody, setToastBody] = useState('');
@@ -156,6 +157,27 @@ export const AgregarHistoria = () => {
 
     });
 
+    // POST INFORMACION
+    const onSubmitInformacion = handleSubmitInformacion(async (data) => {
+
+        try {
+
+            console.log(data);
+
+            await axios.post('https://localhost:7106/api/bdtbinformacion/post', data);
+
+            setToastBody('Informacion Creada!');
+            setShowToast(true);
+
+        } catch (error) {
+
+            setToastBody(`Error al crear Informacion: ${error}`);
+            setShowToast(true);
+
+        }
+
+    });
+
     // QUITA LA ALERTA DESPUES DE 3 SEGUNDOS
     useEffect(() => {
         if (showToast) {
@@ -182,7 +204,10 @@ export const AgregarHistoria = () => {
     useEffect(() => {
         setValueAntPatFam('numExpediente', numExp);
     }, [numExp, setValueAntPatFam]);
-    
+
+    useEffect(() => {
+        setValueInfo('numExpediente', numExp);
+    }, [numExp, setValueInfo]);
 
     return (
         <>
@@ -198,8 +223,11 @@ export const AgregarHistoria = () => {
                     <li className="nav-item" role="presentation">
                         <a className="nav-link" id="APP-tab" data-bs-toggle="tab" role="tab" href="#APP" aria-controls="APP" aria-selected="false">Antecedentes Patológicos Personales</a>
                     </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="APF-tab" data-bs-toggle="tab" role="tab" href="#APF" aria-controls="APF" aria-selected="false">Antecedentes Patológicos Familiares</a>
+                    <li className="nav-item" role="presentation">
+                        <a className="nav-link" id="APF-tab" data-bs-toggle="tab" role="tab" href="#APF" aria-controls="APF" aria-selected="false">Antecedentes Patológicos Familiares</a>
+                    </li>
+                    <li className="nav-item" role="presentation">
+                        <a className="nav-link" id="Motivo-tab" data-bs-toggle="tab" role="tab" href="#Motivo" aria-controls="Motivo" aria-selected="false">Información</a>
                     </li>
                 </ul>
 
@@ -1308,186 +1336,186 @@ export const AgregarHistoria = () => {
                         </div>
                     </div>
                     {/*Antecedentes Patologicos Familiares*/}
-                    <div class="tab-pane fade" id="APF" role="tabpanel" aria-labelledby="APF-tab">
-                        <div class="container-fluid mt-3">
+                    <div className="tab-pane fade" id="APF" role="tabpanel" aria-labelledby="APF-tab">
+                        <div className="container-fluid mt-3">
                             <form onSubmit={onSubmitAntPatFam}>
-                                <div class="row g-3">
-                                    <div class="col-sm-2">
-                                        <label for="Ca_de_Mama" class="form-label">Ca de Mama*</label>
+                                <div className="row g-3">
+                                    <div className="col-sm-2">
+                                        <label htmlFor="Ca_de_Mama" className="form-label">Ca de Mama*</label>
 
-                                        <div class="form-check">
-                                            <input value={true} {...registerAntecPatFam('caMama', { required: true })} id="Ca_de_Mama_si" name="caMama" type="radio" class="form-check-input" required />
-                                            <label class="form-check-label" for="Ca_de_Mama_si">Si</label>
+                                        <div className="form-check">
+                                            <input value={true} {...registerAntecPatFam('caMama', { required: true })} id="Ca_de_Mama_si" name="caMama" type="radio" className="form-check-input" required />
+                                            <label className="form-check-label" htmlFor="Ca_de_Mama_si">Si</label>
                                         </div>
-                                        <div class="form-check">
-                                            <input value={false} {...registerAntecPatFam('caMama', { required: true })} id="Ca_de_Mama_no" name="caMama" type="radio" class="form-check-input" required />
-                                            <label class="form-check-label" for="Ca_de_Mama_no">No</label>
+                                        <div className="form-check">
+                                            <input value={false} {...registerAntecPatFam('caMama', { required: true })} id="Ca_de_Mama_no" name="caMama" type="radio" className="form-check-input" required />
+                                            <label className="form-check-label" htmlFor="Ca_de_Mama_no">No</label>
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-2">
-                                        <label for="parentesco_ca_mama" class="form-label">Parentesco</label>
-                                        <input {...registerAntecPatFam('camParentesco', { required: true })} name="camParentesco" type="text" maxlength="20" class="form-control" id="parentesco_ca_mama" />
+                                    <div className="col-sm-2">
+                                        <label htmlFor="parentesco_ca_mama" className="form-label">Parentesco</label>
+                                        <input {...registerAntecPatFam('camParentesco', { required: true })} name="camParentesco" type="text" maxLength="20" className="form-control" id="parentesco_ca_mama" />
                                     </div>
 
-                                    <div class="col-sm-2">
-                                        <label for="Ca_de_colon" class="form-label">Ca de Colon*</label>
+                                    <div className="col-sm-2">
+                                        <label htmlFor="Ca_de_colon" className="form-label">Ca de Colon*</label>
 
-                                        <div class="form-check">
-                                            <input value={true} {...registerAntecPatFam('caColon', { required: true })} id="Ca_de_colon_si" name="caColon" type="radio" class="form-check-input" required />
-                                            <label class="form-check-label" for="Ca_de_colon_si">Si</label>
+                                        <div className="form-check">
+                                            <input value={true} {...registerAntecPatFam('caColon', { required: true })} id="Ca_de_colon_si" name="caColon" type="radio" className="form-check-input" required />
+                                            <label className="form-check-label" htmlFor="Ca_de_colon_si">Si</label>
                                         </div>
-                                        <div class="form-check">
-                                            <input value={false} {...registerAntecPatFam('caColon', { required: true })} id="Ca_de_colon_no" name="caColon" type="radio" class="form-check-input" required />
-                                            <label class="form-check-label" for="Ca_de_colon_no">No</label>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="col-sm-2">
-                                        <label for="parentesco_CA_Colon" class="form-label">Parentesco</label>
-                                        <input {...registerAntecPatFam('cacoParentesco', { required: true })} name="cacoParentesco" type="text" maxlength="20" class="form-control" id="parentesco_CA_Colon" />
-                                    </div>
-
-
-                                    <div class="col-sm-2">
-                                        <label for="APF_diabetes" class="form-label">Diabetes*</label>
-
-                                        <div class="form-check">
-                                            <input value={true} {...registerAntecPatFam('diabetes', { required: true })} id="diabet_si" name="diabetes" type="radio" class="form-check-input" required />
-                                            <label class="form-check-label" for="diabet_si">Si</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input value={false} {...registerAntecPatFam('diabetes', { required: true })} id="diabet_no" name="diabetes" type="radio" class="form-check-input" required />
-                                            <label class="form-check-label" for="diabet_no">No</label>
+                                        <div className="form-check">
+                                            <input value={false} {...registerAntecPatFam('caColon', { required: true })} id="Ca_de_colon_no" name="caColon" type="radio" className="form-check-input" required />
+                                            <label className="form-check-label" htmlFor="Ca_de_colon_no">No</label>
                                         </div>
 
                                     </div>
 
-
-                                    <div class="col-sm-2">
-                                        <label for="parentesco_diabetes" class="form-label">Parentesco</label>
-                                        <input {...registerAntecPatFam('diabetesParentesco', { required: true })} type="text" maxlength="20" class="form-control" id="parentesco_diabetes" />
+                                    <div className="col-sm-2">
+                                        <label htmlFor="parentesco_CA_Colon" className="form-label">Parentesco</label>
+                                        <input {...registerAntecPatFam('cacoParentesco', { required: true })} name="cacoParentesco" type="text" maxLength="20" className="form-control" id="parentesco_CA_Colon" />
                                     </div>
 
 
-                                    <div class="col-sm-2">
-                                        <label for="Ca_CU" class="form-label">Ca de CU*</label>
+                                    <div className="col-sm-2">
+                                        <label htmlFor="APF_diabetes" className="form-label">Diabetes*</label>
 
-                                        <div class="form-check">
-                                            <input value={true} {...registerAntecPatFam('caCu', { required: true })} id="Ca_CU_si" name="caCu" type="radio" class="form-check-input" required />
-                                            <label class="form-check-label" for="Ca_CU_si">Si</label>
+                                        <div className="form-check">
+                                            <input value={true} {...registerAntecPatFam('diabetes', { required: true })} id="diabet_si" name="diabetes" type="radio" className="form-check-input" required />
+                                            <label className="form-check-label" htmlFor="diabet_si">Si</label>
                                         </div>
-                                        <div class="form-check">
-                                            <input value={false} {...registerAntecPatFam('caCu', { required: true })} id="Ca_CU_no" name="caCu" type="radio" class="form-check-input" required />
-                                            <label class="form-check-label" for="Ca_CU_no">No</label>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="col-sm-2">
-                                        <label for="parentesco_Ca_CU" class="form-label">Parentesco</label>
-                                        <input {...registerAntecPatFam('cacuParentesco', { required: true })} type="text" maxlength="20" class="form-control" id="parentesco_Ca_CU" />
-                                    </div>
-
-
-                                    <div class="col-sm-2">
-                                        <label for="APF_hipertension" class="form-label">Hipertensión*</label>
-
-                                        <div class="form-check">
-                                            <input value={true} {...registerAntecPatFam('hipertension', { required: true })} id="APF_hipertension_si" name="hipertension" type="radio" class="form-check-input" required />
-                                            <label class="form-check-label" for="APF_hipertension_si">Si</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input value={false} {...registerAntecPatFam('hipertension', { required: true })} id="APF_hipertension_no" name="hipertension" type="radio" class="form-check-input" required />
-                                            <label class="form-check-label" for="APF_hipertension_no">No</label>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="col-sm-2">
-                                        <label for="parentesco_hipert" class="form-label">Parentesco</label>
-                                        <input {...registerAntecPatFam('hipertensionParentesco', { required: true })} type="text" maxlength="20" class="form-control" id="parentesco_hipert" />
-                                    </div>
-
-
-                                    <div class="col-sm-2">
-                                        <label for="Enf_card" class="form-label">Enf. Cardíacas*</label>
-
-                                        <div class="form-check">
-                                            <input value={true} {...registerAntecPatFam('enfCardiacas', { required: true })} id="Enf_card_si" name="enfCardiacas" type="radio" class="form-check-input" required />
-                                            <label class="form-check-label" for="Enf_card_si">Si</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input value={false} {...registerAntecPatFam('enfCardiacas', { required: true })} id="Enf_card_no" name="enfCardiacas" type="radio" class="form-check-input" required />
-                                            <label class="form-check-label" for="Enf_card_no">No</label>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="col-sm-2">
-                                        <label for="parentesco_enf_card" class="form-label">Parentesco</label>
-                                        <input {...registerAntecPatFam('enfcarParentesco', { required: true })} type="text" maxlength="20" class="form-control" id="parentesco_enf_card" />
-                                    </div>
-
-
-                                    <div class="col-sm-2">
-                                        <label for="Ca_ovario" class="form-label">Ca de Ovario*</label>
-
-                                        <div class="form-check">
-                                            <input value={true} {...registerAntecPatFam('caOvario', { required: true })} id="Ca_ovario_si" name="caOvario" type="radio" class="form-check-input" required />
-                                            <label class="form-check-label" for="Ca_ovario_si">Si</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input value={false} {...registerAntecPatFam('caOvario', { required: true })} id="Ca_ovario_no" name="caOvario" type="radio" class="form-check-input" required />
-                                            <label class="form-check-label" for="Ca_ovario_no">No</label>
+                                        <div className="form-check">
+                                            <input value={false} {...registerAntecPatFam('diabetes', { required: true })} id="diabet_no" name="diabetes" type="radio" className="form-check-input" required />
+                                            <label className="form-check-label" htmlFor="diabet_no">No</label>
                                         </div>
 
                                     </div>
 
 
-                                    <div class="col-sm-2">
-                                        <label for="parentesco_Ca_ovario" class="form-label">Parentesco</label>
-                                        <input {...registerAntecPatFam('caovaParentesco', { required: true })} type="text" maxlength="20" class="form-control" id="parentesco_Ca_ovario" />
-                                    </div>
-
-                                    <div class="col-sm-2">
-                                        <label for="Hepatitis" class="form-label">Hepatitis*</label>
-
-                                        <div class="form-check">
-                                            <input value={true} {...registerAntecPatFam('hepatitis', { required: true })} id="Hepatitis_si" name="hepatitis" type="radio" class="form-check-input" required />
-                                            <label class="form-check-label" for="Hepatitis_si">Si</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input value={false} {...registerAntecPatFam('hepatitis', { required: true })} id="Hepatitis_no" name="hepatitis" type="radio" class="form-check-input" required />
-                                            <label class="form-check-label" for="Hepatitis_no">No</label>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="col-sm-2">
-                                        <label for="parentesco_Hepatitis" class="form-label">Parentesco</label>
-                                        <input {...registerAntecPatFam('hepatitisParentesco', { required: true })} type="text" maxlength="20" class="form-control" id="parentesco_Hepatitis" />
+                                    <div className="col-sm-2">
+                                        <label htmlFor="parentesco_diabetes" className="form-label">Parentesco</label>
+                                        <input {...registerAntecPatFam('diabetesParentesco', { required: true })} type="text" maxLength="20" className="form-control" id="parentesco_diabetes" />
                                     </div>
 
 
-                                    <div class="col-sm-2">
-                                        <label for="Enf_ren" class="form-label">Enf. Renales*</label>
+                                    <div className="col-sm-2">
+                                        <label htmlFor="Ca_CU" className="form-label">Ca de CU*</label>
 
-                                        <div class="form-check">
-                                            <input value={true} {...registerAntecPatFam('enfRenales', { required: true })} id="Enf_ren_si" name="enfRenales" type="radio" class="form-check-input" required />
-                                            <label class="form-check-label" for="Enf_ren_si">Si</label>
+                                        <div className="form-check">
+                                            <input value={true} {...registerAntecPatFam('caCu', { required: true })} id="Ca_CU_si" name="caCu" type="radio" className="form-check-input" required />
+                                            <label className="form-check-label" htmlFor="Ca_CU_si">Si</label>
                                         </div>
-                                        <div class="form-check">
-                                            <input value={true} {...registerAntecPatFam('enfRenales', { required: true })} id="Enf_ren_no" name="enfRenales" type="radio" class="form-check-input" required />
-                                            <label class="form-check-label" for="Enf_ren_no">No</label>
+                                        <div className="form-check">
+                                            <input value={false} {...registerAntecPatFam('caCu', { required: true })} id="Ca_CU_no" name="caCu" type="radio" className="form-check-input" required />
+                                            <label className="form-check-label" htmlFor="Ca_CU_no">No</label>
                                         </div>
 
                                     </div>
 
-                                    <div class="col-sm-2">
-                                        <label for="parentesco_Enf_ren" class="form-label">Parentesco</label>
-                                        <input {...registerAntecPatFam('enfrenParentesco', { required: true })} type="text" maxlength="20" class="form-control" id="parentesco_Enf_ren" />
+                                    <div className="col-sm-2">
+                                        <label htmlFor="parentesco_Ca_CU" className="form-label">Parentesco</label>
+                                        <input {...registerAntecPatFam('cacuParentesco', { required: true })} type="text" maxLength="20" className="form-control" id="parentesco_Ca_CU" />
+                                    </div>
+
+
+                                    <div className="col-sm-2">
+                                        <label htmlFor="APF_hipertension" className="form-label">Hipertensión*</label>
+
+                                        <div className="form-check">
+                                            <input value={true} {...registerAntecPatFam('hipertension', { required: true })} id="APF_hipertension_si" name="hipertension" type="radio" className="form-check-input" required />
+                                            <label className="form-check-label" htmlFor="APF_hipertension_si">Si</label>
+                                        </div>
+                                        <div className="form-check">
+                                            <input value={false} {...registerAntecPatFam('hipertension', { required: true })} id="APF_hipertension_no" name="hipertension" type="radio" className="form-check-input" required />
+                                            <label className="form-check-label" htmlFor="APF_hipertension_no">No</label>
+                                        </div>
+
+                                    </div>
+
+                                    <div className="col-sm-2">
+                                        <label htmlFor="parentesco_hipert" className="form-label">Parentesco</label>
+                                        <input {...registerAntecPatFam('hipertensionParentesco', { required: true })} type="text" maxLength="20" className="form-control" id="parentesco_hipert" />
+                                    </div>
+
+
+                                    <div className="col-sm-2">
+                                        <label htmlFor="Enf_card" className="form-label">Enf. Cardíacas*</label>
+
+                                        <div className="form-check">
+                                            <input value={true} {...registerAntecPatFam('enfCardiacas', { required: true })} id="Enf_card_si" name="enfCardiacas" type="radio" className="form-check-input" required />
+                                            <label className="form-check-label" htmlFor="Enf_card_si">Si</label>
+                                        </div>
+                                        <div className="form-check">
+                                            <input value={false} {...registerAntecPatFam('enfCardiacas', { required: true })} id="Enf_card_no" name="enfCardiacas" type="radio" className="form-check-input" required />
+                                            <label className="form-check-label" htmlFor="Enf_card_no">No</label>
+                                        </div>
+
+                                    </div>
+
+                                    <div className="col-sm-2">
+                                        <label htmlFor="parentesco_enf_card" className="form-label">Parentesco</label>
+                                        <input {...registerAntecPatFam('enfcarParentesco', { required: true })} type="text" maxLength="20" className="form-control" id="parentesco_enf_card" />
+                                    </div>
+
+
+                                    <div className="col-sm-2">
+                                        <label htmlFor="Ca_ovario" className="form-label">Ca de Ovario*</label>
+
+                                        <div className="form-check">
+                                            <input value={true} {...registerAntecPatFam('caOvario', { required: true })} id="Ca_ovario_si" name="caOvario" type="radio" className="form-check-input" required />
+                                            <label className="form-check-label" htmlFor="Ca_ovario_si">Si</label>
+                                        </div>
+                                        <div className="form-check">
+                                            <input value={false} {...registerAntecPatFam('caOvario', { required: true })} id="Ca_ovario_no" name="caOvario" type="radio" className="form-check-input" required />
+                                            <label className="form-check-label" htmlFor="Ca_ovario_no">No</label>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div className="col-sm-2">
+                                        <label htmlFor="parentesco_Ca_ovario" className="form-label">Parentesco</label>
+                                        <input {...registerAntecPatFam('caovaParentesco', { required: true })} type="text" maxLength="20" className="form-control" id="parentesco_Ca_ovario" />
+                                    </div>
+
+                                    <div className="col-sm-2">
+                                        <label htmlFor="Hepatitis" className="form-label">Hepatitis*</label>
+
+                                        <div className="form-check">
+                                            <input value={true} {...registerAntecPatFam('hepatitis', { required: true })} id="Hepatitis_si" name="hepatitis" type="radio" className="form-check-input" required />
+                                            <label className="form-check-label" htmlFor="Hepatitis_si">Si</label>
+                                        </div>
+                                        <div className="form-check">
+                                            <input value={false} {...registerAntecPatFam('hepatitis', { required: true })} id="Hepatitis_no" name="hepatitis" type="radio" className="form-check-input" required />
+                                            <label className="form-check-label" htmlFor="Hepatitis_no">No</label>
+                                        </div>
+
+                                    </div>
+
+                                    <div className="col-sm-2">
+                                        <label htmlFor="parentesco_Hepatitis" className="form-label">Parentesco</label>
+                                        <input {...registerAntecPatFam('hepatitisParentesco', { required: true })} type="text" maxLength="20" className="form-control" id="parentesco_Hepatitis" />
+                                    </div>
+
+
+                                    <div className="col-sm-2">
+                                        <label htmlFor="Enf_ren" className="form-label">Enf. Renales*</label>
+
+                                        <div className="form-check">
+                                            <input value={true} {...registerAntecPatFam('enfRenales', { required: true })} id="Enf_ren_si" name="enfRenales" type="radio" className="form-check-input" required />
+                                            <label className="form-check-label" htmlFor="Enf_ren_si">Si</label>
+                                        </div>
+                                        <div className="form-check">
+                                            <input value={true} {...registerAntecPatFam('enfRenales', { required: true })} id="Enf_ren_no" name="enfRenales" type="radio" className="form-check-input" required />
+                                            <label className="form-check-label" htmlFor="Enf_ren_no">No</label>
+                                        </div>
+
+                                    </div>
+
+                                    <div className="col-sm-2">
+                                        <label htmlFor="parentesco_Enf_ren" className="form-label">Parentesco</label>
+                                        <input {...registerAntecPatFam('enfrenParentesco', { required: true })} type="text" maxLength="20" className="form-control" id="parentesco_Enf_ren" />
                                     </div>
 
                                     <div className="col-sm-2">
@@ -1503,9 +1531,9 @@ export const AgregarHistoria = () => {
                                     </div>
 
 
-                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-5">
-                                        <button class="btn btn-primary btn-save me-md-2" type="submit">Guardar</button>
-                                        <button type="reset" class="btn btn-danger">Cancelar</button>
+                                    <div className="d-grid gap-2 d-md-flex justify-content-md-end mt-5">
+                                        <button className="btn btn-primary btn-save me-md-2" type="submit">Guardar</button>
+                                        <button type="reset" className="btn btn-danger">Cancelar</button>
                                     </div>
 
 
@@ -1513,7 +1541,52 @@ export const AgregarHistoria = () => {
                             </form>
                         </div>
                     </div>
+                    {/*Informacion*/}
+                    <div className="tab-pane fade" id="Motivo" role="tabpanel" aria-labelledby="Motivo-tab">
 
+                        <div className="container-fluid mt-3">
+                            <form onSubmit={onSubmitInformacion}>
+                                <div>
+                                    <label htmlFor="expediente" className="form-label">Núm. Expediente*</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={numExp}
+                                        title="El Núm. Expediente debe tener 5 números, un guión (-) y el año al final"
+                                        {...registerInformacion('numExpediente')}
+                                        readOnly
+                                    />
+                                </div>
+                                <div className="mt-3">
+                                    <label className="form-label" htmlFor="motivo_visita">Motivo de la visita*</label>
+                                    <textarea
+                                        className="form-control"
+                                        maxLength="170"
+                                        id="motivo_visita"
+                                        style={{ height: '50px' }}
+                                        {...registerInformacion('motVisita', { required: true })}
+                                    >
+                                    </textarea>
+                                </div>
+
+                                <div className="mt-3">
+                                    <label htmlFor="nota_med" className="form-label">Nota Médica</label>
+                                    <textarea
+                                        className="form-control"
+                                        maxLength="170" id="nota_med"
+                                        style={{ height: "50px" }}
+                                        {...registerInformacion('notaMedica', { required: true })}
+                                    >
+                                    </textarea>
+                                </div>
+
+                                <div className="d-grid gap-2 d-md-flex justify-content-md-end mt-5">
+                                    <button className="btn btn-success btn-save me-md-2" type="submit">Guardar</button>
+                                    <button type="reset" className="btn btn-danger">Cancelar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
 
                 <Toast isOpen={showToast} className="position-fixed top-0 end-0 m-3">
