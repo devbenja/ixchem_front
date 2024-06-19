@@ -1563,9 +1563,9 @@ export const AgregarHistoria = () => {
                                     <label className="form-label" htmlFor="motivo_visita">Motivo de la visita*</label>
                                     <textarea
                                         className="form-control"
-                                        maxLength="170"
+                                        rows="10"
                                         id="motivo_visita"
-                                        style={{ height: '50px' }}
+                                        
                                         {...registerInformacion('motVisita', { required: true })}
                                     >
                                     </textarea>
@@ -1575,8 +1575,8 @@ export const AgregarHistoria = () => {
                                     <label htmlFor="nota_med" className="form-label">Nota Médica</label>
                                     <textarea
                                         className="form-control"
-                                        maxLength="170" id="nota_med"
-                                        style={{ height: "50px" }}
+                                        rows="10"
+                                        id="nota_med"
                                         {...registerInformacion('notaMedica', { required: true })}
                                     >
                                     </textarea>

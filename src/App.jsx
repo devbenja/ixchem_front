@@ -15,6 +15,9 @@ import { Layout, Button, theme } from "antd";
 import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
 import { NotaEvolucion } from "./pages/NotaEvolucion/NotaEvolucion";
 import { Doctores } from "./pages/Doctores/Doctores";
+import { AgregarProblema } from "./pages/ListaProblema/AgregarProblema";
+import { BuscarProblema } from "./pages/ListaProblema/BuscarProblema";
+import { ProblemaDetalles } from "./pages/ListaProblema/ProblemaDetalles";
 
 
 const { Header, Sider, Content } = Layout;
@@ -55,8 +58,10 @@ export const App = () => {
                 <Route path="/home" element={<Home />} />
                 <Route path="/agregar-historia-clinica" element={<AgregarHistoria />} />
                 <Route path="/buscar-historia-clinica" element={<BuscarHistoria />} />
-                <Route path="/lista-problemas" element={<ListaProblemas />} />
-                <Route path="/notas-evolucion" element={<NotaEvolucion/>}/>
+                <Route path="/agregar-problema" element={<AgregarProblema />} />
+                <Route path="/notas-evolucion" element={<NotaEvolucion/>}/>           
+                <Route path="/buscar-problema" element={<BuscarProblema/>}/>
+                <Route path="/problemas/:numExpediente" element={<ProblemaDetalles/>} />
                 <Route path="/doctores" element={<Doctores/>}/>
               </Routes>
             </Content>

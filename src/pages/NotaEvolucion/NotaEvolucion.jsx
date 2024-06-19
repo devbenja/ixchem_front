@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Table, Button, Input, Space } from 'antd';
-import { EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { Modal, Form } from 'react-bootstrap';
 
 export const NotaEvolucion = () => {
@@ -151,15 +151,8 @@ export const NotaEvolucion = () => {
     return (
         <div className="container">
             <div className='d-flex align-items-center justify-content-between'>
-                <h4>Notas de Evolucion</h4>
-                <Button
-                    type="primary"
-                    icon={<PlusOutlined />}
-                    onClick={() => setModalVisible(true)}
-                    className="mb-3"
-                >
-                    Crear Nota Evolucion
-                </Button>
+                <h4>Buscar Problemas</h4>
+                
             </div>
             {errors && <p className="text-danger">{errors}</p>}
 

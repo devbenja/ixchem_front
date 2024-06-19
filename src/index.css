@@ -13,6 +13,7 @@
 
 .sidebar {
     color: #fff;
+    background-color: #780650 !important;
 }
 
 .logo {
@@ -20,6 +21,7 @@
     align-items: center;
     justify-content: center;
     padding: 10px;
+    background-color: #780650 !important;
 }
 
 .logo-icon {
@@ -38,4 +40,27 @@
     flex-direction: column;
     gap: 15px; 
     position: relative;
+    background-color: #780650 !important;
+    color: #fff;
+}
+
+.sub-menu {
+    background-color: #780650 !important;
+}
+
+.ant-menu { 
+    background-color: #780650 !important;
+}
+
+.ant-menu-item-selected {
+    background-color: #520339 !important;
+}
+
+.ant-menu-submenu {
+    background-color: #780650 !important;
+}
+
+.custom-table .ant-table-thead > tr > th {
+    background-color: #c41d7f;
+    color: #fff;
 }
