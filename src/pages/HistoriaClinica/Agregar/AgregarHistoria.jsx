@@ -4,6 +4,8 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { Toast, ToastBody, ToastHeader } from 'reactstrap';
 
+import { notification } from 'antd';
+
 export const AgregarHistoria = () => {
 
     const { register: registerPaciente, handleSubmit: handleSubmitPaciente, reset } = useForm();
@@ -12,8 +14,6 @@ export const AgregarHistoria = () => {
     const { register: registerAntecPatFam, handleSubmit: handleSubmitAntecPatFam, setValue: setValueAntPatFam } = useForm();
     const { register: registerInformacion, handleSubmit: handleSubmitInformacion, setValue: setValueInfo } = useForm();
 
-    const [showToast, setShowToast] = useState(false);
-    const [toastBody, setToastBody] = useState('');
     const [numExp, setNumExp] = useState('');
 
     //POST PACIENTE - DATOS PERSONALES
@@ -22,8 +22,11 @@ export const AgregarHistoria = () => {
 
             const response = await axios.post('https://localhost:7106/api/bdtpaciente/post', data);
 
-            setToastBody(`Paciente ${response.data.primerNombre} creado!`);
-            setShowToast(true);
+            notification.success({
+                message: '¡Éxito!',
+                description: `Paciente ${response.data.primerNombre} creado!`,
+                duration: 3
+            });
 
             setNumExp(response.data.numExpediente);
 
@@ -31,8 +34,11 @@ export const AgregarHistoria = () => {
 
         } catch (error) {
 
-            setToastBody(`Error al crear el paciente: ${error}`);
-            setShowToast(true);
+            notification.error({
+                message: 'Error al Crear Paciente',
+                description: `${error.response.data.message}`,
+                duration: 3
+            });
 
         }
     });
@@ -70,13 +76,19 @@ export const AgregarHistoria = () => {
 
             const response = await axios.post('https://localhost:7106/api/bdtbantecedentespersonale/post', transformedData);
 
-            setToastBody('Antecedente Personal creado exitosamente!');
-            setShowToast(true);
+            notification.success({
+                message: '¡Éxito!',
+                description: `Antecedente Personal creado exitosamente!`,
+                duration: 3
+            });
 
         } catch (error) {
 
-            setToastBody(`Error al crear Antecedente: ${error}`);
-            setShowToast(true);
+            notification.error({
+                message: 'Error al Crear Antecedente',
+                description: `${error.response.data.message}`,
+                duration: 3
+            });
 
         }
 
@@ -112,12 +124,19 @@ export const AgregarHistoria = () => {
 
             const response = await axios.post('https://localhost:7106/api/bdtbaantecedentepatper/post', transformedData)
 
-            setToastBody('Antecedente Paterno Personal creado!');
-            setShowToast(true);
+            notification.success({
+                message: '¡Éxito!',
+                description: `Antecedente Paterno Personal creado!`,
+                duration: 3
+            });
 
         } catch (error) {
-            setToastBody(`Error al crear Antecedente: ${error}`);
-            setShowToast(true);
+
+            notification.error({
+                message: 'Error al Crear Antecedente',
+                description: `${error.response.data.message}`,
+                duration: 3
+            });
         }
     });
 
@@ -145,13 +164,20 @@ export const AgregarHistoria = () => {
 
             await axios.post('https://localhost:7106/api/bdtbantecedentepatfam/post', transformedData);
 
-            setToastBody('Antecedente Patologico Fam creado!');
-            setShowToast(true);
+            notification.success({
+                message: '¡Éxito!',
+                description: `Antecedente Patologico Fam creado!`,
+                duration: 3
+            });
+
 
         } catch (error) {
 
-            setToastBody(`Error al crear Antecedente: ${error}`);
-            setShowToast(true);
+            notification.error({
+                message: 'Error al Crear Antecedente',
+                description: `${error.response.data.message}`,
+                duration: 3
+            });
 
         }
 
@@ -166,30 +192,24 @@ export const AgregarHistoria = () => {
 
             await axios.post('https://localhost:7106/api/bdtbinformacion/post', data);
 
-            setToastBody('Informacion Creada!');
-            setShowToast(true);
+            notification.success({
+                message: '¡Éxito!',
+                description: `Información creada!`,
+                duration: 3
+            });
 
         } catch (error) {
 
-            setToastBody(`Error al crear Informacion: ${error}`);
-            setShowToast(true);
+            notification.error({
+                message: 'Error al Crear Informacion',
+                description: `${error.response.data.message}`,
+                duration: 3
+            });
 
         }
 
     });
 
-    // QUITA LA ALERTA DESPUES DE 3 SEGUNDOS
-    useEffect(() => {
-        if (showToast) {
-            const timer = setTimeout(() => {
-                setShowToast(false);
-            }, 3000);
-
-            return () => {
-                clearTimeout(timer);
-            };
-        }
-    }, [showToast]);
 
     // OBTIENE EL DATO NUMEXPEDIENTE DE DATOS PERSONALES PARA USARLO
     // EN ANTECEDENTES PERSONALES
@@ -212,22 +232,28 @@ export const AgregarHistoria = () => {
     return (
         <>
             <div className="container-fluid">
-                <div className="d-flex align-items-center justify-content-between mb-3">
+                <div className="d-flex align-items-center justify-content-between mb-2">
                     <h4>Agregar Historia Clinica</h4>
-                    <p className="text-body-secondary text-smaller">Los datos con asterisco (*) son obligatorios</p>
+                    <div className="d-flex gap-3">
+                        <p className="text-body-secondary text-smaller">Los datos con asterisco (*) son obligatorios,</p>
+                        <p className="text-body-secondary text-smaller">A. = Antecedentes </p>
+                    </div>
                 </div>
                 <ul className="nav nav-tabs" id="myTab" role="tablist">
                     <li className="nav-item" role="presentation">
-                        <a className="nav-link active" id="DG-tab" data-bs-toggle="tab" href="#DG" role="tab" aria-controls="DG" aria-selected="true">Datos Generales</a>
+                        <a className="nav-link active" id="DG-tab" data-bs-toggle="tab" href="#DG" role="tab" aria-controls="DG" aria-selected="true">Paciente</a>
                     </li>
                     <li className="nav-item" role="presentation">
-                        <a className="nav-link" id="AP-tab" data-bs-toggle="tab" role="tab" href="#AP" aria-controls="AP" aria-selected="false">Antecedentes Personales</a>
+                        <a className="nav-link" id="AP-tab" data-bs-toggle="tab" role="tab" href="#AP" aria-controls="AP" aria-selected="false">A. Personales</a>
                     </li>
                     <li className="nav-item" role="presentation">
-                        <a className="nav-link" id="APP-tab" data-bs-toggle="tab" role="tab" href="#APP" aria-controls="APP" aria-selected="false">Antecedentes Patológicos Personales</a>
+                        <a className="nav-link" id="APP-tab" data-bs-toggle="tab" role="tab" href="#APP" aria-controls="APP" aria-selected="false">A. Patológicos Personales</a>
                     </li>
                     <li className="nav-item" role="presentation">
-                        <a className="nav-link" id="APF-tab" data-bs-toggle="tab" role="tab" href="#APF" aria-controls="APF" aria-selected="false">Antecedentes Patológicos Familiares</a>
+                        <a className="nav-link" id="APF-tab" data-bs-toggle="tab" role="tab" href="#APF" aria-controls="APF" aria-selected="false">A. Patológicos Familiares</a>
+                    </li>
+                    <li className="nav-item" role="presentation">
+                        <a className="nav-link" id="AO-tab" data-bs-toggle="tab" role="tab" href="#AO" aria-controls="AO" aria-selected="false">A. Obstetrico</a>
                     </li>
                     <li className="nav-item" role="presentation">
                         <a className="nav-link" id="Motivo-tab" data-bs-toggle="tab" role="tab" href="#Motivo" aria-controls="Motivo" aria-selected="false">Información</a>
@@ -919,7 +945,7 @@ export const AgregarHistoria = () => {
                                             min="1"
                                             className="form-control"
                                             id="cigarros"
-                                            value={true}
+                                            
                                             {...registerAntecPer('cigarrosDia')}
                                         />
                                     </div>
@@ -1323,10 +1349,10 @@ export const AgregarHistoria = () => {
                                     </div>
 
 
-                                    <div className="col-sm-12">
+                                    {/* <div className="col-sm-12">
                                         <label htmlFor="Observaciones" className="form-label">Observaciones</label>
                                         <input type="text" maxLength="140" className="form-control" id="Observaciones" />
-                                    </div>
+                                    </div> */}
 
 
                                     <div className="d-grid gap-2 d-md-flex justify-content-md-end mt-5">
@@ -1543,6 +1569,10 @@ export const AgregarHistoria = () => {
                             </form>
                         </div>
                     </div>
+                    {/*Antecedente Obstetrico*/}
+                    <div className="tab-pane fade" id="AO" role="tabpanel" aria-labelledby="AO-tab">
+
+                    </div>
                     {/*Informacion*/}
                     <div className="tab-pane fade" id="Motivo" role="tabpanel" aria-labelledby="Motivo-tab">
 
@@ -1565,7 +1595,7 @@ export const AgregarHistoria = () => {
                                         className="form-control"
                                         rows="10"
                                         id="motivo_visita"
-                                        
+
                                         {...registerInformacion('motVisita', { required: true })}
                                     >
                                     </textarea>
@@ -1590,11 +1620,6 @@ export const AgregarHistoria = () => {
                         </div>
                     </div>
                 </div>
-
-                <Toast isOpen={showToast} className="position-fixed top-0 end-0 m-3">
-                    <ToastHeader toggle={() => setShowToast(false)}>Notificación</ToastHeader>
-                    <ToastBody>{toastBody}</ToastBody>
-                </Toast>
             </div>
         </>
     )

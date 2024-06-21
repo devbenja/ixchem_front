@@ -18,6 +18,9 @@ import { Doctores } from "./pages/Doctores/Doctores";
 import { AgregarProblema } from "./pages/ListaProblema/AgregarProblema";
 import { BuscarProblema } from "./pages/ListaProblema/BuscarProblema";
 import { ProblemaDetalles } from "./pages/ListaProblema/ProblemaDetalles";
+import { EditarPaciente } from "./pages/HistoriaClinica/Editar/EditarPaciente";
+import { EditarAntPersonales } from "./pages/HistoriaClinica/Editar/EditarAntPersonales";
+import { EditarAntPatPersonales } from "./pages/HistoriaClinica/Editar/EditarAntPatPersonales";
 
 
 const { Header, Sider, Content } = Layout;
@@ -62,6 +65,9 @@ export const App = () => {
                 <Route path="/notas-evolucion" element={<NotaEvolucion/>}/>           
                 <Route path="/buscar-problema" element={<BuscarProblema/>}/>
                 <Route path="/problemas/:numExpediente" element={<ProblemaDetalles/>} />
+                <Route path="/editar-paciente/:id" element={<EditarPaciente/>}/>
+                <Route path="/editar-antecedentes-personales/:id" element={<EditarAntPersonales/>}/>
+                <Route path="/editar-antecedentes-patologicos-personales/:id" element={<EditarAntPatPersonales/>} />
                 <Route path="/doctores" element={<Doctores/>}/>
               </Routes>
             </Content>

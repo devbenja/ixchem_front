@@ -1,116 +1,9 @@
 import './Buscar.css';
 
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
-import { PDFDownloadLink, Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
-import { FilePdfOutlined } from '@ant-design/icons';
-import { Table } from 'antd';
-
-const styles = StyleSheet.create({
-    page: {
-        padding: 30,
-    },
-    section: {
-        marginBottom: 10,
-        display: 'flex',
-        flexDirection: 'row',
-    },
-    label: {
-        fontSize: 12,
-        marginBottom: 5,
-    },
-    header: {
-        fontSize: 18,
-        marginBottom: 30,
-        textAlign: 'center',
-    },
-    value: {
-        fontSize: 12,
-        marginBottom: 10,
-        paddingBottom: 5,
-        borderBottom: '1 solid black',
-        marginLeft: '10px',
-        width: '300px',
-    },
-    row: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-    }
-});
-
-const MyDocument = ({ data }) => (
-    <Document>
-        <Page size="A4" style={styles.page}>
-            <Text style={styles.header}>HISTORIA CLINICA</Text>
-            <View style={styles.section}>
-                <Text style={styles.label}>CENTRO DE MUJERES IXCHEN</Text>
-                <Text style={styles.value}>Fecha: {data && data.fechaIngreso}</Text>
-            </View>
-            <View style={styles.section}>
-                <Text style={styles.label}>Nombre y Apellidos:</Text>
-                <Text style={styles.value}>{data && `${data.primerNombre} ${data.segundoNombre} ${data.primerApellido} ${data.segundoApellido}`}</Text>
-            </View>
-            <View style={styles.section}>
-                <Text style={styles.label}>Cédula:</Text>
-                <Text style={styles.value}>{data && data.cedula}</Text>
-            </View>
-            <View style={styles.section}>
-                <Text style={styles.label}>Número de expediente:</Text>
-                <Text style={styles.value}>{data && data.numExpediente}</Text>
-            </View>
-            <View style={styles.section}>
-                <Text style={styles.label}>Edad:</Text>
-                <Text style={styles.value}>{data && data.edad}</Text>
-            </View>
-            <View style={styles.section}>
-                <Text style={styles.label}>Sexo:</Text>
-                <Text style={styles.value}>{data && data.sexo}</Text>
-            </View>
-            <View style={styles.section}>
-                <Text style={styles.label}>Escolaridad:</Text>
-                <Text style={styles.value}>{data && data.escolaridad}</Text>
-            </View>
-            <View style={styles.section}>
-                <Text style={styles.label}>Profesión/Oficio:</Text>
-                <Text style={styles.value}>{data && data.profesion}</Text>
-            </View>
-            <View style={styles.section}>
-                <Text style={styles.label}>Dirección:</Text>
-                <Text style={styles.value}>{data && data.direccion}</Text>
-            </View>
-            <View style={styles.section}>
-                <Text style={styles.label}>Departamento:</Text>
-                <Text style={styles.value}>{data && data.codDepartamento}</Text>
-            </View>
-            <View style={styles.section}>
-                <Text style={styles.label}>Presión:</Text>
-                <Text style={styles.value}>{data && data.presion}</Text>
-            </View>
-            <View style={styles.section}>
-                <Text style={styles.label}>Temperatura (°C):</Text>
-                <Text style={styles.value}>{data && data.temperatura}</Text>
-            </View>
-            <View style={styles.section}>
-                <Text style={styles.label}>Peso (Kg):</Text>
-                <Text style={styles.value}>{data && data.peso}</Text>
-            </View>
-            <View style={styles.section}>
-                <Text style={styles.label}>Talla (Mtrs):</Text>
-                <Text style={styles.value}>{data && data.talla}</Text>
-            </View>
-            <View style={styles.section}>
-                <Text style={styles.label}>IMC:</Text>
-                <Text style={styles.value}>{data && data.imc}</Text>
-            </View>
-            <View style={styles.section}>
-                <Text style={styles.label}>Fecha del registro:</Text>
-                <Text style={styles.value}>{data && data.fechaIngreso}</Text>
-            </View>
-        </Page>
-    </Document>
-);
+import { Table, message, notification } from 'antd';
 
 export const BuscarHistoria = () => {
 
@@ -118,7 +11,10 @@ export const BuscarHistoria = () => {
     const [searchValue, setSearchValue] = useState('');
     const [data, setData] = useState('');
     const [antecedentesPersonales, setAntPersonales] = useState('');
+    const [antPatPer, setAntPatPer] = useState('');
 
+
+    const navigate = useNavigate();
 
     const handleSearchSubmit = async (event) => {
 
@@ -126,6 +22,7 @@ export const BuscarHistoria = () => {
 
         let response;
         let antPerData;
+        let antPatPerData;
 
         try {
 
@@ -139,6 +36,11 @@ export const BuscarHistoria = () => {
                     params: { NumExpediente: searchValue }
                 });
 
+                antPatPerData = await axios.get('https://localhost:7106/api/bdtbaantecedentepatper/buscarporexpediente', {
+                    params: { NumExpediente: searchValue }
+                });
+
+
             } else if (searchType === 'opcion_cedula') {
 
                 response = await axios.get('https://localhost:7106/api/bdtpaciente/buscarporcedula', {
@@ -146,12 +48,19 @@ export const BuscarHistoria = () => {
                 });
 
             }
-            console.log(response.data);
-            console.log(antPerData.data)
+
             setData(response.data);
-            setAntPersonales(antPerData.data);
+            setAntPersonales(antPerData.data)
+            setAntPatPer(antPatPerData.data);
+
         } catch (error) {
-            console.error(error);
+            
+            notification.error({
+                message: '¡Error!',
+                description: `${error.response.data.message}`,
+                duration: 3
+            });
+            
         }
     };
 
@@ -194,7 +103,14 @@ export const BuscarHistoria = () => {
         { title: 'Compañeros Sexuales', dataIndex: 'compSexuales', key: 'compSexuales' },
         { title: 'Compañeros Sexuales', dataIndex: 'compSexuales', key: 'compSexuales' },
         { title: 'MAC', dataIndex: 'mac', key: 'mac' },
-        { title: '¿Has estado embarazada?', dataIndex: 'histEmbarazo', key: 'histEmbarazo', render: (histEmbarazo) => (histEmbarazo ? 'Sí' : 'No'), },
+        {
+            title: '¿Has estado embarazada?', dataIndex: 'histEmbarazo', key: 'histEmbarazo', render: (histEmbarazo) => {
+                if (histEmbarazo === null || histEmbarazo === undefined) {
+                    return '';
+                }
+                return histEmbarazo ? 'Sí' : 'No';
+            }
+        },
         { title: 'Gestas', dataIndex: 'gestas', key: 'gestas' },
     ]
 
@@ -204,29 +120,281 @@ export const BuscarHistoria = () => {
         { title: 'cesarea', dataIndex: 'cesarea', key: 'cesarea' },
         { title: 'FUM', dataIndex: 'fum', key: 'fum' },
         { title: 'SA', dataIndex: 'sa', key: 'sa' },
-        { title: '¿Lactancia Materna?', dataIndex: 'lactancia', key: 'lactancia', render: (lactancia) => (lactancia ? 'Sí' : 'No') },
-        { title: '¿Esta Embarazada?', dataIndex: 'embarazo', key: 'embarazo', render: (embarazo) => (embarazo ? 'Sí' : 'No') },
+        {
+            title: '¿Lactancia Materna?', dataIndex: 'lactancia', key: 'lactancia', render: (lactancia) => {
+                if (lactancia === null || lactancia === undefined) {
+                    return '';
+                }
+                return lactancia ? 'Sí' : 'No';
+            }
+        },
+        {
+            title: '¿Esta Embarazada?', dataIndex: 'embarazo', key: 'embarazo', render: (embarazo) => {
+                if (embarazo === null || embarazo === undefined) {
+                    return '';
+                }
+                return embarazo ? 'Sí' : 'No';
+            }
+        },
     ]
 
     const colum3AntPer = [
-        { title: '¿Mamografía al día?', dataIndex: 'mamografia', key: 'mamografia', render: (mamografia) => (mamografia ? 'Sí' : 'No') },
-        { title: '¿PAP al día?', dataIndex: 'pap', key: 'pap', render: (pap) => (pap ? 'Sí' : 'No') },
-        { title: '¿PAP Alterado', dataIndex: 'papAlterado', key: 'papAlterado', render: (papAlterado) => (papAlterado ? 'Sí' : 'No') },
+        {
+            title: '¿Mamografía al día?', dataIndex: 'mamografia', key: 'mamografia', render: (mamografia) => {
+                if (mamografia === null || mamografia === undefined) {
+                    return '';
+                }
+                return mamografia ? 'Sí' : 'No';
+            }
+        },
+        {
+            title: '¿PAP al día?', dataIndex: 'pap', key: 'pap', render: (pap) => {
+                if (pap === null || pap === undefined) {
+                    return '';
+                }
+                return pap ? 'Sí' : 'No';
+            }
+        },
+        {
+            title: '¿PAP Alterado', dataIndex: 'papAlterado', key: 'papAlterado', render: (papAlterado) => {
+                if (papAlterado === null || papAlterado === undefined) {
+                    return '';
+                }
+                return papAlterado ? 'Sí' : 'No';
+            }
+        },
         { title: 'Ultimo Pap', dataIndex: 'histPap', key: 'histPap' },
         { title: 'Edad de Menopausia', dataIndex: 'menopausia', key: 'menopausia' },
-        { title: '¿Terapia Reemplazo Hormonal?', dataIndex: 'reempHormonal', key: 'reempHormonal', render: (reempHormonal) => (reempHormonal ? 'Sí' : 'No') },
-        { title: '¿Fuma?', dataIndex: 'fuma', key: 'fuma', render: (fuma) => (fuma ? 'Sí' : 'No') },
+        {
+            title: '¿Terapia Reemplazo Hormonal?', dataIndex: 'reempHormonal', key: 'reempHormonal', render: (reempHormonal) => {
+                if (reempHormonal === null || reempHormonal === undefined) {
+                    return '';
+                }
+                return reempHormonal ? 'Sí' : 'No';
+            }
+        },
+        {
+            title: '¿Fuma?', dataIndex: 'fuma', key: 'fuma', render: (fuma) => {
+                if (fuma === null || fuma === undefined) {
+                    return '';
+                }
+                return fuma ? 'Sí' : 'No';
+            }
+        },
     ]
 
     const colum4AntPer = [
         { title: 'Cigarros por Dia', dataIndex: 'cigarrosDia', key: 'cigarrosDia' },
-        { title: '¿Actualmente está sola o acompañada?', dataIndex: 'abortos', key: 'abortos' },
-        { title: '¿Actualmente está sola o acompañada?', dataIndex: 'estadoPareja', key: 'estadoPareja', render: (estadoPareja) => (estadoPareja ? 'Acompañada' : 'Sola') },
+        { title: 'Abortos', dataIndex: 'abortos', key: 'abortos' },
+        {
+            title: '¿Actualmente está sola o acompañada?', dataIndex: 'estadoPareja', key: 'estadoPareja', render: (estadoPareja) => {
+                if (estadoPareja === null || estadoPareja === undefined) {
+                    return '';
+                }
+                return estadoPareja ? 'Sola' : 'Acompañada';
+            }
+        },
         { title: 'Fecha Nac. último hijo', dataIndex: 'fecNacHijo', key: 'fecNacHijo' },
-        { title: 'Crioterapia', dataIndex: 'crioterapia', key: 'crioterapia', render: (crioterapia) => (crioterapia ? 'Sí' : 'No') },
-        { title: 'Biopsias por colposcopia', dataIndex: 'biopasis', key: 'biopasis', render: (biopasis) => (biopasis ? 'Sí' : 'No') },
+        {
+            title: 'Crioterapia', dataIndex: 'crioterapia', key: 'crioterapia', render: (crioterapia) => {
+                if (crioterapia === null || crioterapia === undefined) {
+                    return '';
+                }
+                return crioterapia ? 'Sí' : 'No';
+            }
+        },
+        {
+            title: 'Biopsias por colposcopia', dataIndex: 'biopasis', key: 'biopasis', render: (biopasis) => {
+                if (biopasis === null || biopasis === undefined) {
+                    return '';
+                }
+                return biopasis ? 'Sí' : 'No';
+            }
+        },
         { title: 'Nº. Expediente', dataIndex: 'numExpediente', key: 'numExpediente' },
     ]
+
+    // Columnas de Ant Patologicos Personales
+
+    const columns1AntPatPer = [
+        {
+            title: 'Fibrodenoma', dataIndex: 'fibrodenoma', key: 'fibrodenoma', render: (fibrodenoma) => {
+                if (fibrodenoma === null || fibrodenoma === undefined) {
+                    return '';
+                }
+                return fibrodenoma ? 'Sí' : 'No';
+            }
+        },
+        {
+            title: 'CAM Izq', dataIndex: 'camIzq', key: 'camIzq', render: (camIzq) => {
+                if (camIzq === null || camIzq === undefined) {
+                    return '';
+                }
+                return camIzq ? 'Sí' : 'No';
+            }
+        },
+        {
+            title: 'CAM Der', dataIndex: 'camDer', key: 'camDer', render: (camDer) => {
+                if (camDer === null || camDer === undefined) {
+                    return '';
+                }
+                return camDer ? 'Sí' : 'No';
+            }
+        },
+        {
+            title: 'Cácer uterino', dataIndex: 'cacerut', key: 'cacerut', render: (cacerut) => {
+                if (cacerut === null || cacerut === undefined) {
+                    return '';
+                }
+                return cacerut ? 'Sí' : 'No';
+            }
+        },
+    ]
+
+    const columns2AntPatPer = [
+        {
+            title: 'Matriz', dataIndex: 'matriz', key: 'matriz', render: (matriz) => {
+                if (matriz === null || matriz === undefined) {
+                    return '';
+                }
+                return matriz ? 'Sí' : 'No';
+            }
+        },
+        {
+            title: 'Extirpación', dataIndex: 'extirpacion', key: 'extirpacion', render: (extirpacion) => {
+                if (extirpacion === null || extirpacion === undefined) {
+                    return '';
+                }
+                return extirpacion ? 'Sí' : 'No';
+            }
+        },
+        { title: 'ITS', dataIndex: 'its', key: 'its' },
+        {
+            title: 'VIH', dataIndex: 'vih', key: 'vih', render: (vih) => {
+                if (vih === null || vih === undefined) {
+                    return '';
+                }
+                return vih ? 'Sí' : 'No';
+            }
+        },
+        {
+            title: 'VIF', dataIndex: 'vif', key: 'vif', render: (vif) => {
+                if (vif === null || vif === undefined) {
+                    return '';
+                }
+                return vif ? 'Sí' : 'No';
+            }
+        },
+    ]
+
+    const columns3AntPatPer = [
+        {
+            title: 'Diabetes', dataIndex: 'diabetes', key: 'diabetes', render: (diabetes) => {
+                if (diabetes === null || diabetes === undefined) {
+                    return '';
+                }
+                return diabetes ? 'Sí' : 'No';
+            }
+        },
+        {
+            title: 'Cardiopatía', dataIndex: 'cardiopatia', key: 'cardiopatia', render: (cardiopatia) => {
+                if (cardiopatia === null || cardiopatia === undefined) {
+                    return '';
+                }
+                return cardiopatia ? 'Sí' : 'No';
+            }
+        },
+        {
+            title: 'Hipertensión', dataIndex: 'hipertension', key: 'hipertension', render: (hipertension) => {
+                if (hipertension === null || hipertension === undefined) {
+                    return '';
+                }
+                return hipertension ? 'Sí' : 'No';
+            }
+        },
+        {
+            title: 'Hepatopatías', dataIndex: 'hepatopatias', key: 'hepatopatias', render: (hepatopatias) => {
+                if (hepatopatias === null || hepatopatias === undefined) {
+                    return '';
+                }
+                return hepatopatias ? 'Sí' : 'No';
+            }
+        },
+        {
+            title: 'Nefropatía', dataIndex: 'nefropatia', key: 'nefropatia', render: (nefropatia) => {
+                if (nefropatia === null || nefropatia === undefined) {
+                    return '';
+                }
+                return nefropatia ? 'Sí' : 'No';
+            }
+        },
+    ]
+
+    const columns4AntPatPer = [
+        {
+            title: 'Cirugías', dataIndex: 'cirugias', key: 'cirugias', render: (cirugias) => {
+                if (cirugias === null || cirugias === undefined) {
+                    return '';
+                }
+                return cirugias ? 'Sí' : 'No';
+            }
+        },
+        {
+            title: 'Anemia', dataIndex: 'anemia', key: 'anemia', render: (anemia) => {
+                if (anemia === null || anemia === undefined) {
+                    return '';
+                }
+                return anemia ? 'Sí' : 'No';
+            }
+        },
+        {
+            title: 'Alergia a medicamentos', dataIndex: 'alergiaMed', key: 'alergiaMed', render: (alergiaMed) => {
+                if (alergiaMed === null || alergiaMed === undefined) {
+                    return '';
+                }
+                return alergiaMed ? 'Sí' : 'No';
+            }
+        },
+        {
+            title: 'Alergia alimentaria', dataIndex: 'alergiaAli', key: 'alergiaAli', render: (alergiaAli) => {
+                if (alergiaAli === null || alergiaAli === undefined) {
+                    return '';
+                }
+                return alergiaAli ? 'Sí' : 'No';
+            }
+        },
+        { title: 'Número de expediente', dataIndex: 'numExpediente', key: 'numExpediente' },
+    ]
+
+    const handleEditPaciente = () => {
+
+        if (data) {
+            navigate(`/editar-paciente/${data.numExpediente}`);
+        } else {
+            message.warning('No hay Datos Para Editar');
+        }
+
+    };
+
+    const handleEditAntPersonales = () => {
+
+        if (antecedentesPersonales) {
+            navigate(`/editar-antecedentes-personales/${antecedentesPersonales.numExpediente}`);
+        } else {
+            message.warning('No hay Datos Para Editar');
+        }
+
+    }
+
+    const handleEditAntPatPer = () => {
+
+        if (antPatPer) {
+            navigate(`/editar-antecedentes-patologicos-personales/${antPatPer.numExpediente}`)
+        } else {
+            message.warning('No hay Datos Para Editar');
+        }
+
+    }
 
     return (
         <>
@@ -263,13 +431,13 @@ export const BuscarHistoria = () => {
                             <a className="nav-link active" id="DG-tab" data-bs-toggle="tab" href="#DG" role="tab" aria-controls="DG" aria-selected="true">Datos Generales</a>
                         </li>
                         <li className="nav-item" role="presentation">
-                            <a className="nav-link text-secondary" id="AP-tab" data-bs-toggle="tab" role="tab" href="#AP" aria-controls="AP" aria-selected="false">Antecedentes Personales</a>
+                            <a className="nav-link text-secondary" id="AP-tab" data-bs-toggle="tab" role="tab" href="#AP" aria-controls="AP" aria-selected="false">A. Personales</a>
                         </li>
                         <li className="nav-item" role="presentation">
-                            <a className="nav-link text-secondary" id="APP-tab" data-bs-toggle="tab" role="tab" href="#APP" aria-controls="APP" aria-selected="false">Antecedentes Patológicos Personales</a>
+                            <a className="nav-link text-secondary" id="APP-tab" data-bs-toggle="tab" role="tab" href="#APP" aria-controls="APP" aria-selected="false">A. Patológicos Personales</a>
                         </li>
                         <li className="nav-item" role="presentation">
-                            <a className="nav-link text-secondary" id="APF-tab" data-bs-toggle="tab" role="tab" href="#APF" aria-controls="APF" aria-selected="false">Antecedentes Patológicos Familiares</a>
+                            <a className="nav-link text-secondary" id="APF-tab" data-bs-toggle="tab" role="tab" href="#APF" aria-controls="APF" aria-selected="false">A. Patológicos Familiares</a>
                         </li>
                         <li className="nav-item" role="presentation">
                             <a className="nav-link text-secondary" id="informacion" data-bs-toggle="tab" role="tab" href="#informacion" aria-controls="Informacion" aria-selected="false">Información</a>
@@ -283,8 +451,9 @@ export const BuscarHistoria = () => {
                         <Table className='mt-3 custom-table' columns={columns2} dataSource={[data]} pagination={false} />
                         <Table className='mt-3 custom-table' columns={columns3} dataSource={[data]} pagination={false} />
                         <Table className='mt-3 custom-table' columns={columns4} dataSource={[data]} pagination={false} />
-                        <div className='container mt-4 d-flex gap-2'>
-                            <button className='btn btn-warning'>Editar</button>
+
+                        <div className='container mt-4 d-flex justify-content-end gap-2'>
+                            <button onClick={handleEditPaciente} className='btn btn-warning'>Editar</button>
                             <button className='btn btn-danger'>Exportar a PDF</button>
                         </div>
                     </div>
@@ -293,12 +462,23 @@ export const BuscarHistoria = () => {
                         <Table rowKey="codAntper" className='custom-table mt-3' columns={colum2AntPer} dataSource={[antecedentesPersonales]} pagination={false} />
                         <Table rowKey="codAntper" className='custom-table mt-3' columns={colum3AntPer} dataSource={[antecedentesPersonales]} pagination={false} />
                         <Table rowKey="codAntper" className='custom-table mt-3' columns={colum4AntPer} dataSource={[antecedentesPersonales]} pagination={false} />
-                        <div className='container mt-4 d-flex gap-2'>
-                            <button className='btn btn-warning'>Editar</button>
+                        <div className='container mt-4 d-flex justify-content-end gap-2'>
+                            <button onClick={handleEditAntPersonales} className='btn btn-warning'>Editar</button>
+                            <button className='btn btn-danger'>Exportar a PDF</button>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="APP" role="tabpanel" aria-labelledby="APP-tab">
+                        <Table className='mt-3 custom-table' columns={columns1AntPatPer} dataSource={[antPatPer]} pagination={false} rowKey="codAntparper" />
+                        <Table className='mt-3 custom-table' columns={columns2AntPatPer} dataSource={[antPatPer]} pagination={false} rowKey="codAntparper" />
+                        <Table className='mt-3 custom-table' columns={columns3AntPatPer} dataSource={[antPatPer]} pagination={false} rowKey="codAntparper" />
+                        <Table className='mt-3 custom-table' columns={columns4AntPatPer} dataSource={[antPatPer]} pagination={false} rowKey="codAntparper" />
+                        <div className='container mt-4 d-flex justify-content-end gap-2'>
+                            <button onClick={handleEditAntPatPer} className='btn btn-warning'>Editar</button>
                             <button className='btn btn-danger'>Exportar a PDF</button>
                         </div>
                     </div>
                 </div>
+
             </div>
         </>
     );
