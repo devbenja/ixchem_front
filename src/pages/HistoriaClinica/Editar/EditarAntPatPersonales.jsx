@@ -406,8 +406,8 @@ export const EditarAntPatPersonales = () => {
                         </div>
                     </div>
 
-                    <div className="d-grid gap-2 d-md-flex justify-content-md-end mt-5">
-                        <button className="btn btn-success btn-save me-md-2" type="submit">Guardar</button>
+                    <div className="d-grid gap-2 d-md-flex justify-content-md-star mt-5">
+                        <button className="btn btn-primary btn-save me-md-2" type="submit">Guardar</button>
                         <button onClick={handleEditCancel} type="reset" className="btn btn-danger">Cancelar</button>
                     </div>
                 </div>

@@ -1554,7 +1554,6 @@ export const AgregarHistoria = () => {
                                             value={numExp}
                                             title="El Núm. Expediente debe tener 5 números, un guión (-) y el año al final"
                                             {...registerAntecPatFam('numExpediente')}
-                                            readOnly
                                         />
                                     </div>
 

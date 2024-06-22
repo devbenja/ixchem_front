@@ -70,17 +70,15 @@ export const AgregarProblema = () => {
 
     return (
         <>
-            <div className='container-fluid mb-5'>
+            <div className='container-fluid mb-3'>
                 <h4>Agregar Problema</h4>
-            </div>
-            <div className="container-fluid mt-3">
-                <form onSubmit={onSubmitProblema}>
+                <form className='mt-4' onSubmit={onSubmitProblema}>
                     <div className="row g-3">
                         <div className="col-sm-3">
                             <label htmlFor="expediente" className="form-label">Núm. Expediente*</label>
                             <input
                                 type="text"
-                                className="form-control custom-input-color"
+                                className="form-control"
                                 {...register('numExpediente', { required: true, maxLength: 20 })}
                             />
                         </div>
@@ -89,7 +87,7 @@ export const AgregarProblema = () => {
                             <label htmlFor="expediente" className="form-label">Nombre del Problema</label>
                             <input
                                 type="text"
-                                className="form-control custom-input-color"
+                                className="form-control"
                                 title="Insertar Identificacion"
                                 {...register('nombreProblema', { required: true })}
                             />
@@ -100,7 +98,7 @@ export const AgregarProblema = () => {
                                 <label htmlFor="PrimerN" className="form-label">Numero de Nota*</label>
                                 <input
                                     type="number"
-                                    className="form-control custom-input-color"
+                                    className="form-control"
                                     title="El nombre debe ir escrito como aparezca en la cédula o la partida de nacimiento"
                                     {...register('numeroNota', { required: true, maxLength: 30 })}
                                 />
@@ -110,7 +108,7 @@ export const AgregarProblema = () => {
                                 <label htmlFor="nacimiento" className="form-label">Fecha*</label>
                                 <input
                                     type="date"
-                                    className="form-control custom-input-color"
+                                    className="form-control"
                                     id="fechaNac"
                                     {...register('fechaNac', { required: true })}
                                 />
@@ -118,7 +116,7 @@ export const AgregarProblema = () => {
 
                             <div className="col-sm-2 mt-3">
                                 <label htmlFor="sexo" className="form-label">Activo*</label>
-                                <div className="d-flex align-items-center justify-content-center gap-4 custom-input-color form-control">
+                                <div className="d-flex align-items-center justify-content-center gap-4 form-control">
                                     <div className="form-check">
                                         <input
                                             type="radio"
@@ -144,7 +142,7 @@ export const AgregarProblema = () => {
 
                             <div className="col-sm-2 mt-3">
                                 <label htmlFor="sexo" className="form-label">Resuelto*</label>
-                                <div className="d-flex align-items-center justify-content-center gap-4 form-control custom-input-color">
+                                <div className="d-flex align-items-center justify-content-center gap-4 form-control">
                                     <div className="form-check">
                                         <input
                                             type="radio"
@@ -171,7 +169,7 @@ export const AgregarProblema = () => {
                     </div>
 
                     <div className="d-grid gap-2 d-md-flex justify-content-md-start mt-4">
-                        <button className="btn btn-success btn-save me-md-2" type="submit" >Guardar</button>
+                        <button className="btn btn-primary btn-save me-md-2" type="submit" >Guardar</button>
                         <button type="reset" className="btn btn-danger">Cancelar</button>
                     </div>
 

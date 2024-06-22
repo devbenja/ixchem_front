@@ -198,6 +198,8 @@ export const ProblemaDetalles = () => {
                 params: { NUM_EXPEDIENTE: numExpediente }
             });
 
+            console.log(response.data)
+
             const data = Array.isArray(response.data) ? response.data : [response.data];
             setProblemas(data);
 

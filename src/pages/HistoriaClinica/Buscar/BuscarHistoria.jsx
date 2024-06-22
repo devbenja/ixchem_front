@@ -5,13 +5,336 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Table, message, notification } from 'antd';
 
+import { Page, Text, View, Document, StyleSheet, PDFViewer, PDFDownloadLink } from '@react-pdf/renderer';
+
+const styles = StyleSheet.create({
+    page: {
+        padding: 30,
+    },
+    section: {
+        marginBottom: 20,
+        fontSize: 12,
+    },
+    header: {
+        fontSize: 20,
+        marginBottom: 20,
+        textAlign: 'center'
+
+    },
+    row: {
+        flexDirection: 'row',
+        marginBottom: 10,
+    },
+    label: {
+        fontWeight: 'bold',
+        marginRight: 10,
+    },
+    value: {
+        borderBottomWidth: 1,
+        borderBottomColor: '#000',
+        width: '50%',
+        marginBottom: 5,
+    },
+});
+
+
+const MyDocument = ({ data }) => (
+    <Document>
+        <Page size="A4" style={styles.page}>
+            <View style={styles.section}>
+                <Text style={styles.header}>Información del Paciente</Text>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Expediente:</Text>
+                    <Text style={styles.value}>{data.nuM_EXPEDIENTE}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Nombre:</Text>
+                    <Text style={styles.value}>{data.primeR_NOMBRE} {data.segundO_NOMBRE} {data.primeR_APELLIDO} {data.segundO_APELLIDO}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Cédula:</Text>
+                    <Text style={styles.value}>{data.cedula}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Fecha de Nacimiento:</Text>
+                    <Text style={styles.value}>{data.fechA_NAC}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Edad:</Text>
+                    <Text style={styles.value}>{data.edad}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Escolaridad:</Text>
+                    <Text style={styles.value}>{data.escolaridad}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Profesión:</Text>
+                    <Text style={styles.value}>{data.profesion}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Sexo:</Text>
+                    <Text style={styles.value}>{data.sexo}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Dirección:</Text>
+                    <Text style={styles.value}>{data.direccion}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Presión:</Text>
+                    <Text style={styles.value}>{data.presion}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Temperatura:</Text>
+                    <Text style={styles.value}>{data.temperatura}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Peso:</Text>
+                    <Text style={styles.value}>{data.peso}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Talla:</Text>
+                    <Text style={styles.value}>{data.talla}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>IMC:</Text>
+                    <Text style={styles.value}>{data.imc}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Fecha de Ingreso:</Text>
+                    <Text style={styles.value}>{data.fechA_INGRESO}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Centro:</Text>
+                    <Text style={styles.value}>{data.centro}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Usuaria:</Text>
+                    <Text style={styles.value}>{data.usuaria}</Text>
+                </View>
+            </View>
+            <View style={styles.section}>
+                <Text style={styles.header}>Antecedentes Personales</Text>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Menstruación:</Text>
+                    <Text style={styles.value}>{data.menstruacion}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Vida Sexual:</Text>
+                    <Text style={styles.value}>{data.vidA_SEXUAL}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Compañeros Sexuales:</Text>
+                    <Text style={styles.value}>{data.comP_SEXUALES}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>MAC:</Text>
+                    <Text style={styles.value}>{data.mac}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Historial de Embarazo:</Text>
+                    <Text style={styles.value}>{data.hisT_EMBARAZO ? 'Sí' : 'No'}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Gestas:</Text>
+                    <Text style={styles.value}>{data.gestas}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Partos:</Text>
+                    <Text style={styles.value}>{data.partos}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Abortos:</Text>
+                    <Text style={styles.value}>{data.abortos}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Cesáreas:</Text>
+                    <Text style={styles.value}>{data.cesarea}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>FUM:</Text>
+                    <Text style={styles.value}>{data.fum}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>SA:</Text>
+                    <Text style={styles.value}>{data.sa}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Lactancia:</Text>
+                    <Text style={styles.value}>{data.lactancia ? 'Sí' : 'No'}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Embarazo:</Text>
+                    <Text style={styles.value}>{data.embarazo ? 'Sí' : 'No'}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Mamografía:</Text>
+                    <Text style={styles.value}>{data.mamografia ? 'Sí' : 'No'}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>PAP:</Text>
+                    <Text style={styles.value}>{data.pap ? 'Sí' : 'No'}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>PAP Alterado:</Text>
+                    <Text style={styles.value}>{data.paP_ALTERADO ? 'Sí' : 'No'}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Historial de PAP:</Text>
+                    <Text style={styles.value}>{data.hisT_PAP}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Menopausia:</Text>
+                    <Text style={styles.value}>{data.menopausia}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Reemplazo Hormonal:</Text>
+                    <Text style={styles.value}>{data.reemP_HORMONAL ? 'Sí' : 'No'}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Fuma:</Text>
+                    <Text style={styles.value}>{data.fuma ? 'Sí' : 'No'}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Cigarros por Día:</Text>
+                    <Text style={styles.value}>{data.cigarroS_DIA}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Estado de Pareja:</Text>
+                    <Text style={styles.value}>{data.estadO_PAREJA ? 'Sí' : 'No'}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Fecha de Nacimiento del Hijo:</Text>
+                    <Text style={styles.value}>{data.feC_NAC_HIJO}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Crioterapia:</Text>
+                    <Text style={styles.value}>{data.crioterapia ? 'Sí' : 'No'}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Biopsia:</Text>
+                    <Text style={styles.value}>{data.biopasis ? 'Sí' : 'No'}</Text>
+                </View>
+            </View>
+
+            <View style={styles.section}>
+                <Text style={styles.header}>Antecedentes Patologicos Personales</Text>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Fibrodenoma:</Text>
+                    <Text style={styles.value}>{data.fibrodenoma ? 'Sí' : 'No'}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Ca de Mama Izq:</Text>
+                    <Text style={styles.value}>{data.caM_IZQ ? 'Sí' : 'No'}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Ca de Mama Der:</Text>
+                    <Text style={styles.value}>{data.caM_DER ? 'Sí' : 'No'}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>+Ca Cervico Uterino:</Text>
+                    <Text style={styles.value}>{data.cacerut ? 'Sí' : 'No'}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Matriz:</Text>
+                    <Text style={styles.value}>{data.matriz ? 'Sí' : 'No'}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Extirpacion:</Text>
+                    <Text style={styles.value}>{data.extirpacion ? 'Sí' : 'No'}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>ITS:</Text>
+                    <Text style={styles.value}>{data.its}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>VIH:</Text>
+                    <Text style={styles.value}>{data.vih ? 'Sí' : 'No'}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>VIF:</Text>
+                    <Text style={styles.value}>{data.vif ? 'Sí' : 'No'}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Diabetes:</Text>
+                    <Text style={styles.value}>{data.diabetes ? 'Sí' : 'No'}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Cardiopatia:</Text>
+                    <Text style={styles.value}>{data.cardiopatia ? 'Sí' : 'No'}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Hipertension:</Text>
+                    <Text style={styles.value}>{data.hipertension ? 'Sí' : 'No'}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Hepatopatias:</Text>
+                    <Text style={styles.value}>{data.hepatopatias ? 'Sí' : 'No'}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Nefropatia:</Text>
+                    <Text style={styles.value}>{data.nefropatia ? 'Sí' : 'No'}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Cirugias:</Text>
+                    <Text style={styles.value}>{data.cirugias ? 'Sí' : 'No'}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Anemia:</Text>
+                    <Text style={styles.value}>{data.anemia ? 'Sí' : 'No'}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Alergia a Medicamentos:</Text>
+                    <Text style={styles.value}>{data.alergiA_MED}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Alergia Alimentos:</Text>
+                    <Text style={styles.value}>{data.alergiA_ALI}</Text>
+                </View>
+
+            </View>
+
+            <View style={styles.section}>
+                <Text style={styles.header}>Antecedentes Patologicos Familiar</Text>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Ca de Mama:</Text>
+                    <Text style={styles.value}>{data.cA_MAMA ? 'Sí' : 'No'}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Parentesco Ca de Mama:</Text>
+                    <Text style={styles.value}>{data.caM_PARENTESCO}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Ca de CU:</Text>
+                    <Text style={styles.value}>{data.cA_CU ? 'Sí' : 'No'}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Parentesco Ca Cu:</Text>
+                    <Text style={styles.value}>{data.cacU_PARENTESCO}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Ca de Colon:</Text>
+                    <Text style={styles.value}>{data.cA_COLON ? 'Sí' : 'No'}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Parentesco Ca Co:</Text>
+                    <Text style={styles.value}>{data.cacO_PARENTESCO}</Text>
+                </View>
+
+            </View>
+        </Page>
+    </Document>
+)
+
 export const BuscarHistoria = () => {
 
     const [searchType, setSearchType] = useState('');
     const [searchValue, setSearchValue] = useState('');
-    const [data, setData] = useState('');
+    const [paciente, setPaciente] = useState('');
     const [antecedentesPersonales, setAntPersonales] = useState('');
     const [antPatPer, setAntPatPer] = useState('');
+    const [antPatFam, setAntPatFam] = useState('');
+    const [info, setInfo] = useState('');
+    const [data, setData] = useState([]);
 
 
     const navigate = useNavigate();
@@ -23,6 +346,9 @@ export const BuscarHistoria = () => {
         let response;
         let antPerData;
         let antPatPerData;
+        let antPatFamData;
+        let infoData;
+        let unidosData;
 
         try {
 
@@ -40,6 +366,18 @@ export const BuscarHistoria = () => {
                     params: { NumExpediente: searchValue }
                 });
 
+                antPatFamData = await axios.get('https://localhost:7106/api/bdtbantecedentepatfam/buscarporexpediente', {
+                    params: { NumExpediente: searchValue }
+                });
+
+                infoData = await axios.get('https://localhost:7106/api/bdtbinformacion/buscarporexpediente', {
+                    params: { NumExpediente: searchValue }
+                });
+
+                unidosData = await axios.get('https://localhost:7106/api/bdtpaciente/buscarpornumexpedienteunidos', {
+                    params: { NUM_EXPEDIENTE: searchValue }
+                });
+
 
             } else if (searchType === 'opcion_cedula') {
 
@@ -49,18 +387,23 @@ export const BuscarHistoria = () => {
 
             }
 
-            setData(response.data);
+            setPaciente(response.data);
             setAntPersonales(antPerData.data)
             setAntPatPer(antPatPerData.data);
+            setAntPatFam(antPatFamData.data);
+            setInfo(infoData.data)
+            setData(unidosData.data[0]);
+
+            console.log(unidosData.data)
 
         } catch (error) {
-            
+
             notification.error({
                 message: '¡Error!',
                 description: `${error.response.data.message}`,
                 duration: 3
             });
-            
+
         }
     };
 
@@ -214,7 +557,7 @@ export const BuscarHistoria = () => {
         { title: 'Nº. Expediente', dataIndex: 'numExpediente', key: 'numExpediente' },
     ]
 
-    // Columnas de Ant Patologicos Personales
+    // Columnas Ant Pat Personales
 
     const columns1AntPatPer = [
         {
@@ -366,6 +709,93 @@ export const BuscarHistoria = () => {
         { title: 'Número de expediente', dataIndex: 'numExpediente', key: 'numExpediente' },
     ]
 
+    // Columnas Ant Pat Familiares
+
+    const columns1AntPatFam = [
+        {
+            title: 'CA Mama',
+            dataIndex: 'caMama',
+            key: 'caMama',
+            render: (value) => (value === null || value === undefined ? '' : value ? 'Sí' : 'No'),
+        },
+        { title: 'Parentesco', dataIndex: 'camParentesco', key: 'camParentesco' },
+        {
+            title: 'CA Cuello Uterino',
+            dataIndex: 'caCu',
+            key: 'caCu',
+            render: (value) => (value === null || value === undefined ? '' : value ? 'Sí' : 'No'),
+        },
+        { title: 'Parentesco', dataIndex: 'cacuParentesco', key: 'cacuParentesco' },
+    ];
+
+    const columns2AntPatFam = [
+        {
+            title: 'CA Colon',
+            dataIndex: 'caColon',
+            key: 'caColon',
+            render: (value) => (value === null || value === undefined ? '' : value ? 'Sí' : 'No'),
+        },
+        { title: 'Parentesco', dataIndex: 'cacoParentesco', key: 'cacoParentesco' },
+        {
+            title: 'CA Ovario',
+            dataIndex: 'caOvario',
+            key: 'caOvario',
+            render: (value) => (value === null || value === undefined ? '' : value ? 'Sí' : 'No'),
+        },
+        { title: 'Parentesco', dataIndex: 'caovaParentesco', key: 'caovaParentesco' },
+    ];
+
+    const columns3AntPatFam = [
+        {
+            title: 'Hipertensión',
+            dataIndex: 'hipertensionf',
+            key: 'hipertensionf',
+            render: (value) => (value === null || value === undefined ? '' : value ? 'Sí' : 'No'),
+        },
+        { title: 'Parentesco', dataIndex: 'hipertensionParentesco', key: 'hipertensionParentesco' },
+        {
+            title: 'Hepatitis',
+            dataIndex: 'hepatitis',
+            key: 'hepatitis',
+            render: (value) => (value === null || value === undefined ? '' : value ? 'Sí' : 'No'),
+        },
+        { title: 'Parentesco', dataIndex: 'hepatitisParentesco', key: 'hepatitisParentesco' },
+    ];
+
+    const columns4AntPatFam = [
+        {
+            title: 'Diabetes',
+            dataIndex: 'diabetesf',
+            key: 'diabetesf',
+            render: (value) => (value === null || value === undefined ? '' : value ? 'Sí' : 'No'),
+        },
+        { title: 'Parentesco', dataIndex: 'diabetesParentesco', key: 'diabetesParentesco' },
+        {
+            title: 'Enfermedades Cardiacas',
+            dataIndex: 'enfCardiacas',
+            key: 'enfCardiacas',
+            render: (value) => (value === null || value === undefined ? '' : value ? 'Sí' : 'No'),
+        },
+        { title: 'Parentesco', dataIndex: 'enfcarParentesco', key: 'enfcarParentesco' },
+        {
+            title: 'Enfermedades Renales',
+            dataIndex: 'enfRenales',
+            key: 'enfRenales',
+            render: (value) => (value === null || value === undefined ? '' : value ? 'Sí' : 'No'),
+        },
+        { title: 'Parentesco', dataIndex: 'enfrenParentesco', key: 'enfrenParentesco' },
+        { title: 'Número de Expediente', dataIndex: 'numExpediente', key: 'numExpediente' },
+    ];
+
+    const columns1Informacion = [
+        { title: 'Motivo de Visita', dataIndex: 'motVisita', key: 'motVisita' },
+        { title: 'Número de Expediente', dataIndex: 'numExpediente', key: 'numExpediente' },
+    ];
+
+    const columns2Informacion = [
+        { title: 'Nota Médica', dataIndex: 'notaMedica', key: 'notaMedica' },
+    ]
+
     const handleEditPaciente = () => {
 
         if (data) {
@@ -396,6 +826,27 @@ export const BuscarHistoria = () => {
 
     }
 
+    const handleEditAntPatFam = () => {
+
+        if (antPatPer) {
+            navigate(`/editar-antecedentes-patologicos-familiares/${antPatFam.numExpediente}`)
+        } else {
+            message.warning('No hay Datos Para Editar');
+        }
+
+    }
+
+    const handleEditInformacion = () => {
+
+        if (info) {
+            navigate(`/editar-informacion/${info.numExpediente}`)
+        } else {
+            message.warning('No hay Datos Para Editar');
+        }
+
+    }
+
+
     return (
         <>
             <div className='container-fluid'>
@@ -425,8 +876,8 @@ export const BuscarHistoria = () => {
                 </div>
             </form>
             <div className="container-fluid" >
-                <div className='d-flex'>
-                    <ul className="nav nav-tabs" id="myTab" role="tablist">
+                <div className='d-flex align-items-center justify-content-between'>
+                    <ul className="nav nav-tabs" id="tab-search-list" role="tablist">
                         <li className="nav-item" role="presentation">
                             <a className="nav-link active" id="DG-tab" data-bs-toggle="tab" href="#DG" role="tab" aria-controls="DG" aria-selected="true">Datos Generales</a>
                         </li>
@@ -440,45 +891,75 @@ export const BuscarHistoria = () => {
                             <a className="nav-link text-secondary" id="APF-tab" data-bs-toggle="tab" role="tab" href="#APF" aria-controls="APF" aria-selected="false">A. Patológicos Familiares</a>
                         </li>
                         <li className="nav-item" role="presentation">
-                            <a className="nav-link text-secondary" id="informacion" data-bs-toggle="tab" role="tab" href="#informacion" aria-controls="Informacion" aria-selected="false">Información</a>
+                            <a className="nav-link text-secondary" id="informacion-tab" data-bs-toggle="tab" role="tab" href="#informacion" aria-controls="Informacion" aria-selected="false">Información</a>
+                        </li>
+                        <li className="nav-item" role="presentation">
+                            <a className="nav-link text-secondary" id="unificados-tab" data-bs-toggle="tab" role="tab" href="#unificados" aria-controls="Unificados" aria-selected="false">Datos Unificados</a>
                         </li>
                     </ul>
+                    <PDFDownloadLink
+                        document={<MyDocument data={data} />}
+                        fileName="informe_paciente.pdf"
+                    >
+                        {({ loading }) => (loading ? 'Generando PDF...' : 'Descargar PDF')}
+                    </PDFDownloadLink>
+
                 </div>
 
-                <div className="tab-content" id="myTabContent">
+
+                <div className="tab-content" id="tab-search-content">
                     <div className="tab-pane fade show active" id="DG" role="tabpanel" aria-labelledby="DG-tab">
-                        <Table className='custom-table mt-3' columns={columns1} dataSource={[data]} pagination={false} />
-                        <Table className='mt-3 custom-table' columns={columns2} dataSource={[data]} pagination={false} />
-                        <Table className='mt-3 custom-table' columns={columns3} dataSource={[data]} pagination={false} />
-                        <Table className='mt-3 custom-table' columns={columns4} dataSource={[data]} pagination={false} />
+                        <Table className='mt-3 custom-table' columns={columns2} dataSource={[paciente]} pagination={false} />
+                        <Table className='mt-3 custom-table' columns={columns3} dataSource={[paciente]} pagination={false} />
+                        <Table className='mt-3 custom-table' columns={columns4} dataSource={[paciente]} pagination={false} />
 
                         <div className='container mt-4 d-flex justify-content-end gap-2'>
                             <button onClick={handleEditPaciente} className='btn btn-warning'>Editar</button>
-                            <button className='btn btn-danger'>Exportar a PDF</button>
+
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="AP" role="tabpanel" aria-labelledby="AP-tab">
+                    <div className="tab-pane fade" id="AP" role="tabpanel" aria-labelledby="AP-tab">
                         <Table rowKey="codAntper" className='custom-table mt-3' columns={colum1AntPer} dataSource={[antecedentesPersonales]} pagination={false} />
                         <Table rowKey="codAntper" className='custom-table mt-3' columns={colum2AntPer} dataSource={[antecedentesPersonales]} pagination={false} />
                         <Table rowKey="codAntper" className='custom-table mt-3' columns={colum3AntPer} dataSource={[antecedentesPersonales]} pagination={false} />
                         <Table rowKey="codAntper" className='custom-table mt-3' columns={colum4AntPer} dataSource={[antecedentesPersonales]} pagination={false} />
                         <div className='container mt-4 d-flex justify-content-end gap-2'>
                             <button onClick={handleEditAntPersonales} className='btn btn-warning'>Editar</button>
-                            <button className='btn btn-danger'>Exportar a PDF</button>
+
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="APP" role="tabpanel" aria-labelledby="APP-tab">
+                    <div className="tab-pane fade" id="APP" role="tabpanel" aria-labelledby="APP-tab">
                         <Table className='mt-3 custom-table' columns={columns1AntPatPer} dataSource={[antPatPer]} pagination={false} rowKey="codAntparper" />
                         <Table className='mt-3 custom-table' columns={columns2AntPatPer} dataSource={[antPatPer]} pagination={false} rowKey="codAntparper" />
                         <Table className='mt-3 custom-table' columns={columns3AntPatPer} dataSource={[antPatPer]} pagination={false} rowKey="codAntparper" />
                         <Table className='mt-3 custom-table' columns={columns4AntPatPer} dataSource={[antPatPer]} pagination={false} rowKey="codAntparper" />
                         <div className='container mt-4 d-flex justify-content-end gap-2'>
                             <button onClick={handleEditAntPatPer} className='btn btn-warning'>Editar</button>
-                            <button className='btn btn-danger'>Exportar a PDF</button>
+
                         </div>
                     </div>
-                </div>
+                    <div className="tab-pane fade" id="APF" role="tabpanel" aria-labelledby="APF-tab">
+                        <Table className='custom-table mt-3' columns={columns1AntPatFam} dataSource={[antPatFam]} pagination={false} />
+                        <Table className='custom-table mt-3' columns={columns2AntPatFam} dataSource={[antPatFam]} pagination={false} />
+                        <Table className='custom-table mt-3' columns={columns3AntPatFam} dataSource={[antPatFam]} pagination={false} />
+                        <Table className='custom-table mt-3' columns={columns4AntPatFam} dataSource={[antPatFam]} pagination={false} />
+                        <div className='container mt-4 d-flex justify-content-end gap-2'>
+                            <button onClick={handleEditAntPatFam} className='btn btn-warning'>Editar</button>
 
+                        </div>
+                    </div>
+                    <div className="tab-pane fade" id="informacion" role="tabpanel" aria-labelledby="informacion-tab">
+                        <Table className='custom-table mt-3' columns={columns1Informacion} dataSource={[info]} pagination={false} />
+                        <Table className='custom-table mt-3' columns={columns2Informacion} dataSource={[info]} pagination={false} />
+                        <div className='container mt-4 d-flex justify-content-end gap-2'>
+                            <button onClick={handleEditInformacion} className='btn btn-warning'>Editar</button>
+
+                        </div>
+                    </div>
+                    <div className="tab-pane fade" id="unificados" role="tabpanel" aria-labelledby="unificados-tab">
+
+                    </div>
+                </div>
             </div>
         </>
     );

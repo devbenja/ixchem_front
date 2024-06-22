@@ -247,7 +247,7 @@ export const EditarPaciente = () => {
                         </div>
                     </div>
                 </div>
-                <div className='mt-3 d-flex gap-2'>
+                <div className='d-grid gap-2 d-md-flex justify-content-md-start mt-5'>
                     <button type="submit" className="btn btn-primary">Guardar</button>
                     <button type="submit" className="btn btn-danger">Cancelar</button>
                 </div>

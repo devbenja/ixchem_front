@@ -116,26 +116,7 @@ export const Doctores = () => {
             dataIndex: 'segundoApellido',
             key: 'segundoApellido',
         },
-        {
-            title: 'Edad',
-            dataIndex: 'edad',
-            key: 'edad',
-        },
-        {
-            title: 'Correo',
-            dataIndex: 'correo',
-            key: 'correo',
-        },
-        {
-            title: 'Teléfono',
-            dataIndex: 'telefono',
-            key: 'telefono',
-        },
-        {
-            title: 'Teléfono 2',
-            dataIndex: 'telefono2',
-            key: 'telefono2',
-        },
+       
         {
             title: 'Acciones',
             key: 'acciones',
@@ -154,14 +135,6 @@ export const Doctores = () => {
         <div className="container">
             <div className='d-flex align-items-center justify-content-between'>
                 <h4>Lista de Doctores</h4>
-                <Button
-                    type="primary"
-                    icon={<PlusOutlined />}
-                    onClick={() => setModalVisible(true)}
-                    className="mb-3"
-                >
-                    Crear Doctor
-                </Button>
             </div>
             {errors && <p className="text-danger">{errors}</p>}
 

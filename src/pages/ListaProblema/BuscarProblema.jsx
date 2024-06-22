@@ -80,7 +80,6 @@ export const BuscarProblema = () => {
         <div className="container">
             <div className='d-flex align-items-start justify-content-between'>
                 <h4>Buscar Problemas</h4>
-                <FilePdfOutlined style={{ fontSize: '25px', color: 'red'}} />
             </div>
             {errors && <p className="text-danger">{errors}</p>}
 
