@@ -34,6 +34,8 @@ import { EditarEpicrisis } from "./pages/Epicrisis/EditarEpicrisis";
 import { AgregarHistoriaClinicaGeneral } from "./pages/HistoriaClinicaGeneral/AgregarHistoriaClinicaGeneral";
 import { BuscarHistoriaClinicaGeneral } from "./pages/HistoriaClinicaGeneral/BuscarHistoriaClinicaGeneral";
 import { EditHistoriaClinicaGeneral } from "./pages/HistoriaClinicaGeneral/EditHistoriaClinicaGeneral";
+import { NotaDetalle } from "./pages/NotaEvolucion/NotaDetalle";
+import { EditarNota } from "./pages/NotaEvolucion/EditarNota";
 
 
 const { Header, Sider, Content } = Layout;
@@ -83,15 +85,23 @@ export const App = () => {
                 <Route path="/editar-antecedentes-patologicos-personales/:id" element={<EditarAntPatPersonales/>} />
                 <Route path="/editar-antecedentes-patologicos-familiares/:id" element={<EditarAntPatFam/>}/>
                 <Route path="/editar-informacion/:id" element={<EditarInformacion/>}/>
+                
                 <Route path="/agregar-nota-evolucion" element={<AgregarNota/>}/>
                 <Route path="/buscar-nota-evolucion" element={<BuscarNota/>}/>
+                <Route path="/notas-de-evolucion/:numExpediente" element={<NotaDetalle/>}/> 
+                <Route path="/nota/:codNota" element={<NotaEvolucion/>}/>
+                <Route path="/editar-nota/:codNota" element={<EditarNota/>}/>
+
+
                 <Route path="/doctores" element={<Doctores/>}/>
                 <Route path="/agregar-doctor" element={<AgregarDoctor/>}/>
                 <Route path="/buscar-doctor" element={<BuscarDoctor/>}/>
                 <Route path="/editar-doctor/:id" element={<EditarDoctor/>}/>
+
                 <Route path="/agregar-epicrisis" element={<AgregarEpicrisis/>}/>  
                 <Route path="/buscar-epicrisis" element={<BuscarEpicrisis/>}/> 
                 <Route path="/editar-epicrisis/:id" element={<EditarEpicrisis/>}/>  
+
                 <Route path="/agregar-historia-clinica-general" element={<AgregarHistoriaClinicaGeneral/>}/> 
                 <Route path="/buscar-historia-clinica-general" element={<BuscarHistoriaClinicaGeneral/>}/>  
                 <Route path="/editar-historia-clinica-general/:id" element={<EditHistoriaClinicaGeneral/>}/> 

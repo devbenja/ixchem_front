@@ -71,7 +71,7 @@ export const BuscarProblema = () => {
 
     if (loading) return (
         <div className="d-flex justify-content-center">
-            <Spinner animation="border" role="status"/>
+            <Spinner animation="border" role="status" />
         </div>
     );
 

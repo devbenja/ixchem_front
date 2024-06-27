@@ -132,10 +132,10 @@ const MyDocument = ({ problemas }) => (
                     <View style={styles.tableColCondiciones}>
                         <Text style={styles.tableCell}>Condiciones</Text>
                         <View style={styles.tableRow}>
-                            <View style={{ width: '50%', borderStyle: 'solid', borderWidth: 1, borderLeftWidth: 0, borderTopWidth: 0, borderTopWidth: 1 }}>
+                            <View style={{ width: '50%', borderStyle: 'solid', borderWidth: 1, borderLeftWidth: 0, borderTopWidth: 1 }}>
                                 <Text style={styles.tableCell}>Activo</Text>
                             </View>
-                            <View style={{ width: '50%', borderStyle: 'solid', borderWidth: 1, borderLeftWidth: 0, borderTopWidth: 0, borderRightWidth: 0, borderTopWidth: 1 }}>
+                            <View style={{ width: '50%', borderStyle: 'solid', borderWidth: 1, borderLeftWidth: 0, borderRightWidth: 0, borderTopWidth: 1 }}>
                                 <Text style={styles.tableCell}>Resuelto</Text>
                             </View>
                         </View>
@@ -340,7 +340,7 @@ export const ProblemaDetalles = () => {
     );
 
     return (
-        <div className="container">
+        <div className="container-fluid">
 
             <div className='d-flex align-items-start justify-content-between'>
                 <h4 className='mb-4'>Problemas Asociados al Expediente: {numExpediente}</h4>

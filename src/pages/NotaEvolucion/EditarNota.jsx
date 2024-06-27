@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { notification } from 'antd';
 import axios from 'axios';
+import { useParams } from "react-router-dom";
 
-export const AgregarNota = () => {
-    
+export const EditarNota = () => {
+
+    const { codNota } = useParams();
+
     const [formData, setFormData] = useState({
         numeroNota: 0,
         fecha: "",
@@ -21,6 +24,27 @@ export const AgregarNota = () => {
         codDoctor: ""
     });
 
+    useEffect(() => {
+
+        const fetchData = async () => {
+
+            try {
+
+                const response = await axios.get(`https://localhost:7106/api/bdtbnotaevolucion/buscarporcodigo/${codNota}`);
+
+                console.log(response.data);
+
+                setFormData(response.data);
+
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchData();
+
+    }, [codNota]);
+
     const handleChange = (e) => {
         const { name, value, type } = e.target;
         setFormData({
@@ -29,30 +53,38 @@ export const AgregarNota = () => {
         });
     };
 
-    const handleSubmitNota = async (e) => {
+    const handleEditNota = async (e) => {
+
         e.preventDefault();
+
         try {
+
             console.log(formData);
-            await axios.post('https://localhost:7106/api/bdtbnotaevolucion/post', formData);
+
+            await axios.put(`https://localhost:7106/api/bdtbnotaevolucion/actualizar/${formData.codNota}`, formData);
 
             notification.success({
                 message: '¡Éxito!',
-                description: `Nota de Evolucion creada con éxito`,
+                description: `Nota de Evolucion Editada con éxito`,
                 duration: 3
             });
+
         } catch (error) {
+
             notification.error({
                 message: '¡Error!',
                 description: error.response?.data?.message || 'Ocurrió un error inesperado',
                 duration: 3
             });
+
         }
+
     };
 
     return (
         <div className="container-fluid">
-            <h4>Agregar Nota de Evolución</h4>
-            <form onSubmit={handleSubmitNota} className='mt-4'>
+            <h4>Editar Nota de Evolución</h4>
+            <form onSubmit={handleEditNota} className='mt-4'>
                 <div className="row g-3">
                     <div className="col-sm-3">
                         <label htmlFor="segundoNombre" className="form-label">Fecha*</label>
@@ -210,5 +242,5 @@ export const AgregarNota = () => {
                 </div>
             </form>
         </div>
-    );
-};
+    )
+}
