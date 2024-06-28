@@ -46,6 +46,7 @@ import { HistoriasCG } from "./pages/HistoriaClinicaGeneral/HistoriasCG";
 import { HistoriaIndividual } from "./pages/HistoriaClinicaGeneral/HistoriaIndividual";
 import { ObstetricosDetalles } from "./pages/HistoriaClinicaGeneral/ObstetricosDetalles";
 import { Obstetrico } from "./pages/HistoriaClinicaGeneral/Obstetrico";
+import { EditarObstetrico } from "./pages/HistoriaClinicaGeneral/EditarObstetrico";
 
 
 const { Header, Sider, Content } = Layout;
@@ -121,7 +122,7 @@ export const App = () => {
                 <Route path="/historia/:codHistoriaClinica" element={<HistoriaIndividual/>}/>
                 <Route path="/obstetricos/:numExpediente" element={<ObstetricosDetalles/>}/>
                 <Route path="/obstetrico/:id" element={<Obstetrico/>}/>
-                <Route path="/editar-obstetrico/:id" element={<Obstetrico/>}/>
+                <Route path="/editar-obstetrico/:id" element={<EditarObstetrico/>}/>
 
                 <Route path="/agregar-usuarios" element={<AgregarUsuarios/>}/>
                 <Route path="/buscar-usuario" element={<BuscarUsuario/>}/>
