@@ -51,7 +51,7 @@ export const AgregarDoctor = () => {
                         <input
                             type="text"
                             className="form-control"
-                            name="primerNombre"
+                            name="primerNombred"
                             onChange={handleChange}
                             value={formData.primerNombred}
                         />
@@ -71,7 +71,7 @@ export const AgregarDoctor = () => {
                         <input
                             type="text"
                             className="form-control"
-                            name="primerApellido"
+                            name="primerApellidod"
                             onChange={handleChange}
                             value={formData.primerApellidod}
                         />
