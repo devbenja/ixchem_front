@@ -28,15 +28,17 @@ export const BuscarDoctor = () => {
           params: { CodDoctor: searchValue }
         })
 
+        setData(response.data)
+
       } else if (searchType === 'Nombre') {
 
         response = await axios.get('https://localhost:7106/api/bdtdoctor/buscarpornombre', {
-          params: { PrimerNombre: firstName, PrimerApellido: firstLastName }
+          params: { PrimerNombred: firstName, PrimerApellidod: firstLastName }
         })
 
-      }
+        setData(response.data[0]);
 
-      setData(response.data);
+      }
 
       console.log(response.data)
 
