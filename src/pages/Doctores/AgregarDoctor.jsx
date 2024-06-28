@@ -5,9 +5,9 @@ import axios from 'axios';
 export const AgregarDoctor = () => {
     const [formData, setFormData] = useState({
         codDoctor: '',
-        primerNombre: '',
+        primerNombred: '',
         segundoNombre: '',
-        primerApellido: '',
+        primerApellidod: '',
         segundoApellido: '',
         cedula: '',
         clinica: ''
