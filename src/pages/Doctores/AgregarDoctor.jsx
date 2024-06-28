@@ -53,7 +53,7 @@ export const AgregarDoctor = () => {
                             className="form-control"
                             name="primerNombre"
                             onChange={handleChange}
-                            value={formData.primerNombre}
+                            value={formData.primerNombred}
                         />
                     </div>
                     <div className="col-sm-3">
@@ -73,7 +73,7 @@ export const AgregarDoctor = () => {
                             className="form-control"
                             name="primerApellido"
                             onChange={handleChange}
-                            value={formData.primerApellido}
+                            value={formData.primerApellidod}
                         />
                     </div>
                     <div className="col-sm-3">
