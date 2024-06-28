@@ -237,8 +237,9 @@ export const AgregarHistoriaClinicaGeneral = () => {
 
     return (
         <div className='container-fluid'>
-            <h4 className='mb-2'>Agregar Historia Clinica General</h4>
-
+            <div className="container-fluid">
+                <h4 className='mb-2'>Agregar Clasificación de Riesgo</h4>
+            </div>
             <form onSubmit={handleSubmitSearch} className="container-fluid mt-4 mb-3">
                 <div className="row g-3">
                     <div className="col-sm-3">

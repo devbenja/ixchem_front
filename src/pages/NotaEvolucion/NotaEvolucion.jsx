@@ -86,7 +86,7 @@ const MyDocument = ({ formData }) => (
                 <Image style={styles.logo} src="/logo.png" />
                 <View style={styles.titleContainer}>
                     <Text style={styles.mainTitle}>CENTRO DE MUJERES IXCHEN</Text>
-                    <Text style={styles.subTitle}>Nota de Evoluciòn</Text>
+                    <Text style={styles.subTitle}>NOTA DE EVOLUCION Y TRATAMIENTO</Text>
                 </View>
             </View>
             <View style={styles.table}>
@@ -95,7 +95,7 @@ const MyDocument = ({ formData }) => (
                         <Text style={styles.tableCell}>Fecha y Hora</Text>
                     </View>
                     <View style={[styles.tableCol, styles.tableColNumero]}>
-                        <Text style={styles.tableCell}>Nota de Evoluciòn</Text>
+                        <Text style={styles.tableCell}>Problemas y Evolución</Text>
                     </View>
                     <View style={[styles.tableCol, styles.tableColNombre]}>
                         <Text style={styles.tableCell}>Planes</Text>

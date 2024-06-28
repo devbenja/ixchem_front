@@ -12,7 +12,6 @@ export const AgregarNota = () => {
         temperatura: 0,
         talla: 0,
         peso: 0,
-        imc: 0,
         frecCardiaca: 0,
         frecResp: 0,
         notaEvolucion1: "",
@@ -134,7 +133,7 @@ export const AgregarNota = () => {
                             value={formData.presion}
                         />
                     </div>
-                    <div className="col-sm-3">
+                    {/* <div className="col-sm-3">
                         <label htmlFor="segundoApellido" className="form-label">IMC*</label>
                         <input
                             type="number"
@@ -143,7 +142,7 @@ export const AgregarNota = () => {
                             onChange={handleChange}
                             value={formData.imc}
                         />
-                    </div>
+                    </div> */}
 
                     <div className="col-sm-3">
                         <label htmlFor="segundoApellido" className="form-label">No. Nota</label>

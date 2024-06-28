@@ -35,6 +35,8 @@ export const AgregarProblema = () => {
                 resuelto: data.resuelto === 'true'
             }
 
+            console.log(transformedData)
+
             await axios.post('https://localhost:7106/api/bdtblistaproblema/post', transformedData);
 
             alerta();
@@ -109,8 +111,9 @@ export const AgregarProblema = () => {
                                 <input
                                     type="date"
                                     className="form-control"
-                                    id="fechaNac"
-                                    {...register('fechaNac', { required: true })}
+                                    name='fecha'
+                                    id='fecha'
+                                    {...register('fecha', { required: true })}
                                 />
                             </div>
 

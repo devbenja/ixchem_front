@@ -6,6 +6,8 @@ import { Spinner } from 'react-bootstrap';
 import { Table, Button, Space, Modal, notification } from 'antd';
 import { FileSearchOutlined, EditOutlined, DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 
+import { useAuth } from '../../context/AuthContext';
+
 
 export const ObstetricosDetalles = () => {
 
@@ -15,6 +17,7 @@ export const ObstetricosDetalles = () => {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
     
+    const { user } = useAuth();
 
     useEffect(() => {
         fetchOb();
@@ -64,7 +67,11 @@ export const ObstetricosDetalles = () => {
                 <Space size="middle">
                     <Button icon={<FileSearchOutlined />} onClick={() => handleRowClick(record.codHojariesgo)} />
                     <Button icon={<EditOutlined />} onClick={() => handleEdit(record.codHojariesgo)} />
-                    <Button icon={<DeleteOutlined />} onClick={() => showDeleteConfirm(record.codHojariesgo)} />
+
+                    {user && user.codRol === 1 && (
+                        <Button icon={<DeleteOutlined />} onClick={() => showDeleteConfirm(record.codHojariesgo)} />
+                    )}
+                    
                 </Space>
             ),
             align: 'center',

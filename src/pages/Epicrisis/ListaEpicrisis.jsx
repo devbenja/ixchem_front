@@ -6,6 +6,8 @@ import { Spinner } from 'react-bootstrap';
 import { Table, Button, Space, Modal, notification } from 'antd';
 import { FileSearchOutlined, EditOutlined, DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 
+import { useAuth } from '../../context/AuthContext';
+
 export const ListaEpicrisis = () => {
 
     const { numExpediente } = useParams();
@@ -14,6 +16,8 @@ export const ListaEpicrisis = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
+    
+    const { user } = useAuth();
 
 
     useEffect(() => {
@@ -68,7 +72,10 @@ export const ListaEpicrisis = () => {
                 <Space size="middle">
                     <Button icon={<FileSearchOutlined />} onClick={() => handleRowClick(record.coD_EPICRISIS)} />
                     <Button icon={<EditOutlined />} onClick={() => handleEdit(record.coD_EPICRISIS)} />
-                    <Button icon={<DeleteOutlined />} onClick={() => showDeleteConfirm(record.coD_EPICRISIS)} />
+
+                    {user && user.codRol === 1 && (
+                        <Button icon={<DeleteOutlined />} onClick={() => showDeleteConfirm(record.coD_EPICRISIS)} />
+                    )}
                 </Space>
             ),
             align: 'center',

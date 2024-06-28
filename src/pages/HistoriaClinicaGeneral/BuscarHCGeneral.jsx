@@ -152,7 +152,7 @@ export const BuscarHCGeneral = () => {
         <div className="container-fluid">
 
             <div className="container-fluid">
-                <h4>Buscar Historia Clinica General</h4>
+                <h4>Buscar Clasificación de Riesgo</h4>
             </div>
 
             <div className="container-fluid mt-3" >

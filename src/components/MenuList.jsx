@@ -41,17 +41,21 @@ export const MenuList = () => {
         <Menu.Item key="nota-search" icon={<SearchOutlined />}><Link to="/buscar-nota-evolucion">Buscar</Link></Menu.Item>
       </Menu.SubMenu>
 
-      <Menu.SubMenu key="doc-sub" title="Doctores" icon={<UserOutlined />}>
-        <Menu.Item key="doctores-add" icon={<PlusOutlined />}><Link to="/agregar-doctor">Agregar</Link></Menu.Item>
-        <Menu.Item key="doctores-search" icon={<SearchOutlined />}><Link to="/buscar-doctor">Buscar</Link></Menu.Item>
-      </Menu.SubMenu>
+      {user && user.codRol === 1 && (
+
+        <Menu.SubMenu key="doc-sub" title="Doctores" icon={<UserOutlined />}>
+          <Menu.Item key="doctores-add" icon={<PlusOutlined />}><Link to="/agregar-doctor">Agregar</Link></Menu.Item>
+          <Menu.Item key="doctores-search" icon={<SearchOutlined />}><Link to="/buscar-doctor">Buscar</Link></Menu.Item>
+        </Menu.SubMenu>
+
+      )}
 
       <Menu.SubMenu key="epi-sub" title="Epicrisis" icon={<FileDoneOutlined />}>
         <Menu.Item key="epi-add" icon={<PlusOutlined />}><Link to="/agregar-epicrisis">Agregar</Link></Menu.Item>
         <Menu.Item key="epi-search" icon={<SearchOutlined />}><Link to="/buscar-epicrisis">Buscar</Link></Menu.Item>
       </Menu.SubMenu>
 
-      <Menu.SubMenu key="hist-sub" title="HC General" icon={<FileDoneOutlined />}>
+      <Menu.SubMenu key="hist-sub" title="Clfn. Riesgo" icon={<FileDoneOutlined />}>
         <Menu.Item key="hist-add" icon={<PlusOutlined />}><Link to="/agregar-historia-clinica-general">Agregar</Link></Menu.Item>
         <Menu.Item key="hist-search" icon={<SearchOutlined />}><Link to="/buscar-historia-clinica-general">Buscar</Link></Menu.Item>
       </Menu.SubMenu>

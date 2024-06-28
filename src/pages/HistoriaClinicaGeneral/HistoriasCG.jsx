@@ -6,6 +6,8 @@ import { Spinner } from 'react-bootstrap';
 import { Table, Button, Space, Modal, notification } from 'antd';
 import { FileSearchOutlined, EditOutlined, DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 
+import { useAuth } from '../../context/AuthContext';
+
 
 
 export const HistoriasCG = () => {
@@ -15,6 +17,8 @@ export const HistoriasCG = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
+
+    const { user } = useAuth();
 
     useEffect(() => {
         fetchhcGeneral();
@@ -67,7 +71,10 @@ export const HistoriasCG = () => {
                 <Space align="center" size="middle">
                     <Button icon={<FileSearchOutlined onClick={() => handleRowClickHCGeneral(record.coD_HISTORIA_CLINICA)} />} />
                     <Button icon={<EditOutlined />} onClick={(e) => { e.stopPropagation(); handleEdit(record.coD_HISTORIA_CLINICA); }} />
-                    <Button icon={<DeleteOutlined onClick={(e) => { e.stopPropagation(); showDeleteConfirm(record.coD_HISTORIA_CLINICA); }} />}  />
+
+                    {user && user.codRol === 1 && (
+                        <Button icon={<DeleteOutlined onClick={(e) => { e.stopPropagation(); showDeleteConfirm(record.coD_HISTORIA_CLINICA); }} />}/>
+                    )}
                 </Space>
             ),
             align: 'center',

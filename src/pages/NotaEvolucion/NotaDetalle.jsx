@@ -6,6 +6,8 @@ import { Spinner } from 'react-bootstrap';
 import { Table, Button, Space, Modal, notification } from 'antd';
 import { FileSearchOutlined, EditOutlined, DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 
+import { useAuth } from '../../context/AuthContext';
+
 
 export const NotaDetalle = () => {
 
@@ -14,7 +16,9 @@ export const NotaDetalle = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
-    
+
+    const { user } = useAuth();
+
 
     useEffect(() => {
         fetchNota();
@@ -68,7 +72,11 @@ export const NotaDetalle = () => {
                 <Space size="middle">
                     <Button icon={<FileSearchOutlined />} onClick={() => handleRowClick(record.coD_NOTA)} />
                     <Button icon={<EditOutlined />} onClick={() => handleEdit(record.coD_NOTA)} />
-                    <Button icon={<DeleteOutlined />} onClick={() => showDeleteConfirm(record.coD_NOTA)} />
+
+                    {user && user.codRol === 1 && (
+                        <Button icon={<DeleteOutlined />} onClick={() => showDeleteConfirm(record.coD_NOTA)} />
+                    )}
+
                 </Space>
             ),
             align: 'center',
@@ -138,7 +146,7 @@ export const NotaDetalle = () => {
                 className='custom-table'
                 columns={columns}
                 dataSource={nota}
-                rowKey="coD_NOTA" 
+                rowKey="coD_NOTA"
             />
         </div>
     )
