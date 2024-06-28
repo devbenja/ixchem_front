@@ -284,11 +284,11 @@ const MyDocument = ({ data }) => (
                 </View>
                 <View style={styles.row}>
                     <Text style={styles.label}>Alergia a Medicamentos:</Text>
-                    <Text style={styles.value}>{data.alergiA_MED}</Text>
+                    <Text style={styles.value}>{data.alergiA_MED ? 'Sí' : 'No'}</Text>
                 </View>
                 <View style={styles.row}>
                     <Text style={styles.label}>Alergia Alimentos:</Text>
-                    <Text style={styles.value}>{data.alergiA_ALI}</Text>
+                    <Text style={styles.value}>{data.alergiA_ALI ? 'Sí' : 'No'}</Text>
                 </View>
 
             </View>
@@ -852,7 +852,7 @@ export const BuscarHistoria = () => {
             <div className='container-fluid'>
                 <h4>Buscar Historia Clinica</h4>
             </div>
-            <form onSubmit={handleSearchSubmit} className="container mt-3 p-3">
+            <form onSubmit={handleSearchSubmit} className="container-fluid mt-3 mb-3">
                 <div className="row g-3">
                     <div className="col-sm-3">
                         <select className="form-select" value={searchType} onChange={(e) => setSearchType(e.target.value)}>
@@ -892,9 +892,6 @@ export const BuscarHistoria = () => {
                         </li>
                         <li className="nav-item" role="presentation">
                             <a className="nav-link text-secondary" id="informacion-tab" data-bs-toggle="tab" role="tab" href="#informacion" aria-controls="Informacion" aria-selected="false">Información</a>
-                        </li>
-                        <li className="nav-item" role="presentation">
-                            <a className="nav-link text-secondary" id="unificados-tab" data-bs-toggle="tab" role="tab" href="#unificados" aria-controls="Unificados" aria-selected="false">Datos Unificados</a>
                         </li>
                     </ul>
                     <PDFDownloadLink

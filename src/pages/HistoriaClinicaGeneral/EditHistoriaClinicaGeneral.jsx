@@ -8,19 +8,15 @@ export const EditHistoriaClinicaGeneral = () => {
     const { id } = useParams();
 
     const [formData, setFormData] = useState({
-        nuM_EXPEDIENTE: "",
-        primeR_NOMBRE: "",
-        primeR_APELLIDO: "",
-        coD_DOCTOR: "",
-        primeR_NOMBRED: "",
-        primeR_APELLIDOD: "",
-        coD_HISTORIA_CLINICA: 0,
-        diabeteS_MELLITUS: false,
+        numExpediente: "",
+        codDoctor: "",
+        codHistoriaClinica: 0,
+        diabetesMellitus: false,
         nefropatia: false,
         cardiopatia: false,
-        consumO_DROGAS: false,
-        cualquieR_OTRO: false,
-        altO_RIESGO: false,
+        consumoDrogas: false,
+        cualquierOtro: false,
+        altoRiesgo: false,
         fecha: ""
     });
 
@@ -47,13 +43,13 @@ export const EditHistoriaClinicaGeneral = () => {
 
             try {
 
-                const response = await axios.get(`https://localhost:7106/api/bdtbhistoriaclinicageneral/buscarpornumexpediente`, {
-                    params: { NUM_EXPEDIENTE: id }
+                const response = await axios.get(`https://localhost:7106/api/bdtbhistoriaclinicageneral/buscarporcodhistoriaclinica`, {
+                    params: { CodHistoriaClinica: id }
                 });
 
                 console.log(response.data);
 
-                setFormData(response.data[0]);
+                setFormData(response.data);
 
             } catch (error) {
                 console.error(error);
@@ -70,20 +66,9 @@ export const EditHistoriaClinicaGeneral = () => {
 
         try {
 
-            const newData = {
-                numExpediente: formData.nuM_EXPEDIENTE,
-                codDoctor: formData.coD_DOCTOR,
-                fecha: formData.fecha,
-                altoRiesgo: formData.altO_RIESGO,
-                cualquierOtro: formData.cualquieR_OTRO,
-                consumoDrogas: formData.consumO_DROGAS,
-                cardiopatia: formData.cardiopatia,
-                nefropatia: formData.nefropatia,
-                diabetesMellitus: formData.diabeteS_MELLITUS,
-                codHistoriaClinica: formData.coD_HISTORIA_CLINICA
-            }
+            console.log(formData)
 
-            await axios.put(`https://localhost:7106/api/bdtbhistoriaclinicageneral/actualizar/${newData.codHistoriaClinica}`, newData);
+            await axios.put(`https://localhost:7106/api/bdtbhistoriaclinicageneral/actualizar/${formData.codHistoriaClinica}`, formData);
 
             notification.success({
                 message: '¡Éxito!',
@@ -110,11 +95,11 @@ export const EditHistoriaClinicaGeneral = () => {
                 <div className="row mb-3">
                     <div className="col-sm-3">
                         <label className="form-label">Número de expediente</label>
-                        <input type="text" name="nuM_EXPEDIENTE" value={formData.nuM_EXPEDIENTE} onChange={handleChange} className="form-control" />
+                        <input type="text" name="numExpediente" value={formData.numExpediente} onChange={handleChange} className="form-control" />
                     </div>
                     <div className="col-sm-3">
                         <label className="form-label">Codigo Doctor</label>
-                        <input type="text" name="coD_DOCTOR" value={formData.coD_DOCTOR} onChange={handleChange} className="form-control" />
+                        <input type="text" name="codDoctor" value={formData.codDoctor} onChange={handleChange} className="form-control" />
                     </div>
                     <div className="col-sm-3">
                         <label className="form-label">Fecha</label>
@@ -124,11 +109,11 @@ export const EditHistoriaClinicaGeneral = () => {
                         <label className="form-label">Diabetes Mellitus</label>
                         <div className='d-flex align-items-center justify-content-center form-control'>
                             <div className="form-check form-check-inline">
-                                <input type="radio" name="diabeteS_MELLITUS" value="true" checked={formData.diabeteS_MELLITUS === true} onChange={handleRadioChange} className="form-check-input" />
+                                <input type="radio" name="diabetesMellitus" value="true" checked={formData.diabetesMellitus === true} onChange={handleRadioChange} className="form-check-input" />
                                 <label className="form-check-label">Sí</label>
                             </div>
                             <div className="form-check form-check-inline">
-                                <input type="radio" name="diabeteS_MELLITUS" value="false" checked={formData.diabeteS_MELLITUS === false} onChange={handleRadioChange} className="form-check-input" />
+                                <input type="radio" name="diabetesMellitus" value="false" checked={formData.diabetesMellitus === false} onChange={handleRadioChange} className="form-check-input" />
                                 <label className="form-check-label">No</label>
                             </div>
                         </div>
@@ -166,11 +151,11 @@ export const EditHistoriaClinicaGeneral = () => {
                         <label className="form-label">¿Consume Drogas?</label>
                         <div className='d-flex align-items-center justify-content-center form-control'>
                             <div className="form-check form-check-inline">
-                                <input type="radio" name="consumO_DROGAS" value="true" checked={formData.consumO_DROGAS === true} onChange={handleRadioChange} className="form-check-input" />
+                                <input type="radio" name="consumoDrogas" value="true" checked={formData.consumoDrogas === true} onChange={handleRadioChange} className="form-check-input" />
                                 <label className="form-check-label">Sí</label>
                             </div>
                             <div className="form-check form-check-inline">
-                                <input type="radio" name="consumO_DROGAS" value="false" checked={formData.consumO_DROGAS === false} onChange={handleRadioChange} className="form-check-input" />
+                                <input type="radio" name="consumoDrogas" value="false" checked={formData.consumoDrogas === false} onChange={handleRadioChange} className="form-check-input" />
                                 <label className="form-check-label">No</label>
                             </div>
                         </div>
@@ -180,11 +165,11 @@ export const EditHistoriaClinicaGeneral = () => {
                         <label className="form-label">Cualquier Otro</label>
                         <div className='d-flex align-items-center justify-content-center form-control'>
                             <div className="form-check form-check-inline">
-                                <input type="radio" name="cualquieR_OTRO" value="true" checked={formData.cualquieR_OTRO === true} onChange={handleRadioChange} className="form-check-input" />
+                                <input type="radio" name="cualquierOtro" value="true" checked={formData.cualquierOtro === true} onChange={handleRadioChange} className="form-check-input" />
                                 <label className="form-check-label">Sí</label>
                             </div>
                             <div className="form-check form-check-inline">
-                                <input type="radio" name="cualquieR_OTRO" value="false" checked={formData.cualquieR_OTRO === false} onChange={handleRadioChange} className="form-check-input" />
+                                <input type="radio" name="cualquierOtro" value="false" checked={formData.cualquierOtro === false} onChange={handleRadioChange} className="form-check-input" />
                                 <label className="form-check-label">No</label>
                             </div>
                         </div>
@@ -195,11 +180,11 @@ export const EditHistoriaClinicaGeneral = () => {
                     <label className="form-label">Alto Riesgo</label>
                     <div className='d-flex align-items-center justify-content-center form-control'>
                         <div className="form-check form-check-inline">
-                            <input type="radio" name="altO_RIESGO" value="true" checked={formData.altO_RIESGO === true} onChange={handleRadioChange} className="form-check-input" />
+                            <input type="radio" name="altoRiesgo" value="true" checked={formData.altoRiesgo === true} onChange={handleRadioChange} className="form-check-input" />
                             <label className="form-check-label">Sí</label>
                         </div>
                         <div className="form-check form-check-inline">
-                            <input type="radio" name="altO_RIESGO" value="false" checked={formData.altO_RIESGO === false} onChange={handleRadioChange} className="form-check-input" />
+                            <input type="radio" name="altoRiesgo" value="false" checked={formData.altoRiesgo === false} onChange={handleRadioChange} className="form-check-input" />
                             <label className="form-check-label">No</label>
                         </div>
                     </div>

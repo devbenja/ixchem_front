@@ -7,28 +7,28 @@ import { Table, Button, Space, Modal, notification } from 'antd';
 import { FileSearchOutlined, EditOutlined, DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 
 
-export const NotaDetalle = () => {
+export const ObstetricosDetalles = () => {
 
     const { numExpediente } = useParams();
-    const [nota, setNota] = useState(null);
+    const [obstetricos, setObstetricos] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
     
 
     useEffect(() => {
-        fetchNota();
+        fetchOb();
     }, []);
 
-    const fetchNota = async () => {
+    const fetchOb = async () => {
 
         try {
 
-            const response = await axios.get(`https://localhost:7106/api/bdtbnotaevolucion/buscarpornumexpediente`, {
-                params: { NUM_EXPEDIENTE: numExpediente }
+            const response = await axios.get(`https://localhost:7106/api/bdtbantecedentesobstetrico/buscarpornumexpediente`, {
+                params: { numExpediente: numExpediente }
             });
 
-            setNota(response.data);
+            setObstetricos(response.data);
 
             console.log(response.data)
 
@@ -47,55 +47,51 @@ export const NotaDetalle = () => {
     const columns = [
         {
             title: 'Número de Expediente',
-            dataIndex: 'nuM_EXPEDIENTE',
-            key: 'nuM_EXPEDIENTE',
+            dataIndex: 'numExpediente',
+            key: 'numExpediente',
             render: (numExpediente) => <a>{numExpediente}</a>,
         },
         {
-            title: 'No. de Nota',
-            dataIndex: 'numerO_NOTA',
-            key: 'numerO_NOTA',
+            title: 'Telefono',
+            dataIndex: 'telefono',
+            key: 'telefono',
         },
-        {
-            title: 'Código de Doctor',
-            dataIndex: 'coD_DOCTOR',
-            key: 'coD_DOCTOR',
-        },
+
         {
             title: 'Acciones',
             key: 'acciones',
             render: (text, record) => (
                 <Space size="middle">
-                    <Button icon={<FileSearchOutlined />} onClick={() => handleRowClick(record.coD_NOTA)} />
-                    <Button icon={<EditOutlined />} onClick={() => handleEdit(record.coD_NOTA)} />
-                    <Button icon={<DeleteOutlined />} onClick={() => showDeleteConfirm(record.coD_NOTA)} />
+                    <Button icon={<FileSearchOutlined />} onClick={() => handleRowClick(record.codHojariesgo)} />
+                    <Button icon={<EditOutlined />} onClick={() => handleEdit(record.codHojariesgo)} />
+                    <Button icon={<DeleteOutlined />} onClick={() => showDeleteConfirm(record.codHojariesgo)} />
                 </Space>
             ),
             align: 'center',
         },
     ];
 
-    const handleEdit = (coD_NOTA) => {
-        navigate(`/editar-nota/${coD_NOTA}`);
+    const handleEdit = (codHojariesgo) => {
+        navigate(`/editar-obstetrico/${codHojariesgo}`);
     };
 
-    const handleRowClick = (coD_NOTA) => {
-        navigate(`/nota/${coD_NOTA}`);
+    const handleRowClick = (codHojariesgo) => {
+        navigate(`/obstetrico/${codHojariesgo}`);
     };
 
-    const deleteNota = async (id) => {
+    const deleteObs = async (id) => {
 
         try {
 
-            await axios.delete(`https://localhost:7106/api/bdtbnotaevolucion/eliminar/${id}`);
+            await axios.delete(`https://localhost:7106/api/bdtbantecedentesobstetrico/eliminar/${id}`);
 
             notification.success({
                 message: '¡Éxito!',
-                description: `Nota de Evolucion Eliminada`,
+                description: `Antecedente Obstetrico Eliminado`,
                 duration: 3
             });
 
-            setNota(nota.filter(p => p.coD_NOTA !== id));
+            setObstetricos(prevObs => prevObs.filter(u => u.codHojariesgo !== id));
 
         } catch (error) {
 
@@ -108,14 +104,14 @@ export const NotaDetalle = () => {
     const showDeleteConfirm = (id) => {
         Modal.confirm({
             centered: true,
-            title: '¿Está seguro que desea eliminar esta Nota?',
+            title: '¿Está seguro que desea eliminar este Antecedente?',
             icon: <ExclamationCircleOutlined />,
             content: 'Esta acción no se puede deshacer.',
             okText: 'Sí',
             okType: 'danger',
             cancelText: 'No',
             onOk() {
-                deleteNota(id);
+                deleteObs(id);
             },
             onCancel() {
                 console.log('Cancelado');
@@ -131,14 +127,14 @@ export const NotaDetalle = () => {
 
     return (
         <div className="container-fluid">
-            <h4 className='mb-4'>Notas de Evolución del Expediente: {numExpediente}</h4>
+            <h4 className='mb-4'>Antecedentes Obstetricos del Expediente: {numExpediente}</h4>
             <Table
                 responsive={true}
                 pagination={{ pageSize: 7 }}
                 className='custom-table'
                 columns={columns}
-                dataSource={nota}
-                rowKey="coD_NOTA" 
+                dataSource={obstetricos}
+                rowKey="codHojariesgo" 
             />
         </div>
     )

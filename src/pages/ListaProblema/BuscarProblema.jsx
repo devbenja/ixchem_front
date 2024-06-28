@@ -81,6 +81,7 @@ export const BuscarProblema = () => {
             <div className='d-flex align-items-start justify-content-between'>
                 <h4>Buscar Problemas</h4>
             </div>
+            
             {errors && <p className="text-danger">{errors}</p>}
 
             <Input

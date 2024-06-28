@@ -251,10 +251,7 @@ export const AgregarHistoria = () => {
                     </li>
                     <li className="nav-item" role="presentation">
                         <a className="nav-link" id="APF-tab" data-bs-toggle="tab" role="tab" href="#APF" aria-controls="APF" aria-selected="false">A. Patológicos Familiares</a>
-                    </li>
-                    <li className="nav-item" role="presentation">
-                        <a className="nav-link" id="AO-tab" data-bs-toggle="tab" role="tab" href="#AO" aria-controls="AO" aria-selected="false">A. Obstetrico</a>
-                    </li>
+                    </li>                   
                     <li className="nav-item" role="presentation">
                         <a className="nav-link" id="Motivo-tab" data-bs-toggle="tab" role="tab" href="#Motivo" aria-controls="Motivo" aria-selected="false">Información</a>
                     </li>

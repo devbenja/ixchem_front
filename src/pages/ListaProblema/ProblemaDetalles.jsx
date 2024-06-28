@@ -8,6 +8,8 @@ import { EditOutlined, DeleteOutlined, ExclamationCircleOutlined, FilePdfOutline
 import { Form, Col, Spinner, Modal } from 'react-bootstrap';
 import { Document, Page, Text, View, StyleSheet, PDFDownloadLink, Image } from '@react-pdf/renderer';
 
+import { useAuth } from '../../context/AuthContext';
+
 
 const styles = StyleSheet.create({
     page: {
@@ -175,6 +177,8 @@ export const ProblemaDetalles = () => {
     const [loading, setLoading] = useState(true);
     const [errors, setErrors] = useState(null);
 
+    const { user } = useAuth();
+
     const [isModalVisible, setIsModalVisible] = useState(false);
 
     const [currentProblem, setCurrentProblem] = useState({
@@ -185,6 +189,7 @@ export const ProblemaDetalles = () => {
         resuelto: false,
     });
 
+    console.log(user)
 
     useEffect(() => {
         fetchProblemas();
@@ -326,7 +331,10 @@ export const ProblemaDetalles = () => {
             render: (text, record) => (
                 <Space size="middle">
                     <Button icon={<EditOutlined />} onClick={() => handleEdit(record)} />
-                    <Button icon={<DeleteOutlined />} onClick={() => showDeleteConfirm(record.coD_PROBLEMAS)} />
+                    {user && user.codRol === 1 && (
+                        <Button icon={<DeleteOutlined />} onClick={() => showDeleteConfirm(record.coD_PROBLEMAS)} />
+                    )}
+                    
                 </Space>
             ),
             align: 'center'

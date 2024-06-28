@@ -8,21 +8,21 @@ export const EditarEpicrisis = () => {
   const { id } = useParams();
 
   const [formData, setFormData] = useState({
-    coD_EPICRISIS: 0,
+    codEpicrisis: 0,
     fecha: "",
     hora: "",
-    fechA_INGRESO: "",
-    fechA_EGRESO: "",
-    diaG_INGRESO: "",
-    diaG_EGRESO: "",
+    fechaIngreso: "",
+    fechaEgreso: "",
+    diagIngreso: "",
+    diagEgreso: "",
     resultado: "",
     tratamiento: "",
     descartes: "",
     complicaciones: "",
     recomendaciones: "",
-    datoS_RELEVANTES: "",
-    nuM_EXPEDIENTE: "",
-    coD_DOCTOR: ""
+    datosRelevantes: "",
+    numExpediente: "",
+    codDoctor: ""
   });
 
   useEffect(() => {
@@ -31,13 +31,13 @@ export const EditarEpicrisis = () => {
 
       try {
 
-        const response = await axios.get(`https://localhost:7106/api/bdtbepicrisis/buscarpornumexpediente`, {
-          params: { NUM_EXPEDIENTE: id }
+        const response = await axios.get(`https://localhost:7106/api/bdtbepicrisis/buscarporcodEpicrisis`, {
+          params: { CodEpicrisis: id }
         });
 
         console.log(response.data);
 
-        setFormData(response.data[0]);
+        setFormData(response.data);
 
       } catch (error) {
         console.error(error);
@@ -65,27 +65,27 @@ export const EditarEpicrisis = () => {
 
       console.log(formData);
 
-      const newData = {
-        recomendaciones: formData.recomendaciones,
-        tratamiento: formData.tratamiento,
-        descartes: formData.descartes,
-        complicaciones: formData.complicaciones,
-        resultado: formData.resultado,
-        hora: formData.hora,
-        fecha: formData.fecha,
-        codEpicrisis: formData.coD_EPICRISIS,
-        fechaIngreso: formData.fechA_INGRESO,
-        fechaEgreso: formData.fechA_EGRESO,
-        diagIngreso: formData.diaG_INGRESO,
-        diagEgreso: formData.diaG_EGRESO,
-        datosRelevantes: formData.datoS_RELEVANTES,
-        numExpediente: formData.nuM_EXPEDIENTE,
-        codDoctor: formData.coD_DOCTOR
-      }
+      // const newData = {
+      //   recomendaciones: formData.recomendaciones,
+      //   tratamiento: formData.tratamiento,
+      //   descartes: formData.descartes,
+      //   complicaciones: formData.complicaciones,
+      //   resultado: formData.resultado,
+      //   hora: formData.hora,
+      //   fecha: formData.fecha,
+      //   codEpicrisis: formData.coD_EPICRISIS,
+      //   fechaIngreso: formData.fechA_INGRESO,
+      //   fechaEgreso: formData.fechA_EGRESO,
+      //   diagIngreso: formData.diaG_INGRESO,
+      //   diagEgreso: formData.diaG_EGRESO,
+      //   datosRelevantes: formData.datoS_RELEVANTES,
+      //   numExpediente: formData.nuM_EXPEDIENTE,
+      //   codDoctor: formData.coD_DOCTOR
+      // }
 
-      console.log(newData);
+      // console.log(newData);
 
-      await axios.put(`https://localhost:7106/api/bdtbepicrisis/actualizar/${newData.codEpicrisis}`, newData);
+      await axios.put(`https://localhost:7106/api/bdtbepicrisis/actualizar/${formData.codEpicrisis}`, formData);
 
       notification.success({
         message: '¡Éxito!',
@@ -111,11 +111,11 @@ export const EditarEpicrisis = () => {
         <div className="row mb-3">
           <div className="col">
             <label className="form-label">Número de expediente</label>
-            <input type="text" name="nuM_EXPEDIENTE" value={formData.nuM_EXPEDIENTE} onChange={handleChange} className="form-control" />
+            <input type="text" name="numExpediente" value={formData.numExpediente} onChange={handleChange} className="form-control" />
           </div>
           <div className="col">
             <label className="form-label">Codigo Doctor</label>
-            <input type="text" name="coD_DOCTOR" value={formData.coD_DOCTOR} onChange={handleChange} className="form-control" />
+            <input type="text" name="codDoctor" value={formData.codDoctor} onChange={handleChange} className="form-control" />
           </div>
           <div className="col sm-mt-3">
             <label className="form-label">Fecha </label>
@@ -133,23 +133,23 @@ export const EditarEpicrisis = () => {
 
           <div className="col sm-mt-3">
             <label className="form-label">Fecha Ingreso</label>
-            <input type="date" name="fechA_INGRESO" value={formData.fechA_INGRESO} onChange={handleChange} className="form-control" />
+            <input type="date" name="fechaIngreso" value={formData.fechaIngreso} onChange={handleChange} className="form-control" />
           </div>
           <div className="col sm-mt-3">
             <label className="form-label">Fecha Egreso</label>
-            <input type="date" name="fechA_EGRESO" value={formData.fechA_EGRESO} onChange={handleChange} className="form-control" />
+            <input type="date" name="fechaEgreso" value={formData.fechaEgreso} onChange={handleChange} className="form-control" />
           </div>
 
         </div>
 
         <div className="col mt-3">
           <label className="form-label">Diagnostico Ingreso</label>
-          <textarea rows="3" type="text" name="diaG_INGRESO" value={formData.diaG_INGRESO} onChange={handleChange} className="form-control" />
+          <textarea rows="3" type="text" name="diagIngreso" value={formData.diagIngreso} onChange={handleChange} className="form-control" />
         </div>
 
         <div className="col mt-3">
           <label className="form-label">Diagnostico Egreso</label>
-          <textarea rows="3" type="text" name="diaG_EGRESO" value={formData.diaG_EGRESO} onChange={handleChange} className="form-control" />
+          <textarea rows="3" type="text" name="diagEgreso" value={formData.diagEgreso} onChange={handleChange} className="form-control" />
         </div>
 
         <div className="col mt-3">

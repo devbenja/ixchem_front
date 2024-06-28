@@ -3,10 +3,14 @@ import { HomeOutlined, UserOutlined, UsergroupAddOutlined, PlusOutlined, SearchO
 
 import { Link } from 'react-router-dom';
 
+import { useAuth } from '../context/AuthContext';
+
 export const MenuList = () => {
 
+  const { user } = useAuth();
+
   const menuStyle = {
-    maxHeight: 'calc(100vh - 50px)', 
+    maxHeight: 'calc(100vh - 50px)',
     overflowY: 'auto'
   };
 
@@ -51,6 +55,15 @@ export const MenuList = () => {
         <Menu.Item key="hist-add" icon={<PlusOutlined />}><Link to="/agregar-historia-clinica-general">Agregar</Link></Menu.Item>
         <Menu.Item key="hist-search" icon={<SearchOutlined />}><Link to="/buscar-historia-clinica-general">Buscar</Link></Menu.Item>
       </Menu.SubMenu>
+
+      {user && user.codRol === 1 && (
+
+        <Menu.SubMenu key="users-sub" title="Usuarios" icon={<FileDoneOutlined />}>
+          <Menu.Item key="user-add" icon={<PlusOutlined />}><Link to="/agregar-usuarios">Agregar</Link></Menu.Item>
+          <Menu.Item key="user-search" icon={<SearchOutlined />}><Link to="/buscar-usuario">Buscar</Link></Menu.Item>
+        </Menu.SubMenu>
+
+      )}
 
     </Menu>
   )

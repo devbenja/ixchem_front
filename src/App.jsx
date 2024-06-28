@@ -36,6 +36,16 @@ import { BuscarHistoriaClinicaGeneral } from "./pages/HistoriaClinicaGeneral/Bus
 import { EditHistoriaClinicaGeneral } from "./pages/HistoriaClinicaGeneral/EditHistoriaClinicaGeneral";
 import { NotaDetalle } from "./pages/NotaEvolucion/NotaDetalle";
 import { EditarNota } from "./pages/NotaEvolucion/EditarNota";
+import { ListaEpicrisis } from "./pages/Epicrisis/ListaEpicrisis";
+import { EpicrisisDetalle } from "./pages/Epicrisis/EpicrisisDetalle";
+import { AgregarUsuarios } from "./pages/Usuarios/AgregarUsuarios";
+import { BuscarUsuario } from "./pages/Usuarios/BuscarUsuario";
+import { EditarUsuario } from "./pages/Usuarios/EditarUsuario";
+import { BuscarHCGeneral } from "./pages/HistoriaClinicaGeneral/BuscarHCGeneral";
+import { HistoriasCG } from "./pages/HistoriaClinicaGeneral/HistoriasCG";
+import { HistoriaIndividual } from "./pages/HistoriaClinicaGeneral/HistoriaIndividual";
+import { ObstetricosDetalles } from "./pages/HistoriaClinicaGeneral/ObstetricosDetalles";
+import { Obstetrico } from "./pages/HistoriaClinicaGeneral/Obstetrico";
 
 
 const { Header, Sider, Content } = Layout;
@@ -57,11 +67,11 @@ export const App = () => {
     <>
       {shouldShowLayout() && (
         <Layout>
-          <Sider trigger={null} collapsible collapsed={collapsed} theme="dark" className="sidebar"  style={{ position: 'fixed',  width: collapsed ? 100 : 250 }}>
+          <Sider trigger={null} collapsible collapsed={collapsed} theme="dark" className="sidebar"  style={{ position: 'fixed' }}>
             <Logo />
             <MenuList />
           </Sider>
-          <Layout className={collapsed ? 'collapsed' : 'expanded'} style={{ marginLeft: collapsed ? 80 : 200 }}>
+          <Layout className={collapsed ? 'collapsed' : 'expanded'} style={{ marginLeft: collapsed ? 80 : 230 }}>
             <Header style={{ padding: 0, background: colorBgContainer, transition: 'margin-left 0.2s' }}>
               <Button
                 onClick={() => setCollapsed(!collapsed)}
@@ -70,7 +80,7 @@ export const App = () => {
                 icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
               />
             </Header>
-            <Content style={{ margin: '24px 16px 30px', overflow: 'initial' }}>
+            <Content  style={{ margin: '24px 16px 30px', overflow: 'initial', transition: 'margin-left 0.2s' }}>
               <Routes>
                 <Route exact path="/" element={<Login />} />
                 <Route path="/home" element={<Home />} />
@@ -100,11 +110,22 @@ export const App = () => {
 
                 <Route path="/agregar-epicrisis" element={<AgregarEpicrisis/>}/>  
                 <Route path="/buscar-epicrisis" element={<BuscarEpicrisis/>}/> 
-                <Route path="/editar-epicrisis/:id" element={<EditarEpicrisis/>}/>  
+                <Route path="/editar-epicrisis/:id" element={<EditarEpicrisis/>}/> 
+                <Route path="/epicrisis/:numExpediente" element={<ListaEpicrisis/>}/> 
+                <Route path="/epicrisis-detalle/:codEpicrisis" element={<EpicrisisDetalle/>}/> 
 
                 <Route path="/agregar-historia-clinica-general" element={<AgregarHistoriaClinicaGeneral/>}/> 
-                <Route path="/buscar-historia-clinica-general" element={<BuscarHistoriaClinicaGeneral/>}/>  
-                <Route path="/editar-historia-clinica-general/:id" element={<EditHistoriaClinicaGeneral/>}/> 
+                <Route path="/buscar-historia-clinica-general" element={<BuscarHCGeneral/>}/>  
+                <Route path="/editar-historia-clinica-general/:id" element={<EditHistoriaClinicaGeneral/>}/>
+                <Route path="/historias-generales/:numExpediente" element={<HistoriasCG/>}/>
+                <Route path="/historia/:codHistoriaClinica" element={<HistoriaIndividual/>}/>
+                <Route path="/obstetricos/:numExpediente" element={<ObstetricosDetalles/>}/>
+                <Route path="/obstetrico/:id" element={<Obstetrico/>}/>
+                <Route path="/editar-obstetrico/:id" element={<Obstetrico/>}/>
+
+                <Route path="/agregar-usuarios" element={<AgregarUsuarios/>}/>
+                <Route path="/buscar-usuario" element={<BuscarUsuario/>}/>
+                <Route path="/editar-usuario/:codAdmin" element={<EditarUsuario/>}/>
               </Routes>
             </Content>
           </Layout>

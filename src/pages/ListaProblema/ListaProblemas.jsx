@@ -18,6 +18,8 @@ export const ListaProblemas = () => {
         setFormValues({ ...formValues, [event.target.name]: event.target.value });
     };
 
+    const user = JSON.parse(localStorage.getItem('user'));
+
     useEffect(() => {
         fetchProblemas();
     }, []);
@@ -154,6 +156,8 @@ export const ListaProblemas = () => {
             render: (text, record) => (
                 <Space size="middle">
                     <Button icon={<EditOutlined />} onClick={() => handleEdit(record)} />
+
+                    
                     <Button icon={<DeleteOutlined />} onClick={() => deleteProblema(record.codProblemas)} />
                 </Space>
             ),

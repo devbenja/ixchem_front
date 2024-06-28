@@ -7,28 +7,28 @@ import { Table, Button, Space, Modal, notification } from 'antd';
 import { FileSearchOutlined, EditOutlined, DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 
 
-export const NotaDetalle = () => {
+
+export const HistoriasCG = () => {
 
     const { numExpediente } = useParams();
-    const [nota, setNota] = useState(null);
+    const [hcgeneral, setHCGeneral] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
-    
 
     useEffect(() => {
-        fetchNota();
+        fetchhcGeneral();
     }, []);
 
-    const fetchNota = async () => {
+    const fetchhcGeneral = async () => {
 
         try {
 
-            const response = await axios.get(`https://localhost:7106/api/bdtbnotaevolucion/buscarpornumexpediente`, {
+            const response = await axios.get(`https://localhost:7106/api/bdtbhistoriaclinicageneral/buscarpornumexpediente`, {
                 params: { NUM_EXPEDIENTE: numExpediente }
             });
 
-            setNota(response.data);
+            setHCGeneral(response.data);
 
             console.log(response.data)
 
@@ -44,17 +44,11 @@ export const NotaDetalle = () => {
 
     };
 
-    const columns = [
+    const columnHCG = [
         {
-            title: 'Número de Expediente',
+            title: 'Numero de Expediente',
             dataIndex: 'nuM_EXPEDIENTE',
             key: 'nuM_EXPEDIENTE',
-            render: (numExpediente) => <a>{numExpediente}</a>,
-        },
-        {
-            title: 'No. de Nota',
-            dataIndex: 'numerO_NOTA',
-            key: 'numerO_NOTA',
         },
         {
             title: 'Código de Doctor',
@@ -62,40 +56,45 @@ export const NotaDetalle = () => {
             key: 'coD_DOCTOR',
         },
         {
+            title: 'Fecha',
+            dataIndex: 'fecha',
+            key: 'fecha',
+        },
+        {
             title: 'Acciones',
             key: 'acciones',
             render: (text, record) => (
-                <Space size="middle">
-                    <Button icon={<FileSearchOutlined />} onClick={() => handleRowClick(record.coD_NOTA)} />
-                    <Button icon={<EditOutlined />} onClick={() => handleEdit(record.coD_NOTA)} />
-                    <Button icon={<DeleteOutlined />} onClick={() => showDeleteConfirm(record.coD_NOTA)} />
+                <Space align="center" size="middle">
+                    <Button icon={<FileSearchOutlined onClick={() => handleRowClickHCGeneral(record.coD_HISTORIA_CLINICA)} />} />
+                    <Button icon={<EditOutlined />} onClick={(e) => { e.stopPropagation(); handleEdit(record.coD_HISTORIA_CLINICA); }} />
+                    <Button icon={<DeleteOutlined onClick={(e) => { e.stopPropagation(); showDeleteConfirm(record.coD_HISTORIA_CLINICA); }} />}  />
                 </Space>
             ),
             align: 'center',
         },
-    ];
+    ]
 
-    const handleEdit = (coD_NOTA) => {
-        navigate(`/editar-nota/${coD_NOTA}`);
+    const handleEdit = (coD_HISTORIA_CLINICA) => {
+        navigate(`/editar-historia-clinica-general/${coD_HISTORIA_CLINICA}`);
     };
 
-    const handleRowClick = (coD_NOTA) => {
-        navigate(`/nota/${coD_NOTA}`);
-    };
+    const handleRowClickHCGeneral = (coD_HISTORIA_CLINICA) => {
+        navigate(`/historia/${coD_HISTORIA_CLINICA}`);
+    }
 
-    const deleteNota = async (id) => {
+    const deletehcGeneral = async (id) => {
 
         try {
 
-            await axios.delete(`https://localhost:7106/api/bdtbnotaevolucion/eliminar/${id}`);
+            await axios.delete(`https://localhost:7106/api/bdtbhistoriaclinicageneral/eliminar/${id}`);
 
             notification.success({
                 message: '¡Éxito!',
-                description: `Nota de Evolucion Eliminada`,
+                description: `Historia Clinica General Eliminada`,
                 duration: 3
             });
 
-            setNota(nota.filter(p => p.coD_NOTA !== id));
+            setHCGeneral(prevHC => prevHC.filter(u => u.coD_HISTORIA_CLINICA !== id));
 
         } catch (error) {
 
@@ -108,14 +107,14 @@ export const NotaDetalle = () => {
     const showDeleteConfirm = (id) => {
         Modal.confirm({
             centered: true,
-            title: '¿Está seguro que desea eliminar esta Nota?',
+            title: '¿Está seguro que desea eliminar esta Historia?',
             icon: <ExclamationCircleOutlined />,
             content: 'Esta acción no se puede deshacer.',
             okText: 'Sí',
             okType: 'danger',
             cancelText: 'No',
             onOk() {
-                deleteNota(id);
+                deletehcGeneral(id);
             },
             onCancel() {
                 console.log('Cancelado');
@@ -123,22 +122,17 @@ export const NotaDetalle = () => {
         });
     };
 
-    if (loading) return (
-        <div className="d-flex justify-content-center">
-            <Spinner animation="border" role="status" />
-        </div>
-    );
-
     return (
-        <div className="container-fluid">
-            <h4 className='mb-4'>Notas de Evolución del Expediente: {numExpediente}</h4>
+        <div className='container-fluid'>
+            <h3>Historias Clinicas Generales del Expediente: {numExpediente}</h3>
             <Table
-                responsive={true}
-                pagination={{ pageSize: 7 }}
-                className='custom-table'
-                columns={columns}
-                dataSource={nota}
-                rowKey="coD_NOTA" 
+                columns={columnHCG}
+                rowKey="coD_HISTORIA_CLINICA"
+                dataSource={hcgeneral}
+                className='mt-3 custom-table'
+                onRow={(record) => ({
+                    onClick: () => handleRowClickHCGeneral(record.coD_HISTORIA_CLINICA),
+                })}
             />
         </div>
     )

@@ -29,6 +29,8 @@ export const AuthProvider = ({ children }) => {
             setUser(response.data);
             setIsAuth(true);
 
+            localStorage.setItem('user', JSON.stringify(response.data));
+
             return response.data;
 
         } catch (error) {
@@ -54,7 +56,6 @@ export const AuthProvider = ({ children }) => {
 
     }, []);
     
-    // Borra los mensajes de error en el tiempo determinado
     useEffect(() => {
         const clean = setTimeout(() => {
             setErrors(null);

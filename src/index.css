@@ -14,7 +14,16 @@
 .sidebar {
     color: #fff;
     background-color: #780650 !important;
+}
 
+.ant-layout-sider {
+    max-width: 300px !important;
+    width: 230px !important;
+}
+
+.ant-layout-sider-collapsed {
+    max-width: 80px !important;
+    width: 70px !important;
 }
 
 .logo {

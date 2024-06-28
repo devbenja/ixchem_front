@@ -6,29 +6,29 @@ import { Spinner } from 'react-bootstrap';
 import { Table, Button, Space, Modal, notification } from 'antd';
 import { FileSearchOutlined, EditOutlined, DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 
-
-export const NotaDetalle = () => {
+export const ListaEpicrisis = () => {
 
     const { numExpediente } = useParams();
-    const [nota, setNota] = useState(null);
+
+    const [epicrisis, setEpicrisis] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
-    
+
 
     useEffect(() => {
-        fetchNota();
+        fetchEpicrisis();
     }, []);
 
-    const fetchNota = async () => {
+    const fetchEpicrisis = async () => {
 
         try {
 
-            const response = await axios.get(`https://localhost:7106/api/bdtbnotaevolucion/buscarpornumexpediente`, {
+            const response = await axios.get(`https://localhost:7106/api/bdtbepicrisis/buscarpornumexpediente`, {
                 params: { NUM_EXPEDIENTE: numExpediente }
             });
 
-            setNota(response.data);
+            setEpicrisis(response.data);
 
             console.log(response.data)
 
@@ -49,12 +49,12 @@ export const NotaDetalle = () => {
             title: 'Número de Expediente',
             dataIndex: 'nuM_EXPEDIENTE',
             key: 'nuM_EXPEDIENTE',
-            render: (numExpediente) => <a>{numExpediente}</a>,
+            render: (nuM_EXPEDIENTE) => <a>{nuM_EXPEDIENTE}</a>,
         },
         {
-            title: 'No. de Nota',
-            dataIndex: 'numerO_NOTA',
-            key: 'numerO_NOTA',
+            title: 'Fecha',
+            dataIndex: 'fecha',
+            key: 'fecha',
         },
         {
             title: 'Código de Doctor',
@@ -66,36 +66,36 @@ export const NotaDetalle = () => {
             key: 'acciones',
             render: (text, record) => (
                 <Space size="middle">
-                    <Button icon={<FileSearchOutlined />} onClick={() => handleRowClick(record.coD_NOTA)} />
-                    <Button icon={<EditOutlined />} onClick={() => handleEdit(record.coD_NOTA)} />
-                    <Button icon={<DeleteOutlined />} onClick={() => showDeleteConfirm(record.coD_NOTA)} />
+                    <Button icon={<FileSearchOutlined />} onClick={() => handleRowClick(record.coD_EPICRISIS)} />
+                    <Button icon={<EditOutlined />} onClick={() => handleEdit(record.coD_EPICRISIS)} />
+                    <Button icon={<DeleteOutlined />} onClick={() => showDeleteConfirm(record.coD_EPICRISIS)} />
                 </Space>
             ),
             align: 'center',
         },
     ];
 
-    const handleEdit = (coD_NOTA) => {
-        navigate(`/editar-nota/${coD_NOTA}`);
+    const handleEdit = (coD_EPICRISIS) => {
+        navigate(`/editar-epicrisis/${coD_EPICRISIS}`);
     };
 
-    const handleRowClick = (coD_NOTA) => {
-        navigate(`/nota/${coD_NOTA}`);
+    const handleRowClick = (coD_EPICRISIS) => {
+        navigate(`/epicrisis-detalle/${coD_EPICRISIS}`);
     };
 
-    const deleteNota = async (id) => {
+    const deleteEpicrisis = async (id) => {
 
         try {
 
-            await axios.delete(`https://localhost:7106/api/bdtbnotaevolucion/eliminar/${id}`);
+            await axios.delete(`https://localhost:7106/api/bdtbepicrisis/eliminar/${id}`);
 
             notification.success({
                 message: '¡Éxito!',
-                description: `Nota de Evolucion Eliminada`,
+                description: `Epicrisis Eliminada`,
                 duration: 3
             });
 
-            setNota(nota.filter(p => p.coD_NOTA !== id));
+            setEpicrisis(epicrisis.filter(e => e.coD_EPICRISIS !== id));
 
         } catch (error) {
 
@@ -108,14 +108,14 @@ export const NotaDetalle = () => {
     const showDeleteConfirm = (id) => {
         Modal.confirm({
             centered: true,
-            title: '¿Está seguro que desea eliminar esta Nota?',
+            title: '¿Está seguro que desea eliminar esta Epicrisis?',
             icon: <ExclamationCircleOutlined />,
             content: 'Esta acción no se puede deshacer.',
             okText: 'Sí',
             okType: 'danger',
             cancelText: 'No',
             onOk() {
-                deleteNota(id);
+                deleteEpicrisis(id);
             },
             onCancel() {
                 console.log('Cancelado');
@@ -123,23 +123,17 @@ export const NotaDetalle = () => {
         });
     };
 
-    if (loading) return (
-        <div className="d-flex justify-content-center">
-            <Spinner animation="border" role="status" />
-        </div>
-    );
-
-    return (
-        <div className="container-fluid">
-            <h4 className='mb-4'>Notas de Evolución del Expediente: {numExpediente}</h4>
-            <Table
+  return (
+    <div className="container-fluid">
+        <h3>Epicrisis del Expediente: {numExpediente}</h3>
+        <Table
                 responsive={true}
                 pagination={{ pageSize: 7 }}
                 className='custom-table'
                 columns={columns}
-                dataSource={nota}
-                rowKey="coD_NOTA" 
+                dataSource={epicrisis}
+                rowKey="coD_EPICRISIS" 
             />
-        </div>
-    )
+    </div>
+  )
 }
