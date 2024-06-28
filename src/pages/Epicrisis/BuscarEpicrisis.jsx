@@ -106,7 +106,7 @@ export const BuscarEpicrisis = () => {
                 className='custom-table'
                 columns={columns}
                 dataSource={filteredEpicrisis}
-                rowKey="codProblemas"
+                rowKey="codEpicrisis"
                 onRow={(record) => ({
                     onClick: () => handleRowClick(record.numExpediente),
                 })}

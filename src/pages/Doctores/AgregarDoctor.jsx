@@ -90,7 +90,7 @@ export const AgregarDoctor = () => {
                         <div className="col-sm-2 col-12 mt-3">
                             <label htmlFor="codDoctor" className="form-label">Codigo Doctor</label>
                             <input
-                                type="number"
+                                type="text"
                                 className="form-control"
                                 name="codDoctor"
                                 onChange={handleChange}

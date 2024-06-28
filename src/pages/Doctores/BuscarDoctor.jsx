@@ -38,6 +38,8 @@ export const BuscarDoctor = () => {
 
       setData(response.data);
 
+      console.log(response.data)
+
     } catch (error) {
 
       notification.error({
@@ -58,8 +60,8 @@ export const BuscarDoctor = () => {
     },
     {
       title: 'Primer Nombre',
-      dataIndex: 'primerNombre',
-      key: 'primerNombre',
+      dataIndex: 'primerNombred',
+      key: 'primerNombred',
     },
     {
       title: 'Segundo Nombre',
@@ -67,14 +69,18 @@ export const BuscarDoctor = () => {
       key: 'segundoNombre',
     },
     {
-      title: 'Segundo Apellido',
-      dataIndex: 'primerApellido',
-      key: 'segundoApellido',
+      title: 'Primer Apellido',
+      dataIndex: 'primerApellidod',
+      key: 'primerApellidod',
     },
-
   ];
 
   const columns2 = [
+    {
+      title: 'Segundo Apellido',
+      dataIndex: 'segundoApellido',
+      key: 'segundoApellido',
+    },
     {
       title: 'Cedula',
       dataIndex: 'cedula',
@@ -102,7 +108,9 @@ export const BuscarDoctor = () => {
 
   return (
     <div className="container-fluid">
-      <h4>Buscar Doctor</h4>
+      <div className="container-fluid">
+        <h4>Buscar Doctor</h4>
+      </div>
       <form onSubmit={handleSubmit} className="container-fluid mt-3">
         <div className="row g-3">
           <div className="col-sm-3">
