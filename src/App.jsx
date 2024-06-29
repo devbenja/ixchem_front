@@ -47,11 +47,21 @@ import { HistoriaIndividual } from "./pages/HistoriaClinicaGeneral/HistoriaIndiv
 import { ObstetricosDetalles } from "./pages/HistoriaClinicaGeneral/ObstetricosDetalles";
 import { Obstetrico } from "./pages/HistoriaClinicaGeneral/Obstetrico";
 import { EditarObstetrico } from "./pages/HistoriaClinicaGeneral/EditarObstetrico";
+import { Unidos } from "./pages/HistoriaClinicaGeneral/Unidos";
+import { UnidoIndividual } from "./pages/HistoriaClinicaGeneral/UnidoIndividual";
+import { Embarazos } from "./pages/HistoriaClinicaGeneral/Embarazos";
+import { EmbarazoIndividual } from "./pages/HistoriaClinicaGeneral/EmbarazoIndividual";
+import { EditarEmbarazo } from "./pages/HistoriaClinicaGeneral/EditarEmbarazo";
+
+import { useAuth } from "./context/AuthContext"; 
+import { LogoutOutlined } from '@ant-design/icons'
 
 
 const { Header, Sider, Content } = Layout;
 
 export const App = () => {
+
+  const { isAuth, logout } = useAuth();
 
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
@@ -73,13 +83,18 @@ export const App = () => {
             <MenuList />
           </Sider>
           <Layout className={collapsed ? 'collapsed' : 'expanded'} style={{ marginLeft: collapsed ? 80 : 230 }}>
-            <Header style={{ padding: 0, background: colorBgContainer, transition: 'margin-left 0.2s' }}>
+            <Header style={{ padding: 0, background: colorBgContainer, transition: 'margin-left 0.2s', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <Button
                 onClick={() => setCollapsed(!collapsed)}
                 className="toggle"
                 type="text"
                 icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
               />
+              {isAuth && (
+                <Button onClick={logout} style={{ marginRight: '16px' }}>
+                  <LogoutOutlined/>Cerrar Sesión
+                </Button>
+              )}
             </Header>
             <Content  style={{ margin: '24px 16px 30px', overflow: 'initial', transition: 'margin-left 0.2s' }}>
               <Routes>
@@ -123,6 +138,11 @@ export const App = () => {
                 <Route path="/obstetricos/:numExpediente" element={<ObstetricosDetalles/>}/>
                 <Route path="/obstetrico/:id" element={<Obstetrico/>}/>
                 <Route path="/editar-obstetrico/:id" element={<EditarObstetrico/>}/>
+                <Route path="/unidos/:id" element={<Unidos/>}/>
+                <Route path="/unido/:id" element={<UnidoIndividual/>}/>
+                <Route path="/embarazos/:id" element={<Embarazos/>}/>
+                <Route path="/embarazo/:id" element={<EmbarazoIndividual/>}/>
+                <Route path="/editar-embarazo/:id" element={<EditarEmbarazo/>}/>
 
                 <Route path="/agregar-usuarios" element={<AgregarUsuarios/>}/>
                 <Route path="/buscar-usuario" element={<BuscarUsuario/>}/>

@@ -3,6 +3,7 @@ import { useAuth } from '../../context/AuthContext';
 
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { notification } from 'antd';
 
 export const Login = () => {
 
@@ -16,8 +17,16 @@ export const Login = () => {
 
             const user = await login(data);
 
+            console.log(user)
+
             if (user) {
                 navigate('/home');
+
+                notification.success({
+                    message: '¡Inicio de Sesión Exitoso!',
+                    description: `Bienvenido ${user.nombre}`,
+                    duration: 3
+                });
             }
             
         } catch (error) {

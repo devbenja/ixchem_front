@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createContext, useState, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
@@ -18,6 +19,7 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [isAuth, setIsAuth] = useState(false);
     const [errors, setErrors] = useState(null);
+    const navigate = useNavigate();
 
 
     const login = async (data) => {
@@ -44,6 +46,12 @@ export const AuthProvider = ({ children }) => {
 
     };
 
+    const logout = () => {
+        setUser(null);
+        setIsAuth(false);
+        navigate('/');
+    };
+
     // Valida si existe el usuario en el localStorage
     useEffect(() => {
 
@@ -67,7 +75,7 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider
-            value={{ user, isAuth, errors, login }}
+            value={{ user, isAuth, errors, login, logout }}
         >
             {children}
         </AuthContext.Provider>

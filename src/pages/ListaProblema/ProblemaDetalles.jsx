@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import './Problemas.css'
 
 import { Table, Space, Button, message, Modal as AntModal } from 'antd';
-import { EditOutlined, DeleteOutlined, ExclamationCircleOutlined, FilePdfOutlined } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined, ExclamationCircleOutlined, FilePdfOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 import { Form, Col, Spinner, Modal } from 'react-bootstrap';
 import { Document, Page, Text, View, StyleSheet, PDFDownloadLink, Image } from '@react-pdf/renderer';
 
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
         width: 100,
         height: 100,
     },
-    titleContainer: { 
+    titleContainer: {
         marginLeft: 70,
         justifyContent: 'center',
         alignItems: 'center',
@@ -172,6 +172,7 @@ const MyDocument = ({ problemas }) => (
 export const ProblemaDetalles = () => {
 
     const { numExpediente } = useParams();
+    const navigate = useNavigate();
 
     const [problemas, setProblemas] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -334,16 +335,21 @@ export const ProblemaDetalles = () => {
                     {user && user.codRol === 1 && (
                         <Button icon={<DeleteOutlined />} onClick={() => showDeleteConfirm(record.coD_PROBLEMAS)} />
                     )}
-                    
+
                 </Space>
             ),
             align: 'center'
         },
     ];
 
+
+    const handleBack = () => {
+        navigate('/buscar-problema');
+    }
+
     if (loading) return (
         <div className="d-flex loading justify-content-center">
-            <Spinner animation="border" role="status"/>
+            <Spinner animation="border" role="status" />
         </div>
     );
 
@@ -352,11 +358,14 @@ export const ProblemaDetalles = () => {
 
             <div className='d-flex align-items-start justify-content-between'>
                 <h4 className='mb-4'>Problemas Asociados al Expediente: {numExpediente}</h4>
-                <PDFDownloadLink document={<MyDocument problemas={problemas} />} fileName="problemas.pdf">
-                    {({ blob, url, loading, error }) =>
-                        loading ? 'Cargando documento...' : <FilePdfOutlined style={{ fontSize: '25px', color: 'red' }} />
-                    }
-                </PDFDownloadLink>
+                <div className='d-flex align-items-center gap-3'>
+                    <PDFDownloadLink document={<MyDocument problemas={problemas} />} fileName="problemas.pdf">
+                        {({ blob, url, loading, error }) =>
+                            loading ? 'Cargando documento...' : <FilePdfOutlined style={{ fontSize: '23px', color: 'red' }} />
+                        }
+                    </PDFDownloadLink>
+                    <Button onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
+                </div>
             </div>
 
             {errors && <p className="text-danger">{errors}</p>}

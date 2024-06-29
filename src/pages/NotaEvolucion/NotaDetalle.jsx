@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
 
 import { Table, Button, Space, Modal, notification } from 'antd';
-import { FileSearchOutlined, EditOutlined, DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
+import { FileSearchOutlined, EditOutlined, DeleteOutlined, ExclamationCircleOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 
 import { useAuth } from '../../context/AuthContext';
 
@@ -131,6 +131,10 @@ export const NotaDetalle = () => {
         });
     };
 
+    const handleBack = () => {
+        navigate('/buscar-nota-evolucion');
+    }
+
     if (loading) return (
         <div className="d-flex justify-content-center">
             <Spinner animation="border" role="status" />
@@ -139,7 +143,10 @@ export const NotaDetalle = () => {
 
     return (
         <div className="container-fluid">
-            <h4 className='mb-4'>Notas de Evolución del Expediente: {numExpediente}</h4>
+            <div className='d-flex align-items-center justify-content-between mb-4'>
+                <h4>Notas de Evolución del Expediente: {numExpediente}</h4>
+                <Button onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
+            </div>
             <Table
                 responsive={true}
                 pagination={{ pageSize: 7 }}
