@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
-import { notification } from 'antd';
+import { notification, Button } from 'antd';
 import axios from 'axios';
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { ArrowLeftOutlined } from '@ant-design/icons';
 
 export const EditarNota = () => {
 
     const { codNota } = useParams();
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         numeroNota: 0,
@@ -81,9 +83,17 @@ export const EditarNota = () => {
 
     };
 
+    const handleBack = () => {
+        navigate(`/nota/${formData.codNota}`);
+    }
+
     return (
         <div className="container-fluid">
-            <h4>Editar Nota de Evolución</h4>
+            <div className="d-flex justify-content-between align-items-center">
+                <h4>Editar Nota de Evolución</h4>
+                <Button onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
+            </div>
+
             <form onSubmit={handleEditNota} className='mt-4'>
                 <div className="row g-3">
                     <div className="col-sm-3">

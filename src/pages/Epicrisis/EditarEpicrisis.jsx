@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { notification } from "antd";
-import { useParams } from "react-router-dom";
+import { notification, Button } from "antd";
+import { useParams, useNavigate } from "react-router-dom";
+import { ArrowLeftOutlined } from '@ant-design/icons';
 
 export const EditarEpicrisis = () => {
 
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     codEpicrisis: 0,
@@ -104,9 +106,17 @@ export const EditarEpicrisis = () => {
     }
   }
 
+  const handleBack = () => {
+    navigate(`/epicrisis-detalle/${formData.codEpicrisis}`)
+  }
+
+
   return (
     <div className="container-fluid">
-      <h4>Editar Epicrisis</h4>
+      <div className="d-flex justify-content-between align-items-center">
+        <h4>Editar Nota de Evolución</h4>
+        <Button onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
+      </div>
       <form className='mt-4' onSubmit={handleSubmit}>
         <div className="row mb-3">
           <div className="col">

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Table, Button } from 'antd';
 import { useParams } from 'react-router-dom';
-import { EditOutlined, FilePdfOutlined } from '@ant-design/icons';
+import { EditOutlined, FilePdfOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { Document, Page, Text, View, StyleSheet, PDFDownloadLink, Image } from '@react-pdf/renderer';
 
@@ -328,6 +328,10 @@ export const EpicrisisDetalle = () => {
         },
     ]
 
+    const handleBack = () => {
+        navigate(`/epicrisis/${formData.nuM_EXPEDIENTE}`)
+    }
+
     return (
         <div className="container-fluid">
             <div className='d-flex justify-content-between'>
@@ -343,6 +347,8 @@ export const EpicrisisDetalle = () => {
                             loading ? 'Cargando documento...' : <Button><FilePdfOutlined style={{ fontSize: '20px', color: 'red' }} /></Button>
                         }
                     </PDFDownloadLink>
+
+                    <Button onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
                 </div>
             </div>
 

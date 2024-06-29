@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Table, Button } from 'antd';
 import { useParams } from 'react-router-dom';
-import { EditOutlined, FilePdfOutlined } from '@ant-design/icons';
+import { EditOutlined, FilePdfOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { Document, Page, Text, View, StyleSheet, PDFDownloadLink, Image } from '@react-pdf/renderer';
 
@@ -171,10 +171,15 @@ export const NotaEvolucion = () => {
         navigate(`/editar-nota/${formData.codNota}`);
     };
 
+    const handleBack = () => {
+        navigate(`/notas-de-evolucion/${formData.numExpediente}`)
+    }
+
 
     return (
         <div className="container-fluid">
             <div className='d-flex justify-content-between'>
+            
                 <h4 className='mb-4'>Nota de Evolución</h4>
 
                 <div className='gap-2 d-flex'>
@@ -187,6 +192,7 @@ export const NotaEvolucion = () => {
                             loading ? 'Cargando documento...' : <Button><FilePdfOutlined style={{ fontSize: '20px', color: 'red' }} /></Button>
                         }
                     </PDFDownloadLink>
+                    <Button onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
                 </div>
             </div>
             <Table className='custom-table' dataSource={[formData]} columns={column1} />

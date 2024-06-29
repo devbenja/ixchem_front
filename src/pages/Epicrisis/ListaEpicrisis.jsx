@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
 
 import { Table, Button, Space, Modal, notification } from 'antd';
-import { FileSearchOutlined, EditOutlined, DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
+import { FileSearchOutlined, EditOutlined, DeleteOutlined, ExclamationCircleOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 
 import { useAuth } from '../../context/AuthContext';
 
@@ -16,7 +16,7 @@ export const ListaEpicrisis = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
-    
+
     const { user } = useAuth();
 
 
@@ -130,17 +130,24 @@ export const ListaEpicrisis = () => {
         });
     };
 
-  return (
-    <div className="container-fluid">
-        <h3>Epicrisis del Expediente: {numExpediente}</h3>
-        <Table
+    const handleBack = () => {
+        navigate('/buscar-epicrisis')
+    }
+
+    return (
+        <div className="container-fluid">
+            <div className='d-flex justify-content-between align-intems-center mb-4'>
+                <h4>Epicrisis del Expediente: {numExpediente}</h4>
+                <Button onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
+            </div>
+            <Table
                 responsive={true}
                 pagination={{ pageSize: 7 }}
                 className='custom-table'
                 columns={columns}
                 dataSource={epicrisis}
-                rowKey="coD_EPICRISIS" 
+                rowKey="coD_EPICRISIS"
             />
-    </div>
-  )
+        </div>
+    )
 }
