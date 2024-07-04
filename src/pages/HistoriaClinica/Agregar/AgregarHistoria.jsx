@@ -6,6 +6,8 @@ import { Toast, ToastBody, ToastHeader } from 'reactstrap';
 
 import { notification } from 'antd';
 
+import { baseURL } from '../../../api/apiURL.js';
+
 export const AgregarHistoria = () => {
 
     const { register: registerPaciente, handleSubmit: handleSubmitPaciente, reset } = useForm();
@@ -20,7 +22,7 @@ export const AgregarHistoria = () => {
     const onSubmitPaciente = handleSubmitPaciente(async (data) => {
         try {
 
-            const response = await axios.post('https://localhost:7106/api/bdtpaciente/post', data);
+            const response = await axios.post(`${baseURL}/bdtpaciente/post`, data);
 
             notification.success({
                 message: '¡Éxito!',
@@ -74,7 +76,7 @@ export const AgregarHistoria = () => {
                 cigarrosDia: Number(data.cigarrosDia),
             };
 
-            const response = await axios.post('https://localhost:7106/api/bdtbantecedentespersonale/post', transformedData);
+            const response = await axios.post(`${baseURL}/bdtbantecedentespersonale/post`, transformedData);
 
             notification.success({
                 message: '¡Éxito!',
@@ -122,7 +124,7 @@ export const AgregarHistoria = () => {
 
             console.log(transformedData);
 
-            const response = await axios.post('https://localhost:7106/api/bdtbaantecedentepatper/post', transformedData)
+            const response = await axios.post(`${baseURL}/bdtbaantecedentepatper/post`, transformedData)
 
             notification.success({
                 message: '¡Éxito!',
@@ -162,7 +164,7 @@ export const AgregarHistoria = () => {
 
             console.log(transformedData);
 
-            await axios.post('https://localhost:7106/api/bdtbantecedentepatfam/post', transformedData);
+            await axios.post(`${baseURL}/bdtbantecedentepatfam/post`, transformedData);
 
             notification.success({
                 message: '¡Éxito!',
@@ -190,7 +192,7 @@ export const AgregarHistoria = () => {
 
             console.log(data);
 
-            await axios.post('https://localhost:7106/api/bdtbinformacion/post', data);
+            await axios.post(`${baseURL}/bdtbinformacion/post`, data);
 
             notification.success({
                 message: '¡Éxito!',

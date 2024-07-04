@@ -3,6 +3,8 @@ import axios from "axios";
 import { notification } from "antd";
 import { useParams } from "react-router-dom";
 
+import { baseURL } from "../../api/apiURL";
+
 export const EditarUsuario = () => {
 
     const { codAdmin } = useParams();
@@ -41,7 +43,7 @@ export const EditarUsuario = () => {
 
             try {
 
-                const response = await axios.get(`https://localhost:7106/api/bdtbusuario/listarporid/${codAdmin}`);
+                const response = await axios.get(`${baseURL}/bdtbusuario/listarporid/${codAdmin}`);
 
                 console.log(response.data);
 
@@ -64,7 +66,7 @@ export const EditarUsuario = () => {
 
             console.log(formData)
 
-            await axios.put(`https://localhost:7106/api/bdtbusuario/actualizar/${formData.codAdmin}`, formData);
+            await axios.put(`${baseURL}/bdtbusuario/actualizar/${formData.codAdmin}`, formData);
 
             notification.success({
                 message: '¡Éxito!',

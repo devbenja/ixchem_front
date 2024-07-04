@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { notification } from "antd";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { baseURL } from "../../api/apiURL";
 
 export const EditarDoctor = () => {
 
@@ -23,7 +24,7 @@ export const EditarDoctor = () => {
 
             try {
 
-                const response = await axios.get(`https://localhost:7106/api/bdtdoctor/buscarporcoddoctor`, {
+                const response = await axios.get(`${baseURL}/bdtdoctor/buscarporcoddoctor`, {
                     params: { CodDoctor: id }
                 });
 
@@ -56,7 +57,7 @@ export const EditarDoctor = () => {
 
         try {
 
-            await axios.put(`https://localhost:7106/api/bdtdoctor/actualizar/${id}`, formData);
+            await axios.put(`${baseURL}/bdtdoctor/actualizar/${id}`, formData);
             
             notification.success({
                 message: '¡Éxito!',

@@ -6,6 +6,8 @@ import { Table, Button, Input, Space } from 'antd';
 import { FileSearchOutlined, FilePdfOutlined } from '@ant-design/icons';
 import { Spinner } from 'react-bootstrap';
 
+import { baseURL } from '../../api/apiURL';
+
 export const BuscarEpicrisis = () => {
     const [epicrisis, setEpicrisis] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -21,7 +23,7 @@ export const BuscarEpicrisis = () => {
 
         try {
 
-            const response = await axios.get('https://localhost:7106/api/bdtbepicrisis/listar');
+            const response = await axios.get(`${baseURL}/bdtbepicrisis/listar`);
             console.log(response.data)
             setEpicrisis(response.data);
 

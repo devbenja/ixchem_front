@@ -7,6 +7,7 @@ import { Table, Button, Space, Modal, notification } from 'antd';
 import { FileSearchOutlined, EditOutlined, DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 
 import { useAuth } from '../../context/AuthContext';
+import { baseURL } from '../../api/apiURL';
 
 
 
@@ -28,7 +29,7 @@ export const HistoriasCG = () => {
 
         try {
 
-            const response = await axios.get(`https://localhost:7106/api/bdtbhistoriaclinicageneral/buscarpornumexpediente`, {
+            const response = await axios.get(`${baseURL}/bdtbhistoriaclinicageneral/buscarpornumexpediente`, {
                 params: { NUM_EXPEDIENTE: numExpediente }
             });
 
@@ -93,7 +94,7 @@ export const HistoriasCG = () => {
 
         try {
 
-            await axios.delete(`https://localhost:7106/api/bdtbhistoriaclinicageneral/eliminar/${id}`);
+            await axios.delete(`${baseURL}/bdtbhistoriaclinicageneral/eliminar/${id}`);
 
             notification.success({
                 message: '¡Éxito!',

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { createContext, useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { baseURL } from '../api/apiURL';
 
 const AuthContext = createContext();
 
@@ -8,7 +9,7 @@ export const useAuth = () => {
     const context = useContext(AuthContext);
 
     if (!context) {
-        throw new Error('useAuth must be used within an AuthProvider');
+        throw new Error('useAuth solo puede ser usado en el AuthProvider');
     }
 
     return context;
@@ -26,7 +27,9 @@ export const AuthProvider = ({ children }) => {
 
         try {
 
-            const response = await axios.post('https://localhost:7106/api/bdtbusuario/login', data);
+            console.log(baseURL);
+
+            const response = await axios.post(`${baseURL}/bdtbusuario/login`, data);
 
             setUser(response.data);
             setIsAuth(true);

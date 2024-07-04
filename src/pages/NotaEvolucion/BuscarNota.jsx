@@ -5,6 +5,8 @@ import { Table, Button, Input, Space } from 'antd';
 import { FileSearchOutlined } from '@ant-design/icons';
 import { Spinner } from 'react-bootstrap';
 
+import { baseURL } from '../../api/apiURL';
+
 export const BuscarNota = () => {
     const [notas, setNotas] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -18,7 +20,7 @@ export const BuscarNota = () => {
 
     const fetchNotas = async () => {
         try {
-            const response = await axios.get('https://localhost:7106/api/bdtbnotaevolucion/listar');
+            const response = await axios.get(`${baseURL}/bdtbnotaevolucion/listar`);
             
             setNotas(response.data);
         } catch (error) {

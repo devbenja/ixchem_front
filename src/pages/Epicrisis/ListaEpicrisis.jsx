@@ -7,6 +7,7 @@ import { Table, Button, Space, Modal, notification } from 'antd';
 import { FileSearchOutlined, EditOutlined, DeleteOutlined, ExclamationCircleOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 
 import { useAuth } from '../../context/AuthContext';
+import { baseURL } from '../../api/apiURL';
 
 export const ListaEpicrisis = () => {
 
@@ -28,7 +29,7 @@ export const ListaEpicrisis = () => {
 
         try {
 
-            const response = await axios.get(`https://localhost:7106/api/bdtbepicrisis/buscarpornumexpediente`, {
+            const response = await axios.get(`${baseURL}/bdtbepicrisis/buscarpornumexpediente`, {
                 params: { NUM_EXPEDIENTE: numExpediente }
             });
 
@@ -94,7 +95,7 @@ export const ListaEpicrisis = () => {
 
         try {
 
-            await axios.delete(`https://localhost:7106/api/bdtbepicrisis/eliminar/${id}`);
+            await axios.delete(`${baseURL}/bdtbepicrisis/eliminar/${id}`);
 
             notification.success({
                 message: '¡Éxito!',

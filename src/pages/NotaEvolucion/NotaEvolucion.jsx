@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { EditOutlined, FilePdfOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { Document, Page, Text, View, StyleSheet, PDFDownloadLink, Image } from '@react-pdf/renderer';
+import { baseURL } from '../../api/apiURL';
 
 const styles = StyleSheet.create({
     page: {
@@ -129,7 +130,7 @@ export const NotaEvolucion = () => {
 
             try {
 
-                const response = await axios.get(`https://localhost:7106/api/bdtbnotaevolucion/buscarporcodigo/${codNota}`);
+                const response = await axios.get(`${baseURL}/bdtbnotaevolucion/buscarporcodigo/${codNota}`);
 
                 console.log(response.data);
 

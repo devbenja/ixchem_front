@@ -5,6 +5,8 @@ import { useParams } from 'react-router-dom';
 import { notification } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
+import { baseURL } from '../../../api/apiURL';
+
 export const EditarAntPatFam = () => {
 
     const { id } = useParams();
@@ -38,7 +40,7 @@ export const EditarAntPatFam = () => {
         const fetchData = async () => {
 
             try {
-                const response = await axios.get(`https://localhost:7106/api/bdtbantecedentepatfam/buscarporexpediente`, {
+                const response = await axios.get(`${baseURL}/bdtbantecedentepatfam/buscarporexpediente`, {
                     params: { NumExpediente: id }
                 });
 
@@ -85,7 +87,7 @@ export const EditarAntPatFam = () => {
 
             console.log(formData)
 
-            await axios.put(`https://localhost:7106/api/bdtbantecedentepatfam/actualizar/${formData.codAntpatfam}`, formData);
+            await axios.put(`${baseURL}/bdtbantecedentepatfam/actualizar/${formData.codAntpatfam}`, formData);
             
             notification.success({
                 message: '¡Éxito!',

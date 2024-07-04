@@ -2,6 +2,8 @@ import { useState } from "react";
 import { notification } from 'antd';
 import axios from 'axios';
 
+import { baseURL } from "../../api/apiURL";
+
 export const AgregarNota = () => {
     
     const [formData, setFormData] = useState({
@@ -32,7 +34,7 @@ export const AgregarNota = () => {
         e.preventDefault();
         try {
             console.log(formData);
-            await axios.post('https://localhost:7106/api/bdtbnotaevolucion/post', formData);
+            await axios.post(`${baseURL}/bdtbnotaevolucion/post`, formData);
 
             notification.success({
                 message: '¡Éxito!',

@@ -3,6 +3,8 @@ import axios from 'axios';
 import { notification, Table } from "antd";
 import { useParams } from 'react-router-dom';
 
+import { baseURL } from '../../api/apiURL';
+
 
 export const Obstetrico = () => {
 
@@ -15,7 +17,7 @@ export const Obstetrico = () => {
 
             try {
 
-                const response = await axios.get(`https://localhost:7106/api/bdtbantecedentesobstetrico/buscarporcodhojariesgo`, {
+                const response = await axios.get(`${baseURL}/bdtbantecedentesobstetrico/buscarporcodhojariesgo`, {
                     params: { codHojariesgo: id }
                 });
 

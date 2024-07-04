@@ -3,6 +3,7 @@ import axios from "axios";
 import { notification, Button } from "antd";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeftOutlined } from '@ant-design/icons';
+import { baseURL } from "../../api/apiURL";
 
 export const EditarEpicrisis = () => {
 
@@ -33,7 +34,7 @@ export const EditarEpicrisis = () => {
 
       try {
 
-        const response = await axios.get(`https://localhost:7106/api/bdtbepicrisis/buscarporcodEpicrisis`, {
+        const response = await axios.get(`${baseURL}/bdtbepicrisis/buscarporcodEpicrisis`, {
           params: { CodEpicrisis: id }
         });
 
@@ -87,7 +88,7 @@ export const EditarEpicrisis = () => {
 
       // console.log(newData);
 
-      await axios.put(`https://localhost:7106/api/bdtbepicrisis/actualizar/${formData.codEpicrisis}`, formData);
+      await axios.put(`${baseURL}/bdtbepicrisis/actualizar/${formData.codEpicrisis}`, formData);
 
       notification.success({
         message: '¡Éxito!',

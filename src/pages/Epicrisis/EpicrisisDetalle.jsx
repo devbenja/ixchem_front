@@ -6,6 +6,8 @@ import { EditOutlined, FilePdfOutlined, ArrowLeftOutlined } from '@ant-design/ic
 import { useNavigate } from 'react-router-dom';
 import { Document, Page, Text, View, StyleSheet, PDFDownloadLink, Image } from '@react-pdf/renderer';
 
+import { baseURL } from '../../api/apiURL';
+
 const styles = StyleSheet.create({
     page: {
         padding: 30,
@@ -195,7 +197,7 @@ export const EpicrisisDetalle = () => {
 
             try {
 
-                const response = await axios.get(`https://localhost:7106/api/bdtbepicrisis/buscarunidoporcodigoepicrisis`, {
+                const response = await axios.get(`${baseURL}/bdtbepicrisis/buscarunidoporcodigoepicrisis`, {
                     params: { CodEpicrisis: codEpicrisis }
                 });
 

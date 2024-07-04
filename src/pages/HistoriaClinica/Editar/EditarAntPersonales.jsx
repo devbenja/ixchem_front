@@ -4,6 +4,8 @@ import { useParams } from 'react-router-dom';
 
 import { notification } from 'antd';
 
+import { baseURL } from '../../../api/apiURL';
+
 export const EditarAntPersonales = () => {
 
     const { id } = useParams();
@@ -42,7 +44,7 @@ export const EditarAntPersonales = () => {
         const fetchData = async () => {
 
             try {
-                const response = await axios.get(`https://localhost:7106/api/bdtbantecedentespersonale/buscarporexpediente`, {
+                const response = await axios.get(`${baseURL}/bdtbantecedentespersonale/buscarporexpediente`, {
                     params: { NumExpediente: id }
                 });
 
@@ -81,7 +83,7 @@ export const EditarAntPersonales = () => {
             
             console.log(formData)
 
-            await axios.put(`https://localhost:7106/api/bdtbantecedentespersonale/actualizar/${formData.codAntper}`, formData);
+            await axios.put(`${baseURL}/bdtbantecedentespersonale/actualizar/${formData.codAntper}`, formData);
 
             notification.success({
                 message: '¡Éxito!',

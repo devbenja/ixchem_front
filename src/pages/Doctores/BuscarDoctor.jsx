@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { notification, Table, message } from "antd";
 import { useNavigate } from "react-router-dom";
+import { baseURL } from "../../api/apiURL";
 
 export const BuscarDoctor = () => {
 
@@ -24,7 +25,7 @@ export const BuscarDoctor = () => {
 
       if (searchType === 'Codigo') {
 
-        response = await axios.get('https://localhost:7106/api/bdtdoctor/buscarporcoddoctor', {
+        response = await axios.get(`${baseURL}/bdtdoctor/buscarporcoddoctor`, {
           params: { CodDoctor: searchValue }
         })
 
@@ -32,7 +33,7 @@ export const BuscarDoctor = () => {
 
       } else if (searchType === 'Nombre') {
 
-        response = await axios.get('https://localhost:7106/api/bdtdoctor/buscarpornombre', {
+        response = await axios.get(`${baseURL}/bdtdoctor/buscarpornombre`, {
           params: { PrimerNombred: firstName, PrimerApellidod: firstLastName }
         })
 

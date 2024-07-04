@@ -3,6 +3,8 @@ import axios from 'axios';
 import { notification } from "antd";
 import { useParams } from 'react-router-dom';
 
+import { baseURL } from '../../api/apiURL';
+
 export const EditHistoriaClinicaGeneral = () => {
 
     const { id } = useParams();
@@ -43,7 +45,7 @@ export const EditHistoriaClinicaGeneral = () => {
 
             try {
 
-                const response = await axios.get(`https://localhost:7106/api/bdtbhistoriaclinicageneral/buscarporcodhistoriaclinica`, {
+                const response = await axios.get(`${baseURL}/bdtbhistoriaclinicageneral/buscarporcodhistoriaclinica`, {
                     params: { CodHistoriaClinica: id }
                 });
 
@@ -68,7 +70,7 @@ export const EditHistoriaClinicaGeneral = () => {
 
             console.log(formData)
 
-            await axios.put(`https://localhost:7106/api/bdtbhistoriaclinicageneral/actualizar/${formData.codHistoriaClinica}`, formData);
+            await axios.put(`${baseURL}/bdtbhistoriaclinicageneral/actualizar/${formData.codHistoriaClinica}`, formData);
 
             notification.success({
                 message: '¡Éxito!',

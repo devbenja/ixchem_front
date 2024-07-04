@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { notification } from "antd";
 
+import { baseURL } from '../../api/apiURL.js';
+
 export const AgregarHistoriaClinicaGeneral = () => {
 
     const [searchType, setSearchType] = useState('');
@@ -66,13 +68,13 @@ export const AgregarHistoriaClinicaGeneral = () => {
 
             if (searchType === 'num_expediente') {
 
-                response = await axios.get('https://localhost:7106/api/bdtpaciente/buscarpornumexpediente', {
+                response = await axios.get(`${baseURL}/bdtpaciente/buscarpornumexpediente`, {
                     params: { NumExpediente: searchValue }
                 })
 
             } else if (searchType === 'nombre') {
 
-                response = await axios.get('https://localhost:7106/api/bdtpaciente/Buscarpacienteunidosnombre', {
+                response = await axios.get(`${baseURL}/bdtpaciente/Buscarpacienteunidosnombre`, {
                     params: { PRIMER_NOMBRE: firstName, PRIMER_APELLIDO: firstLastName }
                 })
 
@@ -164,7 +166,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
 
             console.log(formData);
 
-            await axios.post('https://localhost:7106/api/bdtbhistoriaclinicageneral/post', formData);
+            await axios.post(`${baseURL}/bdtbhistoriaclinicageneral/post`, formData);
 
             notification.success({
                 message: '¡Éxito!',
@@ -191,7 +193,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
 
             console.log(obstetrico);
 
-            await axios.post('https://localhost:7106/api/bdtbantecedentesobstetrico/post', obstetrico);
+            await axios.post(`${baseURL}/bdtbantecedentesobstetrico/post`, obstetrico);
 
             notification.success({
                 message: '¡Éxito!',
@@ -219,7 +221,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
 
             console.log(actual);
 
-            await axios.post('https://localhost:7106/api/bdtbembarazoactual/post', actual);
+            await axios.post(`${baseURL}/bdtbembarazoactual/post`, actual);
 
             notification.success({
                 message: '¡Éxito!',

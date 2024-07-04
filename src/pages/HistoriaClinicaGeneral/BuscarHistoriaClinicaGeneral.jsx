@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { notification, Table, message } from "antd";
 import axios from "axios";
 
+import { baseURL } from "../../api/apiURL";
+
 export const BuscarHistoriaClinicaGeneral = () => {
 
     const [searchType, setSearchType] = useState('');
@@ -24,13 +26,13 @@ export const BuscarHistoriaClinicaGeneral = () => {
 
             if (searchType === 'num_expediente') {
 
-                response = await axios.get('https://localhost:7106/api/bdtbhistoriaclinicageneral/buscarpornumexpediente', {
+                response = await axios.get(`${baseURL}/bdtbhistoriaclinicageneral/buscarpornumexpediente`, {
                     params: { NUM_EXPEDIENTE: searchValue }
                 })
 
             } else if (searchType === 'nombre') {
 
-                response = await axios.get('https://localhost:7106/api/bdtbhistoriaclinicageneral/Buscarpormanombrepaciente', {
+                response = await axios.get(`${baseURL}/bdtbhistoriaclinicageneral/Buscarpormanombrepaciente`, {
                     params: { PRIMER_NOMBRE: firstName, PRIMER_APELLIDO: firstLastName }
                 })
 

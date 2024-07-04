@@ -2,6 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 import { notification } from "antd";
 
+import { baseURL } from "../../api/apiURL";
+
 export const AgregarUsuarios = () => {
 
     const [formData, setFormData] = useState({
@@ -38,7 +40,7 @@ export const AgregarUsuarios = () => {
 
         try {
 
-            await axios.post('https://localhost:7106/api/bdtbusuario/post', formData);
+            await axios.post(`${baseURL}/bdtbusuario/post`, formData);
 
             notification.success({
                 message: '¡Éxito!',

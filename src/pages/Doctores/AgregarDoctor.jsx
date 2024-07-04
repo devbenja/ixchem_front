@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { notification } from 'antd';
 import axios from 'axios';
+import { baseURL } from "../../api/apiURL";
 
 export const AgregarDoctor = () => {
     const [formData, setFormData] = useState({
@@ -25,7 +26,7 @@ export const AgregarDoctor = () => {
         e.preventDefault();
         try {
             console.log(formData);
-            await axios.post('https://localhost:7106/api/bdtdoctor/post', formData);
+            await axios.post(`${baseURL}/bdtdoctor/post`, formData);
 
             notification.success({
                 message: '¡Éxito!',

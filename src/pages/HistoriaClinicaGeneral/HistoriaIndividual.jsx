@@ -3,6 +3,7 @@ import axios from 'axios';
 import { notification, Table } from "antd";
 import { useParams } from 'react-router-dom';
 
+import { baseURL } from '../../api/apiURL';
 
 export const HistoriaIndividual = () => {
 
@@ -15,7 +16,7 @@ export const HistoriaIndividual = () => {
 
             try {
 
-                const response = await axios.get(`https://localhost:7106/api/bdtbhistoriaclinicageneral/buscarporcodhistoriaclinica`, {
+                const response = await axios.get(`${baseURL}/bdtbhistoriaclinicageneral/buscarporcodhistoriaclinica`, {
                     params: { CodHistoriaClinica: codHistoriaClinica }
                 });
 

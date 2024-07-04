@@ -5,6 +5,8 @@ import { Table, Button, Input, Space, Modal, notification } from 'antd';
 import { FileSearchOutlined, EditOutlined, DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import { Spinner } from 'react-bootstrap';
 
+import { baseURL } from '../../api/apiURL';
+
 export const BuscarUsuario = () => {
 
     const [usuarios, setUsuarios] = useState([]);
@@ -19,7 +21,7 @@ export const BuscarUsuario = () => {
 
     const fetchUsuarios = async () => {
         try {
-            const response = await axios.get('https://localhost:7106/api/bdtbusuario/listar');
+            const response = await axios.get(`${baseURL}/bdtbusuario/listar`);
 
             setUsuarios(response.data);
             console.log(response.data)
@@ -76,7 +78,7 @@ export const BuscarUsuario = () => {
 
         try {
 
-            await axios.delete(`https://localhost:7106/api/bdtbusuario/eliminar/${id}`);
+            await axios.delete(`${baseURL}/bdtbusuario/eliminar/${id}`);
 
             notification.success({
                 message: '¡Éxito!',

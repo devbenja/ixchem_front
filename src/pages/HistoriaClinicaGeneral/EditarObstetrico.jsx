@@ -4,6 +4,8 @@ import { notification } from "antd";
 
 import { useParams } from 'react-router-dom';
 
+import { baseURL } from '../../api/apiURL';
+
 export const EditarObstetrico = () => {
 
     const { id } = useParams();
@@ -26,7 +28,7 @@ export const EditarObstetrico = () => {
 
             try {
 
-                const response = await axios.get(`https://localhost:7106/api/bdtbantecedentesobstetrico/buscarporcodhojariesgo`, {
+                const response = await axios.get(`${baseURL}/bdtbantecedentesobstetrico/buscarporcodhojariesgo`, {
                     params: { codHojariesgo: id }
                 });
 
@@ -66,7 +68,7 @@ export const EditarObstetrico = () => {
 
             console.log(obstetrico);
 
-            await axios.put(`https://localhost:7106/api/bdtbantecedentesobstetrico/actualizar/${obstetrico.codHojariesgo}`, obstetrico);
+            await axios.put(`${baseURL}/bdtbantecedentesobstetrico/actualizar/${obstetrico.codHojariesgo}`, obstetrico);
 
             notification.success({
                 message: '¡Éxito!',

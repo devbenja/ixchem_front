@@ -7,6 +7,8 @@ import { Table, message, notification } from 'antd';
 
 import { Page, Text, View, Document, StyleSheet, PDFViewer, PDFDownloadLink } from '@react-pdf/renderer';
 
+import { baseURL } from '../../../api/apiURL';
+
 const styles = StyleSheet.create({
     page: {
         padding: 30,
@@ -354,34 +356,34 @@ export const BuscarHistoria = () => {
 
             if (searchType === 'opcion_expediente') {
 
-                response = await axios.get('https://localhost:7106/api/bdtpaciente/buscarpornumexpediente', {
+                response = await axios.get(`${baseURL}/bdtpaciente/buscarpornumexpediente`, {
                     params: { NumExpediente: searchValue }
                 });
 
-                antPerData = await axios.get('https://localhost:7106/api/bdtbantecedentespersonale/buscarporexpediente', {
+                antPerData = await axios.get(`${baseURL}/bdtbantecedentespersonale/buscarporexpediente`, {
                     params: { NumExpediente: searchValue }
                 });
 
-                antPatPerData = await axios.get('https://localhost:7106/api/bdtbaantecedentepatper/buscarporexpediente', {
+                antPatPerData = await axios.get(`${baseURL}/bdtbaantecedentepatper/buscarporexpediente`, {
                     params: { NumExpediente: searchValue }
                 });
 
-                antPatFamData = await axios.get('https://localhost:7106/api/bdtbantecedentepatfam/buscarporexpediente', {
+                antPatFamData = await axios.get(`${baseURL}/bdtbantecedentepatfam/buscarporexpediente`, {
                     params: { NumExpediente: searchValue }
                 });
 
-                infoData = await axios.get('https://localhost:7106/api/bdtbinformacion/buscarporexpediente', {
+                infoData = await axios.get(`${baseURL}/bdtbinformacion/buscarporexpediente`, {
                     params: { NumExpediente: searchValue }
                 });
 
-                unidosData = await axios.get('https://localhost:7106/api/bdtpaciente/buscarpornumexpedienteunidos', {
+                unidosData = await axios.get(`${baseURL}/bdtpaciente/buscarpornumexpedienteunidos`, {
                     params: { NUM_EXPEDIENTE: searchValue }
                 });
 
 
             } else if (searchType === 'opcion_cedula') {
 
-                response = await axios.get('https://localhost:7106/api/bdtpaciente/buscarporcedula', {
+                response = await axios.get(`${baseURL}/bdtpaciente/buscarporcedula`, {
                     params: { cedula: searchValue }
                 });
 

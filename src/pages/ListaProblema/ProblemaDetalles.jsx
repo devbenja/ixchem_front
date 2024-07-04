@@ -9,6 +9,7 @@ import { Form, Col, Spinner, Modal } from 'react-bootstrap';
 import { Document, Page, Text, View, StyleSheet, PDFDownloadLink, Image } from '@react-pdf/renderer';
 
 import { useAuth } from '../../context/AuthContext';
+import { baseURL } from '../../api/apiURL';
 
 
 const styles = StyleSheet.create({
@@ -200,7 +201,7 @@ export const ProblemaDetalles = () => {
 
         try {
 
-            const response = await axios.get(`https://localhost:7106/api/bdtblistaproblema/buscarpornumexpediente`, {
+            const response = await axios.get(`${baseURL}/bdtblistaproblema/buscarpornumexpediente`, {
                 params: { NUM_EXPEDIENTE: numExpediente }
             });
 
@@ -240,7 +241,7 @@ export const ProblemaDetalles = () => {
                 codProblemas: currentProblem.coD_PROBLEMAS
             }
 
-            await axios.put(`https://localhost:7106/api/bdtblistaproblema/actualizar/${currentProblem.coD_PROBLEMAS}`, updateData);
+            await axios.put(`${baseURL}/bdtblistaproblema/actualizar/${currentProblem.coD_PROBLEMAS}`, updateData);
 
             message.success('Problema actualizado exitosamente');
 
@@ -261,7 +262,7 @@ export const ProblemaDetalles = () => {
 
         try {
 
-            await axios.delete(`https://localhost:7106/api/bdtblistaproblema/eliminar/${id}`);
+            await axios.delete(`${baseURL}/bdtblistaproblema/eliminar/${id}`);
 
             message.success('Problema Eliminado Exitosamente');
 

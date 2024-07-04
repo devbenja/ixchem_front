@@ -6,6 +6,7 @@ import './Problemas.css';
 import { Toast, ToastBody, ToastHeader } from 'reactstrap';
 
 import { notification } from 'antd';
+import { baseURL } from '../../api/apiURL.js';
 
 export const AgregarProblema = () => {
 
@@ -37,7 +38,7 @@ export const AgregarProblema = () => {
 
             console.log(transformedData)
 
-            await axios.post('https://localhost:7106/api/bdtblistaproblema/post', transformedData);
+            await axios.post(`${baseURL}/bdtblistaproblema/post`, transformedData);
 
             alerta();
 

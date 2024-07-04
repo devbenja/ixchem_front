@@ -7,6 +7,7 @@ import { Table, Button, Space, Modal, notification } from 'antd';
 import { FileSearchOutlined, EditOutlined, DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 
 import { useAuth } from '../../context/AuthContext';
+import { baseURL } from '../../api/apiURL';
 
 
 export const ObstetricosDetalles = () => {
@@ -27,7 +28,7 @@ export const ObstetricosDetalles = () => {
 
         try {
 
-            const response = await axios.get(`https://localhost:7106/api/bdtbantecedentesobstetrico/buscarpornumexpediente`, {
+            const response = await axios.get(`${baseURL}/bdtbantecedentesobstetrico/buscarpornumexpediente`, {
                 params: { numExpediente: numExpediente }
             });
 
@@ -90,7 +91,7 @@ export const ObstetricosDetalles = () => {
 
         try {
 
-            await axios.delete(`https://localhost:7106/api/bdtbantecedentesobstetrico/eliminar/${id}`);
+            await axios.delete(`${baseURL}/bdtbantecedentesobstetrico/eliminar/${id}`);
 
             notification.success({
                 message: '¡Éxito!',

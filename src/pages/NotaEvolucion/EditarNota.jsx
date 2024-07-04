@@ -4,6 +4,8 @@ import axios from 'axios';
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeftOutlined } from '@ant-design/icons';
 
+import { baseURL } from "../../api/apiURL";
+
 export const EditarNota = () => {
 
     const { codNota } = useParams();
@@ -32,7 +34,7 @@ export const EditarNota = () => {
 
             try {
 
-                const response = await axios.get(`https://localhost:7106/api/bdtbnotaevolucion/buscarporcodigo/${codNota}`);
+                const response = await axios.get(`${baseURL}/bdtbnotaevolucion/buscarporcodigo/${codNota}`);
 
                 console.log(response.data);
 
@@ -63,7 +65,7 @@ export const EditarNota = () => {
 
             console.log(formData);
 
-            await axios.put(`https://localhost:7106/api/bdtbnotaevolucion/actualizar/${formData.codNota}`, formData);
+            await axios.put(`${baseURL}/bdtbnotaevolucion/actualizar/${formData.codNota}`, formData);
 
             notification.success({
                 message: '¡Éxito!',

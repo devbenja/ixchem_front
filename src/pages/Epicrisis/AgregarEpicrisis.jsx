@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { notification } from "antd";
+import { baseURL } from '../../api/apiURL.js';
 
 export const AgregarEpicrisis = () => {
 
@@ -39,7 +40,7 @@ export const AgregarEpicrisis = () => {
 
             console.log(formData);
 
-            await axios.post('https://localhost:7106/api/bdtbepicrisis/post', formData);
+            await axios.post(`${baseURL}/bdtbepicrisis/post`, formData);
 
             notification.success({
                 message: '¡Éxito!',

@@ -5,6 +5,8 @@ import { useParams } from 'react-router-dom';
 import { notification } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
+import { baseURL } from '../../../api/apiURL';
+
 export const EditarInformacion = () => {
 
     const { id } = useParams();
@@ -22,7 +24,7 @@ export const EditarInformacion = () => {
         const fetchData = async () => {
 
             try {
-                const response = await axios.get(`https://localhost:7106/api/bdtbinformacion/buscarporexpediente`, {
+                const response = await axios.get(`${baseURL}/bdtbinformacion/buscarporexpediente`, {
                     params: { NumExpediente: id }
                 });
 
@@ -58,7 +60,7 @@ export const EditarInformacion = () => {
 
             console.log(formData)
 
-            await axios.put(`https://localhost:7106/api/bdtbinformacion/actualizar/${formData.codInfo}`, formData);
+            await axios.put(`${baseURL}/bdtbinformacion/actualizar/${formData.codInfo}`, formData);
 
             notification.success({
                 message: '¡Éxito!',

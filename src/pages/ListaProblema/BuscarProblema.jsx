@@ -6,6 +6,8 @@ import { Table, Button, Input, Space } from 'antd';
 import { FileSearchOutlined, FilePdfOutlined } from '@ant-design/icons';
 import { Spinner } from 'react-bootstrap';
 
+import { baseURL } from '../../api/apiURL';
+
 export const BuscarProblema = () => {
     const [problemas, setProblemas] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -19,7 +21,7 @@ export const BuscarProblema = () => {
 
     const fetchProblemas = async () => {
         try {
-            const response = await axios.get('https://localhost:7106/api/bdtblistaproblema/listar');
+            const response = await axios.get(`${baseURL}/bdtblistaproblema/listar`);
             setProblemas(response.data);
         } catch (error) {
             setErrors(error.response ? error.response.data : 'Error fetching data');

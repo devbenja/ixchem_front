@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Table, Button, Input, Space } from 'antd';
 import { EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import { Modal, Form } from 'react-bootstrap';
+import { baseURL } from '../../api/apiURL';
 
 export const Doctores = () => {
     const [doctores, setDoctores] = useState([]);
@@ -19,7 +20,7 @@ export const Doctores = () => {
 
     const fetchDoctores = async () => {
         try {
-            const response = await axios.get('https://localhost:7106/api/bdtdoctor/listar');
+            const response = await axios.get(`${baseURL}/bdtdoctor/listar`);
             setDoctores(response.data);
         } catch (error) {
             setErrors(error.response ? error.response.data : 'Error fetching data');
@@ -33,7 +34,7 @@ export const Doctores = () => {
 
             doctor.edad = Number(doctor.edad);
 
-            const response = await axios.post('https://localhost:7106/api/bdtdoctor/post', doctor);
+            const response = await axios.post(`${baseURL}/bdtdoctor/post`, doctor);
 
             setDoctores([...doctores, response.data]);
             setModalVisible(false);
@@ -44,7 +45,7 @@ export const Doctores = () => {
 
     const updateDoctor = async (id, updatedDoctor) => {
         try {
-            const response = await axios.put(`https://localhost:7106/api/bdtdoctor/actualizar/${id}`, updatedDoctor);
+            const response = await axios.put(`${baseURL}/bdtdoctor/actualizar/${id}`, updatedDoctor);
             setDoctores(doctores.map(d => (d.codDoctor === id ? response.data : d)));
             setEditDoctor(null);
             setModalVisible(false);
@@ -55,7 +56,7 @@ export const Doctores = () => {
 
     const deleteDoctor = async (id) => {
         try {
-            await axios.delete(`https://localhost:7106/api/bdtdoctor/eliminar/${id}`);
+            await axios.delete(`${baseURL}/bdtdoctor/eliminar/${id}`);
             setDoctores(doctores.filter(d => d.codDoctor !== id));
         } catch (error) {
             setErrors(error.response ? error.response.data : 'Error deleting data');
