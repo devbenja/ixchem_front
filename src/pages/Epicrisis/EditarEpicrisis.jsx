@@ -115,7 +115,7 @@ export const EditarEpicrisis = () => {
   return (
     <div className="container-fluid">
       <div className="d-flex justify-content-between align-items-center">
-        <h4>Editar Nota de Evolución</h4>
+        <h4>Editar Epicrisis</h4>
         <Button onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
       </div>
       <form className='mt-4' onSubmit={handleSubmit}>

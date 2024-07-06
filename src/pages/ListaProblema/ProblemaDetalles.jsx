@@ -362,7 +362,7 @@ export const ProblemaDetalles = () => {
                 <div className='d-flex align-items-center gap-3'>
                     <PDFDownloadLink document={<MyDocument problemas={problemas} />} fileName="problemas.pdf">
                         {({ blob, url, loading, error }) =>
-                            loading ? 'Cargando documento...' : <FilePdfOutlined style={{ fontSize: '23px', color: 'red' }} />
+                            loading ? 'Cargando documento...' : <Button><FilePdfOutlined style={{ fontSize: '20px', color: 'red' }}/>Exportar a PDF</Button>
                         }
                     </PDFDownloadLink>
                     <Button onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>

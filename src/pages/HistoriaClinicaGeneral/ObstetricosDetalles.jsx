@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
 
 import { Table, Button, Space, Modal, notification } from 'antd';
-import { FileSearchOutlined, EditOutlined, DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
+import { FileSearchOutlined, EditOutlined, DeleteOutlined, ExclamationCircleOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 
 import { useAuth } from '../../context/AuthContext';
 import { baseURL } from '../../api/apiURL';
@@ -127,6 +127,10 @@ export const ObstetricosDetalles = () => {
         });
     };
 
+    const handleBack = () => {
+        navigate('/buscar-historia-clinica-general');
+    }
+
     if (loading) return (
         <div className="d-flex justify-content-center">
             <Spinner animation="border" role="status" />
@@ -135,11 +139,14 @@ export const ObstetricosDetalles = () => {
 
     return (
         <div className="container-fluid">
-            <h4 className='mb-4'>Antecedentes Obstetricos del Expediente: {numExpediente}</h4>
+            <div className='container-fluid d-flex align-items-center justify-content-between'>
+                <h4>Antecedentes Obstetricos del Expediente: {numExpediente}</h4>
+                <Button style={{ backgroundColor: 'red', color: 'white' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
+            </div>
             <Table
                 responsive={true}
                 pagination={{ pageSize: 7 }}
-                className='custom-table'
+                className='custom-table mt-4'
                 columns={columns}
                 dataSource={obstetricos}
                 rowKey="codHojariesgo" 

@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { notification } from "antd";
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import { Button } from "antd";
+import { ArrowLeftOutlined } from '@ant-design/icons';
 
 import { baseURL } from '../../api/apiURL';
 
 export const EditHistoriaClinicaGeneral = () => {
 
     const { id } = useParams();
-
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         numExpediente: "",
         codDoctor: "",
@@ -90,10 +92,18 @@ export const EditHistoriaClinicaGeneral = () => {
 
     }
 
+    const handleBack = () => {
+        navigate(`/historias-generales/${formData.numExpediente}`);
+    }
+
     return (
         <div className="container-fluid">
-            <h4>Editar Historia Clinica General</h4>
-            <form className='mt-4' onSubmit={handleSubmit}>
+            <div className='container-fluid d-flex align-items-center justify-content-between'>
+                <h4>Editar Historia Clinica General</h4>
+                <Button style={{ backgroundColor: 'red', color: 'white' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
+            </div>
+
+            <form className='container-fluid mt-4' onSubmit={handleSubmit}>
                 <div className="row mb-3">
                     <div className="col-sm-3">
                         <label className="form-label">Número de expediente</label>

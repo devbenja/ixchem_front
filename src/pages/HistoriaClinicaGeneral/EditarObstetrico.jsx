@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { notification } from "antd";
+import { notification, Button } from "antd";
+import { ArrowLeftOutlined } from '@ant-design/icons';
 
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import { baseURL } from '../../api/apiURL';
 
 export const EditarObstetrico = () => {
 
     const { id } = useParams();
-
+    const navigate = useNavigate();
     const [obstetrico, setObstetrico] = useState({
         codHojariesgo: 0,
         muerteFetal: false,
@@ -88,10 +89,17 @@ export const EditarObstetrico = () => {
 
     }
 
+    const handleBack = () => {
+        navigate(`/obstetricos/${obstetrico.numExpediente}`);
+    }
+
     return (
         <div className="container-fluid">
-            <h4>Editar Antecedente Obstetrico</h4>
-
+            <div className='container-fluid d-flex align-items-center justify-content-between'>
+                <h4>Editar Antecedente Obstetrico</h4>
+                <Button style={{ backgroundColor: 'red', color: 'white'}} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
+            </div>
+            
             <form className='mt-4' onSubmit={handleSubmitObs}>
                 <div className="row mb-3">
                     

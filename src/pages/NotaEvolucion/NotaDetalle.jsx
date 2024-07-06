@@ -72,7 +72,7 @@ export const NotaDetalle = () => {
             render: (text, record) => (
                 <Space size="middle">
                     <Button icon={<FileSearchOutlined />} onClick={() => handleRowClick(record.coD_NOTA)} />
-                    <Button icon={<EditOutlined />} onClick={() => handleEdit(record.coD_NOTA)} />
+                    {/* <Button icon={<EditOutlined />} onClick={() => handleEdit(record.coD_NOTA)} /> */}
 
                     {user && user.codRol === 1 && (
                         <Button icon={<DeleteOutlined />} onClick={() => showDeleteConfirm(record.coD_NOTA)} />

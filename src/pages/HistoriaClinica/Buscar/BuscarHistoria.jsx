@@ -387,6 +387,26 @@ export const BuscarHistoria = () => {
                     params: { cedula: searchValue }
                 });
 
+                // antPerData = await axios.get(`${baseURL}/bdtbantecedentespersonale/buscarporexpediente`, {
+                //     params: { cedula: searchValue }
+                // });
+
+                // antPatPerData = await axios.get(`${baseURL}/bdtbaantecedentepatper/buscarporexpediente`, {
+                //     params: { cedula: searchValue }
+                // });
+
+                // antPatFamData = await axios.get(`${baseURL}/bdtbantecedentepatfam/buscarporexpediente`, {
+                //     params: { cedula: searchValue }
+                // });
+
+                // infoData = await axios.get(`${baseURL}/bdtbinformacion/buscarporexpediente`, {
+                //     params: { cedula: searchValue }
+                // });
+
+                // unidosData = await axios.get(`${baseURL}/bdtpaciente/buscarpornumexpedienteunidos`, {
+                //     params: { cedula: searchValue }
+                // });
+
             }
 
             setPaciente(response.data);

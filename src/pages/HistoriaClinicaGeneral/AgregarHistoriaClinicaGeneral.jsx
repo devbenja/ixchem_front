@@ -10,12 +10,13 @@ export const AgregarHistoriaClinicaGeneral = () => {
     const [searchValue, setSearchValue] = useState('');
     const [firstName, setFirstName] = useState('');
     const [firstLastName, setFirstLastName] = useState('');
+
     const [data, setData] = useState({
-        primerNombre: '',
-        segundoNombre: '',
-        primerApellido: '',
-        segundoApellido: '',
-        numExpediente: '',
+        primeR_NOMBRE: '',
+        segundO_NOMBRE: '',
+        primeR_APELLIDO: '',
+        segundO_APELLIDO: '',
+        nuM_EXPEDIENTE: '',
         direccion: ''
     });
 
@@ -62,17 +63,18 @@ export const AgregarHistoriaClinicaGeneral = () => {
 
         let response;
 
-        console.log(searchValue)
-
         try {
 
             if (searchType === 'num_expediente') {
+                console.log(searchValue )
 
-                response = await axios.get(`${baseURL}/bdtpaciente/buscarpornumexpediente`, {
-                    params: { NumExpediente: searchValue }
+                response = await axios.get(`${baseURL}/bdtpaciente/buscarpornumexpedienteunidos`, {
+                    params: { NUM_EXPEDIENTE: searchValue }
                 })
 
             } else if (searchType === 'nombre') {
+
+                console.log(firstName)
 
                 response = await axios.get(`${baseURL}/bdtpaciente/Buscarpacienteunidosnombre`, {
                     params: { PRIMER_NOMBRE: firstName, PRIMER_APELLIDO: firstLastName }
@@ -80,29 +82,30 @@ export const AgregarHistoriaClinicaGeneral = () => {
 
             }
 
-            const result = response.data;
+            const result = response.data[0];
             setData(result);
 
+            console.log(result)
             setFormData(prevFormData => ({
                 ...prevFormData,
-                numExpediente: result.numExpediente
+                numExpediente: result.nuM_EXPEDIENTE
             }));
 
             setObstetrico(prevObstetrico => ({
                 ...prevObstetrico,
-                numExpediente: result.numExpediente
+                numExpediente: result.nuM_EXPEDIENTE
             }));
 
             setActual(prevActual => ({
                 ...prevActual,
-                numExpediente: result.numExpediente
+                numExpediente: result.nuM_EXPEDIENTE
             }));
 
         } catch (error) {
 
             notification.error({
                 message: '¡Error!',
-                description: `${error.response.data}`,
+                description: `${error.response?.data ?? 'Error desconocido'}`,
                 duration: 3
             });
 
@@ -247,34 +250,50 @@ export const AgregarHistoriaClinicaGeneral = () => {
                 <h4 className='mb-2'>Agregar Clasificación de Riesgo</h4>
             </div>
             <form onSubmit={handleSubmitSearch} className="container-fluid mt-4 mb-3">
-                <div className="row g-3">
+                <div className="row">
                     <div className="col-sm-3">
-                        <select className="form-select" value={searchType} onChange={(e) => setSearchType(e.target.value)}>
+                        <select
+                            className="form-select"
+                            value={searchType}
+                            onChange={(e) => setSearchType(e.target.value)}>
                             <option value="">Seleccionar Opcion</option>
                             <option value="num_expediente">Numero Expediente</option>
                             <option value="nombre">Nombre</option>
                         </select>
                     </div>
-                    <div className="col-sm-9 d-flex">
-                        <div className="input-group" role="search">
+                    <div className="col-sm-9">
+                        <div className="input-group gap-2" role="search">
                             {searchType === 'nombre' ? (
-                                <div className="d-flex gap-2">
-                                    <div className="d-flex align-items-center justify-content-center">
-                                        <label>Primer Nombre</label>
-                                        <input className="form-control" type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                                <div className="row d-flex flex-wrap w-75">
+                                    <div className="col d-flex align-items-center justify-content-center">
+                                        
+                                        <input
+                                            className="form-control"
+                                            type="search" value={firstName}
+                                            onChange={(e) => setFirstName(e.target.value)}
+                                            aria-label="Search"
+                                            placeholder='Primer Nombre'
+                                        />
                                     </div>
-                                    <div className="d-flex align-items-center justify-content-center">
-                                        <label>Primer Apellido</label>
-                                        <input className="form-control" type="text" value={firstLastName} onChange={(e) => setFirstLastName(e.target.value)} />
+                                    <div className="col d-flex align-items-center justify-content-center">
+                                        
+                                        <input
+                                            className="form-control"
+                                            type="search" value={firstLastName}
+                                            onChange={(e) => setFirstLastName(e.target.value)}
+                                            aria-label="Search"
+                                            placeholder='Primer Apellido'
+                                        />
                                     </div>
                                 </div>
                             ) : (
                                 <input
-                                    className="form-control me-2"
+                                    className="form-control"
                                     maxLength="80"
                                     type="search"
                                     aria-label="Search"
                                     value={searchValue} onChange={(e) => setSearchValue(e.target.value)}
+                                    placeholder='Numero de expediente'
                                 />
                             )}
 
@@ -303,19 +322,19 @@ export const AgregarHistoriaClinicaGeneral = () => {
                             <div className="row mb-3">
                                 <div className="col-sm-3">
                                     <label className="form-label">Primer Nombre</label>
-                                    <input type="text" name="primerNombre" value={data.primerNombre} onChange={handleChange} className="form-control" />
+                                    <input type="text" name="primeR_NOMBRE" value={data.primeR_NOMBRE} onChange={handleChange} className="form-control" />
                                 </div>
                                 <div className="col-sm-3">
                                     <label className="form-label">Segundo Nombre</label>
-                                    <input type="text" name="segundoNombre" value={data.segundoNombre} onChange={handleChange} className="form-control" />
+                                    <input type="text" name="segundO_NOMBRE" value={data.segundO_NOMBRE} onChange={handleChange} className="form-control" />
                                 </div>
                                 <div className="col-sm-3">
                                     <label className="form-label">Primer Apellido</label>
-                                    <input type="text" name="primerApellido" value={data.primerApellido} onChange={handleChange} className="form-control" />
+                                    <input type="text" name="primeR_APELLIDO" value={data.primeR_APELLIDO} onChange={handleChange} className="form-control" />
                                 </div>
                                 <div className="col-sm-3">
                                     <label className="form-label">Segundo Apellido</label>
-                                    <input type="text" name="segundoApellido" value={data.segundoApellido} onChange={handleChange} className="form-control" />
+                                    <input type="text" name="segundO_APELLIDO" value={data.segundO_APELLIDO} onChange={handleChange} className="form-control" />
                                 </div>
                                 <div className="col-sm-3 mt-3">
                                     <label className="form-label">Número de expediente</label>
@@ -568,7 +587,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
                                     <label className="form-label">Número de expediente</label>
                                     <input type="text" name="numExpediente" value={formData.numExpediente} onChange={handleChange} className="form-control" />
                                 </div>
-                                
+
                                 <div className="col-sm-3 mt-3">
                                     <label className="form-label">Diagnostico</label>
                                     <div className='d-flex align-items-center justify-content-center form-control'>

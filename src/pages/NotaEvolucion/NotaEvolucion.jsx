@@ -184,13 +184,13 @@ export const NotaEvolucion = () => {
                 <h4 className='mb-4'>Nota de Evolución</h4>
 
                 <div className='gap-2 d-flex'>
-                    <Button>
-                        <EditOutlined style={{ fontSize: '20px', color: 'blue' }} onClick={handleEdit} />
+                    <Button onClick={handleEdit}>
+                        <EditOutlined style={{ fontSize: '20px', color: 'blue' }}  /> Editar
                     </Button>
 
                     <PDFDownloadLink document={<MyDocument formData={formData} />} fileName="problemas.pdf">
                         {({ loading }) =>
-                            loading ? 'Cargando documento...' : <Button><FilePdfOutlined style={{ fontSize: '20px', color: 'red' }} /></Button>
+                            loading ? 'Cargando documento...' : <Button><FilePdfOutlined style={{ fontSize: '20px', color: 'red' }} />Exportar a PDF</Button>
                         }
                     </PDFDownloadLink>
                     <Button onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>

@@ -22,6 +22,7 @@ export const BuscarProblema = () => {
     const fetchProblemas = async () => {
         try {
             const response = await axios.get(`${baseURL}/bdtblistaproblema/listar`);
+            console.log(response.data)
             setProblemas(response.data);
         } catch (error) {
             setErrors(error.response ? error.response.data : 'Error fetching data');
@@ -34,14 +35,14 @@ export const BuscarProblema = () => {
         setSearchTerm(event.target.value);
     };
 
-    const handleRowClick = (numExpediente) => {
-        navigate(`/problemas/${numExpediente}`);
+    const handleRowClick = (nuM_EXPEDIENTE) => {
+        navigate(`/problemas/${nuM_EXPEDIENTE}`);
     };
 
     const filteredProblemas = problemas
-        .filter(problema => problema.numExpediente && problema.numExpediente.includes(searchTerm))
+        .filter(problema => problema.nuM_EXPEDIENTE && problema.nuM_EXPEDIENTE.includes(searchTerm))
         .reduce((acc, problema) => {
-            if (!acc.find(p => p.numExpediente === problema.numExpediente)) {
+            if (!acc.find(p => p.nuM_EXPEDIENTE === problema.nuM_EXPEDIENTE)) {
                 acc.push(problema);
             }
             return acc;
@@ -49,15 +50,18 @@ export const BuscarProblema = () => {
 
     const columns = [
         {
-            title: 'Nombre del Problema',
-            dataIndex: 'nombreProblema',
-            key: 'nombreProblema',
+            title: 'Nombre del Paciente',
+            dataIndex: 'primeR_NOMBRE',
+            key: 'primeR_NOMBRE',
+            render: (text, record) => (
+                <div>{record.primeR_NOMBRE} {record.primeR_APELLIDO}</div>
+            ),
         },
         {
             title: 'Número de Expediente',
-            dataIndex: 'numExpediente',
-            key: 'numExpediente',
-            render: (numExpediente) => <a>{numExpediente}</a>
+            dataIndex: 'nuM_EXPEDIENTE',
+            key: 'nuM_EXPEDIENTE',
+            render: (nuM_EXPEDIENTE) => <a>{nuM_EXPEDIENTE}</a>
         },
         {
             title: 'Acciones',
@@ -99,9 +103,9 @@ export const BuscarProblema = () => {
                 className='custom-table'
                 columns={columns}
                 dataSource={filteredProblemas}
-                rowKey="codProblemas"
+                rowKey="coD_PROBLEMAS"
                 onRow={(record) => ({
-                    onClick: () => handleRowClick(record.numExpediente),
+                    onClick: () => handleRowClick(record.nuM_EXPEDIENTE),
                 })}
             />
         </div>

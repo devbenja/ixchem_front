@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
 
 import { Table, Button, Space, Modal, notification } from 'antd';
-import { FileSearchOutlined, EditOutlined, DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
+import { FileSearchOutlined, EditOutlined, DeleteOutlined, ExclamationCircleOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 
 import { useAuth } from '../../context/AuthContext';
 import { baseURL } from '../../api/apiURL';
@@ -74,7 +74,7 @@ export const HistoriasCG = () => {
                     <Button icon={<EditOutlined />} onClick={(e) => { e.stopPropagation(); handleEdit(record.coD_HISTORIA_CLINICA); }} />
 
                     {user && user.codRol === 1 && (
-                        <Button icon={<DeleteOutlined onClick={(e) => { e.stopPropagation(); showDeleteConfirm(record.coD_HISTORIA_CLINICA); }} />}/>
+                        <Button icon={<DeleteOutlined onClick={(e) => { e.stopPropagation(); showDeleteConfirm(record.coD_HISTORIA_CLINICA); }} />} />
                     )}
                 </Space>
             ),
@@ -130,9 +130,17 @@ export const HistoriasCG = () => {
         });
     };
 
+
+    const handleBack = () => {
+        navigate('/buscar-historia-clinica-general');
+    }
+
     return (
         <div className='container-fluid'>
-            <h3>Historias Clinicas Generales del Expediente: {numExpediente}</h3>
+            <div className="container-fluid d-flex justify-content-between align-items-center">
+                <h3>Historias Clinicas Generales del Expediente: {numExpediente}</h3>
+                <Button style={{ backgroundColor: 'red', color: 'white'}} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
+            </div>
             <Table
                 columns={columnHCG}
                 rowKey="coD_HISTORIA_CLINICA"

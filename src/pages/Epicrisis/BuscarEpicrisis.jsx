@@ -43,14 +43,14 @@ export const BuscarEpicrisis = () => {
         setSearchTerm(event.target.value);
     };
 
-    const handleRowClick = (numExpediente) => {
-        navigate(`/epicrisis/${numExpediente}`);
+    const handleRowClick = (nuM_EXPEDIENTE) => {
+        navigate(`/epicrisis/${nuM_EXPEDIENTE}`);
     };
 
     const filteredEpicrisis = epicrisis
-        .filter(epicrisi => epicrisi.numExpediente && epicrisi.numExpediente.includes(searchTerm))
+        .filter(epicrisi => epicrisi.nuM_EXPEDIENTE && epicrisi.nuM_EXPEDIENTE.includes(searchTerm))
         .reduce((acc, epicrisi) => {
-            if (!acc.find(e => e.numExpediente === epicrisi.numExpediente)) {
+            if (!acc.find(e => e.nuM_EXPEDIENTE === epicrisi.nuM_EXPEDIENTE)) {
                 acc.push(epicrisi);
             }
             return acc;
@@ -63,10 +63,18 @@ export const BuscarEpicrisis = () => {
             key: 'fecha',
         },
         {
+            title: 'Nombre del Paciente',
+            dataIndex: 'primeR_NOMBRE',
+            key: 'primeR_NOMBRE',
+            render: (text, record) => (
+                <div>{record.primeR_NOMBRE} {record.primeR_APELLIDO}</div>
+            ),
+        },
+        {
             title: 'No. de Expediente',
-            dataIndex: 'numExpediente',
-            key: 'numExpediente',
-            render: (numExpediente) => <a>{numExpediente}</a>
+            dataIndex: 'nuM_EXPEDIENTE',
+            key: 'nuM_EXPEDIENTE',
+            render: (nuM_EXPEDIENTE) => <a>{nuM_EXPEDIENTE}</a>
         },
         {
             title: 'Acciones',
@@ -108,9 +116,9 @@ export const BuscarEpicrisis = () => {
                 className='custom-table'
                 columns={columns}
                 dataSource={filteredEpicrisis}
-                rowKey="codEpicrisis"
+                rowKey="coD_EPICRISIS"
                 onRow={(record) => ({
-                    onClick: () => handleRowClick(record.numExpediente),
+                    onClick: () => handleRowClick(record.nuM_EXPEDIENTE),
                 })}
             />
         </div>

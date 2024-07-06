@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { notification, Table } from "antd";
-import { useParams } from 'react-router-dom';
+import { Button, Table } from "antd";
+import { useParams, useNavigate } from 'react-router-dom';
+import { ArrowLeftOutlined } from '@ant-design/icons';
 
 import { baseURL } from '../../api/apiURL';
 
@@ -9,6 +10,7 @@ export const HistoriaIndividual = () => {
 
     const { codHistoriaClinica } = useParams();
     const [formData, setFormData] = useState({});
+    const navigate = useNavigate();
 
     useEffect(() => {
 
@@ -91,9 +93,16 @@ export const HistoriaIndividual = () => {
         },
     ]
 
+    const handleBack = () => {
+        navigate(`/historias-generales/${formData.numExpediente}`);
+    }
+
   return (
     <div className='container-fluid'>
-        <h4>Historia Clinica General</h4>
+        <div className='container-fluid d-flex align-items-center justify-content-between'>
+            <h4>Historia Clinica General</h4>
+            <Button style={{ backgroundColor: 'red', color: 'white'}} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
+        </div>
         <Table columns={columns1}  dataSource={[formData]} className='custom-table mt-4' pagination={false}/>
         <Table columns={columns2}  dataSource={[formData]} className='custom-table mt-4' pagination={false}/>
     </div>

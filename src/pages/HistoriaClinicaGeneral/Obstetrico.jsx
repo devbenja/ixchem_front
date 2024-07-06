@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { notification, Table } from "antd";
-import { useParams } from 'react-router-dom';
+import { Table, Button } from "antd";
+import { useParams, useNavigate } from 'react-router-dom';
+import { ArrowLeftOutlined } from '@ant-design/icons';
+
 
 import { baseURL } from '../../api/apiURL';
 
@@ -10,6 +12,7 @@ export const Obstetrico = () => {
 
     const { id } = useParams();
     const [formData, setFormData] = useState({});
+    const navigate = useNavigate();
 
     useEffect(() => {
 
@@ -53,7 +56,7 @@ export const Obstetrico = () => {
                 return cirugiasPrevias ? 'Sí' : 'No';
             }
         },
-        
+
     ]
 
     const columns2 = [
@@ -91,11 +94,18 @@ export const Obstetrico = () => {
         },
     ]
 
-  return (
-    <div className='container-fluid'>
-        <h4>Antecedente Obstetrico</h4>
-        <Table columns={columns1}  dataSource={[formData]} className='custom-table mt-4' pagination={false}/>
-        <Table columns={columns2}  dataSource={[formData]} className='custom-table mt-4' pagination={false}/>
-    </div>
-  )
+    const handleBack = () => {
+        navigate(`/obstetricos/${formData.numExpediente}`);
+    }
+
+    return (
+        <div className='container-fluid'>
+            <div className='container-fluid d-flex align-items-center justify-content-between'>
+                <h4>Antecedente Obstetrico</h4>
+                <Button style={{ backgroundColor: 'red', color: 'white' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
+            </div>
+            <Table columns={columns1} dataSource={[formData]} className='custom-table mt-4' pagination={false} />
+            <Table columns={columns2} dataSource={[formData]} className='custom-table mt-4' pagination={false} />
+        </div>
+    )
 }

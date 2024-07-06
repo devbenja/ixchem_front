@@ -19,7 +19,6 @@ export const EditarNota = () => {
         temperatura: 0,
         talla: 0,
         peso: 0,
-        imc: 0,
         frecCardiaca: 0,
         frecResp: 0,
         notaEvolucion1: "",
@@ -178,17 +177,7 @@ export const EditarNota = () => {
                             value={formData.presion}
                         />
                     </div>
-                    <div className="col-sm-3">
-                        <label htmlFor="segundoApellido" className="form-label">IMC*</label>
-                        <input
-                            type="number"
-                            className="form-control"
-                            name="imc"
-                            onChange={handleChange}
-                            value={formData.imc}
-                        />
-                    </div>
-
+                    
                     <div className="col-sm-3">
                         <label htmlFor="segundoApellido" className="form-label">No. Nota</label>
                         <input

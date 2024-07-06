@@ -91,7 +91,7 @@ export const App = () => {
                 icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
               />
               {isAuth && (
-                <Button onClick={logout} style={{ marginRight: '16px' }}>
+                <Button onClick={logout} style={{ marginRight: '40px', backgroundColor: 'red', color: 'white' }}>
                   <LogoutOutlined/>Cerrar Sesión
                 </Button>
               )}

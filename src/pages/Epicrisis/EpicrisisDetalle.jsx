@@ -79,8 +79,8 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center', 
-        justifyContent: 'center', 
+        alignItems: 'center',
+        justifyContent: 'center',
         gap: 5
     },
     textDoctor: {
@@ -334,33 +334,39 @@ export const EpicrisisDetalle = () => {
         navigate(`/epicrisis/${formData.nuM_EXPEDIENTE}`)
     }
 
+    const handleEdit = () => {
+        navigate(`/editar-epicrisis/${formData.coD_EPICRISIS}`);
+    };
+
     return (
         <div className="container-fluid">
-            <div className='d-flex justify-content-between'>
+            <div className='container-fluid d-flex justify-content-between'>
                 <h4 className='mb-4'>Epicrisis</h4>
 
                 <div className='gap-2 d-flex'>
-                    <Button>
-                        <EditOutlined style={{ fontSize: '20px', color: 'blue' }} />
+                    <Button onClick={handleEdit}>
+                        <EditOutlined style={{ fontSize: '20px', color: 'blue' }} />Editar
                     </Button>
 
                     <PDFDownloadLink document={<MyDocument formData={formData} />} fileName="problemas.pdf">
                         {({ loading }) =>
-                            loading ? 'Cargando documento...' : <Button><FilePdfOutlined style={{ fontSize: '20px', color: 'red' }} /></Button>
+                            loading ? 'Cargando documento...' : <Button><FilePdfOutlined style={{ fontSize: '20px', color: 'red' }} />Exportar a PDF</Button>
                         }
                     </PDFDownloadLink>
 
-                    <Button onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
+                    <Button style={{ backgroundColor: 'red', color: 'white' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
                 </div>
             </div>
 
-            <Table className='custom-table' dataSource={[formData]} columns={columPaciente} pagination={false} />
-            <Table className='custom-table mt-3' dataSource={[formData]} columns={column1} pagination={false} />
-            <Table className='custom-table mt-3' dataSource={[formData]} columns={column2} pagination={false} />
-            <Table className='custom-table mt-3' dataSource={[formData]} columns={column3} pagination={false} />
-            <Table className='custom-table mt-3' dataSource={[formData]} columns={column4} pagination={false} />
-            <Table className='custom-table mt-3' dataSource={[formData]} columns={column5} pagination={false} />
-            <Table className='custom-table mt-3' dataSource={[formData]} columns={columnaDoctor} pagination={false} />
+            <div className='container-fluid'>
+                <Table className='custom-table' dataSource={[formData]} columns={columPaciente} pagination={false} />
+                <Table className='custom-table mt-3' dataSource={[formData]} columns={column1} pagination={false} />
+                <Table className='custom-table mt-3' dataSource={[formData]} columns={column2} pagination={false} />
+                <Table className='custom-table mt-3' dataSource={[formData]} columns={column3} pagination={false} />
+                <Table className='custom-table mt-3' dataSource={[formData]} columns={column4} pagination={false} />
+                <Table className='custom-table mt-3' dataSource={[formData]} columns={column5} pagination={false} />
+                <Table className='custom-table mt-3' dataSource={[formData]} columns={columnaDoctor} pagination={false} />
+            </div>
         </div>
     )
 }
