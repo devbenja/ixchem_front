@@ -24,6 +24,27 @@ export const EditHistoriaClinicaGeneral = () => {
         fecha: ""
     });
 
+    const [doctors, setDoctors] = useState([]);
+
+    useEffect(() => {
+        const fetchDoctors = async () => {
+            try {
+                const response = await axios.get(`${baseURL}/bdtdoctor/listar`);
+                setDoctors(response.data);
+            } catch (error) {
+                console.error("Error fetching doctors: ", error);
+                notification.error({
+                    message: '¡Error!',
+                    description: 'Error al cargar la lista de doctores',
+                    duration: 3
+                });
+            }
+        };
+
+        fetchDoctors();
+
+    }, []);
+
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
         setFormData({
@@ -109,9 +130,25 @@ export const EditHistoriaClinicaGeneral = () => {
                         <label className="form-label">Número de expediente</label>
                         <input type="text" name="numExpediente" value={formData.numExpediente} onChange={handleChange} className="form-control" />
                     </div>
-                    <div className="col-sm-3">
+                    {/* <div className="col-sm-3">
                         <label className="form-label">Codigo Doctor</label>
                         <input type="text" name="codDoctor" value={formData.codDoctor} onChange={handleChange} className="form-control" />
+                    </div> */}
+                    <div className="col-sm-3">
+                        <label htmlFor="codDoctor" className="form-label">Codigo Doctor*</label>
+                        <select
+                            className="form-control"
+                            name="codDoctor"
+                            onChange={handleChange}
+                            value={formData.codDoctor}
+                        >
+                            <option value="">Seleccione un Doctor</option>
+                            {doctors.map(doctor => (
+                                <option key={doctor.codDoctor} value={doctor.codDoctor}>
+                                    {doctor.primerNombred} {doctor.primerApellidod}
+                                </option>
+                            ))}
+                        </select>
                     </div>
                     <div className="col-sm-3">
                         <label className="form-label">Fecha</label>

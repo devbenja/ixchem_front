@@ -3,7 +3,8 @@ import './Buscar.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Table, message, notification } from 'antd';
+import { Table, message, notification, Button } from 'antd';
+import { FilePdfOutlined } from '@ant-design/icons'
 
 import { Page, Text, View, Document, StyleSheet, PDFViewer, PDFDownloadLink } from '@react-pdf/renderer';
 
@@ -920,7 +921,7 @@ export const BuscarHistoria = () => {
                         document={<MyDocument data={data} />}
                         fileName="informe_paciente.pdf"
                     >
-                        {({ loading }) => (loading ? 'Generando PDF...' : 'Descargar PDF')}
+                        {({ loading }) => (loading ? 'Generando PDF...' : <Button><FilePdfOutlined style={{ fontSize: '20px', color: 'red' }} />Exportar a PDF</Button>)}
                     </PDFDownloadLink>
 
                 </div>

@@ -55,15 +55,23 @@ export const BuscarNota = () => {
             render: (nuM_EXPEDIENTE) => <a>{nuM_EXPEDIENTE}</a>,
         },
         {
-            title: 'Código de Nota',
-            dataIndex: 'coD_NOTA',
-            key: 'coD_NOTA',
+            title: 'Nombre del Paciente',
+            dataIndex: 'primeR_NOMBRE',
+            key: 'primeR_NOMBRE',
+            render: (text, record) => (
+                <div>{record.primeR_NOMBRE} {record.primeR_APELLIDO}</div>
+            ),
         },
-        {
-            title: 'Código de Doctor',
-            dataIndex: 'coD_DOCTOR',
-            key: 'coD_DOCTOR',
-        },
+        // {
+        //     title: 'Código de Nota',
+        //     dataIndex: 'coD_NOTA',
+        //     key: 'coD_NOTA',
+        // },
+        // {
+        //     title: 'Código de Doctor',
+        //     dataIndex: 'coD_DOCTOR',
+        //     key: 'coD_DOCTOR',
+        // },
         {
             title: 'Acciones',
             key: 'acciones',

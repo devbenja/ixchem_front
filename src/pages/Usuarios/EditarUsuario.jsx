@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { notification } from "antd";
-import { useParams } from "react-router-dom";
+import { notification, Button } from "antd";
+import { useParams, useNavigate } from "react-router-dom";
+import { ArrowLeftOutlined } from '@ant-design/icons';
 
 import { baseURL } from "../../api/apiURL";
 
 export const EditarUsuario = () => {
 
     const { codAdmin } = useParams();
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         codAdmin: 0,
@@ -86,10 +88,19 @@ export const EditarUsuario = () => {
 
     };
 
+    const handleBack = () => {
+        navigate('/buscar-usuario');
+    }
+
+
     return (
         <div className="container-fluid">
-            <h4>Editar Usuario</h4>
-            <form className='mt-4' onSubmit={handleSubmit}>
+            <div className="container-fluid d-flex align-items-center justify-content-between">
+                <h4>Editar Usuario</h4>
+                <Button style={{ backgroundColor: 'red', color: 'white' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
+            </div>
+            
+            <form className='container-fluid mt-4' onSubmit={handleSubmit}>
                 <div className="row mb-3">
                     <div className="col">
                         <label className="form-label">Nombre</label>

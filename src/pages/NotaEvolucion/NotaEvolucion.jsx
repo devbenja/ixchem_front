@@ -193,7 +193,7 @@ export const NotaEvolucion = () => {
                             loading ? 'Cargando documento...' : <Button><FilePdfOutlined style={{ fontSize: '20px', color: 'red' }} />Exportar a PDF</Button>
                         }
                     </PDFDownloadLink>
-                    <Button onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
+                    <Button style={{ backgroundColor: 'red', color: 'white' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
                 </div>
             </div>
             <Table className='custom-table' dataSource={[formData]} columns={column1} />

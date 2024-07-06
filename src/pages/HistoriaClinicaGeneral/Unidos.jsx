@@ -93,7 +93,7 @@ export const Unidos = () => {
         <div className="container-fluid">
             <div className="container-fluid d-flex justify-content-between align-items-center">
                 <h4>Clasificación de Riesgo del Expediente: {id}</h4>
-                <Button onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
+                <Button style={{ backgroundColor: 'red', color: 'white' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
             </div>
             <Table 
                 className="custom-table mt-4"
