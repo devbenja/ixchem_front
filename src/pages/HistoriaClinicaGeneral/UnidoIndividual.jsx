@@ -416,9 +416,19 @@ const MyDocument = ({ data }) => (
             <Text style={styles.textWar}>Si la respuesta es NO, será atendida en Atención de Bajo Riesgo.</Text>
 
             <View style={styles.footer}>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Fecha:</Text>
-                    <Text style={styles.valueExp}>{data.fecha}</Text>
+                <View style={styles.twoValues}>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Fecha:</Text>
+                        <Text style={styles.valueExp}>{data.fecha}</Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Nombre:</Text>
+                        <Text style={styles.value}>{data.primeR_NOMBRED} {data.primeR_APELLIDOD}</Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Firma:</Text>
+                        <Text style={styles.valueExp}></Text>
+                    </View>
                 </View>
             </View>
 
