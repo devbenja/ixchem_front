@@ -55,6 +55,11 @@ export const Unidos = () => {
 
     const column = [
         {
+            title: 'Fecha',
+            dataIndex: 'fecha',
+            key: 'fecha',
+        },
+        {
             title: 'Numero de Expediente',
             dataIndex: 'nuM_EXPEDIENTE',
             key: 'nuM_EXPEDIENTE',
