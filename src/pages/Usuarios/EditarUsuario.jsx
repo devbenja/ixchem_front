@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { notification, Button } from "antd";
+import { notification, Button, Modal as AntModal } from "antd";
 import { useParams, useNavigate } from "react-router-dom";
-import { ArrowLeftOutlined } from '@ant-design/icons';
+import { ArrowLeftOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 
 import { baseURL } from "../../api/apiURL";
 
@@ -60,9 +60,7 @@ export const EditarUsuario = () => {
 
     }, [codAdmin]);
 
-    const handleSubmit = async (e) => {
-
-        e.preventDefault();
+    const handleSubmit = async () => {
 
         try {
 
@@ -92,6 +90,24 @@ export const EditarUsuario = () => {
         navigate('/buscar-usuario');
     }
 
+    const showDeleteConfirm = () => {
+
+        AntModal.confirm({
+            centered: true,
+            title: '¿Está seguro de editar este usuario permanentemente? No podrá volver a Editarlo',
+            icon: <ExclamationCircleOutlined />,
+            content: 'Esta acción no se puede deshacer.',
+            okText: 'Sí',
+            okType: 'danger',
+            cancelText: 'No',
+            onOk() {
+                handleSubmit();
+            },
+            onCancel() {
+                console.log('Cancelado');
+            },
+        });
+    };
 
     return (
         <div className="container-fluid">
@@ -100,7 +116,7 @@ export const EditarUsuario = () => {
                 <Button style={{ backgroundColor: 'red', color: 'white' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
             </div>
             
-            <form className='container-fluid mt-4' onSubmit={handleSubmit}>
+            <form className='container-fluid mt-4' onSubmit={(e) => e.preventDefault()}>
                 <div className="row mb-3">
                     <div className="col">
                         <label className="form-label">Nombre</label>
@@ -134,7 +150,7 @@ export const EditarUsuario = () => {
 
                 </div>
                 <div className='mt-4 d-flex gap-2'>
-                    <button type="submit" className="btn btn-primary">Guardar</button>
+                    <button type="submit" onClick={showDeleteConfirm} className="btn btn-primary">Guardar</button>
                     <button type="reset" className="btn btn-danger">Cancelar</button>
                 </div>
             </form>

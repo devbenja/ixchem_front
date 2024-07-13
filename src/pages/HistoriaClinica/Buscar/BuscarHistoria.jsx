@@ -45,7 +45,7 @@ const MyDocument = ({ data }) => (
     <Document>
         <Page size="A4" style={styles.page}>
             <View style={styles.section}>
-                <Text style={styles.header}>Información del Paciente</Text>
+                <Text style={styles.header}>Historia Clínica</Text>
                 <View style={styles.row}>
                     <Text style={styles.label}>Expediente:</Text>
                     <Text style={styles.value}>{data.nuM_EXPEDIENTE}</Text>
@@ -113,6 +113,10 @@ const MyDocument = ({ data }) => (
                 <View style={styles.row}>
                     <Text style={styles.label}>Usuaria:</Text>
                     <Text style={styles.value}>{data.usuaria}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Motivo de Visita:</Text>
+                    <Text style={styles.value}>{data.moT_VISITA}</Text>
                 </View>
             </View>
             <View style={styles.section}>
@@ -214,6 +218,11 @@ const MyDocument = ({ data }) => (
                     <Text style={styles.value}>{data.crioterapia ? 'Sí' : 'No'}</Text>
                 </View>
                 <View style={styles.row}>
+                    <Text style={styles.label}>TermocuagulaciÓn:</Text>
+                    <Text style={styles.value}>{data.thermocuagulacion ? 'Sí' : 'No'}</Text>
+                </View>
+                thermocuagulacion
+                <View style={styles.row}>
                     <Text style={styles.label}>Biopsia:</Text>
                     <Text style={styles.value}>{data.biopasis ? 'Sí' : 'No'}</Text>
                 </View>
@@ -238,7 +247,7 @@ const MyDocument = ({ data }) => (
                     <Text style={styles.value}>{data.cacerut ? 'Sí' : 'No'}</Text>
                 </View>
                 <View style={styles.row}>
-                    <Text style={styles.label}>Matriz:</Text>
+                    <Text style={styles.label}>Útero:</Text>
                     <Text style={styles.value}>{data.matriz ? 'Sí' : 'No'}</Text>
                 </View>
                 <View style={styles.row}>
@@ -254,7 +263,7 @@ const MyDocument = ({ data }) => (
                     <Text style={styles.value}>{data.vih ? 'Sí' : 'No'}</Text>
                 </View>
                 <View style={styles.row}>
-                    <Text style={styles.label}>VIF:</Text>
+                    <Text style={styles.label}>Violencia Intrafamiliar:</Text>
                     <Text style={styles.value}>{data.vif ? 'Sí' : 'No'}</Text>
                 </View>
                 <View style={styles.row}>
@@ -502,9 +511,6 @@ export const BuscarHistoria = () => {
                 return embarazo ? 'Sí' : 'No';
             }
         },
-    ]
-
-    const colum3AntPer = [
         {
             title: '¿Mamografía al día?', dataIndex: 'mamografia', key: 'mamografia', render: (mamografia) => {
                 if (mamografia === null || mamografia === undefined) {
@@ -513,6 +519,10 @@ export const BuscarHistoria = () => {
                 return mamografia ? 'Sí' : 'No';
             }
         },
+    ]
+
+    const colum3AntPer = [
+        
         {
             title: '¿PAP al día?', dataIndex: 'pap', key: 'pap', render: (pap) => {
                 if (pap === null || pap === undefined) {
@@ -547,10 +557,11 @@ export const BuscarHistoria = () => {
                 return fuma ? 'Sí' : 'No';
             }
         },
+        { title: 'Cigarros por Dia', dataIndex: 'cigarrosDia', key: 'cigarrosDia' },
     ]
 
     const colum4AntPer = [
-        { title: 'Cigarros por Dia', dataIndex: 'cigarrosDia', key: 'cigarrosDia' },
+        
         { title: 'Abortos', dataIndex: 'abortos', key: 'abortos' },
         {
             title: '¿Actualmente está sola o acompañada?', dataIndex: 'estadoPareja', key: 'estadoPareja', render: (estadoPareja) => {
@@ -567,6 +578,14 @@ export const BuscarHistoria = () => {
                     return '';
                 }
                 return crioterapia ? 'Sí' : 'No';
+            }
+        },
+        {
+            title: 'Termocuagulación', dataIndex: 'thermocuagulacion', key: 'thermocuagulacion', render: (thermocuagulacion) => {
+                if (thermocuagulacion === null || thermocuagulacion === undefined) {
+                    return '';
+                }
+                return thermocuagulacion ? 'Sí' : 'No';
             }
         },
         {
@@ -619,7 +638,7 @@ export const BuscarHistoria = () => {
 
     const columns2AntPatPer = [
         {
-            title: 'Matriz', dataIndex: 'matriz', key: 'matriz', render: (matriz) => {
+            title: 'Útero', dataIndex: 'matriz', key: 'matriz', render: (matriz) => {
                 if (matriz === null || matriz === undefined) {
                     return '';
                 }
@@ -644,7 +663,7 @@ export const BuscarHistoria = () => {
             }
         },
         {
-            title: 'VIF', dataIndex: 'vif', key: 'vif', render: (vif) => {
+            title: 'Violencia Intrafamiliar', dataIndex: 'vif', key: 'vif', render: (vif) => {
                 if (vif === null || vif === undefined) {
                     return '';
                 }

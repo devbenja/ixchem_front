@@ -1066,7 +1066,7 @@ export const AgregarHistoria = () => {
                                     <div className="col-sm-2">
                                         <label htmlFor="fibroadenoma" className="form-label">Fibroadenoma*</label>
 
-                                        <div className="d-flex align-items-center justify-content-center gap-3">
+                                        <div className="d-flex align-items-center justify-content-center gap-3 form-control">
                                             <div className="form-check">
                                                 <input value={true} {...registerAntecPerPat('fibrodenoma', { required: true })} id="fibro_si" name="fibrodenoma" type="radio" className="form-check-input" required />
                                                 <label className="form-check-label" htmlFor="fibro_si">Si</label>
@@ -1081,7 +1081,7 @@ export const AgregarHistoria = () => {
                                     <div className="col-sm-2">
                                         <label htmlFor="Ca_mama_izq" className="form-label">Ca Mama Izq*</label>
 
-                                        <div className="d-flex align-items-center justify-content-center gap-3">
+                                        <div className="d-flex align-items-center justify-content-center gap-3 form-control">
                                             <div className="form-check">
                                                 <input value={true} {...registerAntecPerPat('camIzq', { required: true })} id="Ca_mama_izq_si" name="camIzq" type="radio" className="form-check-input" required />
                                                 <label className="form-check-label" htmlFor="Ca_mama_izq_si">Si</label>
@@ -1096,7 +1096,7 @@ export const AgregarHistoria = () => {
                                     <div className="col-sm-2">
                                         <label htmlFor="Ca_mama_der" className="form-label">Ca Mama Der*</label>
 
-                                        <div className="d-flex align-items-center justify-content-center gap-3">
+                                        <div className="d-flex align-items-center justify-content-center gap-3 form-control">
                                             <div className="form-check">
                                                 <input value={true} {...registerAntecPerPat('camDer', { required: true })} id="Ca_mama_der_si" name="camDer" type="radio" className="form-check-input" required />
                                                 <label className="form-check-label" htmlFor="Ca_mama_der_si">Si</label>
@@ -1111,7 +1111,7 @@ export const AgregarHistoria = () => {
                                     <div className="col-sm-2">
                                         <label htmlFor="Ca_cervico_uterino" className="form-label">Ca Cervico Uterino*</label>
 
-                                        <div className="d-flex align-items-center justify-content-center gap-3">
+                                        <div className="d-flex align-items-center justify-content-center gap-3 form-control">
                                             <div className="form-check">
                                                 <input value={true} {...registerAntecPerPat('cacerut', { required: true })} id="Ca_cervico_uterino_si" name="cacerut" type="radio" className="form-check-input" required />
                                                 <label className="form-check-label" htmlFor="Ca_cervico_uterino_si">Si</label>
@@ -1124,9 +1124,9 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="matriz" className="form-label">¿Aún conserva su matriz?*</label>
+                                        <label htmlFor="matriz" className="form-label">¿Conserva su Útero?</label>
 
-                                        <div className="d-flex align-items-center justify-content-center gap-3">
+                                        <div className="d-flex align-items-center justify-content-center gap-3 form-control">
                                             <div className="form-check">
                                                 <input value={true} {...registerAntecPerPat('matriz', { required: true })} id="matriz_si" name="matriz" type="radio" className="form-check-input" required />
                                                 <label className="form-check-label" htmlFor="matriz_si">Si</label>
@@ -1141,7 +1141,7 @@ export const AgregarHistoria = () => {
                                     <div className="col-sm-2">
                                         <label htmlFor="extirpacion" className="form-label">Extirpación Qx Ovario*</label>
 
-                                        <div className="d-flex align-items-center justify-content-center gap-3">
+                                        <div className="d-flex align-items-center justify-content-center gap-3 form-control">
                                             <div className="form-check">
                                                 <input value={true} {...registerAntecPerPat('extirpacion', { required: true })} id="extirpacion_si" name="extirpacion" type="radio" className="form-check-input" required />
                                                 <label className="form-check-label" htmlFor="extirpacion_si">Si</label>
@@ -1176,7 +1176,7 @@ export const AgregarHistoria = () => {
                                     <div className="col-sm-2">
                                         <label htmlFor="VIH" className="form-label">VIH*</label>
 
-                                        <div className="d-flex align-items-center justify-content-center gap-3">
+                                        <div className="d-flex align-items-center justify-content-center gap-3 form-control">
                                             <div className="form-check">
                                                 <input value={true} {...registerAntecPerPat('vih', { required: true })} id="VIH_si" name="vih" type="radio" className="form-check-input" required />
                                                 <label className="form-check-label" htmlFor="VIH_si">Si</label>
@@ -1190,9 +1190,9 @@ export const AgregarHistoria = () => {
 
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="VIF" className="form-label">VIF*</label>
+                                        <label htmlFor="VIF" className="form-label">Violencia Intrafamiliar</label>
 
-                                        <div className="d-flex align-items-center justify-content-center gap-3">
+                                        <div className="d-flex align-items-center justify-content-center gap-3 form-control">
                                             <div className="form-check">
                                                 <input value={true} {...registerAntecPerPat('vif', { required: true })} id="VIF_si" name="vif" type="radio" className="form-check-input" required />
                                                 <label className="form-check-label" htmlFor="VIF_si">Si</label>
@@ -1207,7 +1207,7 @@ export const AgregarHistoria = () => {
                                     <div className="col-sm-2">
                                         <label htmlFor="diabetes" className="form-label">Diabetes*</label>
 
-                                        <div className="d-flex align-items-center justify-content-center gap-3">
+                                        <div className="d-flex align-items-center justify-content-center gap-3 form-control">
                                             <div className="form-check">
                                                 <input value={true} {...registerAntecPerPat('diabetes', { required: true })} id="diabetes_si" name="diabetes" type="radio" className="form-check-input" required />
                                                 <label className="form-check-label" htmlFor="diabetes_si">Si</label>
@@ -1222,7 +1222,7 @@ export const AgregarHistoria = () => {
                                     <div className="col-sm-2">
                                         <label htmlFor="cardiopatia" className="form-label">Cardiopatía*</label>
 
-                                        <div className="d-flex align-items-center justify-content-center gap-3">
+                                        <div className="d-flex align-items-center justify-content-center gap-3 form-control">
                                             <div className="form-check">
                                                 <input value={true} {...registerAntecPerPat('cardiopatia', { required: true })} id="cardiopatia_si" name="cardiopatia" type="radio" className="form-check-input" required />
                                                 <label className="form-check-label" htmlFor="cardiopatia_si">Si</label>
@@ -1238,7 +1238,7 @@ export const AgregarHistoria = () => {
                                     <div className="col-sm-2">
                                         <label htmlFor="hipertension" className="form-label">Hipertensión*</label>
 
-                                        <div className="d-flex align-items-center justify-content-center gap-3">
+                                        <div className="d-flex align-items-center justify-content-center gap-3 form-control">
                                             <div className="form-check">
                                                 <input value={true} {...registerAntecPerPat('hipertension', { required: true })} id="hipertension_si" name="hipertension" type="radio" className="form-check-input" required />
                                                 <label className="form-check-label" htmlFor="hipertension_si">Si</label>
@@ -1254,7 +1254,7 @@ export const AgregarHistoria = () => {
                                     <div className="col-sm-2">
                                         <label htmlFor="hepatopatias" className="form-label">Hepatopatías*</label>
 
-                                        <div className="d-flex align-items-center justify-content-center gap-3">
+                                        <div className="d-flex align-items-center justify-content-center gap-3 form-control">
                                             <div className="form-check">
                                                 <input value={true} {...registerAntecPerPat('hepatopatias', { required: true })} id="hepatopatias_si" name="hepatopatias" type="radio" className="form-check-input" required />
                                                 <label className="form-check-label" htmlFor="hepatopatias_si">Si</label>
@@ -1270,7 +1270,7 @@ export const AgregarHistoria = () => {
                                     <div className="col-sm-2">
                                         <label htmlFor="nefropatias" className="form-label">Nefropatías*</label>
 
-                                        <div className="d-flex align-items-center justify-content-center gap-3">
+                                        <div className="d-flex align-items-center justify-content-center gap-3 form-control">
                                             <div className="form-check">
                                                 <input value={true} {...registerAntecPerPat('nefropatia', { required: true })} id="nefropatias_si" name="nefropatia" type="radio" className="form-check-input" required />
                                                 <label className="form-check-label" htmlFor="nefropatias_si">Si</label>
@@ -1286,7 +1286,7 @@ export const AgregarHistoria = () => {
                                     <div className="col-sm-2">
                                         <label htmlFor="cirugias" className="form-label">Cirugías*</label>
 
-                                        <div className="d-flex align-items-center justify-content-center gap-3">
+                                        <div className="d-flex align-items-center justify-content-center gap-3 form-control">
                                             <div className="form-check">
                                                 <input value={true} {...registerAntecPerPat('cirugias', { required: true })} id="cirugias_si" name="cirugias" type="radio" className="form-check-input" />
                                                 <label className="form-check-label" htmlFor="cirugias_si">Si</label>
@@ -1303,7 +1303,7 @@ export const AgregarHistoria = () => {
                                     <div className="col-sm-2">
                                         <label htmlFor="anemia" className="form-label">Anemia*</label>
 
-                                        <div className="d-flex align-items-center justify-content-center gap-3">
+                                        <div className="d-flex align-items-center justify-content-center gap-3 form-control">
                                             <div className="form-check">
                                                 <input value={true} {...registerAntecPerPat('anemia', { required: true })} id="anemia_si" name="anemia" type="radio" className="form-check-input" required />
                                                 <label className="form-check-label" htmlFor="anemia_si">Si</label>
@@ -1317,9 +1317,9 @@ export const AgregarHistoria = () => {
 
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="alergia_medi" className="form-label">Alergia a medicamentos*</label>
+                                        <label htmlFor="alergia_medi" className="form-label">Alergia Medicamentos</label>
 
-                                        <div className="d-flex align-items-center justify-content-center gap-3">
+                                        <div className="d-flex align-items-center justify-content-center gap-3 form-control">
                                             <div className="form-check">
                                                 <input value={true} {...registerAntecPerPat('alergiaMed', { required: true })} id="alergia_medi_si" name="alergiaMed" type="radio" className="form-check-input" required />
                                                 <label className="form-check-label" htmlFor="alergia_medi_si">Si</label>
@@ -1333,9 +1333,9 @@ export const AgregarHistoria = () => {
 
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="alergia_ali" className="form-label">Alergia a alimentos*</label>
+                                        <label htmlFor="alergia_ali" className="form-label">Alergia Alimentos*</label>
 
-                                        <div className="d-flex align-items-center justify-content-center gap-3">
+                                        <div className="d-flex align-items-center justify-content-center gap-3 form-control">
                                             <div className="form-check">
                                                 <input value={true} {...registerAntecPerPat('alergiaAli', { required: true })} id="alergia_ali_si" name="alergiaAli" type="radio" className="form-check-input" required />
                                                 <label className="form-check-label" htmlFor="alergia_ali_si">Si</label>

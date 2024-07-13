@@ -186,7 +186,7 @@ export const EditarAntPatPersonales = () => {
                     </div>
 
                     <div className="col-sm-2">
-                        <label htmlFor="matriz" className="form-label">¿Conserva matriz?*</label>
+                        <label htmlFor="matriz" className="form-label">¿Conserva Útero?*</label>
 
                         <div className="d-flex align-items-center justify-content-center gap-3 form-control">
                             <div className="form-check">
@@ -252,7 +252,7 @@ export const EditarAntPatPersonales = () => {
 
 
                     <div className="col-sm-2">
-                        <label htmlFor="VIF" className="form-label">VIF*</label>
+                        <label htmlFor="VIF" className="form-label">Violencia Intrafamiliar*</label>
 
                         <div className="d-flex align-items-center justify-content-center gap-3 form-control">
                             <div className="form-check">

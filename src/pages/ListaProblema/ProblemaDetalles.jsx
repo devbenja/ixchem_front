@@ -322,11 +322,11 @@ export const ProblemaDetalles = () => {
             key: 'resuelto',
             render: (resuelto) => (resuelto ? 'Sí' : 'No'),
         },
-        {
-            title: 'Número de Expediente',
-            dataIndex: 'nuM_EXPEDIENTE',
-            key: 'nuM_EXPEDIENTE',
-        },
+        // {
+        //     title: 'Número de Expediente',
+        //     dataIndex: 'nuM_EXPEDIENTE',
+        //     key: 'nuM_EXPEDIENTE',
+        // },
         {
             title: 'Acciones',
             key: 'acciones',
