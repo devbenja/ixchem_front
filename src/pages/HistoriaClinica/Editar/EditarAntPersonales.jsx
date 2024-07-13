@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import { notification } from 'antd';
 
@@ -8,6 +8,7 @@ import { baseURL } from '../../../api/apiURL';
 
 export const EditarAntPersonales = () => {
 
+    const navigate = useNavigate();
     const { id } = useParams();
     const [formData, setFormData] = useState({
         codAntper: 0,
@@ -36,7 +37,8 @@ export const EditarAntPersonales = () => {
         fecNacHijo: '',
         crioterapia: false,
         biopasis: false,
-        numExpediente: ''
+        numExpediente: '',
+        thermocuagulacion: false
     });
 
     useEffect(() => {
@@ -80,7 +82,7 @@ export const EditarAntPersonales = () => {
         e.preventDefault();
 
         try {
-            
+
             console.log(formData)
 
             await axios.put(`${baseURL}/bdtbantecedentespersonale/actualizar/${formData.codAntper}`, formData);
@@ -92,7 +94,7 @@ export const EditarAntPersonales = () => {
             });
 
         } catch (error) {
-            
+
             notification.error({
                 message: '¡Error!',
                 description: `${error.response.data.message}`,
@@ -102,6 +104,10 @@ export const EditarAntPersonales = () => {
         }
 
     };
+
+    const handleBack = () => {
+        navigate('/buscar-historia-clinica');
+    }
 
     return (
         <div className='container-fluid'>
@@ -310,6 +316,19 @@ export const EditarAntPersonales = () => {
 
                 <div className="row mb-3">
                     <div className="col-sm-2">
+                        <label className="form-label">Termocuagulación</label>
+                        <div className='d-flex align-items-center justify-content-center form-control'>
+                            <div className="form-check form-check-inline">
+                                <input type="radio" name="thermocuagulacion" value="true" checked={formData.thermocuagulacion === true} onChange={handleRadioChange} className="form-check-input" />
+                                <label className="form-check-label">Sí</label>
+                            </div>
+                            <div className="form-check form-check-inline">
+                                <input type="radio" name="thermocuagulacion" value="false" checked={formData.thermocuagulacion === false} onChange={handleRadioChange} className="form-check-input" />
+                                <label className="form-check-label">No</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-sm-2">
                         <label className="form-label">Biopsias</label>
                         <div className='d-flex align-items-center justify-content-center form-control'>
                             <div className="form-check form-check-inline">
@@ -330,9 +349,9 @@ export const EditarAntPersonales = () => {
 
                 <div className='mt-4 d-flex gap-2'>
                     <button type="submit" className="btn btn-primary">Guardar</button>
-                    <button type="submit" className="btn btn-danger">Cancelar</button>
+                    <button type="cancel" onClick={handleBack} className="btn btn-danger">Cancelar</button>
                 </div>
             </form>
         </div>
-    ) 
+    )
 }

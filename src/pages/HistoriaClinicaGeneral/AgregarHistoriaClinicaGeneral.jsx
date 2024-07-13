@@ -30,7 +30,8 @@ export const AgregarHistoriaClinicaGeneral = () => {
         altoRiesgo: false,
         fecha: "",
         numExpediente: '',
-        codDoctor: ""
+        codDoctor: "",
+        ciclO_CONTROL: 0
     });
 
     const [obstetrico, setObstetrico] = useState({
@@ -190,7 +191,14 @@ export const AgregarHistoriaClinicaGeneral = () => {
 
             console.log(formData);
 
-            await axios.post(`${baseURL}/bdtbhistoriaclinicageneral/post`, formData);
+            const convertedData = {
+                ...formData,
+                ciclO_CONTROL: Number(formData.ciclO_CONTROL),
+            }
+
+            console.log(convertedData)
+
+            await axios.post(`${baseURL}/bdtbhistoriaclinicageneral/post`, convertedData);
 
             notification.success({
                 message: '¡Éxito!',
@@ -468,9 +476,19 @@ export const AgregarHistoriaClinicaGeneral = () => {
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
 
-
+                            <div className="col-sm-2">
+                                <label htmlFor="ciclo" className="form-label">Ciclo de Control</label>
+                                <input
+                                    type="number"
+                                    className="form-control"
+                                    name='ciclO_CONTROL'
+                                    value={formData.ciclO_CONTROL}
+                                    onChange={handleChange}
+                                />
+                            </div>
 
                             <div className='mt-4 d-flex gap-2'>
                                 <button type="submit" className="btn btn-primary">Guardar</button>

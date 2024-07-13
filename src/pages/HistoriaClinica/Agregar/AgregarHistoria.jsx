@@ -62,6 +62,7 @@ export const AgregarHistoria = () => {
                 fuma: data.fuma === 'true',
                 estadoPareja: data.estadoPareja === 'true',
                 crioterapia: data.crioterapia === 'true',
+                thermocuagulacion: data.thermocuagulacion === 'true',
                 biopasis: data.biopasis === 'true',
                 menstruacion: Number(data.menstruacion),
                 vidaSexual: Number(data.vidaSexual),
@@ -1012,6 +1013,32 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-2">
+                                        <label htmlFor="thermocuagulacion" className="form-label">Termocuagulación</label>
+                                        <div className="form-check">
+                                            <input
+                                                id="si"
+                                                name="thermocuagulacion"
+                                                type="radio"
+                                                className="form-check-input"
+                                                value={true}
+                                                {...registerAntecPer('thermocuagulacion')}
+                                            />
+                                            <label className="form-check-label" htmlFor="thermocuagulacion">Si</label>
+                                        </div>
+                                        <div className="form-check">
+                                            <input
+                                                id="no"
+                                                name="thermocuagulacion"
+                                                type="radio"
+                                                className="form-check-input"
+                                                value={false}
+                                                {...registerAntecPer('thermocuagulacion')}
+                                            />
+                                            <label className="form-check-label" htmlFor="thermocuagulacion">No</label>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-sm-2">
                                         <label htmlFor="biopasis" className="form-label">Biopsias por colposcopia</label>
                                         <div className="form-check">
                                             <input
@@ -1550,6 +1577,7 @@ export const AgregarHistoria = () => {
                                         <input
                                             type="text"
                                             className="form-control"
+                                            name="numExpediente"
                                             value={numExp}
                                             title="El Núm. Expediente debe tener 5 números, un guión (-) y el año al final"
                                             {...registerAntecPatFam('numExpediente')}
