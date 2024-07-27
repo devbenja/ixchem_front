@@ -30,9 +30,10 @@ export const AgregarDoctor = () => {
 
             notification.success({
                 message: '¡Éxito!',
-                description: `Doctor ${formData.primerNombre} agregado con éxito`,
+                description: `Doctor ${formData.primerNombred} agregado con éxito`,
                 duration: 3
             });
+
         } catch (error) {
             notification.error({
                 message: '¡Error!',

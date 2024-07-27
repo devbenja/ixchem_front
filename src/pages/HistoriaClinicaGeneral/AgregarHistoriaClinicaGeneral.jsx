@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { notification } from "antd";
+import { notification, Button } from "antd";
 
 import { baseURL } from '../../api/apiURL.js';
 
@@ -20,6 +20,10 @@ export const AgregarHistoriaClinicaGeneral = () => {
         direccion: ''
     });
 
+    const [cita, setCita] = useState({
+        num_cita: 0
+    });
+
     const [formData, setFormData] = useState({
         codHistoriaClinica: 0,
         diabetesMellitus: false,
@@ -31,7 +35,8 @@ export const AgregarHistoriaClinicaGeneral = () => {
         fecha: "",
         numExpediente: '',
         codDoctor: "",
-        ciclO_CONTROL: 0
+        nuM_CITA: 0,
+        iD_CITA: 0
     });
 
     const [obstetrico, setObstetrico] = useState({
@@ -43,7 +48,9 @@ export const AgregarHistoriaClinicaGeneral = () => {
         internada: false,
         cirugiasPrevias: false,
         numExpediente: "",
-        telefono: ""
+        telefono: "",
+        nuM_CITA: 0,
+        iD_CITA: 0
     });
 
     const [actual, setActual] = useState({
@@ -55,7 +62,9 @@ export const AgregarHistoriaClinicaGeneral = () => {
         sangradov: false,
         masaPelvica: false,
         presionArterial: false,
-        numExpediente: ""
+        numExpediente: "",
+        nuM_CITA: 0,
+        iD_CITA: 0
     });
 
     const [doctors, setDoctors] = useState([]);
@@ -151,6 +160,14 @@ export const AgregarHistoriaClinicaGeneral = () => {
         });
     };
 
+    const handleChangeCita = (e) => {
+        const { name, value, type, checked } = e.target;
+        setCita({
+            ...cita,
+            [name]: type === 'checkbox' ? checked : value
+        });
+    }
+
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
         setFormData({
@@ -183,6 +200,57 @@ export const AgregarHistoriaClinicaGeneral = () => {
         });
     };
 
+    const handleSubmitCita = async (e) => {
+
+        e.preventDefault();
+
+        try {
+
+            const parseCita = {
+                ...cita,
+                num_cita: Number(cita.num_cita)
+            }
+
+            const response = await axios.post(`${baseURL}/bdtbcita/post`, parseCita);
+
+            notification.success({
+                message: '¡Éxito!',
+                description: `Ciclo Control Creado`,
+                duration: 3
+            });
+            
+            console.log(response.data.id_cita);
+
+            setFormData({
+                ...formData,
+                nuM_CITA: parseCita.num_cita,
+                iD_CITA: response.data.id_cita
+            });
+
+            setObstetrico({
+                ...obstetrico,
+                nuM_CITA: parseCita.num_cita,
+                iD_CITA: response.data.id_cita
+            });
+
+            setActual({
+                ...actual,
+                nuM_CITA: parseCita.num_cita,
+                iD_CITA: response.data.id_cita
+            });
+       
+        } catch (error) {
+
+            notification.error({
+                message: '¡Error!',
+                description: error,
+                duration: 3
+            });
+
+        }
+
+    }
+
     const handleSubmit = async (e) => {
 
         e.preventDefault();
@@ -191,14 +259,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
 
             console.log(formData);
 
-            const convertedData = {
-                ...formData,
-                ciclO_CONTROL: Number(formData.ciclO_CONTROL),
-            }
-
-            console.log(convertedData)
-
-            await axios.post(`${baseURL}/bdtbhistoriaclinicageneral/post`, convertedData);
+            await axios.post(`${baseURL}/bdtbhistoriaclinicageneral/post`, formData);
 
             notification.success({
                 message: '¡Éxito!',
@@ -333,17 +394,42 @@ export const AgregarHistoriaClinicaGeneral = () => {
             </form>
 
             <div className='container-fluid'>
-                <ul className="nav nav-tabs" id="myTab" role="tablist">
-                    <li className="nav-item" role="presentation">
-                        <a className="nav-link active" id="HCG-tab" data-bs-toggle="tab" data-bs-target="#HCG" role="tab" aria-controls="HCG" aria-selected="true">Historia Clinica General</a>
-                    </li>
-                    <li className="nav-item" role="presentation">
-                        <a className="nav-link" id="AO-tab" data-bs-toggle="tab" role="tab" data-bs-target="#AO" aria-controls="AO" aria-selected="false">A. Obstetrico</a>
-                    </li>
-                    <li className="nav-item" role="presentation">
-                        <a className="nav-link" id="EA-tab" data-bs-toggle="tab" role="tab" data-bs-target="#EA" aria-controls="EA" aria-selected="false">Embarazo Actual</a>
-                    </li>
-                </ul>
+
+                <div className='d-flex justify-content-between align-items-center'>
+                    <ul className="nav nav-tabs" id="myTab" role="tablist">
+                        <li className="nav-item" role="presentation">
+                            <a className="nav-link active" id="HCG-tab" data-bs-toggle="tab" data-bs-target="#HCG" role="tab" aria-controls="HCG" aria-selected="true">Historia Clinica General</a>
+                        </li>
+                        <li className="nav-item" role="presentation">
+                            <a className="nav-link" id="AO-tab" data-bs-toggle="tab" role="tab" data-bs-target="#AO" aria-controls="AO" aria-selected="false">A. Obstetrico</a>
+                        </li>
+                        <li className="nav-item" role="presentation">
+                            <a className="nav-link" id="EA-tab" data-bs-toggle="tab" role="tab" data-bs-target="#EA" aria-controls="EA" aria-selected="false">Embarazo Actual</a>
+                        </li>
+                    </ul>
+                    <form onSubmit={handleSubmitCita}>
+                        <div className='d-flex align-items-center gap-4'>
+                            <div className="d-flex gap-2 align-items-center">
+                                <label htmlFor="num_cita">CPN*</label>
+                                <select
+                                    className="form-control"
+                                    name="num_cita"
+                                    type="number"
+                                    onChange={handleChangeCita}
+                                    value={cita.num_cita}
+                                >
+                                    <option value="">Elija el ciclo</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                </select>
+                            </div>
+                            <button className="btn btn-success" type="submit">Agregar Ciclo</button>
+                        </div>
+                    </form>
+
+                </div>
 
                 <div className="tab-content" id="hcgtab">
                     <div className="tab-pane show active" id="HCG" role="tabpanel" aria-labelledby="HCG-tab">
@@ -369,10 +455,6 @@ export const AgregarHistoriaClinicaGeneral = () => {
                                     <label className="form-label">Número de expediente</label>
                                     <input type="text" name="numExpediente" value={formData.numExpediente} onChange={handleChange} className="form-control" />
                                 </div>
-                                {/* <div className="col-sm-3 mt-3">
-                                    <label className="form-label">Codigo Doctor</label>
-                                    <input type="text" name="codDoctor" value={formData.codDoctor} onChange={handleChange} className="form-control" />
-                                </div> */}
                                 <div className="col-sm-3 mt-3">
                                     <label htmlFor="codDoctor" className="form-label">Codigo Doctor*</label>
                                     <select
@@ -485,7 +567,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
                                     type="number"
                                     className="form-control"
                                     name='ciclO_CONTROL'
-                                    value={formData.ciclO_CONTROL}
+                                    value={formData.nuM_CITA}
                                     onChange={handleChange}
                                 />
                             </div>

@@ -53,7 +53,7 @@ import { Embarazos } from "./pages/HistoriaClinicaGeneral/Embarazos";
 import { EmbarazoIndividual } from "./pages/HistoriaClinicaGeneral/EmbarazoIndividual";
 import { EditarEmbarazo } from "./pages/HistoriaClinicaGeneral/EditarEmbarazo";
 
-import { useAuth } from "./context/AuthContext"; 
+import { useAuth } from "./context/AuthContext";
 import { LogoutOutlined } from '@ant-design/icons'
 
 
@@ -61,7 +61,7 @@ const { Header, Sider, Content } = Layout;
 
 export const App = () => {
 
-  const { isAuth, logout } = useAuth();
+  const { isAuth, logout, user } = useAuth();
 
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
@@ -78,7 +78,7 @@ export const App = () => {
     <>
       {shouldShowLayout() && (
         <Layout>
-          <Sider trigger={null} collapsible collapsed={collapsed} theme="dark" className="sidebar"  style={{ position: 'fixed' }}>
+          <Sider trigger={null} collapsible collapsed={collapsed} theme="dark" className="sidebar" style={{ position: 'fixed' }}>
             <Logo />
             <MenuList />
           </Sider>
@@ -90,63 +90,67 @@ export const App = () => {
                 type="text"
                 icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
               />
+            
               {isAuth && (
-                <Button onClick={logout} style={{ marginRight: '40px', backgroundColor: 'red', color: 'white' }}>
-                  <LogoutOutlined/>Cerrar Sesión
-                </Button>
+                <div className="d-flex align-items-center gap-3">
+                  <p className="m-0">Bienvenido al Sistema ANFAM, {user.nombre}</p>
+                  <Button onClick={logout} style={{ marginRight: '40px', backgroundColor: 'red', color: 'white' }}>
+                    <LogoutOutlined />Cerrar Sesión
+                  </Button>
+                </div>
               )}
             </Header>
-            <Content  style={{ margin: '24px 16px 30px', overflow: 'initial', transition: 'margin-left 0.2s' }}>
+            <Content style={{ margin: '24px 16px 30px', overflow: 'initial', transition: 'margin-left 0.2s' }}>
               <Routes>
                 <Route exact path="/" element={<Login />} />
                 <Route path="/home" element={<Home />} />
                 <Route path="/agregar-historia-clinica" element={<AgregarHistoria />} />
                 <Route path="/buscar-historia-clinica" element={<BuscarHistoria />} />
                 <Route path="/agregar-problema" element={<AgregarProblema />} />
-                <Route path="/notas-evolucion" element={<NotaEvolucion/>}/>           
-                <Route path="/buscar-problema" element={<BuscarProblema/>}/>
-                <Route path="/problemas/:numExpediente" element={<ProblemaDetalles/>} />
-                <Route path="/editar-paciente/:id" element={<EditarPaciente/>}/>
-                <Route path="/editar-antecedentes-personales/:id" element={<EditarAntPersonales/>}/>
-                <Route path="/editar-antecedentes-patologicos-personales/:id" element={<EditarAntPatPersonales/>} />
-                <Route path="/editar-antecedentes-patologicos-familiares/:id" element={<EditarAntPatFam/>}/>
-                <Route path="/editar-informacion/:id" element={<EditarInformacion/>}/>
-                
-                <Route path="/agregar-nota-evolucion" element={<AgregarNota/>}/>
-                <Route path="/buscar-nota-evolucion" element={<BuscarNota/>}/>
-                <Route path="/notas-de-evolucion/:numExpediente" element={<NotaDetalle/>}/> 
-                <Route path="/nota/:codNota" element={<NotaEvolucion/>}/>
-                <Route path="/editar-nota/:codNota" element={<EditarNota/>}/>
+                <Route path="/notas-evolucion" element={<NotaEvolucion />} />
+                <Route path="/buscar-problema" element={<BuscarProblema />} />
+                <Route path="/problemas/:numExpediente" element={<ProblemaDetalles />} />
+                <Route path="/editar-paciente/:id" element={<EditarPaciente />} />
+                <Route path="/editar-antecedentes-personales/:id" element={<EditarAntPersonales />} />
+                <Route path="/editar-antecedentes-patologicos-personales/:id" element={<EditarAntPatPersonales />} />
+                <Route path="/editar-antecedentes-patologicos-familiares/:id" element={<EditarAntPatFam />} />
+                <Route path="/editar-informacion/:id" element={<EditarInformacion />} />
+
+                <Route path="/agregar-nota-evolucion" element={<AgregarNota />} />
+                <Route path="/buscar-nota-evolucion" element={<BuscarNota />} />
+                <Route path="/notas-de-evolucion/:numExpediente" element={<NotaDetalle />} />
+                <Route path="/nota/:codNota" element={<NotaEvolucion />} />
+                <Route path="/editar-nota/:codNota" element={<EditarNota />} />
 
 
-                <Route path="/doctores" element={<Doctores/>}/>
-                <Route path="/agregar-doctor" element={<AgregarDoctor/>}/>
-                <Route path="/buscar-doctor" element={<BuscarDoctor/>}/>
-                <Route path="/editar-doctor/:id" element={<EditarDoctor/>}/>
+                <Route path="/doctores" element={<Doctores />} />
+                <Route path="/agregar-doctor" element={<AgregarDoctor />} />
+                <Route path="/buscar-doctor" element={<BuscarDoctor />} />
+                <Route path="/editar-doctor/:id" element={<EditarDoctor />} />
 
-                <Route path="/agregar-epicrisis" element={<AgregarEpicrisis/>}/>  
-                <Route path="/buscar-epicrisis" element={<BuscarEpicrisis/>}/> 
-                <Route path="/editar-epicrisis/:id" element={<EditarEpicrisis/>}/> 
-                <Route path="/epicrisis/:numExpediente" element={<ListaEpicrisis/>}/> 
-                <Route path="/epicrisis-detalle/:codEpicrisis" element={<EpicrisisDetalle/>}/> 
+                <Route path="/agregar-epicrisis" element={<AgregarEpicrisis />} />
+                <Route path="/buscar-epicrisis" element={<BuscarEpicrisis />} />
+                <Route path="/editar-epicrisis/:id" element={<EditarEpicrisis />} />
+                <Route path="/epicrisis/:numExpediente" element={<ListaEpicrisis />} />
+                <Route path="/epicrisis-detalle/:codEpicrisis" element={<EpicrisisDetalle />} />
 
-                <Route path="/agregar-historia-clinica-general" element={<AgregarHistoriaClinicaGeneral/>}/> 
-                <Route path="/buscar-historia-clinica-general" element={<BuscarHCGeneral/>}/>  
-                <Route path="/editar-historia-clinica-general/:id" element={<EditHistoriaClinicaGeneral/>}/>
-                <Route path="/historias-generales/:numExpediente" element={<HistoriasCG/>}/>
-                <Route path="/historia/:codHistoriaClinica" element={<HistoriaIndividual/>}/>
-                <Route path="/obstetricos/:numExpediente" element={<ObstetricosDetalles/>}/>
-                <Route path="/obstetrico/:id" element={<Obstetrico/>}/>
-                <Route path="/editar-obstetrico/:id" element={<EditarObstetrico/>}/>
-                <Route path="/unidos/:id" element={<Unidos/>}/>
-                <Route path="/unido/:id" element={<UnidoIndividual/>}/>
-                <Route path="/embarazos/:id" element={<Embarazos/>}/>
-                <Route path="/embarazo/:id" element={<EmbarazoIndividual/>}/>
-                <Route path="/editar-embarazo/:id" element={<EditarEmbarazo/>}/>
+                <Route path="/agregar-historia-clinica-general" element={<AgregarHistoriaClinicaGeneral />} />
+                <Route path="/buscar-historia-clinica-general" element={<BuscarHCGeneral />} />
+                <Route path="/editar-historia-clinica-general/:id" element={<EditHistoriaClinicaGeneral />} />
+                <Route path="/historias-generales/:numExpediente" element={<HistoriasCG />} />
+                <Route path="/historia/:codHistoriaClinica" element={<HistoriaIndividual />} />
+                <Route path="/obstetricos/:numExpediente" element={<ObstetricosDetalles />} />
+                <Route path="/obstetrico/:id" element={<Obstetrico />} />
+                <Route path="/editar-obstetrico/:id" element={<EditarObstetrico />} />
+                <Route path="/unidos/:id" element={<Unidos />} />
+                <Route path="/unido/:id" element={<UnidoIndividual />} />
+                <Route path="/embarazos/:id" element={<Embarazos />} />
+                <Route path="/embarazo/:id" element={<EmbarazoIndividual />} />
+                <Route path="/editar-embarazo/:id" element={<EditarEmbarazo />} />
 
-                <Route path="/agregar-usuarios" element={<AgregarUsuarios/>}/>
-                <Route path="/buscar-usuario" element={<BuscarUsuario/>}/>
-                <Route path="/editar-usuario/:codAdmin" element={<EditarUsuario/>}/>
+                <Route path="/agregar-usuarios" element={<AgregarUsuarios />} />
+                <Route path="/buscar-usuario" element={<BuscarUsuario />} />
+                <Route path="/editar-usuario/:codAdmin" element={<EditarUsuario />} />
               </Routes>
             </Content>
           </Layout>

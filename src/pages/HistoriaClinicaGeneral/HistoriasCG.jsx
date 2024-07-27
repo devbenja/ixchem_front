@@ -10,7 +10,6 @@ import { useAuth } from '../../context/AuthContext';
 import { baseURL } from '../../api/apiURL';
 
 
-
 export const HistoriasCG = () => {
 
     const { numExpediente } = useParams();
@@ -130,7 +129,6 @@ export const HistoriasCG = () => {
         });
     };
 
-
     const handleBack = () => {
         navigate('/buscar-historia-clinica-general');
     }
@@ -139,6 +137,9 @@ export const HistoriasCG = () => {
         <div className='container-fluid'>
             <div className="container-fluid d-flex justify-content-between align-items-center">
                 <h3>Historias Clinicas Generales del Expediente: {numExpediente}</h3>
+                <div className='d-flex gap-2'>
+
+                </div>
                 <Button style={{ backgroundColor: 'red', color: 'white'}} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
             </div>
             <Table

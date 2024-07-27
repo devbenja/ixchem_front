@@ -74,7 +74,7 @@ export const AgregarUsuarios = () => {
                     </div>
                     <div className="col sm-mt-3">
                         <label className="form-label">Correo</label>
-                        <input type="email" name="correo" value={formData.correo} onChange={handleChange} className="form-control" />
+                        <input type="text" name="correo" value={formData.correo} onChange={handleChange} className="form-control" />
                     </div>
 
                 </div>
