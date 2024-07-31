@@ -3,11 +3,9 @@ import './Home.css';
 
 const images = [
 	"./imagen_ixchem1.jpeg",
-	// "./imagen_ixchem2.jpeg",
 	"./imagen_ixchem3.jpeg",
 	"./imagen_ixchem4.jpeg",
 	"./imagen_ixchem5.jpeg",
-	"./imagen_ixchem6.jpeg",
 ];
 
 export const Home = () => {

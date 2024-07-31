@@ -49,7 +49,7 @@ export const BuscarUsuario = () => {
             key: 'apellido',
         },
         {
-            title: 'Correo',
+            title: 'Código MINSA',
             dataIndex: 'correo',
             key: 'correo',
         },

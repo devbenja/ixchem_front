@@ -73,7 +73,7 @@ export const AgregarUsuarios = () => {
                         <input type="text" name="apellido" value={formData.apellido} onChange={handleChange} className="form-control" />
                     </div>
                     <div className="col sm-mt-3">
-                        <label className="form-label">Correo</label>
+                        <label className="form-label">Código MINSA</label>
                         <input type="text" name="correo" value={formData.correo} onChange={handleChange} className="form-control" />
                     </div>
 

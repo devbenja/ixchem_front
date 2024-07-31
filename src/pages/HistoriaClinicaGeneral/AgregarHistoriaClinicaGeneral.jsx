@@ -1,15 +1,23 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { notification, Button } from "antd";
 
 import { baseURL } from '../../api/apiURL.js';
+import { useAuth } from '../../context/AuthContext.jsx';
 
 export const AgregarHistoriaClinicaGeneral = () => {
+
+    const { user } = useAuth();
+    const HCGTab = useRef(null);
+    const AOTab = useRef(null);
+    const EmbActual = useRef(null);
 
     const [searchType, setSearchType] = useState('');
     const [searchValue, setSearchValue] = useState('');
     const [firstName, setFirstName] = useState('');
     const [firstLastName, setFirstLastName] = useState('');
+
+    const [isSelectDisabled, setIsSelectDisabled] = useState(false);
 
     const [data, setData] = useState({
         primeR_NOMBRE: '',
@@ -38,6 +46,15 @@ export const AgregarHistoriaClinicaGeneral = () => {
         nuM_CITA: 0,
         iD_CITA: 0
     });
+
+    useEffect(() => {
+        if (user) {
+            setFormData((prevData) => ({
+                ...prevData,
+                codDoctor: user.correo
+            }));
+        }
+    }, [user]);
 
     const [obstetrico, setObstetrico] = useState({
         codHojariesgo: 0,
@@ -203,6 +220,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
     const handleSubmitCita = async (e) => {
 
         e.preventDefault();
+        setIsSelectDisabled(true);
 
         try {
 
@@ -218,7 +236,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
                 description: `Ciclo Control Creado`,
                 duration: 3
             });
-            
+
             console.log(response.data.id_cita);
 
             setFormData({
@@ -238,7 +256,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
                 nuM_CITA: parseCita.num_cita,
                 iD_CITA: response.data.id_cita
             });
-       
+
         } catch (error) {
 
             notification.error({
@@ -267,6 +285,12 @@ export const AgregarHistoriaClinicaGeneral = () => {
                 duration: 3
             });
 
+            if (AOTab.current) {
+                console.log('xd')
+                const tab = new window.bootstrap.Tab(AOTab.current);
+                tab.show();
+            }
+
         } catch (error) {
 
             notification.error({
@@ -294,6 +318,12 @@ export const AgregarHistoriaClinicaGeneral = () => {
                 duration: 3
             });
 
+            if (EmbActual.current) {
+                console.log('xd')
+                const tab = new window.bootstrap.Tab(EmbActual.current);
+                tab.show();
+            }
+
         } catch (error) {
 
             notification.error({
@@ -309,6 +339,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
     const handleSubmitActual = async (e) => {
 
         e.preventDefault();
+        setIsSelectDisabled(false);
 
         try {
 
@@ -321,6 +352,12 @@ export const AgregarHistoriaClinicaGeneral = () => {
                 description: `Embarazo Actual Creado con Exito`,
                 duration: 3
             });
+
+            if (HCGTab.current) {
+                console.log('xd')
+                const tab = new window.bootstrap.Tab(HCGTab.current);
+                tab.show();
+            }
 
         } catch (error) {
 
@@ -398,13 +435,13 @@ export const AgregarHistoriaClinicaGeneral = () => {
                 <div className='d-flex justify-content-between align-items-center'>
                     <ul className="nav nav-tabs" id="myTab" role="tablist">
                         <li className="nav-item" role="presentation">
-                            <a className="nav-link active" id="HCG-tab" data-bs-toggle="tab" data-bs-target="#HCG" role="tab" aria-controls="HCG" aria-selected="true">Historia Clinica General</a>
+                            <a className="nav-link active" id="HCG-tab" data-bs-toggle="tab" data-bs-target="#HCG" role="tab" aria-controls="HCG" aria-selected="true" ref={HCGTab}>Historia Clinica General</a>
                         </li>
                         <li className="nav-item" role="presentation">
-                            <a className="nav-link" id="AO-tab" data-bs-toggle="tab" role="tab" data-bs-target="#AO" aria-controls="AO" aria-selected="false">A. Obstetrico</a>
+                            <a className="nav-link" id="AO-tab" data-bs-toggle="tab" role="tab" data-bs-target="#AO" aria-controls="AO" aria-selected="false" ref={AOTab}>A. Obstetrico</a>
                         </li>
                         <li className="nav-item" role="presentation">
-                            <a className="nav-link" id="EA-tab" data-bs-toggle="tab" role="tab" data-bs-target="#EA" aria-controls="EA" aria-selected="false">Embarazo Actual</a>
+                            <a className="nav-link" id="EA-tab" data-bs-toggle="tab" role="tab" data-bs-target="#EA" aria-controls="EA" aria-selected="false" ref={EmbActual}>Embarazo Actual</a>
                         </li>
                     </ul>
                     <form onSubmit={handleSubmitCita}>
@@ -417,6 +454,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
                                     type="number"
                                     onChange={handleChangeCita}
                                     value={cita.num_cita}
+                                    disabled={isSelectDisabled}
                                 >
                                     <option value="">Elija el ciclo</option>
                                     <option value="1">1</option>
@@ -456,21 +494,17 @@ export const AgregarHistoriaClinicaGeneral = () => {
                                     <input type="text" name="numExpediente" value={formData.numExpediente} onChange={handleChange} className="form-control" />
                                 </div>
                                 <div className="col-sm-3 mt-3">
-                                    <label htmlFor="codDoctor" className="form-label">Codigo Doctor*</label>
-                                    <select
-                                        className="form-control"
+                                    <label className="form-label">Codigo Doctor</label>
+                                    <input
+                                        type="text"
                                         name="codDoctor"
-                                        onChange={handleChange}
                                         value={formData.codDoctor}
-                                    >
-                                        <option value="">Seleccione un Doctor</option>
-                                        {doctors.map(doctor => (
-                                            <option key={doctor.codDoctor} value={doctor.codDoctor}>
-                                                {doctor.primerNombred} {doctor.primerApellidod}
-                                            </option>
-                                        ))}
-                                    </select>
+                                        onChange={handleChange}
+                                        className="form-control"
+                                        readOnly
+                                    />
                                 </div>
+                                
                                 <div className="col-sm-3 mt-3">
                                     <label className="form-label">Fecha</label>
                                     <input type="date" name="fecha" value={formData.fecha} onChange={handleChange} className="form-control" />

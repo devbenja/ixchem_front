@@ -3,7 +3,11 @@ import axios from "axios";
 import { notification } from "antd";
 import { baseURL } from '../../api/apiURL.js';
 
+import { useAuth } from "../../context/AuthContext.jsx";
+
 export const AgregarEpicrisis = () => {
+
+    const { user } = useAuth();
 
     const [formData, setFormData] = useState({
         codEpicrisis: 0,
@@ -22,6 +26,15 @@ export const AgregarEpicrisis = () => {
         numExpediente: "",
         codDoctor: ""
     });
+
+    useEffect(() => {
+        if (user) {
+            setFormData((prevData) => ({
+                ...prevData,
+                codDoctor: user.correo
+            }));
+        }
+    }, [user]);
 
     const [doctors, setDoctors] = useState([]);
 
@@ -88,11 +101,18 @@ export const AgregarEpicrisis = () => {
                         <label className="form-label">Número de expediente</label>
                         <input type="text" name="numExpediente" value={formData.numExpediente} onChange={handleChange} className="form-control" />
                     </div>
-                    {/* <div className="col">
+                    <div className="col">
                         <label className="form-label">Codigo Doctor</label>
-                        <input type="text" name="codDoctor" value={formData.codDoctor} onChange={handleChange} className="form-control" />
-                    </div> */}
-                    <div className="col sm-mt-3">
+                        <input 
+                            type="text" 
+                            name="codDoctor" 
+                            value={formData.codDoctor}
+                            onChange={handleChange} 
+                            className="form-control" 
+                            readOnly
+                        />
+                    </div>
+                    {/* <div className="col sm-mt-3">
                         <label htmlFor="codDoctor" className="form-label">Codigo Doctor*</label>
                         <select
                             className="form-control"
@@ -107,7 +127,7 @@ export const AgregarEpicrisis = () => {
                                 </option>
                             ))}
                         </select>
-                    </div>
+                    </div> */}
                     <div className="col sm-mt-3">
                         <label className="form-label">Fecha </label>
                         <input type="date" name="fecha" value={formData.fecha} onChange={handleChange} className="form-control" />

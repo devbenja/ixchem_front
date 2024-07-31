@@ -67,11 +67,11 @@ export const Login = () => {
                     }
                     <form onSubmit={onSubmit}>
                         <div className="form-group mb-3">
-                            <label htmlFor="correo" className='form-label'>Correo</label>
+                            <label htmlFor="correo" className='form-label'>Código MINSA</label>
                             <input
                                 type="text"
                                 className="form-control"
-                                placeholder="Ingrese su correo"
+                                placeholder="Ingrese su código MINSA"
                                 {...register('correo', { required: true })}
                             />
                         </div>
