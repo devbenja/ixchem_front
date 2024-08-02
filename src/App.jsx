@@ -55,6 +55,7 @@ import { EditarEmbarazo } from "./pages/HistoriaClinicaGeneral/EditarEmbarazo";
 
 import { useAuth } from "./context/AuthContext";
 import { LogoutOutlined } from '@ant-design/icons'
+import { CambiarContra } from "./pages/Usuarios/CambiarContra";
 
 
 const { Header, Sider, Content } = Layout;
@@ -151,6 +152,8 @@ export const App = () => {
                 <Route path="/agregar-usuarios" element={<AgregarUsuarios />} />
                 <Route path="/buscar-usuario" element={<BuscarUsuario />} />
                 <Route path="/editar-usuario/:codAdmin" element={<EditarUsuario />} />
+
+                <Route path="/cambiar-contraseña" element={<CambiarContra/>} />
               </Routes>
             </Content>
           </Layout>

@@ -69,6 +69,8 @@ export const MenuList = () => {
 
       )}
 
+      <Menu.Item key="change_pass" icon={<HomeOutlined />}><Link to="/cambiar-contraseña">Contraseña</Link></Menu.Item>
+
     </Menu>
   )
 }
