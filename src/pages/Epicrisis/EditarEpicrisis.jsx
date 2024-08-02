@@ -146,12 +146,19 @@ export const EditarEpicrisis = () => {
                         <label className="form-label">Número de expediente</label>
                         <input type="text" name="numExpediente" value={formData.numExpediente} onChange={handleChange} className="form-control" />
                     </div>
-                    {/* <div className="col">
-                        <label className="form-label">Codigo Doctor</label>
-                        <input type="text" name="codDoctor" value={formData.codDoctor} onChange={handleChange} className="form-control" />
-                    </div> */}
-                    <div className="col sm-mt-3">
-                        <label htmlFor="codDoctor" className="form-label">Codigo Doctor*</label>
+                    <div className="col">
+                        <label className="form-label">Codigo MINSA</label>
+                        <input 
+                            type="text" 
+                            name="codDoctor" 
+                            value={formData.codDoctor} 
+                            onChange={handleChange} 
+                            className="form-control" 
+                            readOnly
+                        />
+                    </div>
+                    {/* <div className="col sm-mt-3">
+                        <label htmlFor="codDoctor" className="form-label">Codigo INSS</label>
                         <select
                             className="form-control"
                             name="codDoctor"
@@ -165,7 +172,7 @@ export const EditarEpicrisis = () => {
                                 </option>
                             ))}
                         </select>
-                    </div>
+                    </div> */}
                     <div className="col sm-mt-3">
                         <label className="form-label">Fecha </label>
                         <input type="date" name="fecha" value={formData.fecha} onChange={handleChange} className="form-control" />

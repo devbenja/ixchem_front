@@ -254,7 +254,7 @@ export const EpicrisisDetalle = () => {
             key: 'nuM_EXPEDIENTE',
         },
         {
-            title: 'Codigo Doctor',
+            title: 'Codigo MINSA',
             dataIndex: 'coD_DOCTOR',
             key: 'coD_DOCTOR',
         },
@@ -324,7 +324,7 @@ export const EpicrisisDetalle = () => {
             key: 'primeR_APELLIDOD',
         },
         {
-            title: 'Codigo Doctor',
+            title: 'Codigo MINSA',
             dataIndex: 'coD_DOCTOR',
             key: 'coD_DOCTOR',
         },

@@ -37,7 +37,7 @@ export const HistoriaIndividual = () => {
 
     const columns1 = [
         { title: 'No. Expediente', dataIndex: 'numExpediente', key: 'numExpediente' },
-        { title: 'Codigo Doctor', dataIndex: 'codDoctor', key: 'codDoctor' },
+        { title: 'Codigo MINSA', dataIndex: 'codDoctor', key: 'codDoctor' },
         { title: 'Fecha', dataIndex: 'fecha', key: 'fecha' },
         {
             title: 'Consumo de Drogas', dataIndex: 'consumoDrogas', key: 'consumoDrogas', render: (consumoDrogas) => {

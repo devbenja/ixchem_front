@@ -55,7 +55,7 @@ export const HistoriasCG = () => {
             key: 'nuM_EXPEDIENTE',
         },
         {
-            title: 'Código de Doctor',
+            title: 'Código MINSA',
             dataIndex: 'coD_DOCTOR',
             key: 'coD_DOCTOR',
         },

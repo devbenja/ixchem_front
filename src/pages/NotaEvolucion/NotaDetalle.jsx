@@ -62,7 +62,7 @@ export const NotaDetalle = () => {
             key: 'numerO_NOTA',
         },
         {
-            title: 'Código de Doctor',
+            title: 'Código MINSA',
             dataIndex: 'coD_DOCTOR',
             key: 'coD_DOCTOR',
         },

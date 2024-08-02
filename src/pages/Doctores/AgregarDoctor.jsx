@@ -90,7 +90,7 @@ export const AgregarDoctor = () => {
                     </div>
                     <div className='d-flex justify-content-between flex-wrap'>
                         <div className="col-sm-2 col-12 mt-3">
-                            <label htmlFor="codDoctor" className="form-label">Codigo Doctor</label>
+                            <label htmlFor="codDoctor" className="form-label">Codigo MINSA</label>
                             <input
                                 type="text"
                                 className="form-control"

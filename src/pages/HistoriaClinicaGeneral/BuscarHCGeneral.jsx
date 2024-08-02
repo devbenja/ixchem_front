@@ -120,7 +120,7 @@ export const BuscarHCGeneral = () => {
             key: 'numExpediente',
         },
         {
-            title: 'Código de Doctor',
+            title: 'Código MINSA',
             dataIndex: 'codDoctor',
             key: 'codDoctor',
         },
@@ -148,7 +148,7 @@ export const BuscarHCGeneral = () => {
             key: 'numExpediente',
         },
         {
-            title: 'Código de Doctor',
+            title: 'Código MINSA',
             dataIndex: 'telefono',
             key: 'telefono',
         },

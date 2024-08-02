@@ -57,7 +57,7 @@ export const BuscarDoctor = () => {
 
   const columns = [
     {
-      title: 'Codigo Doctor',
+      title: 'Codigo MINSA',
       dataIndex: 'codDoctor',
       key: 'codDoctor',
     },
@@ -119,7 +119,7 @@ export const BuscarDoctor = () => {
           <div className="col-sm-3">
             <select className="form-select" value={searchType} onChange={(e) => setSearchType(e.target.value)}>
               <option value="">Seleccionar Opcion</option>
-              <option value="Codigo">Codigo Doctor</option>
+              <option value="Codigo">Codigo MINSA</option>
               <option value="Nombre">Nombre</option>
             </select>
           </div>

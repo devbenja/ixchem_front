@@ -467,7 +467,7 @@ export const UnidoIndividual = () => {
 
     const columns1 = [
         { title: 'No. Expediente', dataIndex: 'nuM_EXPEDIENTE', key: 'nuM_EXPEDIENTE' },
-        { title: 'Codigo Doctor', dataIndex: 'coD_DOCTOR', key: 'coD_DOCTOR' },
+        { title: 'Codigo MINSA', dataIndex: 'coD_DOCTOR', key: 'coD_DOCTOR' },
         { title: 'Fecha', dataIndex: 'fecha', key: 'fecha' },
         { title: 'Primer Nombre', dataIndex: 'primeR_NOMBRE', key: 'primeR_NOMBRE' },
         { title: 'Segundo Nombre', dataIndex: 'segundO_NOMBRE', key: 'segundO_NOMBRE' },
@@ -639,7 +639,7 @@ export const UnidoIndividual = () => {
         },
         { title: 'Primer Nombre Doctor', dataIndex: 'primeR_NOMBRED', key: 'primeR_NOMBRED' },
         { title: 'Primer Apellido Doctor', dataIndex: 'primeR_APELLIDOD', key: 'primeR_APELLIDOD' },
-        { title: 'Código Doctor', dataIndex: 'coD_DOCTOR', key: 'coD_DOCTOR' },
+        { title: 'Código MINSA', dataIndex: 'coD_DOCTOR', key: 'coD_DOCTOR' },
     ]
 
     const handleBack = () => {

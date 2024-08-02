@@ -70,7 +70,7 @@ export const ListaEpicrisis = () => {
             render: (nuM_EXPEDIENTE) => <a>{nuM_EXPEDIENTE}</a>,
         },
         {
-            title: 'Código de Doctor',
+            title: 'Código MINSA',
             dataIndex: 'coD_DOCTOR',
             key: 'coD_DOCTOR',
         },

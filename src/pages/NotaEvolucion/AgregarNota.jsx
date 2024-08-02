@@ -99,7 +99,7 @@ export const AgregarNota = () => {
                         />
                     </div>
                     <div className="col-sm-3">
-                        <label htmlFor="segundoNombre" className="form-label">Codigo Doctor*</label>
+                        <label htmlFor="segundoNombre" className="form-label">Codigo MINSA*</label>
                         <input
                             type="text"
                             className="form-control"

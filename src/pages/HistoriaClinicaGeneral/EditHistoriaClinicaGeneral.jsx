@@ -130,26 +130,18 @@ export const EditHistoriaClinicaGeneral = () => {
                         <label className="form-label">Número de expediente</label>
                         <input type="text" name="numExpediente" value={formData.numExpediente} onChange={handleChange} className="form-control" />
                     </div>
-                    {/* <div className="col-sm-3">
-                        <label className="form-label">Codigo Doctor</label>
-                        <input type="text" name="codDoctor" value={formData.codDoctor} onChange={handleChange} className="form-control" />
-                    </div> */}
                     <div className="col-sm-3">
-                        <label htmlFor="codDoctor" className="form-label">Codigo Doctor*</label>
-                        <select
-                            className="form-control"
-                            name="codDoctor"
-                            onChange={handleChange}
-                            value={formData.codDoctor}
-                        >
-                            <option value="">Seleccione un Doctor</option>
-                            {doctors.map(doctor => (
-                                <option key={doctor.codDoctor} value={doctor.codDoctor}>
-                                    {doctor.primerNombred} {doctor.primerApellidod}
-                                </option>
-                            ))}
-                        </select>
+                        <label className="form-label">Codigo MINSA</label>
+                        <input 
+                            type="text" 
+                            name="codDoctor" 
+                            value={formData.codDoctor} 
+                            onChange={handleChange} 
+                            className="form-control" 
+                            readOnly
+                        />
                     </div>
+            
                     <div className="col-sm-3">
                         <label className="form-label">Fecha</label>
                         <input type="date" name="fecha" value={formData.fecha} onChange={handleChange} className="form-control" />

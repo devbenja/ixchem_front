@@ -102,7 +102,7 @@ export const AgregarEpicrisis = () => {
                         <input type="text" name="numExpediente" value={formData.numExpediente} onChange={handleChange} className="form-control" />
                     </div>
                     <div className="col">
-                        <label className="form-label">Codigo Doctor</label>
+                        <label className="form-label">Codigo MINSA</label>
                         <input 
                             type="text" 
                             name="codDoctor" 

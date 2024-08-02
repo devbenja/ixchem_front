@@ -494,7 +494,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
                                     <input type="text" name="numExpediente" value={formData.numExpediente} onChange={handleChange} className="form-control" />
                                 </div>
                                 <div className="col-sm-3 mt-3">
-                                    <label className="form-label">Codigo Doctor</label>
+                                    <label className="form-label">Código MINSA</label>
                                     <input
                                         type="text"
                                         name="codDoctor"

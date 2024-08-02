@@ -148,18 +148,19 @@ export const EditarNota = () => {
                             value={formData.numExpediente}
                         />
                     </div>
-                    {/* <div className="col-sm-3">
-                        <label htmlFor="segundoNombre" className="form-label">Codigo Doctor*</label>
+                    <div className="col-sm-3">
+                        <label htmlFor="segundoNombre" className="form-label">Codigo MINSA*</label>
                         <input
                             type="text"
                             className="form-control"
                             name="codDoctor"
                             onChange={handleChange}
                             value={formData.codDoctor}
+                            
                         />
-                    </div> */}
-                    <div className="col-sm-3">
-                        <label htmlFor="codDoctor" className="form-label">Codigo Doctor*</label>
+                    </div>
+                    {/* <div className="col-sm-3">
+                        <label htmlFor="codDoctor" className="form-label">Codigo MINSA*</label>
                         <select
                             className="form-control"
                             name="codDoctor"
@@ -173,7 +174,7 @@ export const EditarNota = () => {
                                 </option>
                             ))}
                         </select>
-                    </div>
+                    </div> */}
                     <div className="col-sm-3">
                         <label htmlFor="primerApellido" className="form-label">Talla*</label>
                         <input
