@@ -6,7 +6,12 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { notification } from 'antd';
 
-const images = ["./logo.png", "./imagen2.jpg", "./imagen3.jpg"];
+const images = [
+    "./logo.png", 
+    // "./imagen2.jpg", 
+    // "./imagen3.jpg", 
+    "./imagen_ixchem6.jpeg"
+];
 
 export const Login = () => {
 

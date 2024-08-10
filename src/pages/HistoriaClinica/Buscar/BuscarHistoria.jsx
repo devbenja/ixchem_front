@@ -6,13 +6,18 @@ import axios from 'axios';
 import { Table, message, notification, Button } from 'antd';
 import { FilePdfOutlined } from '@ant-design/icons'
 
-import { Page, Text, View, Document, StyleSheet, PDFViewer, PDFDownloadLink } from '@react-pdf/renderer';
+import { Image, Page, Text, View, Document, StyleSheet, PDFViewer, PDFDownloadLink } from '@react-pdf/renderer';
 
 import { baseURL } from '../../../api/apiURL';
 
 const styles = StyleSheet.create({
     page: {
         padding: 30,
+    },
+    headerAnt: {
+        fontSize: 15,
+        marginBottom: 20,
+        fontStyle: 'bold'
     },
     section: {
         marginBottom: 20,
@@ -22,7 +27,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginBottom: 20,
         textAlign: 'center'
-
     },
     row: {
         flexDirection: 'row',
@@ -32,11 +36,36 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginRight: 10,
     },
+    twoValues: {
+        flexDirection: 'row',
+        marginBottom: 5,
+        gap: 10
+    },
     value: {
         borderBottomWidth: 1,
         borderBottomColor: '#000',
         width: '50%',
         marginBottom: 5,
+    },
+    logito: {
+        flexDirection: 'row',
+        marginBottom: 10,
+    },
+    logo: {
+        width: 100,
+        height: 100,
+    },
+    titleContainer: {
+        marginLeft: 100,
+        paddingTop: 80,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    mainTitle: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        marginBottom: 30,
+        paddingLeft: 30,
     },
 });
 
@@ -45,293 +74,308 @@ const MyDocument = ({ data }) => (
     <Document>
         <Page size="A4" style={styles.page}>
             <View style={styles.section}>
-                <Text style={styles.header}>Historia Clínica</Text>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Expediente:</Text>
-                    <Text style={styles.value}>{data.nuM_EXPEDIENTE}</Text>
+                <View style={styles.logito}>
+                    <Image style={styles.logo} src="/logo.png" />
+                    <View style={styles.titleContainer}>
+                        <Text style={styles.mainTitle}>HISTORIA CLINICA</Text>
+                    </View>
                 </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Nombre:</Text>
-                    <Text style={styles.value}>{data.primeR_NOMBRE} {data.segundO_NOMBRE} {data.primeR_APELLIDO} {data.segundO_APELLIDO}</Text>
+                <View style={styles.twoValues}>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Centro de mujeres IXCHEM:</Text>
+                        <Text style={styles.value}>{data.centro}</Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Fecha:</Text>
+                        <Text style={styles.value}>{data.fechA_INGRESO}</Text>
+                    </View>
                 </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Cédula:</Text>
-                    <Text style={styles.value}>{data.cedula}</Text>
+
+                <View style={styles.twoValues}>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Nombre:</Text>
+                        <Text style={styles.value}>{data.primeR_NOMBRE} {data.segundO_NOMBRE} {data.primeR_APELLIDO} {data.segundO_APELLIDO}</Text>
+                    </View>
+
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Edad:</Text>
+                        <Text style={styles.value}>{data.edad}</Text>
+                    </View>
                 </View>
+
                 <View style={styles.row}>
-                    <Text style={styles.label}>Fecha de Nacimiento:</Text>
-                    <Text style={styles.value}>{data.fechA_NAC}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Edad:</Text>
-                    <Text style={styles.value}>{data.edad}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Escolaridad:</Text>
-                    <Text style={styles.value}>{data.escolaridad}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Profesión:</Text>
-                    <Text style={styles.value}>{data.profesion}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Sexo:</Text>
-                    <Text style={styles.value}>{data.sexo}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Dirección:</Text>
-                    <Text style={styles.value}>{data.direccion}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Presión:</Text>
-                    <Text style={styles.value}>{data.presion}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Temperatura:</Text>
-                    <Text style={styles.value}>{data.temperatura}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Peso:</Text>
-                    <Text style={styles.value}>{data.peso}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Talla:</Text>
-                    <Text style={styles.value}>{data.talla}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>IMC:</Text>
-                    <Text style={styles.value}>{data.imc}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Fecha de Ingreso:</Text>
-                    <Text style={styles.value}>{data.fechA_INGRESO}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Centro:</Text>
-                    <Text style={styles.value}>{data.centro}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Usuaria:</Text>
-                    <Text style={styles.value}>{data.usuaria}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Motivo de Visita:</Text>
+                    <Text style={styles.label}>Motivo de Consulta:</Text>
                     <Text style={styles.value}>{data.moT_VISITA}</Text>
                 </View>
             </View>
+
             <View style={styles.section}>
-                <Text style={styles.header}>Antecedentes Personales</Text>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Menstruación:</Text>
-                    <Text style={styles.value}>{data.menstruacion}</Text>
+                <Text style={styles.headerAnt}>ANTECEDENTES FAMILIARES PATOLOGICOS</Text>
+                <View style={styles.twoValues}>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Ca de Mama:</Text>
+                        <Text style={styles.value}>{data.cA_MAMA ? 'Sí' : 'No'}</Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Parentesco Ca de Mama:</Text>
+                        <Text style={styles.value}>{data.caM_PARENTESCO}</Text>
+                    </View>
                 </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Vida Sexual:</Text>
-                    <Text style={styles.value}>{data.vidA_SEXUAL}</Text>
+                <View style={styles.twoValues}>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Ca de CU:</Text>
+                        <Text style={styles.value}>{data.cA_CU ? 'Sí' : 'No'}</Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Parentesco Ca Cu:</Text>
+                        <Text style={styles.value}>{data.cacU_PARENTESCO}</Text>
+                    </View>
                 </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Compañeros Sexuales:</Text>
-                    <Text style={styles.value}>{data.comP_SEXUALES}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>MAC:</Text>
-                    <Text style={styles.value}>{data.mac}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Historial de Embarazo:</Text>
-                    <Text style={styles.value}>{data.hisT_EMBARAZO ? 'Sí' : 'No'}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Gestas:</Text>
-                    <Text style={styles.value}>{data.gestas}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Partos:</Text>
-                    <Text style={styles.value}>{data.partos}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Abortos:</Text>
-                    <Text style={styles.value}>{data.abortos}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Cesáreas:</Text>
-                    <Text style={styles.value}>{data.cesarea}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>FUM:</Text>
-                    <Text style={styles.value}>{data.fum}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>SA:</Text>
-                    <Text style={styles.value}>{data.sa}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Lactancia:</Text>
-                    <Text style={styles.value}>{data.lactancia ? 'Sí' : 'No'}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Embarazo:</Text>
-                    <Text style={styles.value}>{data.embarazo ? 'Sí' : 'No'}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Mamografía:</Text>
-                    <Text style={styles.value}>{data.mamografia ? 'Sí' : 'No'}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>PAP:</Text>
-                    <Text style={styles.value}>{data.pap ? 'Sí' : 'No'}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>PAP Alterado:</Text>
-                    <Text style={styles.value}>{data.paP_ALTERADO ? 'Sí' : 'No'}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Historial de PAP:</Text>
-                    <Text style={styles.value}>{data.hisT_PAP}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Menopausia:</Text>
-                    <Text style={styles.value}>{data.menopausia}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Reemplazo Hormonal:</Text>
-                    <Text style={styles.value}>{data.reemP_HORMONAL ? 'Sí' : 'No'}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Fuma:</Text>
-                    <Text style={styles.value}>{data.fuma ? 'Sí' : 'No'}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Cigarros por Día:</Text>
-                    <Text style={styles.value}>{data.cigarroS_DIA}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Estado de Pareja:</Text>
-                    <Text style={styles.value}>{data.estadO_PAREJA ? 'Sí' : 'No'}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Fecha de Nacimiento del Hijo:</Text>
-                    <Text style={styles.value}>{data.feC_NAC_HIJO}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Crioterapia:</Text>
-                    <Text style={styles.value}>{data.crioterapia ? 'Sí' : 'No'}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>TermocuagulaciÓn:</Text>
-                    <Text style={styles.value}>{data.thermocuagulacion ? 'Sí' : 'No'}</Text>
-                </View>
-                thermocuagulacion
-                <View style={styles.row}>
-                    <Text style={styles.label}>Biopsia:</Text>
-                    <Text style={styles.value}>{data.biopasis ? 'Sí' : 'No'}</Text>
+                <View style={styles.twoValues}>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Ca de Colon:</Text>
+                        <Text style={styles.value}>{data.cA_COLON ? 'Sí' : 'No'}</Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Parentesco Ca Co:</Text>
+                        <Text style={styles.value}>{data.cacO_PARENTESCO}</Text>
+                    </View>
                 </View>
             </View>
 
             <View style={styles.section}>
-                <Text style={styles.header}>Antecedentes Patologicos Personales</Text>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Fibrodenoma:</Text>
-                    <Text style={styles.value}>{data.fibrodenoma ? 'Sí' : 'No'}</Text>
+                <Text style={styles.headerAnt}>ANTECEDENTES PERSONALES</Text>
+
+                <View style={styles.twoValues}>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Menstruación:</Text>
+                        <Text style={styles.value}>{data.menstruacion}</Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Vida Sexual:</Text>
+                        <Text style={styles.value}>{data.vidA_SEXUAL}</Text>
+                    </View>
                 </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Ca de Mama Izq:</Text>
-                    <Text style={styles.value}>{data.caM_IZQ ? 'Sí' : 'No'}</Text>
+                <View style={styles.twoValues}>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Compañeros Sexuales:</Text>
+                        <Text style={styles.value}>{data.comP_SEXUALES}</Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>MAC:</Text>
+                        <Text style={styles.value}>{data.mac}</Text>
+                    </View>
                 </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Ca de Mama Der:</Text>
-                    <Text style={styles.value}>{data.caM_DER ? 'Sí' : 'No'}</Text>
+                <View style={styles.twoValues}>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Historial de Embarazo:</Text>
+                        <Text style={styles.value}>{data.hisT_EMBARAZO ? 'Sí' : 'No'}</Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Gestas:</Text>
+                        <Text style={styles.value}>{data.gestas}</Text>
+                    </View>
                 </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>+Ca Cervico Uterino:</Text>
-                    <Text style={styles.value}>{data.cacerut ? 'Sí' : 'No'}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Útero:</Text>
-                    <Text style={styles.value}>{data.matriz ? 'Sí' : 'No'}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Extirpacion:</Text>
-                    <Text style={styles.value}>{data.extirpacion ? 'Sí' : 'No'}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>ITS:</Text>
-                    <Text style={styles.value}>{data.its}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>VIH:</Text>
-                    <Text style={styles.value}>{data.vih ? 'Sí' : 'No'}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Violencia Intrafamiliar:</Text>
-                    <Text style={styles.value}>{data.vif ? 'Sí' : 'No'}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Diabetes:</Text>
-                    <Text style={styles.value}>{data.diabetes ? 'Sí' : 'No'}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Cardiopatia:</Text>
-                    <Text style={styles.value}>{data.cardiopatia ? 'Sí' : 'No'}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Hipertension:</Text>
-                    <Text style={styles.value}>{data.hipertension ? 'Sí' : 'No'}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Hepatopatias:</Text>
-                    <Text style={styles.value}>{data.hepatopatias ? 'Sí' : 'No'}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Nefropatia:</Text>
-                    <Text style={styles.value}>{data.nefropatia ? 'Sí' : 'No'}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Cirugias:</Text>
-                    <Text style={styles.value}>{data.cirugias ? 'Sí' : 'No'}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Anemia:</Text>
-                    <Text style={styles.value}>{data.anemia ? 'Sí' : 'No'}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Alergia a Medicamentos:</Text>
-                    <Text style={styles.value}>{data.alergiA_MED ? 'Sí' : 'No'}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Alergia Alimentos:</Text>
-                    <Text style={styles.value}>{data.alergiA_ALI ? 'Sí' : 'No'}</Text>
+                <View style={styles.twoValues}>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Partos:</Text>
+                        <Text style={styles.value}>{data.partos}</Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Abortos:</Text>
+                        <Text style={styles.value}>{data.abortos}</Text>
+                    </View>
                 </View>
 
+                <View style={styles.twoValues}>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Cesáreas:</Text>
+                        <Text style={styles.value}>{data.cesarea}</Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>FUM:</Text>
+                        <Text style={styles.value}>{data.fum}</Text>
+                    </View>
+                </View>
+                <View style={styles.twoValues}>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>SA:</Text>
+                        <Text style={styles.value}>{data.sa}</Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Lactancia:</Text>
+                        <Text style={styles.value}>{data.lactancia ? 'Sí' : 'No'}</Text>
+                    </View>
+                </View>
+                <View style={styles.twoValues}>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Embarazo:</Text>
+                        <Text style={styles.value}>{data.embarazo ? 'Sí' : 'No'}</Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Mamografía:</Text>
+                        <Text style={styles.value}>{data.mamografia ? 'Sí' : 'No'}</Text>
+                    </View>
+                </View>
+                <View style={styles.twoValues}>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>PAP:</Text>
+                        <Text style={styles.value}>{data.pap ? 'Sí' : 'No'}</Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>PAP Alterado:</Text>
+                        <Text style={styles.value}>{data.paP_ALTERADO ? 'Sí' : 'No'}</Text>
+                    </View>
+                </View>
+                <View style={styles.twoValues}>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Historial de PAP:</Text>
+                        <Text style={styles.value}>{data.hisT_PAP}</Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Menopausia:</Text>
+                        <Text style={styles.value}>{data.menopausia}</Text>
+                    </View>
+                </View>
+                <View style={styles.twoValues}>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Reemplazo Hormonal:</Text>
+                        <Text style={styles.value}>{data.reemP_HORMONAL ? 'Sí' : 'No'}</Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Fuma:</Text>
+                        <Text style={styles.value}>{data.fuma ? 'Sí' : 'No'}</Text>
+                    </View>
+                </View>
+                <View style={styles.twoValues}>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Cigarros por Día:</Text>
+                        <Text style={styles.value}>{data.cigarroS_DIA}</Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Estado de Pareja:</Text>
+                        <Text style={styles.value}>{data.estadO_PAREJA ? 'Sí' : 'No'}</Text>
+                    </View>
+                </View>
+                <View style={styles.twoValues}>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Fecha de Nacimiento del Hijo:</Text>
+                        <Text style={styles.value}>{data.feC_NAC_HIJO}</Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Crioterapia:</Text>
+                        <Text style={styles.value}>{data.crioterapia ? 'Sí' : 'No'}</Text>
+                    </View>
+                </View>
+                <View style={styles.twoValues}>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>TermocuagulaciÓn:</Text>
+                        <Text style={styles.value}>{data.thermocuagulacion ? 'Sí' : 'No'}</Text>
+                    </View>
+
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Biopsia:</Text>
+                        <Text style={styles.value}>{data.biopasis ? 'Sí' : 'No'}</Text>
+                    </View>
+                </View>
             </View>
 
             <View style={styles.section}>
-                <Text style={styles.header}>Antecedentes Patologicos Familiar</Text>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Ca de Mama:</Text>
-                    <Text style={styles.value}>{data.cA_MAMA ? 'Sí' : 'No'}</Text>
+                <Text style={styles.headerAnt}>ANTECEDENTES PATOLOGICOS PERSONALES</Text>
+                <View style={styles.twoValues}>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Fibrodenoma:</Text>
+                        <Text style={styles.value}>{data.fibrodenoma ? 'Sí' : 'No'}</Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Ca de Mama Izq:</Text>
+                        <Text style={styles.value}>{data.caM_IZQ ? 'Sí' : 'No'}</Text>
+                    </View>
                 </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Parentesco Ca de Mama:</Text>
-                    <Text style={styles.value}>{data.caM_PARENTESCO}</Text>
+                <View style={styles.twoValues}>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Ca de Mama Der:</Text>
+                        <Text style={styles.value}>{data.caM_DER ? 'Sí' : 'No'}</Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>+Ca Cervico Uterino:</Text>
+                        <Text style={styles.value}>{data.cacerut ? 'Sí' : 'No'}</Text>
+                    </View>
                 </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Ca de CU:</Text>
-                    <Text style={styles.value}>{data.cA_CU ? 'Sí' : 'No'}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Parentesco Ca Cu:</Text>
-                    <Text style={styles.value}>{data.cacU_PARENTESCO}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Ca de Colon:</Text>
-                    <Text style={styles.value}>{data.cA_COLON ? 'Sí' : 'No'}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Parentesco Ca Co:</Text>
-                    <Text style={styles.value}>{data.cacO_PARENTESCO}</Text>
+                <View style={styles.twoValues}>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Útero:</Text>
+                        <Text style={styles.value}>{data.matriz ? 'Sí' : 'No'}</Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Extirpacion:</Text>
+                        <Text style={styles.value}>{data.extirpacion ? 'Sí' : 'No'}</Text>
+                    </View>
                 </View>
 
+                <View style={styles.twoValues}>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>ITS:</Text>
+                        <Text style={styles.value}>{data.its}</Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>VIH:</Text>
+                        <Text style={styles.value}>{data.vih ? 'Sí' : 'No'}</Text>
+                    </View>
+                </View>
+                <View style={styles.twoValues}>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Violencia Intrafamiliar:</Text>
+                        <Text style={styles.value}>{data.vif ? 'Sí' : 'No'}</Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Diabetes:</Text>
+                        <Text style={styles.value}>{data.diabetes ? 'Sí' : 'No'}</Text>
+                    </View>
+                </View>
+                <View style={styles.twoValues}>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Cardiopatia:</Text>
+                        <Text style={styles.value}>{data.cardiopatia ? 'Sí' : 'No'}</Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Hipertension:</Text>
+                        <Text style={styles.value}>{data.hipertension ? 'Sí' : 'No'}</Text>
+                    </View>
+                </View>
+                <View style={styles.twoValues}>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Hepatopatias:</Text>
+                        <Text style={styles.value}>{data.hepatopatias ? 'Sí' : 'No'}</Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Nefropatia:</Text>
+                        <Text style={styles.value}>{data.nefropatia ? 'Sí' : 'No'}</Text>
+                    </View>
+                </View>
+                <View style={styles.twoValues}>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Cirugias:</Text>
+                        <Text style={styles.value}>{data.cirugias ? 'Sí' : 'No'}</Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Anemia:</Text>
+                        <Text style={styles.value}>{data.anemia ? 'Sí' : 'No'}</Text>
+                    </View>
+                </View>
+                <View style={styles.twoValues}>
+
+                </View>
+                <View style={styles.twoValues}>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Alergia a Medicamentos:</Text>
+                        <Text style={styles.value}>{data.alergiA_MED ? 'Sí' : 'No'}</Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Alergia Alimentos:</Text>
+                        <Text style={styles.value}>{data.alergiA_ALI ? 'Sí' : 'No'}</Text>
+                    </View>
+                </View>
             </View>
         </Page>
     </Document>
@@ -347,6 +391,11 @@ export const BuscarHistoria = () => {
     const [antPatFam, setAntPatFam] = useState('');
     const [info, setInfo] = useState('');
     const [data, setData] = useState([]);
+
+    const [firstName, setFirstName] = useState('');
+    const [secondName, setSecondName] = useState('');
+    const [firstLastName, setFirstLastName] = useState('');
+    const [secondLastName, setSecondLastName] = useState('');
 
 
     const navigate = useNavigate();
@@ -369,6 +418,8 @@ export const BuscarHistoria = () => {
                 response = await axios.get(`${baseURL}/bdtpaciente/buscarpornumexpediente`, {
                     params: { NumExpediente: searchValue }
                 });
+
+                console.log(response.data)
 
                 antPerData = await axios.get(`${baseURL}/bdtbantecedentespersonale/buscarporexpediente`, {
                     params: { NumExpediente: searchValue }
@@ -417,6 +468,18 @@ export const BuscarHistoria = () => {
                 //     params: { cedula: searchValue }
                 // });
 
+            } else if (searchType === 'opcion_nombre') {
+                
+                response = await axios.get(`${baseURL}/bdtpaciente/buscarpornombre`, {
+                    params: {
+                        primerNombre: firstName,
+                        segundoNombre: secondName,
+                        primerApellido: firstLastName,
+                        segundoApellido: secondLastName
+                    }
+                });
+
+                
             }
 
             setPaciente(response.data);
@@ -426,7 +489,7 @@ export const BuscarHistoria = () => {
             setInfo(infoData.data)
             setData(unidosData.data[0]);
 
-            console.log(unidosData.data)
+           
 
         } catch (error) {
 
@@ -522,7 +585,7 @@ export const BuscarHistoria = () => {
     ]
 
     const colum3AntPer = [
-        
+
         {
             title: '¿PAP al día?', dataIndex: 'pap', key: 'pap', render: (pap) => {
                 if (pap === null || pap === undefined) {
@@ -561,7 +624,7 @@ export const BuscarHistoria = () => {
     ]
 
     const colum4AntPer = [
-        
+
         { title: 'Abortos', dataIndex: 'abortos', key: 'abortos' },
         {
             title: '¿Actualmente está sola o acompañada?', dataIndex: 'estadoPareja', key: 'estadoPareja', render: (estadoPareja) => {
@@ -896,23 +959,68 @@ export const BuscarHistoria = () => {
             </div>
             <form onSubmit={handleSearchSubmit} className="container-fluid mt-3 mb-3">
                 <div className="row g-3">
-                    <div className="col-sm-3">
-                        <select className="form-select" value={searchType} onChange={(e) => setSearchType(e.target.value)}>
-                            <option value="">Seleccionar Opcion...</option>
-                            <option value="opcion_expediente">Número de expediente</option>
-                            <option value="opcion_cedula">Cédula de identidad</option>
-                        </select>
-                    </div>
+                    {
+                        searchType === 'opcion_nombre' ? (
+                            <div className="col-sm-2">
+                                <select className="form-select" value={searchType} onChange={(e) => setSearchType(e.target.value)}>
+                                    <option value="">Seleccionar Opcion...</option>
+                                    <option value="opcion_expediente">Número de expediente</option>
+                                    <option value="opcion_cedula">Cédula de identidad</option>
+                                    <option value="opcion_nombre">Nombre</option>
+                                </select>
+                            </div>
+                        ) : (
+                            <div className="col-sm-3">
+                                <select className="form-select" value={searchType} onChange={(e) => setSearchType(e.target.value)}>
+                                    <option value="">Seleccionar Opcion...</option>
+                                    <option value="opcion_expediente">Número de expediente</option>
+                                    <option value="opcion_cedula">Cédula de identidad</option>
+                                    <option value="opcion_nombre">Nombre</option>
+                                </select>
+                            </div>
+                        )
+                    }
+
                     <div className="col-sm-9 d-flex">
                         <div className="input-group" role="search">
-                            <input
-                                className="form-control me-2"
-                                maxLength="80"
-                                type="search"
-                                aria-label="Search"
-                                value={searchValue} onChange={(e) => setSearchValue(e.target.value)}
-                            />
-                            <button className="btn btn-success" type="submit">Buscar</button>
+                            {
+                                searchType === 'opcion_nombre' ? (
+                                    <div className="d-flex gap-2">
+                                        <div className="d-flex align-items-center justify-content-center">
+                                            <label>Primer Nombre</label>
+                                            <input className="form-control" type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                                        </div>
+                                        <div className="d-flex align-items-center justify-content-center">
+                                            <label>Segundo Nombre</label>
+                                            <input className="form-control" type="text" value={secondName} onChange={(e) => setSecondName(e.target.value)} />
+                                        </div>
+                                        <div className="d-flex align-items-center justify-content-center">
+                                            <label>Primer Apellido</label>
+                                            <input className="form-control" type="text" value={firstLastName} onChange={(e) => setFirstLastName(e.target.value)} />
+                                        </div>
+                                        <div className="d-flex align-items-center justify-content-center">
+                                            <label>Segundo Apellido</label>
+                                            <input className="form-control" type="text" value={secondLastName} onChange={(e) => setSecondLastName(e.target.value)} />
+                                        </div>
+                                        <button className="btn btn-success" type="submit">Buscar</button>
+                                    </div>
+                                ) : (
+                                    <>
+                                        <input
+                                            className="form-control me-2"
+                                            maxLength="80"
+                                            type="search"
+                                            aria-label="Search"
+                                            value={searchValue} onChange={(e) => setSearchValue(e.target.value)}
+                                        />
+                                        <button className="btn btn-success" type="submit">Buscar</button>
+                                    </>
+
+
+                                )
+                            }
+
+
                         </div>
                     </div>
                 </div>
