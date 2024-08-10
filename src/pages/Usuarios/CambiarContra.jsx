@@ -69,7 +69,7 @@ export const CambiarContra = () => {
                     </div>
                     <div className="col">
                         <label className="form-label">Contraseña Nueva</label>
-                        <input type="text" name="nuevaContraseña" value={formData.nuevaContraseña} onChange={handleChange} className="form-control" />
+                        <input type="password" name="nuevaContraseña" value={formData.nuevaContraseña} onChange={handleChange} className="form-control" />
                     </div>
                 </div>
                 <div className='mt-4 d-flex gap-2'>
