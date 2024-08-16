@@ -1,18 +1,19 @@
 import { useState, useEffect } from "react";
 import { notification } from "antd";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { baseURL } from "../../api/apiURL";
 
 export const EditarDoctor = () => {
 
     const { id } = useParams();
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         codDoctor: '',
-        primerNombre: '',
+        primerNombred: '',
         segundoNombre: '',
-        primerApellido: '',
+        primerApellidod: '',
         segundoApellido: '',
         cedula: '',
         clinica: ''
@@ -40,6 +41,10 @@ export const EditarDoctor = () => {
         fetchData();
 
     }, [id]);
+
+    const handleBack = () => {
+        navigate('/buscar-doctor')
+    }
 
 
     const handleChange = (e) => {
@@ -90,7 +95,7 @@ export const EditarDoctor = () => {
                             className="form-control"
                             name="primerNombre"
                             onChange={handleChange}
-                            value={formData.primerNombre}
+                            value={formData.primerNombred}
                         />
                     </div>
                     <div className="col-sm-3">
@@ -110,7 +115,7 @@ export const EditarDoctor = () => {
                             className="form-control"
                             name="primerApellido"
                             onChange={handleChange}
-                            value={formData.primerApellido}
+                            value={formData.primerApellidod}
                         />
                     </div>
                     <div className="col-sm-3">
@@ -158,7 +163,7 @@ export const EditarDoctor = () => {
                 </div>
                 <div className="d-grid gap-2 d-md-flex justify-content-md-start mt-4">
                     <button className="btn btn-primary btn-save me-md-2" type="submit">Guardar</button>
-                    <button type="reset" className="btn btn-danger">Cancelar</button>
+                    <button type="reset" onClick={handleBack} className="btn btn-danger">Cancelar</button>
                 </div>
             </form>
         </div>

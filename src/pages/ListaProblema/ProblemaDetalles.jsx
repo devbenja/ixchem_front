@@ -191,8 +191,6 @@ export const ProblemaDetalles = () => {
         resuelto: false,
     });
 
-    console.log(user)
-
     useEffect(() => {
         fetchProblemas();
     }, []);
@@ -322,12 +320,8 @@ export const ProblemaDetalles = () => {
             key: 'resuelto',
             render: (resuelto) => (resuelto ? 'Sí' : 'No'),
         },
-        // {
-        //     title: 'Número de Expediente',
-        //     dataIndex: 'nuM_EXPEDIENTE',
-        //     key: 'nuM_EXPEDIENTE',
-        // },
-        {
+
+        ...(user && (user.codRol === 1 || user.codRol === 2) ? [{
             title: 'Acciones',
             key: 'acciones',
             render: (text, record) => (
@@ -340,7 +334,8 @@ export const ProblemaDetalles = () => {
                 </Space>
             ),
             align: 'center'
-        },
+        }] : [])
+
     ];
 
 

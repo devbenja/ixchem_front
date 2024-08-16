@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import { Document, Page, Text, View, StyleSheet, PDFDownloadLink, Image } from '@react-pdf/renderer';
 import { baseURL } from '../../api/apiURL';
 
+import { useAuth } from '../../context/AuthContext';
+
 const styles = StyleSheet.create({
     page: {
         flexDirection: 'column',
@@ -45,14 +47,14 @@ const styles = StyleSheet.create({
     },
     tableRow: {
         flexDirection: 'row',
-        flexWrap: 'wrap', 
+        flexWrap: 'wrap',
     },
     tableCol: {
         borderStyle: 'solid',
         borderWidth: 1,
         borderLeftWidth: 0,
         borderTopWidth: 0,
-        flexShrink: 1, 
+        flexShrink: 1,
         flexGrow: 1,
         justifyContent: 'center',
         alignItems: 'center',
@@ -124,6 +126,8 @@ export const NotaEvolucion = () => {
     const [formData, setFormData] = useState('');
     const navigate = useNavigate();
 
+    const { user } = useAuth();
+
     useEffect(() => {
 
         const fetchData = async () => {
@@ -176,17 +180,21 @@ export const NotaEvolucion = () => {
         navigate(`/notas-de-evolucion/${formData.numExpediente}`)
     }
 
-
     return (
         <div className="container-fluid">
             <div className='d-flex justify-content-between'>
-            
+
                 <h4 className='mb-4'>Nota de Evolución</h4>
 
                 <div className='gap-2 d-flex'>
-                    <Button onClick={handleEdit}>
-                        <EditOutlined style={{ fontSize: '20px', color: 'blue' }}  /> Editar
-                    </Button>
+
+                    {
+                        user && (user.codRol === 1 || user.codRol === 2) && (
+                            <Button onClick={handleEdit}>
+                                <EditOutlined style={{ fontSize: '20px', color: 'blue' }} /> Editar
+                            </Button>
+                        )
+                    }
 
                     <PDFDownloadLink document={<MyDocument formData={formData} />} fileName="problemas.pdf">
                         {({ loading }) =>

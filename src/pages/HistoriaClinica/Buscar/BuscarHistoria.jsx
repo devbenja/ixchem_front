@@ -9,6 +9,7 @@ import { FilePdfOutlined } from '@ant-design/icons'
 import { Image, Page, Text, View, Document, StyleSheet, PDFViewer, PDFDownloadLink } from '@react-pdf/renderer';
 
 import { baseURL } from '../../../api/apiURL';
+import { useAuth } from '../../../context/AuthContext';
 
 const styles = StyleSheet.create({
     page: {
@@ -383,6 +384,8 @@ const MyDocument = ({ data }) => (
 
 export const BuscarHistoria = () => {
 
+    const { user } = useAuth();
+
     const [searchType, setSearchType] = useState('');
     const [searchValue, setSearchValue] = useState('');
     const [paciente, setPaciente] = useState('');
@@ -469,7 +472,7 @@ export const BuscarHistoria = () => {
                 // });
 
             } else if (searchType === 'opcion_nombre') {
-                
+
                 response = await axios.get(`${baseURL}/bdtpaciente/buscarpornombre`, {
                     params: {
                         primerNombre: firstName,
@@ -479,7 +482,7 @@ export const BuscarHistoria = () => {
                     }
                 });
 
-                
+
             }
 
             setPaciente(response.data);
@@ -489,7 +492,7 @@ export const BuscarHistoria = () => {
             setInfo(infoData.data)
             setData(unidosData.data[0]);
 
-           
+
 
         } catch (error) {
 
@@ -904,7 +907,7 @@ export const BuscarHistoria = () => {
     const handleEditPaciente = () => {
 
         if (data) {
-            navigate(`/editar-paciente/${data.numExpediente}`);
+            navigate(`/editar-paciente/${paciente.numExpediente}`);
         } else {
             message.warning('No hay Datos Para Editar');
         }
@@ -1060,50 +1063,73 @@ export const BuscarHistoria = () => {
                         <Table className='mt-3 custom-table' columns={columns3} dataSource={[paciente]} pagination={false} />
                         <Table className='mt-3 custom-table' columns={columns4} dataSource={[paciente]} pagination={false} />
 
-                        <div className='container mt-4 d-flex justify-content-end gap-2'>
-                            <button onClick={handleEditPaciente} className='btn btn-warning'>Editar</button>
+                        {
+                            user && (user.codRol === 1 || user.codRol === 2) && (
+                                <div className='container mt-4 d-flex justify-content-end gap-2'>
+                                    <button onClick={handleEditPaciente} className='btn btn-warning'>Editar</button>
+                                </div>
+                            )
+                        }
 
-                        </div>
                     </div>
                     <div className="tab-pane fade" id="AP" role="tabpanel" aria-labelledby="AP-tab">
                         <Table rowKey="codAntper" className='custom-table mt-3' columns={colum1AntPer} dataSource={[antecedentesPersonales]} pagination={false} />
                         <Table rowKey="codAntper" className='custom-table mt-3' columns={colum2AntPer} dataSource={[antecedentesPersonales]} pagination={false} />
                         <Table rowKey="codAntper" className='custom-table mt-3' columns={colum3AntPer} dataSource={[antecedentesPersonales]} pagination={false} />
                         <Table rowKey="codAntper" className='custom-table mt-3' columns={colum4AntPer} dataSource={[antecedentesPersonales]} pagination={false} />
-                        <div className='container mt-4 d-flex justify-content-end gap-2'>
-                            <button onClick={handleEditAntPersonales} className='btn btn-warning'>Editar</button>
 
-                        </div>
+                        {
+                            user && (user.codRol === 1 || user.codRol === 2) && (
+                                <div className='container mt-4 d-flex justify-content-end gap-2'>
+                                    <button onClick={handleEditAntPersonales} className='btn btn-warning'>Editar</button>
+                                </div>
+                            )
+                        }
+
                     </div>
+
                     <div className="tab-pane fade" id="APP" role="tabpanel" aria-labelledby="APP-tab">
                         <Table className='mt-3 custom-table' columns={columns1AntPatPer} dataSource={[antPatPer]} pagination={false} rowKey="codAntparper" />
                         <Table className='mt-3 custom-table' columns={columns2AntPatPer} dataSource={[antPatPer]} pagination={false} rowKey="codAntparper" />
                         <Table className='mt-3 custom-table' columns={columns3AntPatPer} dataSource={[antPatPer]} pagination={false} rowKey="codAntparper" />
                         <Table className='mt-3 custom-table' columns={columns4AntPatPer} dataSource={[antPatPer]} pagination={false} rowKey="codAntparper" />
-                        <div className='container mt-4 d-flex justify-content-end gap-2'>
-                            <button onClick={handleEditAntPatPer} className='btn btn-warning'>Editar</button>
 
-                        </div>
+                        {
+                            user && (user.codRol === 1 || user.codRol === 2) && (
+                                <div className='container mt-4 d-flex justify-content-end gap-2'>
+                                    <button onClick={handleEditAntPatPer} className='btn btn-warning'>Editar</button>
+                                </div>
+                            )
+                        }
+
                     </div>
                     <div className="tab-pane fade" id="APF" role="tabpanel" aria-labelledby="APF-tab">
                         <Table className='custom-table mt-3' columns={columns1AntPatFam} dataSource={[antPatFam]} pagination={false} />
                         <Table className='custom-table mt-3' columns={columns2AntPatFam} dataSource={[antPatFam]} pagination={false} />
                         <Table className='custom-table mt-3' columns={columns3AntPatFam} dataSource={[antPatFam]} pagination={false} />
                         <Table className='custom-table mt-3' columns={columns4AntPatFam} dataSource={[antPatFam]} pagination={false} />
-                        <div className='container mt-4 d-flex justify-content-end gap-2'>
-                            <button onClick={handleEditAntPatFam} className='btn btn-warning'>Editar</button>
 
-                        </div>
+                        {
+                            user && (user.codRol === 1 || user.codRol === 2) && (
+                                <div className='container mt-4 d-flex justify-content-end gap-2'>
+                                    <button onClick={handleEditAntPatFam} className='btn btn-warning'>Editar</button>
+                                </div>
+                            )
+                        }
+
                     </div>
+
                     <div className="tab-pane fade" id="informacion" role="tabpanel" aria-labelledby="informacion-tab">
                         <Table className='custom-table mt-3' columns={columns1Informacion} dataSource={[info]} pagination={false} />
                         <Table className='custom-table mt-3' columns={columns2Informacion} dataSource={[info]} pagination={false} />
-                        <div className='container mt-4 d-flex justify-content-end gap-2'>
-                            <button onClick={handleEditInformacion} className='btn btn-warning'>Editar</button>
 
-                        </div>
-                    </div>
-                    <div className="tab-pane fade" id="unificados" role="tabpanel" aria-labelledby="unificados-tab">
+                        {
+                            user && (user.codRol === 1 || user.codRol === 2) && (
+                                <div className='container mt-4 d-flex justify-content-end gap-2'>
+                                    <button onClick={handleEditInformacion} className='btn btn-warning'>Editar</button>
+                                </div>
+                            )
+                        }
 
                     </div>
                 </div>

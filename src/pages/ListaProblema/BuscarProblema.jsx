@@ -7,8 +7,11 @@ import { FileSearchOutlined, FilePdfOutlined } from '@ant-design/icons';
 import { Spinner } from 'react-bootstrap';
 
 import { baseURL } from '../../api/apiURL';
+import { useAuth } from '../../context/AuthContext';
 
 export const BuscarProblema = () => {
+
+    const { user } = useAuth();
     const [problemas, setProblemas] = useState([]);
     const [loading, setLoading] = useState(true);
     const [errors, setErrors] = useState(null);

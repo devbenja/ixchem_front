@@ -12,141 +12,148 @@ import { baseURL } from '../../api/apiURL';
 
 export const Embarazos = () => {
 
-  const { id } = useParams();
-  const [embarazos, setEmbarazos] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const navigate = useNavigate();
+	const { id } = useParams();
+	const [embarazos, setEmbarazos] = useState([]);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState(null);
+	const navigate = useNavigate();
 
-  const { user } = useAuth();
+	const { user } = useAuth();
 
-  useEffect(() => {
-    fetchEmbarazo();
-  }, []);
+	useEffect(() => {
+		fetchEmbarazo();
+	}, []);
 
-  const fetchEmbarazo = async () => {
+	const fetchEmbarazo = async () => {
 
-    try {
+		try {
 
-      const response = await axios.get(`${baseURL}/bdtbembarazoactual/listar/${id}`);
+			const response = await axios.get(`${baseURL}/bdtbembarazoactual/listar/${id}`);
 
-      setEmbarazos(response.data);
+			setEmbarazos(response.data);
 
-      console.log(response.data)
+			console.log(response.data)
 
-    } catch (error) {
+		} catch (error) {
 
-      setError(error.response ? error.response.data : 'Error fetching data');
+			setError(error.response ? error.response.data : 'Error fetching data');
 
-    } finally {
+		} finally {
 
-      setLoading(false);
+			setLoading(false);
 
-    }
+		}
 
-  };
+	};
 
-  const columnEmbarazos = [
-    {
-      title: 'Numero de Expediente',
-      dataIndex: 'numExpediente',
-      key: 'numExpediente',
-    },
-    {
-      title: 'Diagnostico Embarazo',
-      dataIndex: 'diagnostico',
-      key: 'diagnostico',
-      render: (diagnostico) => {
-        if (diagnostico === null || diagnostico === undefined) {
-          return '';
-        }
-        return diagnostico ? 'Sí' : 'No';
-      }
-    },
-    {
-      title: 'Acciones',
-      key: 'acciones',
-      render: (text, record) => (
-        <Space align="center" size="middle">
-          <Button icon={<FileSearchOutlined onClick={() => handleRowClickEmbarazo(record.codEmbarazo)} />} />
-          <Button icon={<EditOutlined />} onClick={(e) => { e.stopPropagation(); handleEdit(record.codEmbarazo); }} />
+	const columnEmbarazos = [
+		{
+			title: 'Numero de Expediente',
+			dataIndex: 'numExpediente',
+			key: 'numExpediente',
+		},
+		{
+			title: 'Diagnostico Embarazo',
+			dataIndex: 'diagnostico',
+			key: 'diagnostico',
+			render: (diagnostico) => {
+				if (diagnostico === null || diagnostico === undefined) {
+					return '';
+				}
+				return diagnostico ? 'Sí' : 'No';
+			}
+		},
+		{
+			title: 'Acciones',
+			key: 'acciones',
+			render: (text, record) => (
+				<Space align="center" size="middle">
+					<Button icon={<FileSearchOutlined onClick={() => handleRowClickEmbarazo(record.codEmbarazo)} />} />
 
-          {user && user.codRol === 1 && (
-            <Button icon={<DeleteOutlined onClick={(e) => { e.stopPropagation(); showDeleteConfirm(record.codEmbarazo); }} />} />
-          )}
-        </Space>
-      ),
-      align: 'center',
-    },
-  ]
+					{
+						user && (user.codRol === 1 || user.codRol === 2) && (
+							<Button icon={<EditOutlined />} onClick={(e) => { e.stopPropagation(); handleEdit(record.codEmbarazo); }} />
+						)
+					}
 
-  const handleEdit = (codEmbarazo) => {
-    navigate(`/editar-embarazo/${codEmbarazo}`);
-  };
+					{
+						user && user.codRol === 1 && (
+							<Button icon={<DeleteOutlined onClick={(e) => { e.stopPropagation(); showDeleteConfirm(record.codEmbarazo); }} />} />
+						)
+					}
+				</Space>
+			),
+			align: 'center',
+		},
+	]
 
-  const handleRowClickEmbarazo = (codEmbarazo) => {
-    navigate(`/embarazo/${codEmbarazo}`);
-  }
+	const handleEdit = (codEmbarazo) => {
+		navigate(`/editar-embarazo/${codEmbarazo}`);
+	};
 
-  const deleteEmbarazo = async (id) => {
+	const handleRowClickEmbarazo = (codEmbarazo) => {
+		navigate(`/embarazo/${codEmbarazo}`);
+	}
 
-    try {
+	const deleteEmbarazo = async (id) => {
 
-      await axios.delete(`${baseURL}/bdtbembarazoactual/eliminar/${id}`);
+		try {
 
-      notification.success({
-        message: '¡Éxito!',
-        description: `Embarazo Actual Eliminado`,
-        duration: 3
-      });
+			await axios.delete(`${baseURL}/bdtbembarazoactual/eliminar/${id}`);
 
-      setEmbarazos(prevEmb => prevEmb.filter(u => u.codEmbarazo !== id));
+			notification.success({
+				message: '¡Éxito!',
+				description: `Embarazo Actual Eliminado`,
+				duration: 3
+			});
 
-    } catch (error) {
+			setEmbarazos(prevEmb => prevEmb.filter(u => u.codEmbarazo !== id));
 
-      setError(error.response ? error.response.data : 'Error al Eliminar Datos');
+		} catch (error) {
 
-    }
+			setError(error.response ? error.response.data : 'Error al Eliminar Datos');
 
-  };
+		}
 
-  const showDeleteConfirm = (id) => {
-    Modal.confirm({
-      centered: true,
-      title: '¿Está seguro que desea eliminar este Dato?',
-      icon: <ExclamationCircleOutlined />,
-      content: 'Esta acción no se puede deshacer.',
-      okText: 'Sí',
-      okType: 'danger',
-      cancelText: 'No',
-      onOk() {
-        deleteEmbarazo(id);
-      },
-      onCancel() {
-        console.log('Cancelado');
-      },
-    });
-  };
+	};
 
-  const handleBack = () => {
-    navigate('/buscar-historia-clinica-general');
-  }
+	const showDeleteConfirm = (id) => {
+		Modal.confirm({
+			centered: true,
+			title: '¿Está seguro que desea eliminar este Dato?',
+			icon: <ExclamationCircleOutlined />,
+			content: 'Esta acción no se puede deshacer.',
+			okText: 'Sí',
+			okType: 'danger',
+			cancelText: 'No',
+			onOk() {
+				deleteEmbarazo(id);
+			},
+			onCancel() {
+				console.log('Cancelado');
+			},
+		});
+	};
 
-  return (
-    <div className='container-fluid'>
-      <div className="container-fluid d-flex justify-content-between align-items-center">
-        <h4>Embarazo Actual del Expediente: {id}</h4>
-        <Button style={{ backgroundColor: 'red', color: 'white' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
-      </div>
-      <Table
-        columns={columnEmbarazos}
-        rowKey="codEmbarazo"
-        dataSource={embarazos}
-        className='mt-3 custom-table'
-        onRow={(record) => ({
-          onClick: () => handleRowClickEmbarazo(record.codEmbarazo),
-        })}
-      />
-    </div>
-  )
+	const handleBack = () => {
+		navigate('/buscar-historia-clinica-general');
+	}
+
+	return (
+		<div className='container-fluid'>
+			<div className="container-fluid d-flex justify-content-between align-items-center">
+				<h4>Embarazo Actual del Expediente: {id}</h4>
+				<Button style={{ backgroundColor: 'red', color: 'white' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
+			</div>
+			<Table
+				columns={columnEmbarazos}
+				rowKey="codEmbarazo"
+				dataSource={embarazos}
+				className='mt-3 custom-table'
+				onRow={(record) => ({
+					onClick: () => handleRowClickEmbarazo(record.codEmbarazo),
+				})}
+			/>
+		</div>
+	)
 }

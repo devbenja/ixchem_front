@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { Document, Page, Text, View, StyleSheet, PDFDownloadLink, Image } from '@react-pdf/renderer';
 
 import { baseURL } from '../../api/apiURL';
+import { useAuth } from '../../context/AuthContext';
 
 const styles = StyleSheet.create({
     page: {
@@ -190,6 +191,7 @@ export const EpicrisisDetalle = () => {
     const { codEpicrisis } = useParams();
     const [formData, setFormData] = useState('');
     const navigate = useNavigate();
+    const { user } = useNavigate();
 
     useEffect(() => {
 
@@ -344,9 +346,14 @@ export const EpicrisisDetalle = () => {
                 <h4 className='mb-4'>Epicrisis</h4>
 
                 <div className='gap-2 d-flex'>
-                    <Button onClick={handleEdit}>
-                        <EditOutlined style={{ fontSize: '20px', color: 'blue' }} />Editar
-                    </Button>
+
+                    {
+                        user && (user.codRol === 1 || user.codRol === 2) && (
+                            <Button onClick={handleEdit}>
+                                <EditOutlined style={{ fontSize: '20px', color: 'blue' }} />Editar
+                            </Button>
+                        )
+                    }
 
                     <PDFDownloadLink document={<MyDocument formData={formData} />} fileName="problemas.pdf">
                         {({ loading }) =>

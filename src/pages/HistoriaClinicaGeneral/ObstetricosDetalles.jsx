@@ -17,7 +17,7 @@ export const ObstetricosDetalles = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
-    
+
     const { user } = useAuth();
 
     useEffect(() => {
@@ -67,12 +67,19 @@ export const ObstetricosDetalles = () => {
             render: (text, record) => (
                 <Space size="middle">
                     <Button icon={<FileSearchOutlined />} onClick={() => handleRowClick(record.codHojariesgo)} />
-                    <Button icon={<EditOutlined />} onClick={() => handleEdit(record.codHojariesgo)} />
 
-                    {user && user.codRol === 1 && (
-                        <Button icon={<DeleteOutlined />} onClick={() => showDeleteConfirm(record.codHojariesgo)} />
-                    )}
-                    
+                    {
+                        user && (user.codRol === 1 || user.codRol === 2) && (
+                            <Button icon={<EditOutlined />} onClick={() => handleEdit(record.codHojariesgo)} />
+                        )
+                    }
+
+                    {
+                        user && user.codRol === 1 && (
+                            <Button icon={<DeleteOutlined />} onClick={() => showDeleteConfirm(record.codHojariesgo)} />
+                        )
+                    }
+
                 </Space>
             ),
             align: 'center',
@@ -149,7 +156,7 @@ export const ObstetricosDetalles = () => {
                 className='custom-table mt-4'
                 columns={columns}
                 dataSource={obstetricos}
-                rowKey="codHojariesgo" 
+                rowKey="codHojariesgo"
             />
         </div>
     )

@@ -80,7 +80,7 @@ export const ListaEpicrisis = () => {
             render: (text, record) => (
                 <Space size="middle">
                     <Button icon={<FileSearchOutlined />} onClick={() => handleRowClick(record.coD_EPICRISIS)} />
-                    <Button icon={<EditOutlined />} onClick={() => handleEdit(record.coD_EPICRISIS)} />
+                    {/* <Button icon={<EditOutlined />} onClick={() => handleEdit(record.coD_EPICRISIS)} /> */}
 
                     {user && user.codRol === 1 && (
                         <Button icon={<DeleteOutlined />} onClick={() => showDeleteConfirm(record.coD_EPICRISIS)} />

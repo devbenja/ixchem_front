@@ -57,9 +57,15 @@ export const BuscarUsuario = () => {
             title: 'Rol',
             dataIndex: 'codRol',
             key: 'codRol',
-            render: (codRol) => (
-                codRol === 1 ? 'Administrador' : 'Normal'
-            ),
+            render: (codRol) => {
+                if (codRol === 1) {
+                    return 'Administrador';
+                } else if (codRol === 2) {
+                    return 'Normal';
+                } else if (codRol === 3) {
+                    return 'Director';
+                }
+            }
         },
         {
             title: 'Acciones',

@@ -70,11 +70,19 @@ export const HistoriasCG = () => {
             render: (text, record) => (
                 <Space align="center" size="middle">
                     <Button icon={<FileSearchOutlined onClick={() => handleRowClickHCGeneral(record.coD_HISTORIA_CLINICA)} />} />
-                    <Button icon={<EditOutlined />} onClick={(e) => { e.stopPropagation(); handleEdit(record.coD_HISTORIA_CLINICA); }} />
 
-                    {user && user.codRol === 1 && (
-                        <Button icon={<DeleteOutlined onClick={(e) => { e.stopPropagation(); showDeleteConfirm(record.coD_HISTORIA_CLINICA); }} />} />
-                    )}
+                    {
+                        user && (user.codRol === 1 || user.codRol === 2) && (
+                            <Button icon={<EditOutlined />} onClick={(e) => { e.stopPropagation(); handleEdit(record.coD_HISTORIA_CLINICA); }} />
+                        )
+                    }
+                    
+                    {
+                        user && user.codRol === 1 && (
+                            <Button icon={<DeleteOutlined onClick={(e) => { e.stopPropagation(); showDeleteConfirm(record.coD_HISTORIA_CLINICA); }} />} />
+                        )
+                    }
+
                 </Space>
             ),
             align: 'center',

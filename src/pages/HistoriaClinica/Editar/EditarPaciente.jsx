@@ -10,6 +10,8 @@ import { baseURL } from '../../../api/apiURL';
 export const EditarPaciente = () => {
 
     const { id } = useParams();
+    
+    console.log(id)
 
     const [formData, setFormData] = useState({
         numExpediente: '',
