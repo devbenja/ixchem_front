@@ -12,7 +12,8 @@ export const CambiarContra = () => {
     const [formData, setFormData] = useState({
         codAdmin: 0,
         contraseñaActual: "",
-        nuevaContraseña: ""
+        nuevaContraseña: "",
+        confirmarContraseña: ""
     });
 
     useEffect(() => {
@@ -70,6 +71,10 @@ export const CambiarContra = () => {
                     <div className="col">
                         <label className="form-label">Contraseña Nueva</label>
                         <input type="password" name="nuevaContraseña" value={formData.nuevaContraseña} onChange={handleChange} className="form-control" />
+                    </div>
+                    <div className="col">
+                        <label className="form-label">Confirmar Contraseña Nueva</label>
+                        <input type="password" name="confirmarContraseña" value={formData.confirmarContraseña} onChange={handleChange} className="form-control" />
                     </div>
                 </div>
                 <div className='mt-4 d-flex gap-2'>

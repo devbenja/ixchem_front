@@ -6,7 +6,7 @@ import './Problemas.css'
 import { Table, Space, Button, message, Modal as AntModal } from 'antd';
 import { EditOutlined, DeleteOutlined, ExclamationCircleOutlined, FilePdfOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 import { Form, Col, Spinner, Modal } from 'react-bootstrap';
-import { Document, Page, Text, View, StyleSheet, PDFDownloadLink, Image } from '@react-pdf/renderer';
+import { Document, Page, Text, View, StyleSheet, PDFDownloadLink, Image, BlobProvider } from '@react-pdf/renderer';
 
 import { useAuth } from '../../context/AuthContext';
 import { baseURL } from '../../api/apiURL';
@@ -171,6 +171,19 @@ const MyDocument = ({ problemas }) => (
 );
 
 export const ProblemaDetalles = () => {
+
+    const [visible, setVisible] = useState(false);
+    const [previewUrl, setPreviewUrl] = useState('');
+
+    const handlePreview = (url) => {
+        setPreviewUrl(url);
+        setVisible(true);
+    };
+
+    const handleClose = () => {
+        setVisible(false);
+        setPreviewUrl('');
+    };
 
     const { numExpediente } = useParams();
     const navigate = useNavigate();
@@ -355,9 +368,36 @@ export const ProblemaDetalles = () => {
             <div className='d-flex align-items-start justify-content-between'>
                 <h4 className='mb-4'>Problemas Asociados al Expediente: {numExpediente}</h4>
                 <div className='d-flex align-items-center gap-3'>
+                    <BlobProvider document={<MyDocument problemas={problemas} />}>
+                        {({ blob, url, loading }) => (
+                            <>
+                                <Button onClick={() => handlePreview(url)}>
+                                    <FilePdfOutlined style={{ fontSize: '20px', color: 'blue' }} /> Previsualizar PDF
+                                </Button>
+                                <Modal
+                                    show={visible}
+                                    title="Previsualización del PDF"
+                                    footer={null}
+                                    width={1200}
+                                >
+                                    <iframe
+                                        src={previewUrl}
+                                        style={{ width: '100%', height: '500px' }}
+                                    
+                                    ></iframe>
+
+                                    <Modal.Footer>
+                                        <Button danger key="close" onClick={handleClose}>
+                                            Cerrar
+                                        </Button>
+                                    </Modal.Footer>
+                                </Modal>
+                            </>
+                        )}
+                    </BlobProvider>
                     <PDFDownloadLink document={<MyDocument problemas={problemas} />} fileName="problemas.pdf">
-                        {({ blob, url, loading, error }) =>
-                            loading ? 'Cargando documento...' : <Button><FilePdfOutlined style={{ fontSize: '20px', color: 'red' }}/>Exportar a PDF</Button>
+                        {({ loading }) =>
+                            loading ? 'Cargando documento...' : <Button><FilePdfOutlined style={{ fontSize: '20px', color: 'red' }} />Exportar a PDF</Button>
                         }
                     </PDFDownloadLink>
                     <Button style={{ backgroundColor: 'red', color: 'white' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>

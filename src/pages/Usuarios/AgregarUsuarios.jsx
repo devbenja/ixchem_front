@@ -91,6 +91,7 @@ export const AgregarUsuarios = () => {
                         <select name="codRol" value={formData.codRol} onChange={handleChange} className="form-select">
                             <option value={1}>Administrador</option>
                             <option value={2}>Normal</option>
+                            <option value={3}>Director</option>
                         </select>
                     </div>
 
