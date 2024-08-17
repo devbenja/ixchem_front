@@ -2,12 +2,14 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import { Page, Text, View, Document, StyleSheet, PDFDownloadLink } from '@react-pdf/renderer';
+import { Page, Text, View, Document, StyleSheet, PDFDownloadLink, BlobProvider } from '@react-pdf/renderer';
 
 import { ArrowLeftOutlined, FileSearchOutlined, FilePdfOutlined } from '@ant-design/icons';
 import { Table, Button, Input, Space } from "antd";
+import { Modal } from "react-bootstrap";
 
 import { baseURL } from "../../api/apiURL";
+import { useAuth } from "../../context/AuthContext";
 
 const styles = StyleSheet.create({
     page: {
@@ -593,9 +595,24 @@ const MyDocument = ({ data }) => {
 
 export const Unidos = () => {
 
+    const [visible, setVisible] = useState(false);
+    const [previewUrl, setPreviewUrl] = useState('');
+
+    const handlePreview = (url) => {
+        setPreviewUrl(url + '#toolbar=0');
+        setVisible(true);
+    };
+
+    const handleClose = () => {
+        setVisible(false);
+        setPreviewUrl('');
+    };
+
+
     // id es el nuM_EXPEDIENTE
     const { id } = useParams();
     const navigate = useNavigate();
+    const { user } = useAuth();
 
     const [unidosExp, setUnidosExp] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -682,11 +699,46 @@ export const Unidos = () => {
             <div className="container-fluid d-flex justify-content-between align-items-center">
                 <h4>Clasificación de Riesgo del Expediente: {id}</h4>
                 <div className="d-flex gap-2">
-                    <PDFDownloadLink document={<MyDocument data={unidosExp} />} fileName="clasificacio_de_riesgo.pdf">
-                        {({ loading }) =>
-                            loading ? 'Cargando documento...' : <Button><FilePdfOutlined style={{ fontSize: '20px', color: 'red' }} />Exportar a PDF</Button>
-                        }
-                    </PDFDownloadLink>
+
+                    <BlobProvider document={<MyDocument data={unidosExp} />}>
+                        {({ url }) => (
+                            <>
+                                <Button onClick={() => handlePreview(url)}>
+                                    <FilePdfOutlined style={{ fontSize: '20px', color: 'blue' }} /> Visualizar PDF
+                                </Button>
+                                <Modal
+                                    show={visible}
+                                    title="Previsualización del PDF"
+                                    footer={null}
+                                    size='xl'
+                                    onHide={handleClose}
+                                    centered
+                                >
+                                    <iframe
+                                        src={previewUrl}
+                                        style={{ width: '100%', height: '80vh' }}
+                                    ></iframe>
+
+                                    <Modal.Footer>
+                                        <Button danger key="close" onClick={handleClose}>
+                                            Cerrar
+                                        </Button>
+                                    </Modal.Footer>
+                                </Modal>
+                            </>
+                        )}
+                    </BlobProvider>
+
+                    {
+                        user && (user.codRol === 1 || user.codRol === 3) && (
+                            <PDFDownloadLink document={<MyDocument data={unidosExp} />} fileName="clasificacio_de_riesgo.pdf">
+                                {({ loading }) =>
+                                    loading ? 'Cargando documento...' : <Button><FilePdfOutlined style={{ fontSize: '20px', color: 'red' }} />Exportar a PDF</Button>
+                                }
+                            </PDFDownloadLink>
+                        )
+                    }
+
                     <Button style={{ backgroundColor: 'red', color: 'white' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
                 </div>
             </div>

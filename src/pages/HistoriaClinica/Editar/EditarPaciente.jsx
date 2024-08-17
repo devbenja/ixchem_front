@@ -10,8 +10,6 @@ import { baseURL } from '../../../api/apiURL';
 export const EditarPaciente = () => {
 
     const { id } = useParams();
-    
-    console.log(id)
 
     const [formData, setFormData] = useState({
         numExpediente: '',
@@ -34,7 +32,8 @@ export const EditarPaciente = () => {
         imc: 0,
         fechaIngreso: '',
         centro: '',
-        usuaria: ''
+        usuaria: '',
+        estado: false
     });
 
     useEffect(() => {
@@ -77,7 +76,12 @@ export const EditarPaciente = () => {
 
         try {
 
-            await axios.put(`${baseURL}/bdtpaciente/actualizar/${id}`, formData);
+            const transformedData = {
+                ...formData,
+                estado: formData.estado === 'true'
+            }
+
+            await axios.put(`${baseURL}/bdtpaciente/actualizar/${id}`, transformedData);
             
             notification.success({
                 message: '¡Éxito!',
@@ -104,7 +108,7 @@ export const EditarPaciente = () => {
                 <div className='row'>
                     <div className='col-sm-2'>
                         <div className="mb-3">
-                            <label className="form-label">Número de expediente</label>
+                            <label className="form-label">No. de expediente</label>
                             <input type="text" name="numExpediente" value={formData.numExpediente} onChange={handleChange} className="form-control" />
                         </div>
                     </div>
@@ -247,6 +251,16 @@ export const EditarPaciente = () => {
                                 <option value="">{formData.usuaria}</option>
                                 <option value="Usuaria">Usuaria</option>
                                 <option value="Subsecuente">Subsecuente</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="col-sm-3">
+                        <div className="mb-3">
+                            <label className="form-label">Estado</label>
+                            <select name="estado" value={formData.estado} onChange={handleChange} className="form-select">
+                                <option value="">{formData.estado ? 'Habilitado' : 'Inhabilitado'}</option>
+                                <option value={true}>Habilitado</option>
+                                <option value={false}>Inhabilitado</option>
                             </select>
                         </div>
                     </div>

@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Table, Button } from 'antd';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { EditOutlined, FilePdfOutlined, ArrowLeftOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
-import { Document, Page, Text, View, StyleSheet, PDFDownloadLink, Image } from '@react-pdf/renderer';
+import { Document, Page, Text, View, StyleSheet, PDFDownloadLink, Image, BlobProvider } from '@react-pdf/renderer';
+import { Modal } from 'react-bootstrap';
 
 import { baseURL } from '../../api/apiURL';
 import { useAuth } from '../../context/AuthContext';
@@ -188,10 +188,23 @@ const MyDocument = ({ formData }) => (
 
 export const EpicrisisDetalle = () => {
 
+    const [visible, setVisible] = useState(false);
+    const [previewUrl, setPreviewUrl] = useState('');
+
+    const handlePreview = (url) => {
+        setPreviewUrl(url + '#toolbar=0');
+        setVisible(true);
+    };
+
+    const handleClose = () => {
+        setVisible(false);
+        setPreviewUrl('');
+    };
+
     const { codEpicrisis } = useParams();
     const [formData, setFormData] = useState('');
     const navigate = useNavigate();
-    const { user } = useNavigate();
+    const { user } = useAuth();
 
     useEffect(() => {
 
@@ -355,11 +368,44 @@ export const EpicrisisDetalle = () => {
                         )
                     }
 
-                    <PDFDownloadLink document={<MyDocument formData={formData} />} fileName="problemas.pdf">
-                        {({ loading }) =>
-                            loading ? 'Cargando documento...' : <Button><FilePdfOutlined style={{ fontSize: '20px', color: 'red' }} />Exportar a PDF</Button>
-                        }
-                    </PDFDownloadLink>
+                    <BlobProvider document={<MyDocument formData={formData} />}>
+                        {({ url }) => (
+                            <>
+                                <Button onClick={() => handlePreview(url)}>
+                                    <FilePdfOutlined style={{ fontSize: '20px', color: 'blue' }} /> Visualizar PDF
+                                </Button>
+                                <Modal
+                                    show={visible}
+                                    title="Previsualización del PDF"
+                                    footer={null}
+                                    size='xl'
+                                    onHide={handleClose}
+                                    centered
+                                >
+                                    <iframe
+                                        src={previewUrl}
+                                        style={{ width: '100%', height: '80vh' }}
+                                    ></iframe>
+
+                                    <Modal.Footer>
+                                        <Button danger key="close" onClick={handleClose}>
+                                            Cerrar
+                                        </Button>
+                                    </Modal.Footer>
+                                </Modal>
+                            </>
+                        )}
+                    </BlobProvider>
+
+                    {
+                        user && (user.codRol === 1 || user.codRol === 3) && (
+                            <PDFDownloadLink document={<MyDocument formData={formData} />} fileName="problemas.pdf">
+                                {({ loading }) =>
+                                    loading ? 'Cargando documento...' : <Button><FilePdfOutlined style={{ fontSize: '20px', color: 'red' }} />Exportar a PDF</Button>
+                                }
+                            </PDFDownloadLink>
+                        )
+                    }
 
                     <Button style={{ backgroundColor: 'red', color: 'white' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
                 </div>

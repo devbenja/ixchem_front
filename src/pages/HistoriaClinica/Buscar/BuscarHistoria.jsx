@@ -4,9 +4,10 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Table, message, notification, Button } from 'antd';
+import { Modal } from 'react-bootstrap';
 import { FilePdfOutlined } from '@ant-design/icons'
 
-import { Image, Page, Text, View, Document, StyleSheet, PDFViewer, PDFDownloadLink } from '@react-pdf/renderer';
+import { Image, Page, Text, View, Document, StyleSheet, BlobProvider, PDFDownloadLink } from '@react-pdf/renderer';
 
 import { baseURL } from '../../../api/apiURL';
 import { useAuth } from '../../../context/AuthContext';
@@ -384,6 +385,19 @@ const MyDocument = ({ data }) => (
 
 export const BuscarHistoria = () => {
 
+    const [visible, setVisible] = useState(false);
+    const [previewUrl, setPreviewUrl] = useState('');
+
+    const handlePreview = (url) => {
+        setPreviewUrl(url + '#toolbar=0');
+        setVisible(true);
+    };
+
+    const handleClose = () => {
+        setVisible(false);
+        setPreviewUrl('');
+    };
+
     const { user } = useAuth();
 
     const [searchType, setSearchType] = useState('');
@@ -396,9 +410,7 @@ export const BuscarHistoria = () => {
     const [data, setData] = useState([]);
 
     const [firstName, setFirstName] = useState('');
-    const [secondName, setSecondName] = useState('');
     const [firstLastName, setFirstLastName] = useState('');
-    const [secondLastName, setSecondLastName] = useState('');
 
 
     const navigate = useNavigate();
@@ -418,27 +430,27 @@ export const BuscarHistoria = () => {
 
             if (searchType === 'opcion_expediente') {
 
-                response = await axios.get(`${baseURL}/bdtpaciente/buscarpornumexpediente`, {
-                    params: { NumExpediente: searchValue }
-                });
+                // response = await axios.get(`${baseURL}/bdtpaciente/buscarpornumexpediente`, {
+                //     params: { NumExpediente: searchValue }
+                // });
 
-                console.log(response.data)
+                // console.log(response.data)
 
-                antPerData = await axios.get(`${baseURL}/bdtbantecedentespersonale/buscarporexpediente`, {
-                    params: { NumExpediente: searchValue }
-                });
+                // antPerData = await axios.get(`${baseURL}/bdtbantecedentespersonale/buscarporexpediente`, {
+                //     params: { NumExpediente: searchValue }
+                // });
 
-                antPatPerData = await axios.get(`${baseURL}/bdtbaantecedentepatper/buscarporexpediente`, {
-                    params: { NumExpediente: searchValue }
-                });
+                // antPatPerData = await axios.get(`${baseURL}/bdtbaantecedentepatper/buscarporexpediente`, {
+                //     params: { NumExpediente: searchValue }
+                // });
 
-                antPatFamData = await axios.get(`${baseURL}/bdtbantecedentepatfam/buscarporexpediente`, {
-                    params: { NumExpediente: searchValue }
-                });
+                // antPatFamData = await axios.get(`${baseURL}/bdtbantecedentepatfam/buscarporexpediente`, {
+                //     params: { NumExpediente: searchValue }
+                // });
 
-                infoData = await axios.get(`${baseURL}/bdtbinformacion/buscarporexpediente`, {
-                    params: { NumExpediente: searchValue }
-                });
+                // infoData = await axios.get(`${baseURL}/bdtbinformacion/buscarporexpediente`, {
+                //     params: { NumExpediente: searchValue }
+                // });
 
                 unidosData = await axios.get(`${baseURL}/bdtpaciente/buscarpornumexpedienteunidos`, {
                     params: { NUM_EXPEDIENTE: searchValue }
@@ -447,9 +459,9 @@ export const BuscarHistoria = () => {
 
             } else if (searchType === 'opcion_cedula') {
 
-                response = await axios.get(`${baseURL}/bdtpaciente/buscarporcedula`, {
-                    params: { cedula: searchValue }
-                });
+                // response = await axios.get(`${baseURL}/bdtpaciente/buscarporcedula`, {
+                //     params: { cedula: searchValue }
+                // });
 
                 // antPerData = await axios.get(`${baseURL}/bdtbantecedentespersonale/buscarporexpediente`, {
                 //     params: { cedula: searchValue }
@@ -473,25 +485,25 @@ export const BuscarHistoria = () => {
 
             } else if (searchType === 'opcion_nombre') {
 
-                response = await axios.get(`${baseURL}/bdtpaciente/buscarpornombre`, {
+                unidosData = await axios.get(`${baseURL}/bdtpaciente/buscarpacientesunidosnombre`, {
                     params: {
-                        primerNombre: firstName,
-                        segundoNombre: secondName,
-                        primerApellido: firstLastName,
-                        segundoApellido: secondLastName
+                        PRIMER_NOMBRE: firstName,
+                        PRIMER_APELLIDO: firstLastName,
                     }
                 });
 
 
             }
 
-            setPaciente(response.data);
-            setAntPersonales(antPerData.data)
-            setAntPatPer(antPatPerData.data);
-            setAntPatFam(antPatFamData.data);
-            setInfo(infoData.data)
+            // setPaciente(response.data);
+            // setAntPersonales(antPerData.data)
+            // setAntPatPer(antPatPerData.data);
+            // setAntPatFam(antPatFamData.data);
+            // setInfo(infoData.data)
+
             setData(unidosData.data[0]);
 
+            console.log(unidosData.data[0]);
 
 
         } catch (error) {
@@ -506,19 +518,19 @@ export const BuscarHistoria = () => {
     };
 
     const columns1 = [
-        { title: 'Fecha de ingreso', dataIndex: 'fechaIngreso', key: 'fechaIngreso' },
+        { title: 'Fecha de ingreso', dataIndex: 'fechA_INGRESO', key: 'fechA_INGRESO' },
         { title: 'Centro de mujeres IXCHEN', dataIndex: 'centro', key: 'centro' },
         { title: 'Usuaria', dataIndex: 'usuaria', key: 'usuaria' },
     ];
 
     const columns2 = [
-        { title: 'Primer nombre', dataIndex: 'primerNombre', key: 'primerNombre' },
-        { title: 'Segundo nombre', dataIndex: 'segundoNombre', key: 'segundoNombre' },
-        { title: 'Primer apellido', dataIndex: 'primerApellido', key: 'primerApellido' },
-        { title: 'Segundo apellido', dataIndex: 'segundoApellido', key: 'segundoApellido' },
+        { title: 'Primer nombre', dataIndex: 'primeR_NOMBRE', key: 'primeR_NOMBRE' },
+        { title: 'Segundo nombre', dataIndex: 'segundO_NOMBRE', key: 'segundO_NOMBRE' },
+        { title: 'Primer apellido', dataIndex: 'primeR_APELLIDO', key: 'primeR_APELLIDO' },
+        { title: 'Segundo apellido', dataIndex: 'segundO_APELLIDO', key: 'segundO_APELLIDO' },
         { title: 'Cédula', dataIndex: 'cedula', key: 'cedula' },
-        { title: 'Expediente', dataIndex: 'numExpediente', key: 'numExpediente' },
-        { title: 'Fecha de Nac.', dataIndex: 'fechaNac', key: 'fechaNac' },
+        { title: 'Expediente', dataIndex: 'nuM_EXPEDIENTE', key: 'nuM_EXPEDIENTE' },
+        { title: 'Fecha de Nac.', dataIndex: 'fechA_NAC', key: 'fechA_NAC' },
         { title: 'Edad', dataIndex: 'edad', key: 'edad' },
         { title: 'Sexo', dataIndex: 'sexo', key: 'sexo' },
     ];
@@ -527,7 +539,7 @@ export const BuscarHistoria = () => {
         { title: 'Escolaridad', dataIndex: 'escolaridad', key: 'escolaridad' },
         { title: 'Profesión/Oficio', dataIndex: 'profesion', key: 'profesion' },
         { title: 'Dirección', dataIndex: 'direccion', key: 'direccion' },
-        { title: 'Departamento', dataIndex: 'codDepartamento', key: 'codDepartamento' },
+        { title: 'Departamento', dataIndex: 'coD_DEPARTAMENTO', key: 'coD_DEPARTAMENTO' },
     ];
 
     const columns4 = [
@@ -540,16 +552,15 @@ export const BuscarHistoria = () => {
 
     const colum1AntPer = [
         { title: 'Primera Menstruación', dataIndex: 'menstruacion', key: 'menstruacion' },
-        { title: 'Inicio Vida Sexual', dataIndex: 'vidaSexual', key: 'vidaSexual' },
-        { title: 'Compañeros Sexuales', dataIndex: 'compSexuales', key: 'compSexuales' },
-        { title: 'Compañeros Sexuales', dataIndex: 'compSexuales', key: 'compSexuales' },
+        { title: 'Inicio Vida Sexual', dataIndex: 'vidA_SEXUAL', key: 'vidA_SEXUAL' },
+        { title: 'Compañeros Sexuales', dataIndex: 'comP_SEXUALES', key: 'comP_SEXUALES' },
         { title: 'MAC', dataIndex: 'mac', key: 'mac' },
         {
-            title: '¿Has estado embarazada?', dataIndex: 'histEmbarazo', key: 'histEmbarazo', render: (histEmbarazo) => {
-                if (histEmbarazo === null || histEmbarazo === undefined) {
+            title: '¿Has estado embarazada?', dataIndex: 'hisT_EMBARAZO', key: 'hisT_EMBARAZO', render: (hisT_EMBARAZO) => {
+                if (hisT_EMBARAZO === null || hisT_EMBARAZO === undefined) {
                     return '';
                 }
-                return histEmbarazo ? 'Sí' : 'No';
+                return hisT_EMBARAZO ? 'Sí' : 'No';
             }
         },
         { title: 'Gestas', dataIndex: 'gestas', key: 'gestas' },
@@ -598,21 +609,21 @@ export const BuscarHistoria = () => {
             }
         },
         {
-            title: '¿PAP Alterado', dataIndex: 'papAlterado', key: 'papAlterado', render: (papAlterado) => {
-                if (papAlterado === null || papAlterado === undefined) {
+            title: '¿PAP Alterado', dataIndex: 'paP_ALTERADO', key: 'paP_ALTERADO', render: (paP_ALTERADO) => {
+                if (paP_ALTERADO === null || paP_ALTERADO === undefined) {
                     return '';
                 }
-                return papAlterado ? 'Sí' : 'No';
+                return paP_ALTERADO ? 'Sí' : 'No';
             }
         },
-        { title: 'Ultimo Pap', dataIndex: 'histPap', key: 'histPap' },
+        { title: 'Ultimo Pap', dataIndex: 'hisT_PAP', key: 'hisT_PAP' },
         { title: 'Edad de Menopausia', dataIndex: 'menopausia', key: 'menopausia' },
         {
-            title: '¿Terapia Reemplazo Hormonal?', dataIndex: 'reempHormonal', key: 'reempHormonal', render: (reempHormonal) => {
-                if (reempHormonal === null || reempHormonal === undefined) {
+            title: '¿Terapia Reemplazo Hormonal?', dataIndex: 'reemP_HORMONAL', key: 'reemP_HORMONAL', render: (reemP_HORMONAL) => {
+                if (reemP_HORMONAL === null || reemP_HORMONAL === undefined) {
                     return '';
                 }
-                return reempHormonal ? 'Sí' : 'No';
+                return reemP_HORMONAL ? 'Sí' : 'No';
             }
         },
         {
@@ -623,21 +634,20 @@ export const BuscarHistoria = () => {
                 return fuma ? 'Sí' : 'No';
             }
         },
-        { title: 'Cigarros por Dia', dataIndex: 'cigarrosDia', key: 'cigarrosDia' },
+        { title: 'Cigarros por Dia', dataIndex: 'cigarroS_DIA', key: 'cigarroS_DIA' },
     ]
 
     const colum4AntPer = [
 
-        { title: 'Abortos', dataIndex: 'abortos', key: 'abortos' },
         {
-            title: '¿Actualmente está sola o acompañada?', dataIndex: 'estadoPareja', key: 'estadoPareja', render: (estadoPareja) => {
-                if (estadoPareja === null || estadoPareja === undefined) {
+            title: '¿Actualmente está sola o acompañada?', dataIndex: 'estadO_PAREJA', key: 'estadO_PAREJA', render: (estadO_PAREJA) => {
+                if (estadO_PAREJA === null || estadO_PAREJA === undefined) {
                     return '';
                 }
-                return estadoPareja ? 'Sola' : 'Acompañada';
+                return estadO_PAREJA ? 'Acompañada' : 'Sola';
             }
         },
-        { title: 'Fecha Nac. último hijo', dataIndex: 'fecNacHijo', key: 'fecNacHijo' },
+        { title: 'Fecha Nac. último hijo', dataIndex: 'feC_NAC_HIJO', key: 'feC_NAC_HIJO' },
         {
             title: 'Crioterapia', dataIndex: 'crioterapia', key: 'crioterapia', render: (crioterapia) => {
                 if (crioterapia === null || crioterapia === undefined) {
@@ -662,7 +672,7 @@ export const BuscarHistoria = () => {
                 return biopasis ? 'Sí' : 'No';
             }
         },
-        { title: 'Nº. Expediente', dataIndex: 'numExpediente', key: 'numExpediente' },
+        { title: 'Nº. Expediente', dataIndex: 'nuM_EXPEDIENTE', key: 'nuM_EXPEDIENTE' },
     ]
 
     // Columnas Ant Pat Personales
@@ -677,19 +687,19 @@ export const BuscarHistoria = () => {
             }
         },
         {
-            title: 'CAM Izq', dataIndex: 'camIzq', key: 'camIzq', render: (camIzq) => {
-                if (camIzq === null || camIzq === undefined) {
+            title: 'CAM Izq', dataIndex: 'caM_IZQ', key: 'caM_IZQ', render: (caM_IZQ) => {
+                if (caM_IZQ === null || caM_IZQ === undefined) {
                     return '';
                 }
-                return camIzq ? 'Sí' : 'No';
+                return caM_IZQ ? 'Sí' : 'No';
             }
         },
         {
-            title: 'CAM Der', dataIndex: 'camDer', key: 'camDer', render: (camDer) => {
-                if (camDer === null || camDer === undefined) {
+            title: 'CAM Der', dataIndex: 'caM_DER', key: 'caM_DER', render: (caM_DER) => {
+                if (caM_DER === null || caM_DER === undefined) {
                     return '';
                 }
-                return camDer ? 'Sí' : 'No';
+                return caM_DER ? 'Sí' : 'No';
             }
         },
         {
@@ -799,22 +809,22 @@ export const BuscarHistoria = () => {
             }
         },
         {
-            title: 'Alergia a medicamentos', dataIndex: 'alergiaMed', key: 'alergiaMed', render: (alergiaMed) => {
-                if (alergiaMed === null || alergiaMed === undefined) {
+            title: 'Alergia a medicamentos', dataIndex: 'alergiA_MED', key: 'alergiA_MED', render: (alergiA_MED) => {
+                if (alergiA_MED === null || alergiA_MED === undefined) {
                     return '';
                 }
-                return alergiaMed ? 'Sí' : 'No';
+                return alergiA_MED ? 'Sí' : 'No';
             }
         },
         {
-            title: 'Alergia alimentaria', dataIndex: 'alergiaAli', key: 'alergiaAli', render: (alergiaAli) => {
-                if (alergiaAli === null || alergiaAli === undefined) {
+            title: 'Alergia alimentaria', dataIndex: 'alergiA_ALI', key: 'alergiA_ALI', render: (alergiA_ALI) => {
+                if (alergiA_ALI === null || alergiA_ALI === undefined) {
                     return '';
                 }
-                return alergiaAli ? 'Sí' : 'No';
+                return alergiA_ALI ? 'Sí' : 'No';
             }
         },
-        { title: 'Número de expediente', dataIndex: 'numExpediente', key: 'numExpediente' },
+        { title: 'Número de expediente', dataIndex: 'nuM_EXPEDIENTE', key: 'nuM_EXPEDIENTE' },
     ]
 
     // Columnas Ant Pat Familiares
@@ -822,35 +832,35 @@ export const BuscarHistoria = () => {
     const columns1AntPatFam = [
         {
             title: 'CA Mama',
-            dataIndex: 'caMama',
-            key: 'caMama',
-            render: (value) => (value === null || value === undefined ? '' : value ? 'Sí' : 'No'),
+            dataIndex: 'cA_MAMA',
+            key: 'cA_MAMA',
+            render: (cA_MAMA) => (cA_MAMA === null || cA_MAMA === undefined ? '' : cA_MAMA ? 'Sí' : 'No'),
         },
-        { title: 'Parentesco', dataIndex: 'camParentesco', key: 'camParentesco' },
+        { title: 'Parentesco', dataIndex: 'caM_PARENTESCO', key: 'caM_PARENTESCO' },
         {
             title: 'CA Cuello Uterino',
-            dataIndex: 'caCu',
-            key: 'caCu',
+            dataIndex: 'cA_CU',
+            key: 'cA_CU',
             render: (value) => (value === null || value === undefined ? '' : value ? 'Sí' : 'No'),
         },
-        { title: 'Parentesco', dataIndex: 'cacuParentesco', key: 'cacuParentesco' },
+        { title: 'Parentesco', dataIndex: 'cacU_PARENTESCO', key: 'cacU_PARENTESCO' },
     ];
 
     const columns2AntPatFam = [
         {
             title: 'CA Colon',
-            dataIndex: 'caColon',
-            key: 'caColon',
+            dataIndex: 'cA_COLON',
+            key: 'cA_COLON',
             render: (value) => (value === null || value === undefined ? '' : value ? 'Sí' : 'No'),
         },
-        { title: 'Parentesco', dataIndex: 'cacoParentesco', key: 'cacoParentesco' },
+        { title: 'Parentesco', dataIndex: 'cacO_PARENTESCO', key: 'cacO_PARENTESCO' },
         {
             title: 'CA Ovario',
-            dataIndex: 'caOvario',
-            key: 'caOvario',
+            dataIndex: 'cA_OVARIO',
+            key: 'cA_OVARIO',
             render: (value) => (value === null || value === undefined ? '' : value ? 'Sí' : 'No'),
         },
-        { title: 'Parentesco', dataIndex: 'caovaParentesco', key: 'caovaParentesco' },
+        { title: 'Parentesco', dataIndex: 'caovA_PARENTESCO', key: 'caovA_PARENTESCO' },
     ];
 
     const columns3AntPatFam = [
@@ -860,14 +870,14 @@ export const BuscarHistoria = () => {
             key: 'hipertensionf',
             render: (value) => (value === null || value === undefined ? '' : value ? 'Sí' : 'No'),
         },
-        { title: 'Parentesco', dataIndex: 'hipertensionParentesco', key: 'hipertensionParentesco' },
+        { title: 'Parentesco', dataIndex: 'hipertensioN_PARENTESCO', key: 'hipertensioN_PARENTESCO' },
         {
             title: 'Hepatitis',
             dataIndex: 'hepatitis',
             key: 'hepatitis',
             render: (value) => (value === null || value === undefined ? '' : value ? 'Sí' : 'No'),
         },
-        { title: 'Parentesco', dataIndex: 'hepatitisParentesco', key: 'hepatitisParentesco' },
+        { title: 'Parentesco', dataIndex: 'hepatitiS_PARENTESCO', key: 'hepatitiS_PARENTESCO' },
     ];
 
     const columns4AntPatFam = [
@@ -877,37 +887,37 @@ export const BuscarHistoria = () => {
             key: 'diabetesf',
             render: (value) => (value === null || value === undefined ? '' : value ? 'Sí' : 'No'),
         },
-        { title: 'Parentesco', dataIndex: 'diabetesParentesco', key: 'diabetesParentesco' },
+        { title: 'Parentesco', dataIndex: 'diabeteS_PARENTESCO', key: 'diabeteS_PARENTESCO' },
         {
             title: 'Enfermedades Cardiacas',
-            dataIndex: 'enfCardiacas',
-            key: 'enfCardiacas',
+            dataIndex: 'enF_CARDIACAS',
+            key: 'enF_CARDIACAS',
             render: (value) => (value === null || value === undefined ? '' : value ? 'Sí' : 'No'),
         },
-        { title: 'Parentesco', dataIndex: 'enfcarParentesco', key: 'enfcarParentesco' },
+        { title: 'Parentesco', dataIndex: 'enfcaR_PARENTESCO', key: 'enfcaR_PARENTESCO' },
         {
             title: 'Enfermedades Renales',
-            dataIndex: 'enfRenales',
-            key: 'enfRenales',
+            dataIndex: 'enF_RENALES',
+            key: 'enF_RENALES',
             render: (value) => (value === null || value === undefined ? '' : value ? 'Sí' : 'No'),
         },
-        { title: 'Parentesco', dataIndex: 'enfrenParentesco', key: 'enfrenParentesco' },
-        { title: 'Número de Expediente', dataIndex: 'numExpediente', key: 'numExpediente' },
+        { title: 'Parentesco', dataIndex: 'enfreN_PARENTESCO', key: 'enfreN_PARENTESCO' },
+        { title: 'Número de Expediente', dataIndex: 'nuM_EXPEDIENTE', key: 'nuM_EXPEDIENTE' },
     ];
 
     const columns1Informacion = [
-        { title: 'Motivo de Visita', dataIndex: 'motVisita', key: 'motVisita' },
-        { title: 'Número de Expediente', dataIndex: 'numExpediente', key: 'numExpediente' },
+        { title: 'Motivo de Visita', dataIndex: 'moT_VISITA', key: 'moT_VISITA' },
+        { title: 'Número de Expediente', dataIndex: 'nuM_EXPEDIENTE', key: 'nuM_EXPEDIENTE' },
     ];
 
     const columns2Informacion = [
-        { title: 'Nota Médica', dataIndex: 'notaMedica', key: 'notaMedica' },
+        { title: 'Nota Médica', dataIndex: 'notA_MEDICA', key: 'notA_MEDICA' },
     ]
 
     const handleEditPaciente = () => {
 
         if (data) {
-            navigate(`/editar-paciente/${paciente.numExpediente}`);
+            navigate(`/editar-paciente/${data.nuM_EXPEDIENTE}`);
         } else {
             message.warning('No hay Datos Para Editar');
         }
@@ -916,8 +926,8 @@ export const BuscarHistoria = () => {
 
     const handleEditAntPersonales = () => {
 
-        if (antecedentesPersonales) {
-            navigate(`/editar-antecedentes-personales/${antecedentesPersonales.numExpediente}`);
+        if (data) {
+            navigate(`/editar-antecedentes-personales/${data.nuM_EXPEDIENTE}`);
         } else {
             message.warning('No hay Datos Para Editar');
         }
@@ -926,8 +936,8 @@ export const BuscarHistoria = () => {
 
     const handleEditAntPatPer = () => {
 
-        if (antPatPer) {
-            navigate(`/editar-antecedentes-patologicos-personales/${antPatPer.numExpediente}`)
+        if (data) {
+            navigate(`/editar-antecedentes-patologicos-personales/${data.nuM_EXPEDIENTE}`)
         } else {
             message.warning('No hay Datos Para Editar');
         }
@@ -936,8 +946,8 @@ export const BuscarHistoria = () => {
 
     const handleEditAntPatFam = () => {
 
-        if (antPatPer) {
-            navigate(`/editar-antecedentes-patologicos-familiares/${antPatFam.numExpediente}`)
+        if (data) {
+            navigate(`/editar-antecedentes-patologicos-familiares/${data.nuM_EXPEDIENTE}`)
         } else {
             message.warning('No hay Datos Para Editar');
         }
@@ -946,8 +956,8 @@ export const BuscarHistoria = () => {
 
     const handleEditInformacion = () => {
 
-        if (info) {
-            navigate(`/editar-informacion/${info.numExpediente}`)
+        if (data) {
+            navigate(`/editar-informacion/${data.nuM_EXPEDIENTE}`)
         } else {
             message.warning('No hay Datos Para Editar');
         }
@@ -962,27 +972,14 @@ export const BuscarHistoria = () => {
             </div>
             <form onSubmit={handleSearchSubmit} className="container-fluid mt-3 mb-3">
                 <div className="row g-3">
-                    {
-                        searchType === 'opcion_nombre' ? (
-                            <div className="col-sm-2">
-                                <select className="form-select" value={searchType} onChange={(e) => setSearchType(e.target.value)}>
-                                    <option value="">Seleccionar Opcion...</option>
-                                    <option value="opcion_expediente">Número de expediente</option>
-                                    <option value="opcion_cedula">Cédula de identidad</option>
-                                    <option value="opcion_nombre">Nombre</option>
-                                </select>
-                            </div>
-                        ) : (
-                            <div className="col-sm-3">
-                                <select className="form-select" value={searchType} onChange={(e) => setSearchType(e.target.value)}>
-                                    <option value="">Seleccionar Opcion...</option>
-                                    <option value="opcion_expediente">Número de expediente</option>
-                                    <option value="opcion_cedula">Cédula de identidad</option>
-                                    <option value="opcion_nombre">Nombre</option>
-                                </select>
-                            </div>
-                        )
-                    }
+                    <div className="col-sm-3">
+                        <select className="form-select" value={searchType} onChange={(e) => setSearchType(e.target.value)}>
+                            <option value="">Seleccionar Opcion...</option>
+                            <option value="opcion_expediente">Número de expediente</option>
+                            <option value="opcion_cedula">Cédula de identidad</option>
+                            <option value="opcion_nombre">Nombre</option>
+                        </select>
+                    </div>
 
                     <div className="col-sm-9 d-flex">
                         <div className="input-group" role="search">
@@ -993,17 +990,10 @@ export const BuscarHistoria = () => {
                                             <label>Primer Nombre</label>
                                             <input className="form-control" type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
                                         </div>
-                                        <div className="d-flex align-items-center justify-content-center">
-                                            <label>Segundo Nombre</label>
-                                            <input className="form-control" type="text" value={secondName} onChange={(e) => setSecondName(e.target.value)} />
-                                        </div>
+
                                         <div className="d-flex align-items-center justify-content-center">
                                             <label>Primer Apellido</label>
                                             <input className="form-control" type="text" value={firstLastName} onChange={(e) => setFirstLastName(e.target.value)} />
-                                        </div>
-                                        <div className="d-flex align-items-center justify-content-center">
-                                            <label>Segundo Apellido</label>
-                                            <input className="form-control" type="text" value={secondLastName} onChange={(e) => setSecondLastName(e.target.value)} />
                                         </div>
                                         <button className="btn btn-success" type="submit">Buscar</button>
                                     </div>
@@ -1047,21 +1037,55 @@ export const BuscarHistoria = () => {
                             <a className="nav-link text-secondary" id="informacion-tab" data-bs-toggle="tab" role="tab" href="#informacion" aria-controls="Informacion" aria-selected="false">Información</a>
                         </li>
                     </ul>
-                    <PDFDownloadLink
-                        document={<MyDocument data={data} />}
-                        fileName="informe_paciente.pdf"
-                    >
-                        {({ loading }) => (loading ? 'Generando PDF...' : <Button><FilePdfOutlined style={{ fontSize: '20px', color: 'red' }} />Exportar a PDF</Button>)}
-                    </PDFDownloadLink>
+                    <BlobProvider document={<MyDocument data={data} />}>
+                        {({ url }) => (
+                            <>
+                                <Button onClick={() => handlePreview(url)}>
+                                    <FilePdfOutlined style={{ fontSize: '20px', color: 'blue' }} /> Visualizar PDF
+                                </Button>
+                                <Modal
+                                    show={visible}
+                                    title="Previsualización del PDF"
+                                    footer={null}
+                                    size='xl'
+                                    onHide={handleClose}
+                                    centered
+                                >
+                                    <iframe
+                                        src={previewUrl}
+                                        style={{ width: '100%', height: '80vh' }}
+                                    ></iframe>
+
+                                    <Modal.Footer>
+                                        <Button danger key="close" onClick={handleClose}>
+                                            Cerrar
+                                        </Button>
+                                    </Modal.Footer>
+                                </Modal>
+                            </>
+                        )}
+                    </BlobProvider>
+
+                    {
+                        user && (user.codRol === 1 || user.codRol === 3) && (
+                            <PDFDownloadLink
+                                document={<MyDocument data={data} />}
+                                fileName="informe_paciente.pdf"
+                            >
+                                {({ loading }) => (loading ? 'Generando PDF...' : <Button><FilePdfOutlined style={{ fontSize: '20px', color: 'red' }} />Exportar</Button>)}
+                            </PDFDownloadLink>
+                        )
+                    }
+
 
                 </div>
 
 
                 <div className="tab-content" id="tab-search-content">
                     <div className="tab-pane fade show active" id="DG" role="tabpanel" aria-labelledby="DG-tab">
-                        <Table className='mt-3 custom-table' columns={columns2} dataSource={[paciente]} pagination={false} />
-                        <Table className='mt-3 custom-table' columns={columns3} dataSource={[paciente]} pagination={false} />
-                        <Table className='mt-3 custom-table' columns={columns4} dataSource={[paciente]} pagination={false} />
+                        <Table className='mt-3 custom-table' columns={columns2} dataSource={[data]} pagination={false} />
+                        <Table className='mt-3 custom-table' columns={columns3} dataSource={[data]} pagination={false} />
+                        <Table className='mt-3 custom-table' columns={columns4} dataSource={[data]} pagination={false} />
 
                         {
                             user && (user.codRol === 1 || user.codRol === 2) && (
@@ -1073,10 +1097,10 @@ export const BuscarHistoria = () => {
 
                     </div>
                     <div className="tab-pane fade" id="AP" role="tabpanel" aria-labelledby="AP-tab">
-                        <Table rowKey="codAntper" className='custom-table mt-3' columns={colum1AntPer} dataSource={[antecedentesPersonales]} pagination={false} />
-                        <Table rowKey="codAntper" className='custom-table mt-3' columns={colum2AntPer} dataSource={[antecedentesPersonales]} pagination={false} />
-                        <Table rowKey="codAntper" className='custom-table mt-3' columns={colum3AntPer} dataSource={[antecedentesPersonales]} pagination={false} />
-                        <Table rowKey="codAntper" className='custom-table mt-3' columns={colum4AntPer} dataSource={[antecedentesPersonales]} pagination={false} />
+                        <Table rowKey="codAntper" className='custom-table mt-3' columns={colum1AntPer} dataSource={[data]} pagination={false} />
+                        <Table rowKey="codAntper" className='custom-table mt-3' columns={colum2AntPer} dataSource={[data]} pagination={false} />
+                        <Table rowKey="codAntper" className='custom-table mt-3' columns={colum3AntPer} dataSource={[data]} pagination={false} />
+                        <Table rowKey="codAntper" className='custom-table mt-3' columns={colum4AntPer} dataSource={[data]} pagination={false} />
 
                         {
                             user && (user.codRol === 1 || user.codRol === 2) && (
@@ -1089,10 +1113,10 @@ export const BuscarHistoria = () => {
                     </div>
 
                     <div className="tab-pane fade" id="APP" role="tabpanel" aria-labelledby="APP-tab">
-                        <Table className='mt-3 custom-table' columns={columns1AntPatPer} dataSource={[antPatPer]} pagination={false} rowKey="codAntparper" />
-                        <Table className='mt-3 custom-table' columns={columns2AntPatPer} dataSource={[antPatPer]} pagination={false} rowKey="codAntparper" />
-                        <Table className='mt-3 custom-table' columns={columns3AntPatPer} dataSource={[antPatPer]} pagination={false} rowKey="codAntparper" />
-                        <Table className='mt-3 custom-table' columns={columns4AntPatPer} dataSource={[antPatPer]} pagination={false} rowKey="codAntparper" />
+                        <Table className='mt-3 custom-table' columns={columns1AntPatPer} dataSource={[data]} pagination={false} rowKey="codAntparper" />
+                        <Table className='mt-3 custom-table' columns={columns2AntPatPer} dataSource={[data]} pagination={false} rowKey="codAntparper" />
+                        <Table className='mt-3 custom-table' columns={columns3AntPatPer} dataSource={[data]} pagination={false} rowKey="codAntparper" />
+                        <Table className='mt-3 custom-table' columns={columns4AntPatPer} dataSource={[data]} pagination={false} rowKey="codAntparper" />
 
                         {
                             user && (user.codRol === 1 || user.codRol === 2) && (
@@ -1104,10 +1128,10 @@ export const BuscarHistoria = () => {
 
                     </div>
                     <div className="tab-pane fade" id="APF" role="tabpanel" aria-labelledby="APF-tab">
-                        <Table className='custom-table mt-3' columns={columns1AntPatFam} dataSource={[antPatFam]} pagination={false} />
-                        <Table className='custom-table mt-3' columns={columns2AntPatFam} dataSource={[antPatFam]} pagination={false} />
-                        <Table className='custom-table mt-3' columns={columns3AntPatFam} dataSource={[antPatFam]} pagination={false} />
-                        <Table className='custom-table mt-3' columns={columns4AntPatFam} dataSource={[antPatFam]} pagination={false} />
+                        <Table className='custom-table mt-3' columns={columns1AntPatFam} dataSource={[data]} pagination={false} />
+                        <Table className='custom-table mt-3' columns={columns2AntPatFam} dataSource={[data]} pagination={false} />
+                        <Table className='custom-table mt-3' columns={columns3AntPatFam} dataSource={[data]} pagination={false} />
+                        <Table className='custom-table mt-3' columns={columns4AntPatFam} dataSource={[data]} pagination={false} />
 
                         {
                             user && (user.codRol === 1 || user.codRol === 2) && (
@@ -1120,8 +1144,8 @@ export const BuscarHistoria = () => {
                     </div>
 
                     <div className="tab-pane fade" id="informacion" role="tabpanel" aria-labelledby="informacion-tab">
-                        <Table className='custom-table mt-3' columns={columns1Informacion} dataSource={[info]} pagination={false} />
-                        <Table className='custom-table mt-3' columns={columns2Informacion} dataSource={[info]} pagination={false} />
+                        <Table className='custom-table mt-3' columns={columns1Informacion} dataSource={[data]} pagination={false} />
+                        <Table className='custom-table mt-3' columns={columns2Informacion} dataSource={[data]} pagination={false} />
 
                         {
                             user && (user.codRol === 1 || user.codRol === 2) && (

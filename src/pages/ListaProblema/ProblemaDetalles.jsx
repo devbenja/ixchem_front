@@ -176,7 +176,7 @@ export const ProblemaDetalles = () => {
     const [previewUrl, setPreviewUrl] = useState('');
 
     const handlePreview = (url) => {
-        setPreviewUrl(url);
+        setPreviewUrl(url + '#toolbar=0');
         setVisible(true);
     };
 
@@ -369,21 +369,22 @@ export const ProblemaDetalles = () => {
                 <h4 className='mb-4'>Problemas Asociados al Expediente: {numExpediente}</h4>
                 <div className='d-flex align-items-center gap-3'>
                     <BlobProvider document={<MyDocument problemas={problemas} />}>
-                        {({ blob, url, loading }) => (
+                        {({ url }) => (
                             <>
                                 <Button onClick={() => handlePreview(url)}>
-                                    <FilePdfOutlined style={{ fontSize: '20px', color: 'blue' }} /> Previsualizar PDF
+                                    <FilePdfOutlined style={{ fontSize: '20px', color: 'blue' }} /> Visualizar PDF
                                 </Button>
                                 <Modal
                                     show={visible}
                                     title="Previsualización del PDF"
                                     footer={null}
-                                    width={1200}
+                                    size='xl'
+                                    onHide={handleClose}
+                                    centered
                                 >
                                     <iframe
                                         src={previewUrl}
-                                        style={{ width: '100%', height: '500px' }}
-                                    
+                                        style={{ width: '100%', height: '80vh' }}
                                     ></iframe>
 
                                     <Modal.Footer>
@@ -395,11 +396,18 @@ export const ProblemaDetalles = () => {
                             </>
                         )}
                     </BlobProvider>
-                    <PDFDownloadLink document={<MyDocument problemas={problemas} />} fileName="problemas.pdf">
-                        {({ loading }) =>
-                            loading ? 'Cargando documento...' : <Button><FilePdfOutlined style={{ fontSize: '20px', color: 'red' }} />Exportar a PDF</Button>
-                        }
-                    </PDFDownloadLink>
+
+                    {
+                        user && (user.codRol === 1 || user.codRol === 3) && (
+                            <PDFDownloadLink document={<MyDocument problemas={problemas} />} fileName="problemas.pdf">
+                                {({ loading }) =>
+                                    loading ? 'Cargando documento...' : <Button><FilePdfOutlined style={{ fontSize: '20px', color: 'red' }} />Exportar a PDF</Button>
+                                }
+                            </PDFDownloadLink>
+                        )
+                    }
+
+
                     <Button style={{ backgroundColor: 'red', color: 'white' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
                 </div>
             </div>
