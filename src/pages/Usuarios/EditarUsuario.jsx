@@ -152,7 +152,7 @@ export const EditarUsuario = () => {
                 </div>
                 <div className='mt-4 d-flex gap-2'>
                     <button type="submit" onClick={showDeleteConfirm} className="btn btn-primary">Guardar</button>
-                    <button type="reset" className="btn btn-danger">Cancelar</button>
+                    <button type="button" onClick={handleBack} className="btn btn-danger">Cancelar</button>
                 </div>
             </form>
         </div>

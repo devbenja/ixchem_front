@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
-import { notification } from 'antd';
+import { notification, Switch  } from 'antd';
 
 import { baseURL } from '../../../api/apiURL';
 
@@ -10,6 +10,7 @@ import { baseURL } from '../../../api/apiURL';
 export const EditarPaciente = () => {
 
     const { id } = useParams();
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         numExpediente: '',
@@ -70,18 +71,21 @@ export const EditarPaciente = () => {
 
     };
 
+    const handleSwitchChange = (checked) => {
+        setFormData({
+            ...formData,
+            estado: checked, 
+        });
+    };
+
     const handleSubmit = async (e) => {
 
         e.preventDefault();
 
         try {
 
-            const transformedData = {
-                ...formData,
-                estado: formData.estado === 'true'
-            }
-
-            await axios.put(`${baseURL}/bdtpaciente/actualizar/${id}`, transformedData);
+            
+            await axios.put(`${baseURL}/bdtpaciente/actualizar/${id}`, formData);
             
             notification.success({
                 message: '¡Éxito!',
@@ -100,6 +104,9 @@ export const EditarPaciente = () => {
         }
     };
 
+    const handleBack = () => {
+        navigate('/buscar-historia-clinica');
+    }
 
     return (
         <div className='container-fluid'>
@@ -254,20 +261,26 @@ export const EditarPaciente = () => {
                             </select>
                         </div>
                     </div>
-                    <div className="col-sm-3">
-                        <div className="mb-3">
+                    <div className="col-sm-2">
+                        <div className="d-flex flex-column">
                             <label className="form-label">Estado</label>
-                            <select name="estado" value={formData.estado} onChange={handleChange} className="form-select">
+                            <Switch 
+                                checked={formData.estado} 
+                                onChange={handleSwitchChange} 
+                                checkedChildren="Habilitado" 
+                                unCheckedChildren="Inhabilitado" 
+                            />
+                            {/* <select name="estado" value={formData.estado} onChange={handleChange} className="form-select">
                                 <option value="">{formData.estado ? 'Habilitado' : 'Inhabilitado'}</option>
-                                <option value={true}>Habilitado</option>
-                                <option value={false}>Inhabilitado</option>
-                            </select>
+                                <option value={true}>Habilitar</option>
+                                <option value={false}>Inhabilitar</option>
+                            </select> */}
                         </div>
                     </div>
                 </div>
                 <div className='d-grid gap-2 d-md-flex justify-content-md-start mt-5'>
                     <button type="submit" className="btn btn-primary">Guardar</button>
-                    <button type="submit" className="btn btn-danger">Cancelar</button>
+                    <button type="submit" onClick={handleBack} className="btn btn-danger">Cancelar</button>
                 </div>
             </form>
         </div>

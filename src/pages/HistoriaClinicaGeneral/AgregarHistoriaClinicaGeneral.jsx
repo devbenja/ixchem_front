@@ -5,12 +5,16 @@ import { notification, Button } from "antd";
 import { baseURL } from '../../api/apiURL.js';
 import { useAuth } from '../../context/AuthContext.jsx';
 
+import { useNavigate } from 'react-router-dom';
+
 export const AgregarHistoriaClinicaGeneral = () => {
 
     const { user } = useAuth();
     const HCGTab = useRef(null);
     const AOTab = useRef(null);
     const EmbActual = useRef(null);
+
+    const navigate = useNavigate();
 
     const [searchType, setSearchType] = useState('');
     const [searchValue, setSearchValue] = useState('');
@@ -371,6 +375,12 @@ export const AgregarHistoriaClinicaGeneral = () => {
 
     }
 
+
+    const handleBack = () => {
+      navigate('/home');
+    }
+    
+
     return (
         <div className='container-fluid'>
             <div className="container-fluid">
@@ -608,7 +618,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
 
                             <div className='mt-4 d-flex gap-2'>
                                 <button type="submit" className="btn btn-primary">Guardar</button>
-                                <button type="submit" className="btn btn-danger">Cancelar</button>
+                                <button type="button" onClick={handleBack} className="btn btn-danger">Cancelar</button>
                             </div>
                         </form>
                     </div>
@@ -730,7 +740,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
 
                             <div className='mt-4 d-flex gap-2'>
                                 <button type="submit" className="btn btn-primary">Guardar</button>
-                                <button type="submit" className="btn btn-danger">Cancelar</button>
+                                <button type="button" onClick={handleBack} className="btn btn-danger">Cancelar</button>
                             </div>
                         </form>
                     </div>
@@ -862,7 +872,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
 
                             <div className='mt-4 d-flex gap-2'>
                                 <button type="submit" className="btn btn-primary">Guardar</button>
-                                <button type="submit" className="btn btn-danger">Cancelar</button>
+                                <button type="button" onClick={handleBack} className="btn btn-danger">Cancelar</button>
                             </div>
                         </form>
                     </div>

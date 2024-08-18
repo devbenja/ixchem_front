@@ -8,9 +8,13 @@ import { Toast, ToastBody, ToastHeader } from 'reactstrap';
 import { notification } from 'antd';
 import { baseURL } from '../../api/apiURL.js';
 
+import { useNavigate } from 'react-router-dom';
+
 export const AgregarProblema = () => {
 
     const { register, handleSubmit, reset } = useForm();
+
+    const navigate = useNavigate();
 
     const [showToast, setShowToast] = useState(false);
     const [toastBody, setToastBody] = useState('');
@@ -70,6 +74,11 @@ export const AgregarProblema = () => {
         }
 
     }, [showToast]);
+
+
+    const handleBack = () => {
+        navigate('/home')
+    }
 
     return (
         <>
@@ -174,7 +183,7 @@ export const AgregarProblema = () => {
 
                     <div className="d-grid gap-2 d-md-flex justify-content-md-start mt-4">
                         <button className="btn btn-primary btn-save me-md-2" type="submit" >Guardar</button>
-                        <button type="reset" className="btn btn-danger">Cancelar</button>
+                        <button type="button"  onClick={handleBack} className="btn btn-danger">Cancelar</button>
                     </div>
 
                 </form>

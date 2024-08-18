@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { notification } from "antd";
+import { notification, Switch } from "antd";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { baseURL } from "../../api/apiURL";
@@ -16,7 +16,8 @@ export const EditarDoctor = () => {
         primerApellidod: '',
         segundoApellido: '',
         cedula: '',
-        clinica: ''
+        clinica: '', 
+        estado: false
     });
 
     useEffect(() => {
@@ -55,6 +56,13 @@ export const EditarDoctor = () => {
         });
     };
 
+    const handleSwitchChange = (checked) => {
+        setFormData({
+            ...formData,
+            estado: checked, 
+        });
+    };
+
 
     const handleSubmit = async (e) => {
 
@@ -62,13 +70,15 @@ export const EditarDoctor = () => {
 
         try {
 
-            await axios.put(`${baseURL}/bdtdoctor/actualizar/${id}`, formData);
+            console.log(formData)
+
+            // await axios.put(`${baseURL}/bdtdoctor/actualizar/${id}`, formData);
             
-            notification.success({
-                message: '¡Éxito!',
-                description: `Doctor Editado`,
-                duration: 3
-            });
+            // notification.success({
+            //     message: '¡Éxito!',
+            //     description: `Doctor Editado`,
+            //     duration: 3
+            // });
 
         } catch (error) {
 
@@ -132,7 +142,7 @@ export const EditarDoctor = () => {
                         <div className="col-sm-2 col-12 mt-3">
                             <label htmlFor="codDoctor" className="form-label">Codigo MINSA</label>
                             <input
-                                type="number"
+                                type="text"
                                 className="form-control"
                                 name="codDoctor"
                                 onChange={handleChange}

@@ -4,6 +4,8 @@ import { notification } from "antd";
 
 import { baseURL } from "../../api/apiURL";
 
+import { useNavigate } from "react-router-dom";
+
 export const AgregarUsuarios = () => {
 
     const [formData, setFormData] = useState({
@@ -14,6 +16,8 @@ export const AgregarUsuarios = () => {
         contraseña: "",
         codRol: 2
     });
+
+    const navigate = useNavigate();
 
 
     const handleChange = (e) => {
@@ -33,6 +37,10 @@ export const AgregarUsuarios = () => {
         });
 
     };
+
+    const handleBack = () => {
+        navigate('/home');
+    }
 
     const handleSubmit = async (event) => {
 
@@ -98,7 +106,7 @@ export const AgregarUsuarios = () => {
                 </div>
                 <div className='mt-4 d-flex gap-2'>
                     <button type="submit" className="btn btn-primary">Guardar</button>
-                    <button type="reset" className="btn btn-danger">Cancelar</button>
+                    <button type="button" onClick={handleBack} className="btn btn-danger">Cancelar</button>
                 </div>
             </form>
         </div>

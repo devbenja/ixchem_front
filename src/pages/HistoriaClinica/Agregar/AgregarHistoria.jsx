@@ -32,7 +32,7 @@ export const AgregarHistoria = () => {
 
             setNumExp(response.data.numExpediente);
 
-            reset();
+            //reset();
 
         } catch (error) {
 

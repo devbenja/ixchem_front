@@ -201,7 +201,7 @@ export const EditarObstetrico = () => {
 
                 <div className='mt-4 d-flex gap-2'>
                     <button type="submit" className="btn btn-primary">Guardar</button>
-                    <button type="submit" className="btn btn-danger">Cancelar</button>
+                    <button type='button' onClick={handleBack} className="btn btn-danger">Cancelar</button>
                 </div>
             </form>
         </div>

@@ -419,38 +419,11 @@ export const BuscarHistoria = () => {
 
         event.preventDefault();
 
-        let response;
-        let antPerData;
-        let antPatPerData;
-        let antPatFamData;
-        let infoData;
         let unidosData;
 
         try {
 
             if (searchType === 'opcion_expediente') {
-
-                // response = await axios.get(`${baseURL}/bdtpaciente/buscarpornumexpediente`, {
-                //     params: { NumExpediente: searchValue }
-                // });
-
-                // console.log(response.data)
-
-                // antPerData = await axios.get(`${baseURL}/bdtbantecedentespersonale/buscarporexpediente`, {
-                //     params: { NumExpediente: searchValue }
-                // });
-
-                // antPatPerData = await axios.get(`${baseURL}/bdtbaantecedentepatper/buscarporexpediente`, {
-                //     params: { NumExpediente: searchValue }
-                // });
-
-                // antPatFamData = await axios.get(`${baseURL}/bdtbantecedentepatfam/buscarporexpediente`, {
-                //     params: { NumExpediente: searchValue }
-                // });
-
-                // infoData = await axios.get(`${baseURL}/bdtbinformacion/buscarporexpediente`, {
-                //     params: { NumExpediente: searchValue }
-                // });
 
                 unidosData = await axios.get(`${baseURL}/bdtpaciente/buscarpornumexpedienteunidos`, {
                     params: { NUM_EXPEDIENTE: searchValue }
@@ -458,26 +431,6 @@ export const BuscarHistoria = () => {
 
 
             } else if (searchType === 'opcion_cedula') {
-
-                // response = await axios.get(`${baseURL}/bdtpaciente/buscarporcedula`, {
-                //     params: { cedula: searchValue }
-                // });
-
-                // antPerData = await axios.get(`${baseURL}/bdtbantecedentespersonale/buscarporexpediente`, {
-                //     params: { cedula: searchValue }
-                // });
-
-                // antPatPerData = await axios.get(`${baseURL}/bdtbaantecedentepatper/buscarporexpediente`, {
-                //     params: { cedula: searchValue }
-                // });
-
-                // antPatFamData = await axios.get(`${baseURL}/bdtbantecedentepatfam/buscarporexpediente`, {
-                //     params: { cedula: searchValue }
-                // });
-
-                // infoData = await axios.get(`${baseURL}/bdtbinformacion/buscarporexpediente`, {
-                //     params: { cedula: searchValue }
-                // });
 
                 // unidosData = await axios.get(`${baseURL}/bdtpaciente/buscarpornumexpedienteunidos`, {
                 //     params: { cedula: searchValue }
@@ -492,14 +445,7 @@ export const BuscarHistoria = () => {
                     }
                 });
 
-
             }
-
-            // setPaciente(response.data);
-            // setAntPersonales(antPerData.data)
-            // setAntPatPer(antPatPerData.data);
-            // setAntPatFam(antPatFamData.data);
-            // setInfo(infoData.data)
 
             setData(unidosData.data[0]);
 
@@ -539,7 +485,7 @@ export const BuscarHistoria = () => {
         { title: 'Escolaridad', dataIndex: 'escolaridad', key: 'escolaridad' },
         { title: 'Profesión/Oficio', dataIndex: 'profesion', key: 'profesion' },
         { title: 'Dirección', dataIndex: 'direccion', key: 'direccion' },
-        { title: 'Departamento', dataIndex: 'coD_DEPARTAMENTO', key: 'coD_DEPARTAMENTO' },
+        { title: 'Departamento', dataIndex: 'nombre', key: 'nombre' },
     ];
 
     const columns4 = [

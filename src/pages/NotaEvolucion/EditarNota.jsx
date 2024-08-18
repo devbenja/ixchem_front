@@ -277,7 +277,7 @@ export const EditarNota = () => {
                 </div>
                 <div className="d-grid gap-2 d-md-flex justify-content-md-start mt-4">
                     <button className="btn btn-primary btn-save me-md-2" type="submit">Guardar</button>
-                    <button type="reset" className="btn btn-danger">Cancelar</button>
+                    <button type="reset" onClick={handleBack} className="btn btn-danger">Cancelar</button>
                 </div>
             </form>
         </div>

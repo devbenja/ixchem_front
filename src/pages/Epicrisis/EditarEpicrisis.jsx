@@ -240,7 +240,7 @@ export const EditarEpicrisis = () => {
 
                 <div className='mt-2 d-flex gap-2'>
                     <button type="submit" className="btn btn-primary">Guardar</button>
-                    <button type="reset" className="btn btn-danger">Cancelar</button>
+                    <button type="reset" onClick={handleBack} className="btn btn-danger">Cancelar</button>
                 </div>
             </form>
         </div>
