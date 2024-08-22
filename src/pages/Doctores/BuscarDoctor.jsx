@@ -1,8 +1,9 @@
 import { useState } from "react";
 import axios from "axios";
-import { notification, Table, message, Button } from "antd";
+import { notification, Table, message, Button, Space } from "antd";
 import { useNavigate } from "react-router-dom";
 import { baseURL } from "../../api/apiURL";
+import { EditOutlined } from '@ant-design/icons';
 
 export const BuscarDoctor = () => {
 
@@ -80,13 +81,11 @@ export const BuscarDoctor = () => {
 			title: 'Acciones',
 			key: 'actions',
 			render: (record) => (
-				<Button 
-					type="primary" 
-					onClick={() => handleEditDoctor(record.codDoctor)}
-				>
-					Editar
-				</Button>
-			)
+				<Space size="middle">
+                    <Button icon={<EditOutlined onClick={() => handleEditDoctor(record.codDoctor)} />} />
+                </Space>
+			), 
+			align: 'center'
 		}
 	];
 

@@ -71,14 +71,12 @@ export const Embarazos = () => {
 					<Button icon={<FileSearchOutlined onClick={() => handleRowClickEmbarazo(record.codEmbarazo)} />} />
 
 					{
-						user && (user.codRol === 1 || user.codRol === 2) && (
-							<Button icon={<EditOutlined />} onClick={(e) => { e.stopPropagation(); handleEdit(record.codEmbarazo); }} />
-						)
-					}
-
-					{
 						user && user.codRol === 1 && (
-							<Button icon={<DeleteOutlined onClick={(e) => { e.stopPropagation(); showDeleteConfirm(record.codEmbarazo); }} />} />
+							<>
+								<Button icon={<EditOutlined />} onClick={(e) => { e.stopPropagation(); handleEdit(record.codEmbarazo); }} />
+
+								<Button icon={<DeleteOutlined onClick={(e) => { e.stopPropagation(); showDeleteConfirm(record.codEmbarazo); }} />} />
+							</>
 						)
 					}
 				</Space>

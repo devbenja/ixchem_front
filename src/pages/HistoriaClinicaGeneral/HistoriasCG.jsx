@@ -71,15 +71,14 @@ export const HistoriasCG = () => {
                 <Space align="center" size="middle">
                     <Button icon={<FileSearchOutlined onClick={() => handleRowClickHCGeneral(record.coD_HISTORIA_CLINICA)} />} />
 
-                    {
-                        user && (user.codRol === 1 || user.codRol === 2) && (
-                            <Button icon={<EditOutlined />} onClick={(e) => { e.stopPropagation(); handleEdit(record.coD_HISTORIA_CLINICA); }} />
-                        )
-                    }
-                    
+
                     {
                         user && user.codRol === 1 && (
-                            <Button icon={<DeleteOutlined onClick={(e) => { e.stopPropagation(); showDeleteConfirm(record.coD_HISTORIA_CLINICA); }} />} />
+                            <>
+                                <Button icon={<EditOutlined />} onClick={(e) => { e.stopPropagation(); handleEdit(record.coD_HISTORIA_CLINICA); }} />
+                                <Button icon={<DeleteOutlined onClick={(e) => { e.stopPropagation(); showDeleteConfirm(record.coD_HISTORIA_CLINICA); }} />} />
+                            </>
+
                         )
                     }
 
@@ -148,7 +147,7 @@ export const HistoriasCG = () => {
                 <div className='d-flex gap-2'>
 
                 </div>
-                <Button style={{ backgroundColor: 'red', color: 'white'}} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
+                <Button style={{ backgroundColor: 'red', color: 'white' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
             </div>
             <Table
                 columns={columnHCG}

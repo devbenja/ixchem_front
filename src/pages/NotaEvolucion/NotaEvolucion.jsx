@@ -203,7 +203,7 @@ export const NotaEvolucion = () => {
                 <div className='gap-2 d-flex'>
 
                     {
-                        user && (user.codRol === 1 || user.codRol === 2) && (
+                        user && (user.codRol === 1 ) && (
                             <Button onClick={handleEdit}>
                                 <EditOutlined style={{ fontSize: '20px', color: 'blue' }} /> Editar
                             </Button>

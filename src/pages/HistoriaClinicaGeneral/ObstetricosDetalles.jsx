@@ -69,14 +69,11 @@ export const ObstetricosDetalles = () => {
                     <Button icon={<FileSearchOutlined />} onClick={() => handleRowClick(record.codHojariesgo)} />
 
                     {
-                        user && (user.codRol === 1 || user.codRol === 2) && (
-                            <Button icon={<EditOutlined />} onClick={() => handleEdit(record.codHojariesgo)} />
-                        )
-                    }
-
-                    {
                         user && user.codRol === 1 && (
-                            <Button icon={<DeleteOutlined />} onClick={() => showDeleteConfirm(record.codHojariesgo)} />
+                            <>
+                                <Button icon={<EditOutlined />} onClick={() => handleEdit(record.codHojariesgo)} />
+                                <Button icon={<DeleteOutlined />} onClick={() => showDeleteConfirm(record.codHojariesgo)} />
+                            </>
                         )
                     }
 

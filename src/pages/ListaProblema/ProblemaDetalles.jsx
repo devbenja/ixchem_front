@@ -334,16 +334,13 @@ export const ProblemaDetalles = () => {
             render: (resuelto) => (resuelto ? 'Sí' : 'No'),
         },
 
-        ...(user && (user.codRol === 1 || user.codRol === 2) ? [{
+        ...(user && (user.codRol === 1 ) ? [{
             title: 'Acciones',
             key: 'acciones',
             render: (text, record) => (
                 <Space size="middle">
                     <Button icon={<EditOutlined />} onClick={() => handleEdit(record)} />
-                    {user && user.codRol === 1 && (
-                        <Button icon={<DeleteOutlined />} onClick={() => showDeleteConfirm(record.coD_PROBLEMAS)} />
-                    )}
-
+                    <Button icon={<DeleteOutlined />} onClick={() => showDeleteConfirm(record.coD_PROBLEMAS)} />
                 </Space>
             ),
             align: 'center'
