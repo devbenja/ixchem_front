@@ -56,6 +56,9 @@ export const BuscarEpicrisis = () => {
             return acc;
         }, []);
 
+    
+    console.log('xd', filteredEpicrisis)
+
     const columns = [
         {
             title: 'Fecha',

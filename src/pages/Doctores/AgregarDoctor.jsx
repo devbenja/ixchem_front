@@ -28,15 +28,27 @@ export const AgregarDoctor = () => {
     };
 
     const handleSubmitCreateDoctor = async (e) => {
+
         e.preventDefault();
+
         try {
-            console.log(formData);
+
             await axios.post(`${baseURL}/bdtdoctor/post`, formData);
 
             notification.success({
                 message: '¡Éxito!',
                 description: `Doctor ${formData.primerNombred} agregado con éxito`,
                 duration: 3
+            });
+
+            setFormData({
+                codDoctor: '',
+                primerNombred: '',
+                segundoNombre: '',
+                primerApellidod: '',
+                segundoApellido: '',
+                cedula: '',
+                clinica: ''
             });
 
         } catch (error) {

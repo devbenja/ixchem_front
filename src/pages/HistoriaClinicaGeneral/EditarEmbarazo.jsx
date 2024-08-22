@@ -77,6 +77,10 @@ export const EditarEmbarazo = () => {
                 duration: 3
             });
 
+            setTimeout(() => {
+                navigate(`/embarazos/${actual.numExpediente}`);
+            }, 1000);
+
         } catch (error) {
 
             notification.error({

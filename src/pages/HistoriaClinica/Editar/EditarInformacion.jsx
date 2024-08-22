@@ -68,6 +68,10 @@ export const EditarInformacion = () => {
                 duration: 3
             });
 
+            setTimeout(() => {
+                navigate('/buscar-historia-clinica');
+            }, 1000);
+
         } catch (error) {
 
             notification.error({
@@ -81,7 +85,7 @@ export const EditarInformacion = () => {
     };
 
     const handleBack = () => {
-        navigate('/buscar-historia-clinica')
+        navigate('/buscar-historia-clinica');
     }
 
     return (

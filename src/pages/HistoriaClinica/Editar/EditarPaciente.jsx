@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 
-import { notification, Switch  } from 'antd';
+import { notification, Switch } from 'antd';
 
 import { baseURL } from '../../../api/apiURL';
 
@@ -74,7 +74,7 @@ export const EditarPaciente = () => {
     const handleSwitchChange = (checked) => {
         setFormData({
             ...formData,
-            estado: checked, 
+            estado: checked,
         });
     };
 
@@ -84,14 +84,18 @@ export const EditarPaciente = () => {
 
         try {
 
-            
+
             await axios.put(`${baseURL}/bdtpaciente/actualizar/${id}`, formData);
-            
+
             notification.success({
                 message: '¡Éxito!',
                 description: `Paciente con No. Expediente ${formData.numExpediente} Editado`,
                 duration: 3
             });
+
+            setTimeout(() => {
+                navigate('/buscar-historia-clinica');
+            }, 1000);
 
         } catch (error) {
 
@@ -264,11 +268,11 @@ export const EditarPaciente = () => {
                     <div className="col-sm-2">
                         <div className="d-flex flex-column">
                             <label className="form-label">Estado</label>
-                            <Switch 
-                                checked={formData.estado} 
-                                onChange={handleSwitchChange} 
-                                checkedChildren="Habilitado" 
-                                unCheckedChildren="Inhabilitado" 
+                            <Switch
+                                checked={formData.estado}
+                                onChange={handleSwitchChange}
+                                checkedChildren="Habilitado"
+                                unCheckedChildren="Inhabilitado"
                             />
                             {/* <select name="estado" value={formData.estado} onChange={handleChange} className="form-select">
                                 <option value="">{formData.estado ? 'Habilitado' : 'Inhabilitado'}</option>

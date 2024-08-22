@@ -93,6 +93,10 @@ export const EditarAntPersonales = () => {
                 duration: 3
             });
 
+            setTimeout(() => {
+                navigate('/buscar-historia-clinica');
+            }, 1000);
+
         } catch (error) {
 
             notification.error({

@@ -118,6 +118,10 @@ export const EditarEpicrisis = () => {
                 duration: 3
             });
 
+            setTimeout(() => {
+                navigate(`/epicrisis-detalle/${formData.codEpicrisis}`)
+            }, 1000);
+
         } catch (error) {
 
             notification.error({
@@ -148,12 +152,12 @@ export const EditarEpicrisis = () => {
                     </div>
                     <div className="col">
                         <label className="form-label">Codigo MINSA</label>
-                        <input 
-                            type="text" 
-                            name="codDoctor" 
-                            value={formData.codDoctor} 
-                            onChange={handleChange} 
-                            className="form-control" 
+                        <input
+                            type="text"
+                            name="codDoctor"
+                            value={formData.codDoctor}
+                            onChange={handleChange}
+                            className="form-control"
                             readOnly
                         />
                     </div>

@@ -9,20 +9,20 @@ import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from "react-router-dom";
 
 export const AgregarNota = () => {
-    
+
     const { user } = useAuth();
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
-        numeroNota: 0,
+        numeroNota: "",
         fecha: "",
         hora: "",
         presion: "",
-        temperatura: 0,
-        talla: 0,
-        peso: 0,
-        frecCardiaca: 0,
-        frecResp: 0,
+        temperatura: "",
+        talla: "",
+        peso: "",
+        frecCardiaca: "",
+        frecResp: "",
         notaEvolucion1: "",
         planes: "",
         numExpediente: "",
@@ -39,15 +39,19 @@ export const AgregarNota = () => {
     }, [user]);
 
     const handleChange = (e) => {
+
         const { name, value, type } = e.target;
         setFormData({
             ...formData,
-            [name]: type === 'number' ? Number(value) : value
+            [name]: type === 'number' && value !== "" ? Number(value) : value
         });
+
     };
 
     const handleSubmitNota = async (e) => {
+
         e.preventDefault();
+
         try {
             console.log(formData);
             await axios.post(`${baseURL}/bdtbnotaevolucion/post`, formData);
@@ -57,6 +61,24 @@ export const AgregarNota = () => {
                 description: `Nota de Evolucion creada con éxito`,
                 duration: 3
             });
+
+            setFormData({
+                numeroNota: "",
+                fecha: "",
+                hora: "",
+                presion: "",
+                temperatura: "",
+                talla: "",
+                peso: "",
+                frecCardiaca: "",
+                frecResp: "",
+                notaEvolucion1: "",
+                planes: "",
+                numExpediente: "",
+                codDoctor: user ? user.correo : ""
+            });
+
+
         } catch (error) {
             notification.error({
                 message: '¡Error!',
@@ -116,7 +138,7 @@ export const AgregarNota = () => {
                             readOnly
                         />
                     </div>
-                    
+
                     <div className="col-sm-3">
                         <label htmlFor="primerApellido" className="form-label">Talla*</label>
                         <input

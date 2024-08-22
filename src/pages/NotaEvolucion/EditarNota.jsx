@@ -12,15 +12,15 @@ export const EditarNota = () => {
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
-        numeroNota: 0,
+        numeroNota: "",
         fecha: "",
         hora: "",
         presion: "",
-        temperatura: 0,
-        talla: 0,
-        peso: 0,
-        frecCardiaca: 0,
-        frecResp: 0,
+        temperatura: "",
+        talla: "",
+        peso: "",
+        frecCardiaca: "",
+        frecResp: "",
         notaEvolucion1: "",
         planes: "",
         numExpediente: "",
@@ -73,7 +73,7 @@ export const EditarNota = () => {
         const { name, value, type } = e.target;
         setFormData({
             ...formData,
-            [name]: type === 'number' ? Number(value) : value
+            [name]: type === 'number' && value !== "" ? Number(value) : value
         });
     };
 
@@ -92,6 +92,10 @@ export const EditarNota = () => {
                 description: `Nota de Evolucion Editada con éxito`,
                 duration: 3
             });
+
+            setTimeout(() => {
+                navigate(`/nota/${formData.codNota}`);
+            }, 1000);
 
         } catch (error) {
 

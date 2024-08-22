@@ -11,10 +11,10 @@ import { baseURL } from '../../../api/apiURL.js';
 export const AgregarHistoria = () => {
 
     const { register: registerPaciente, handleSubmit: handleSubmitPaciente, reset } = useForm();
-    const { register: registerAntecPer, handleSubmit: handleSubmitAntPer, setValue } = useForm();
-    const { register: registerAntecPerPat, handleSubmit: handleSubmitAntPerPat, setValue: setValueAntPer } = useForm();
-    const { register: registerAntecPatFam, handleSubmit: handleSubmitAntecPatFam, setValue: setValueAntPatFam } = useForm();
-    const { register: registerInformacion, handleSubmit: handleSubmitInformacion, setValue: setValueInfo } = useForm();
+    const { register: registerAntecPer, handleSubmit: handleSubmitAntPer, setValue, reset: resetAntecPer } = useForm();
+    const { register: registerAntecPerPat, handleSubmit: handleSubmitAntPerPat, setValue: setValueAntPer, reset: resetAntPerPat } = useForm();
+    const { register: registerAntecPatFam, handleSubmit: handleSubmitAntecPatFam, setValue: setValueAntPatFam, reset: resetAntPatFam } = useForm();
+    const { register: registerInformacion, handleSubmit: handleSubmitInformacion, setValue: setValueInfo, reset:  resetInfo } = useForm();
 
     const [numExp, setNumExp] = useState('');
 
@@ -32,7 +32,7 @@ export const AgregarHistoria = () => {
 
             setNumExp(response.data.numExpediente);
 
-            //reset();
+            reset();
 
         } catch (error) {
 
@@ -85,6 +85,8 @@ export const AgregarHistoria = () => {
                 duration: 3
             });
 
+            resetAntecPer();
+
         } catch (error) {
 
             notification.error({
@@ -133,6 +135,8 @@ export const AgregarHistoria = () => {
                 duration: 3
             });
 
+            resetAntPerPat();
+
         } catch (error) {
 
             notification.error({
@@ -173,6 +177,7 @@ export const AgregarHistoria = () => {
                 duration: 3
             });
 
+            resetAntPatFam();
 
         } catch (error) {
 
@@ -200,6 +205,8 @@ export const AgregarHistoria = () => {
                 description: `Información creada!`,
                 duration: 3
             });
+
+            resetInfo();
 
         } catch (error) {
 
@@ -1581,6 +1588,7 @@ export const AgregarHistoria = () => {
                                             value={numExp}
                                             title="El Núm. Expediente debe tener 5 números, un guión (-) y el año al final"
                                             {...registerAntecPatFam('numExpediente')}
+                                            readOnly
                                         />
                                     </div>
 

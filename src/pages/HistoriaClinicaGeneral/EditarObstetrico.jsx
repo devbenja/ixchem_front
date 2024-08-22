@@ -77,6 +77,10 @@ export const EditarObstetrico = () => {
                 duration: 3
             });
 
+            setTimeout(() => {
+                navigate(`/obstetricos/${obstetrico.numExpediente}`);
+            }, 1000);
+
         } catch (error) {
 
             notification.error({

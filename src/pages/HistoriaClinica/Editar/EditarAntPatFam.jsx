@@ -22,11 +22,11 @@ export const EditarAntPatFam = () => {
         cacoParentesco: "",
         caOvario: false,
         caovaParentesco: "",
-        hipertension: false,
+        hipertensionf: false,
         hipertensionParentesco: "",
         hepatitis: false,
         hepatitisParentesco: "",
-        diabetes: false,
+        diabetesf: false,
         diabetesParentesco: "",
         enfCardiacas: false,
         enfcarParentesco: "",
@@ -95,7 +95,9 @@ export const EditarAntPatFam = () => {
                 duration: 3
             });
 
-            fetchData();
+            setTimeout(() => {
+                navigate('/buscar-historia-clinica');
+            }, 1000);
 
         } catch (error) {
 
@@ -160,11 +162,11 @@ export const EditarAntPatFam = () => {
                         <label htmlFor="APF_diabetes" className="form-label">Diabetes*</label>
 
                         <div className="form-check">
-                            <input value="true" id="diabet_si" name="diabetes" checked={formData.diabetes === true} onChange={handleRadioChange} type="radio" className="form-check-input" required />
+                            <input value="true" id="diabet_si" name="diabetesf" checked={formData.diabetesf === true} onChange={handleRadioChange} type="radio" className="form-check-input" required />
                             <label className="form-check-label" htmlFor="diabet_si">Si</label>
                         </div>
                         <div className="form-check">
-                            <input value="false" id="diabet_no" name="diabetes" checked={formData.diabetes === false} onChange={handleRadioChange} type="radio" className="form-check-input" required />
+                            <input value="false" id="diabet_no" name="diabetesf" checked={formData.diabetesf === false} onChange={handleRadioChange} type="radio" className="form-check-input" required />
                             <label className="form-check-label" htmlFor="diabet_no">No</label>
                         </div>
 
@@ -201,11 +203,11 @@ export const EditarAntPatFam = () => {
                         <label htmlFor="APF_hipertension" className="form-label">Hipertensión*</label>
 
                         <div className="form-check">
-                            <input value="true" id="APF_hipertension_si" name="hipertension" checked={formData.hipertension === true} onChange={handleRadioChange} type="radio" className="form-check-input" required />
+                            <input value="true" id="APF_hipertension_si" name="hipertensionf" checked={formData.hipertensionf === true} onChange={handleRadioChange} type="radio" className="form-check-input" required />
                             <label className="form-check-label" htmlFor="APF_hipertension_si">Si</label>
                         </div>
                         <div className="form-check">
-                            <input value="false" id="APF_hipertension_no" name="hipertension" checked={formData.hipertension === false} onChange={handleRadioChange} type="radio" className="form-check-input" required />
+                            <input value="false" id="APF_hipertension_no" name="hipertensionf" checked={formData.hipertensionf === false} onChange={handleRadioChange} type="radio" className="form-check-input" required />
                             <label className="form-check-label" htmlFor="APF_hipertension_no">No</label>
                         </div>
 

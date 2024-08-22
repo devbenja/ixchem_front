@@ -97,9 +97,13 @@ export const EditHistoriaClinicaGeneral = () => {
 
             notification.success({
                 message: '¡Éxito!',
-                description: `Historua Clinica General Editada con Exito`,
+                description: `Historia Clinica General Editada con Exito`,
                 duration: 3
             });
+
+            setTimeout(() => {
+                navigate(`/historias-generales/${formData.numExpediente}`);
+            }, 1000);
 
         } catch (error) {
 

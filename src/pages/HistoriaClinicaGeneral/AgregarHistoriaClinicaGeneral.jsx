@@ -91,7 +91,9 @@ export const AgregarHistoriaClinicaGeneral = () => {
     const [doctors, setDoctors] = useState([]);
 
     useEffect(() => {
+
         const fetchDoctors = async () => {
+
             try {
                 const response = await axios.get(`${baseURL}/bdtdoctor/listar`);
                 setDoctors(response.data);
@@ -103,6 +105,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
                     duration: 3
                 });
             }
+
         };
 
         fetchDoctors();
@@ -357,6 +360,62 @@ export const AgregarHistoriaClinicaGeneral = () => {
                 duration: 3
             });
 
+            setFormData({
+                codHistoriaClinica: 0,
+                diabetesMellitus: false,
+                nefropatia: false,
+                cardiopatia: false,
+                consumoDrogas: false,
+                cualquierOtro: false,
+                altoRiesgo: false,
+                fecha: "",
+                numExpediente: '',
+                codDoctor: "",
+                nuM_CITA: 0,
+                iD_CITA: 0
+            });
+
+            setObstetrico({
+                codHojariesgo: 0,
+                muerteFetal: false,
+                antAbortos: false,
+                peso250: false,
+                peso450: false,
+                internada: false,
+                cirugiasPrevias: false,
+                numExpediente: "",
+                telefono: "",
+                nuM_CITA: 0,
+                iD_CITA: 0
+            })
+
+            setActual({
+                codEmbarazo: 0,
+                diagnostico: false,
+                menor20: false,
+                mayorde35: false,
+                isoinmunizacion: false,
+                sangradov: false,
+                masaPelvica: false,
+                presionArterial: false,
+                numExpediente: "",
+                nuM_CITA: 0,
+                iD_CITA: 0
+            });
+
+            setData({
+                primeR_NOMBRE: '',
+                segundO_NOMBRE: '',
+                primeR_APELLIDO: '',
+                segundO_APELLIDO: '',
+                nuM_EXPEDIENTE: '',
+                direccion: ''
+            });
+
+            setCita({
+                num_cita: 0
+            });
+
             if (HCGTab.current) {
                 console.log('xd')
                 const tab = new window.bootstrap.Tab(HCGTab.current);
@@ -377,9 +436,9 @@ export const AgregarHistoriaClinicaGeneral = () => {
 
 
     const handleBack = () => {
-      navigate('/home');
+        navigate('/home');
     }
-    
+
 
     return (
         <div className='container-fluid'>
@@ -514,7 +573,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
                                         readOnly
                                     />
                                 </div>
-                                
+
                                 <div className="col-sm-3 mt-3">
                                     <label className="form-label">Fecha</label>
                                     <input type="date" name="fecha" value={formData.fecha} onChange={handleChange} className="form-control" />

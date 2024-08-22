@@ -16,7 +16,7 @@ export const EditarDoctor = () => {
         primerApellidod: '',
         segundoApellido: '',
         cedula: '',
-        clinica: '', 
+        clinica: '',
         estado: false
     });
 
@@ -59,7 +59,7 @@ export const EditarDoctor = () => {
     const handleSwitchChange = (checked) => {
         setFormData({
             ...formData,
-            estado: checked, 
+            estado: checked,
         });
     };
 
@@ -72,13 +72,17 @@ export const EditarDoctor = () => {
 
             console.log(formData)
 
-            // await axios.put(`${baseURL}/bdtdoctor/actualizar/${id}`, formData);
-            
-            // notification.success({
-            //     message: '¡Éxito!',
-            //     description: `Doctor Editado`,
-            //     duration: 3
-            // });
+            await axios.put(`${baseURL}/bdtdoctor/actualizar/${id}`, formData);
+
+            notification.success({
+                message: '¡Éxito!',
+                description: `Doctor Editado`,
+                duration: 3
+            });
+
+            setTimeout(() => {
+                navigate('/buscar-doctor');
+            }, 1000);
 
         } catch (error) {
 
@@ -89,14 +93,14 @@ export const EditarDoctor = () => {
             });
 
         }
+
     };
 
-    
-    
+
     return (
         <div className='container-fluid'>
             <h4>Editar Doctor</h4>
-            <form onSubmit={handleSubmit}  className='mt-4'>
+            <form onSubmit={handleSubmit} className='mt-4'>
                 <div className="row g-3">
                     <div className="col-sm-3">
                         <label htmlFor="primerNombre" className="form-label">Primer Nombre*</label>
@@ -168,6 +172,18 @@ export const EditarDoctor = () => {
                                 onChange={handleChange}
                                 value={formData.clinica}
                             />
+                        </div>
+                        <div className="col-sm-2 col-12 mt-3">
+                            <div className="d-flex flex-column">
+                                <label className="form-label">Estado</label>
+                                <Switch
+                                    checked={formData.estado}
+                                    onChange={handleSwitchChange}
+                                    checkedChildren="Habilitado"
+                                    unCheckedChildren="Inhabilitado"
+                                />
+
+                            </div>
                         </div>
                     </div>
                 </div>
