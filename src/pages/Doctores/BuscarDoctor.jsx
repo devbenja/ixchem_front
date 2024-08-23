@@ -126,34 +126,45 @@ export const BuscarDoctor = () => {
 				<h4>Buscar Doctor</h4>
 			</div>
 			<form onSubmit={handleSubmit} className="container-fluid mt-3">
-				<div className="row g-3">
-					<div className="col-sm-3">
+				<div className="container-fluid d-flex gap-2">
+					<div className="col-12 col-sm-6 col-md-3">
 						<select className="form-select" value={searchType} onChange={(e) => setSearchType(e.target.value)}>
 							<option value="">Seleccionar Opcion</option>
 							<option value="Codigo">Codigo MINSA</option>
 							<option value="Nombre">Nombre</option>
 						</select>
 					</div>
-					<div className="col-sm-9 d-flex">
+					<div className="col-12 col-sm-6 col-md-9 d-flex">
 						<div className="input-group" role="search">
 							{searchType === 'Nombre' ? (
 								<div className="d-flex gap-2">
 									<div className="d-flex align-items-center justify-content-center">
-										<label>Primer Nombre</label>
-										<input className="form-control" type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+										{/* <label>Primer Nombre</label> */}
+										<input 
+											className="form-control" 
+											type="text" value={firstName} 
+											onChange={(e) => setFirstName(e.target.value)}
+											placeholder="Primer Nombre"
+										/>
 									</div>
 									<div className="d-flex align-items-center justify-content-center">
-										<label>Primer Apellido</label>
-										<input className="form-control" type="text" value={firstLastName} onChange={(e) => setFirstLastName(e.target.value)} />
+										{/* <label>Primer Apellido</label> */}
+										<input 
+											className="form-control" 
+											type="text" value={firstLastName} 
+											onChange={(e) => setFirstLastName(e.target.value)} 
+											placeholder="Primer Apellido"
+										/>
 									</div>
 								</div>
 							) : (
 								<input
-									className="form-control me-2"
+									className="form-control"
 									maxLength="80"
 									type="search"
 									aria-label="Search"
 									value={searchValue} onChange={(e) => setSearchValue(e.target.value)}
+									placeholder="Codigo MINSA"
 								/>
 							)}
 

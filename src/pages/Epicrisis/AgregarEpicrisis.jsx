@@ -3,8 +3,10 @@ import axios from "axios";
 import { notification } from "antd";
 import { baseURL } from '../../api/apiURL.js';
 
-import { useAuth } from "../../context/AuthContext.jsx";
+import { Modal } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 
+import { useAuth } from "../../context/AuthContext.jsx";
 import { useNavigate } from "react-router-dom";
 
 export const AgregarEpicrisis = () => {
@@ -68,9 +70,7 @@ export const AgregarEpicrisis = () => {
         });
     };
 
-    const handleSubmit = async (event) => {
-
-        event.preventDefault();
+    const handleSubmit = async () => {
 
         try {
 
@@ -93,16 +93,44 @@ export const AgregarEpicrisis = () => {
             });
 
         }
-    }
+    };
+
+    const showSaveConfirm = () => {
+
+        Modal.confirm({
+            centered: true,
+            title: '¿Está seguro de Guardar permanentemente?',
+            icon: <ExclamationCircleOutlined />,
+            content: 'Esta acción no se puede deshacer.',
+            okText: 'Sí',
+            okType: 'danger',
+            cancelText: 'No',
+            onOk() {
+                handleSubmit();
+            },
+            onCancel() {
+                console.log('Cancelado');
+            },
+        });
+    };
+
+    const handleSave = () => {
+
+        if (user.codRol === 2) {
+            showSaveConfirm();
+        } else {
+            handleSubmit();
+        }
+    };
 
     const handleBack = () => {
         navigate('/home')
-    }
+    };
 
     return (
         <div className="container-fluid">
             <h4>Agregar Epicrisis</h4>
-            <form className='mt-4' onSubmit={handleSubmit}>
+            <form className='mt-4' onSubmit={(e) => e.preventDefault()}>
                 <div className="row mb-3">
                     <div className="col">
                         <label className="form-label">Número de expediente</label>
@@ -201,7 +229,7 @@ export const AgregarEpicrisis = () => {
                 </div>
 
                 <div className='mt-4 d-flex gap-2'>
-                    <button type="submit" className="btn btn-primary">Guardar</button>
+                    <button onClick={handleSave} type="submit" className="btn btn-primary">Guardar</button>
                     <button type="button" onClick={handleBack} className="btn btn-danger">Cancelar</button>
                 </div>
             </form>

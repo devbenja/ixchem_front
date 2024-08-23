@@ -3,9 +3,10 @@ import { notification } from 'antd';
 import axios from 'axios';
 
 import { baseURL } from "../../api/apiURL";
+import { Modal } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 import { useAuth } from '../../context/AuthContext';
-
 import { useNavigate } from "react-router-dom";
 
 export const AgregarNota = () => {
@@ -48,9 +49,7 @@ export const AgregarNota = () => {
 
     };
 
-    const handleSubmitNota = async (e) => {
-
-        e.preventDefault();
+    const handleSubmitNota = async () => {
 
         try {
             console.log(formData);
@@ -88,14 +87,43 @@ export const AgregarNota = () => {
         }
     };
 
+    const showSaveConfirm = () => {
+
+        Modal.confirm({
+            centered: true,
+            title: '¿Está seguro de Guardar permanentemente?',
+            icon: <ExclamationCircleOutlined />,
+            content: 'Esta acción no se puede deshacer.',
+            okText: 'Sí',
+            okType: 'danger',
+            cancelText: 'No',
+            onOk() {
+                handleSubmitNota();
+            },
+            onCancel() {
+                console.log('Cancelado');
+            },
+        });
+    };
+
+    const handleSave = () => {
+
+        if (user.codRol === 2) {
+            showSaveConfirm();
+        } else {
+            handleSubmitNota();
+        }
+    };
+
+
     const handleBack = () => {
         navigate('/home')
-    }
+    };
 
     return (
         <div className="container-fluid">
             <h4>Agregar Nota de Evolución</h4>
-            <form onSubmit={handleSubmitNota} className='mt-4'>
+            <form onSubmit={(e) => e.preventDefault()} className='mt-4'>
                 <div className="row g-3">
                     <div className="col-sm-3">
                         <label htmlFor="segundoNombre" className="form-label">Fecha*</label>
@@ -239,7 +267,7 @@ export const AgregarNota = () => {
 
                 </div>
                 <div className="d-grid gap-2 d-md-flex justify-content-md-start mt-4">
-                    <button className="btn btn-primary btn-save me-md-2" type="submit">Guardar</button>
+                    <button className="btn btn-primary btn-save me-md-2" onClick={handleSave} type="submit">Guardar</button>
                     <button type="button" onClick={handleBack} className="btn btn-danger">Cancelar</button>
                 </div>
             </form>

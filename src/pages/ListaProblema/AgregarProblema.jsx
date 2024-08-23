@@ -1,24 +1,24 @@
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
-
 import './Problemas.css';
-import { Toast, ToastBody, ToastHeader } from 'reactstrap';
+
 
 import { notification } from 'antd';
 import { baseURL } from '../../api/apiURL.js';
 
 import { useNavigate } from 'react-router-dom';
 
+import { Modal } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+
+import { useAuth } from '../../context/AuthContext.jsx';
+
 export const AgregarProblema = () => {
 
     const { register, handleSubmit, reset } = useForm();
-
+    const { user } = useAuth();
     const navigate = useNavigate();
-
-    const [showToast, setShowToast] = useState(false);
-    const [toastBody, setToastBody] = useState('');
-
 
     const alerta = () => {
 
@@ -60,31 +60,42 @@ export const AgregarProblema = () => {
 
     });
 
-    useEffect(() => {
+    const showSaveConfirm = () => {
 
-        if (showToast) {
-
-            const timer = setTimeout(() => {
-                setShowToast(false);
-            }, 3000);
-
-            return () => {
-                clearTimeout(timer);
-            };
-        }
-
-    }, [showToast]);
-
+        Modal.confirm({
+            centered: true,
+            title: '¿Está seguro de Guardar permanentemente?',
+            icon: <ExclamationCircleOutlined />,
+            content: 'Esta acción no se puede deshacer.',
+            okText: 'Sí',
+            okType: 'danger',
+            cancelText: 'No',
+            onOk() {
+                onSubmitProblema();
+            },
+            onCancel() {
+                console.log('Cancelado');
+            },
+        });
+    };
 
     const handleBack = () => {
         navigate('/home')
-    }
+    };
+
+    const handleSave = () => {
+        if (user.codRol === 2) {
+            showSaveConfirm();
+        } else {
+            onSubmitProblema();
+        }
+    };
 
     return (
         <>
             <div className='container-fluid mb-3'>
                 <h4>Agregar Problema</h4>
-                <form className='mt-4' onSubmit={onSubmitProblema}>
+                <form className='mt-4' onSubmit={(e) => e.preventDefault()}>
                     <div className="row g-3">
                         <div className="col-sm-3">
                             <label htmlFor="expediente" className="form-label">Núm. Expediente*</label>
@@ -182,16 +193,13 @@ export const AgregarProblema = () => {
                     </div>
 
                     <div className="d-grid gap-2 d-md-flex justify-content-md-start mt-4">
-                        <button className="btn btn-primary btn-save me-md-2" type="submit" >Guardar</button>
-                        <button type="button"  onClick={handleBack} className="btn btn-danger">Cancelar</button>
+                        <button className="btn btn-primary btn-save me-md-2" onClick={handleSave} type="submit">Guardar</button>
+                        <button type="button" onClick={handleBack} className="btn btn-danger">Cancelar</button>
                     </div>
 
                 </form>
             </div>
-            <Toast isOpen={showToast} className="position-fixed top-0 end-0 m-3">
-                <ToastHeader toggle={() => setShowToast(false)}>Notificación</ToastHeader>
-                <ToastBody>{toastBody}</ToastBody>
-            </Toast>
+     
         </>
     )
 }

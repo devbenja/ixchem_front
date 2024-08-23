@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { notification, Button } from "antd";
+import { notification, Button, Modal } from "antd";
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 import { baseURL } from '../../api/apiURL.js';
 import { useAuth } from '../../context/AuthContext.jsx';
@@ -276,9 +277,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
 
     }
 
-    const handleSubmit = async (e) => {
-
-        e.preventDefault();
+    const handleSubmit = async () => {
 
         try {
 
@@ -309,9 +308,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
         }
     }
 
-    const handleSubmitObs = async (e) => {
-
-        e.preventDefault();
+    const handleSubmitObs = async () => {
 
         try {
 
@@ -343,9 +340,8 @@ export const AgregarHistoriaClinicaGeneral = () => {
 
     }
 
-    const handleSubmitActual = async (e) => {
+    const handleSubmitActual = async () => {
 
-        e.preventDefault();
         setIsSelectDisabled(false);
 
         try {
@@ -434,11 +430,93 @@ export const AgregarHistoriaClinicaGeneral = () => {
 
     }
 
-
     const handleBack = () => {
         navigate('/home');
     }
 
+    const showSaveConfirmHCG = () => {
+
+        Modal.confirm({
+            centered: true,
+            title: '¿Está seguro de Guardar permanentemente?',
+            icon: <ExclamationCircleOutlined />,
+            content: 'Esta acción no se puede deshacer.',
+            okText: 'Sí',
+            okType: 'danger',
+            cancelText: 'No',
+            onOk() {
+                handleSubmit();
+            },
+            onCancel() {
+                console.log('Cancelado');
+            },
+        });
+    };
+
+    const handleSave = () => {
+
+        if (user.codRol === 2) {
+            showSaveConfirmHCG();
+        } else {
+            handleSubmit();
+        }
+    };
+
+    const showSaveConfirmObs = () => {
+
+        Modal.confirm({
+            centered: true,
+            title: '¿Está seguro de Guardar permanentemente?',
+            icon: <ExclamationCircleOutlined />,
+            content: 'Esta acción no se puede deshacer.',
+            okText: 'Sí',
+            okType: 'danger',
+            cancelText: 'No',
+            onOk() {
+                handleSubmitObs();
+            },
+            onCancel() {
+                console.log('Cancelado');
+            },
+        });
+    };
+
+    const handleSaveObs = () => {
+
+        if (user.codRol === 2) {
+            showSaveConfirmObs();
+        } else {
+            handleSubmitObs();
+        }
+    };
+
+    const showSaveConfirmActual = () => {
+
+        Modal.confirm({
+            centered: true,
+            title: '¿Está seguro de Guardar permanentemente?',
+            icon: <ExclamationCircleOutlined />,
+            content: 'Esta acción no se puede deshacer.',
+            okText: 'Sí',
+            okType: 'danger',
+            cancelText: 'No',
+            onOk() {
+                handleSubmitActual();
+            },
+            onCancel() {
+                console.log('Cancelado');
+            },
+        });
+    };
+
+    const handleSaveActual = () => {
+
+        if (user.codRol === 2) {
+            showSaveConfirmActual();
+        } else {
+            handleSubmitActual();
+        }
+    };
 
     return (
         <div className='container-fluid'>
@@ -540,7 +618,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
 
                 <div className="tab-content" id="hcgtab">
                     <div className="tab-pane show active" id="HCG" role="tabpanel" aria-labelledby="HCG-tab">
-                        <form className='mt-4' onSubmit={handleSubmit}>
+                        <form className='mt-4' onSubmit={(e) => e.preventDefault()}>
                             <div className="row mb-3">
                                 <div className="col-sm-3">
                                     <label className="form-label">Primer Nombre</label>
@@ -676,14 +754,14 @@ export const AgregarHistoriaClinicaGeneral = () => {
                             </div>
 
                             <div className='mt-4 d-flex gap-2'>
-                                <button type="submit" className="btn btn-primary">Guardar</button>
+                                <button type="submit" onClick={handleSave} className="btn btn-primary">Guardar</button>
                                 <button type="button" onClick={handleBack} className="btn btn-danger">Cancelar</button>
                             </div>
                         </form>
                     </div>
 
                     <div className="tab-pane fade" id="AO" role="tabpanel" aria-labelledby="AO-tab">
-                        <form className='mt-4' onSubmit={handleSubmitObs}>
+                        <form className='mt-4' onSubmit={(e) => e.preventDefault()}>
                             <div className="row mb-3">
                                 <div className="col-sm-3">
                                     <label className="form-label">Primer Nombre</label>
@@ -798,14 +876,14 @@ export const AgregarHistoriaClinicaGeneral = () => {
                             </div>
 
                             <div className='mt-4 d-flex gap-2'>
-                                <button type="submit" className="btn btn-primary">Guardar</button>
+                                <button type="submit" onClick={handleSaveObs} className="btn btn-primary">Guardar</button>
                                 <button type="button" onClick={handleBack} className="btn btn-danger">Cancelar</button>
                             </div>
                         </form>
                     </div>
 
                     <div className="tab-pane fade" id="EA" role="tabpanel" aria-labelledby="EA-tab">
-                        <form className='mt-4' onSubmit={handleSubmitActual}>
+                        <form className='mt-4' onSubmit={(e) => e.preventDefault()}>
                             <div className="row mb-3">
                                 <div className="col-sm-3">
                                     <label className="form-label">Primer Nombre</label>
@@ -930,7 +1008,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
                             </div>
 
                             <div className='mt-4 d-flex gap-2'>
-                                <button type="submit" className="btn btn-primary">Guardar</button>
+                                <button type="submit" onClick={handleSaveActual} className="btn btn-primary">Guardar</button>
                                 <button type="button" onClick={handleBack} className="btn btn-danger">Cancelar</button>
                             </div>
                         </form>
