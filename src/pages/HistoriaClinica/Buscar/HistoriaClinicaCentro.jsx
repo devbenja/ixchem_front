@@ -1,16 +1,17 @@
 import './Buscar.css';
 
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Table, message, notification, Button } from 'antd';
 import { Modal } from 'react-bootstrap';
-import { FilePdfOutlined } from '@ant-design/icons'
+import { FilePdfOutlined, ArrowLeftOutlined } from '@ant-design/icons'
 
 import { Image, Page, Text, View, Document, StyleSheet, BlobProvider, PDFDownloadLink } from '@react-pdf/renderer';
 
 import { baseURL } from '../../../api/apiURL';
 import { useAuth } from '../../../context/AuthContext';
+
 
 const styles = StyleSheet.create({
     page: {
@@ -383,7 +384,7 @@ const MyDocument = ({ data }) => (
     </Document>
 )
 
-export const BuscarHistoria = () => {
+export const HistoriaCentro = () => {
 
     const [visible, setVisible] = useState(false);
     const [previewUrl, setPreviewUrl] = useState('');
@@ -399,69 +400,39 @@ export const BuscarHistoria = () => {
     };
 
     const { user } = useAuth();
+    const navigate = useNavigate();
+    const { numExp } = useParams();
 
-    const [searchType, setSearchType] = useState('');
-    const [searchValue, setSearchValue] = useState('');
-    const [paciente, setPaciente] = useState('');
-    const [antecedentesPersonales, setAntPersonales] = useState('');
-    const [antPatPer, setAntPatPer] = useState('');
-    const [antPatFam, setAntPatFam] = useState('');
-    const [info, setInfo] = useState('');
     const [data, setData] = useState([]);
 
-    const [firstName, setFirstName] = useState('');
-    const [firstLastName, setFirstLastName] = useState('');
+    useEffect(() => {
 
+        const handleSearchSubmit = async () => {
 
-    const navigate = useNavigate();
-
-    const handleSearchSubmit = async (event) => {
-
-        event.preventDefault();
-
-        let unidosData;
-
-        try {
-
-            if (searchType === 'opcion_expediente') {
-
-                unidosData = await axios.get(`${baseURL}/bdtpaciente/buscarpornumexpedienteunidos`, {
-                    params: { NUM_EXPEDIENTE: searchValue }
+            try {
+    
+                const unidosData = await axios.get(`${baseURL}/bdtpaciente/buscarpornumexpedienteunidos`, {
+                    params: { NUM_EXPEDIENTE: numExp }
                 });
-
-
-            } else if (searchType === 'opcion_cedula') {
-
-                // unidosData = await axios.get(`${baseURL}/bdtpaciente/buscarpornumexpedienteunidos`, {
-                //     params: { cedula: searchValue }
-                // });
-
-            } else if (searchType === 'opcion_nombre') {
-
-                unidosData = await axios.get(`${baseURL}/bdtpaciente/buscarpacientesunidosnombre`, {
-                    params: {
-                        PRIMER_NOMBRE: firstName,
-                        PRIMER_APELLIDO: firstLastName,
-                    }
+    
+                setData(unidosData.data[0]);
+    
+                console.log(unidosData.data[0]);
+    
+            } catch (error) {
+    
+                notification.error({
+                    message: '¡Error!',
+                    description: `${error.response.data.message}`,
+                    duration: 3
                 });
-
+    
             }
+        };
 
-            setData(unidosData.data[0]);
+        handleSearchSubmit();
 
-            console.log(unidosData.data[0]);
-
-
-        } catch (error) {
-
-            notification.error({
-                message: '¡Error!',
-                description: `${error.response.data.message}`,
-                duration: 3
-            });
-
-        }
-    };
+    }, [numExp]);
 
     const columns1 = [
         { title: 'Fecha de ingreso', dataIndex: 'fechA_INGRESO', key: 'fechA_INGRESO' },
@@ -910,65 +881,24 @@ export const BuscarHistoria = () => {
 
     }
 
+    const handleBack = () => {
+        navigate('/buscar-por-centro');
+    };
 
     return (
         <>
-            <div className='container-fluid'>
+            <div className='container-fluid d-flex align-items-center justify-content-between'>
                 <h4>Buscar Historia Clinica</h4>
+                <Button style={{ backgroundColor: 'red', color: 'white' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
             </div>
-            <form onSubmit={handleSearchSubmit} className="container-fluid mt-3 mb-3">
-                <div className="row g-3">
-                    <div className="col-sm-3">
-                        <select className="form-select" value={searchType} onChange={(e) => setSearchType(e.target.value)}>
-                            <option value="">Seleccionar Opcion...</option>
-                            <option value="opcion_expediente">Número de expediente</option>
-                            <option value="opcion_cedula">Cédula de identidad</option>
-                            <option value="opcion_nombre">Nombre</option>
-                        </select>
-                    </div>
+ 
+            <div className="container-fluid mt-3">
 
-                    <div className="col-sm-9 d-flex">
-                        <div className="input-group" role="search">
-                            {
-                                searchType === 'opcion_nombre' ? (
-                                    <div className="d-flex gap-2">
-                                        <div className="d-flex align-items-center justify-content-center">
-                                            <label>Primer Nombre</label>
-                                            <input className="form-control" type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-                                        </div>
-
-                                        <div className="d-flex align-items-center justify-content-center">
-                                            <label>Primer Apellido</label>
-                                            <input className="form-control" type="text" value={firstLastName} onChange={(e) => setFirstLastName(e.target.value)} />
-                                        </div>
-                                        <button className="btn btn-success" type="submit">Buscar</button>
-                                    </div>
-                                ) : (
-                                    <>
-                                        <input
-                                            className="form-control me-2"
-                                            maxLength="80"
-                                            type="search"
-                                            aria-label="Search"
-                                            value={searchValue} onChange={(e) => setSearchValue(e.target.value)}
-                                        />
-                                        <button className="btn btn-success" type="submit">Buscar</button>
-                                    </>
-
-
-                                )
-                            }
-
-
-                        </div>
-                    </div>
-                </div>
-            </form>
-            <div className="container-fluid" >
                 <div className='d-flex align-items-center justify-content-between'>
+
                     <ul className="nav nav-tabs" id="tab-search-list" role="tablist">
                         <li className="nav-item" role="presentation">
-                            <a className="nav-link active" id="DG-tab" data-bs-toggle="tab" href="#DG" role="tab" aria-controls="DG" aria-selected="true">Datos Generales</a>
+                            <a className="nav-link active" id="DG-tab" data-bs-toggle="tab" href="#DG" role="tab" aria-controls="DG" aria-selected="true">Paciente</a>
                         </li>
                         <li className="nav-item" role="presentation">
                             <a className="nav-link text-secondary" id="AP-tab" data-bs-toggle="tab" role="tab" href="#AP" aria-controls="AP" aria-selected="false">A. Personales</a>
@@ -983,6 +913,7 @@ export const BuscarHistoria = () => {
                             <a className="nav-link text-secondary" id="informacion-tab" data-bs-toggle="tab" role="tab" href="#informacion" aria-controls="Informacion" aria-selected="false">Información</a>
                         </li>
                     </ul>
+
                     <BlobProvider document={<MyDocument data={data} />}>
                         {({ url }) => (
                             <>
@@ -1022,7 +953,6 @@ export const BuscarHistoria = () => {
                             </PDFDownloadLink>
                         )
                     }
-
 
                 </div>
 

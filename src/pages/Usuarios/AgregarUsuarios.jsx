@@ -56,6 +56,15 @@ export const AgregarUsuarios = () => {
                 duration: 3
             });
 
+            setFormData({
+                codAdmin: 0,
+                nombre: "",
+                apellido: "",
+                correo: "",
+                contraseña: "",
+                codRol: 2
+            });
+
         } catch (error) {
 
             notification.error({

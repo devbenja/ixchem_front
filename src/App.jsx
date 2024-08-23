@@ -57,6 +57,8 @@ import { useAuth } from "./context/AuthContext";
 import { LogoutOutlined } from '@ant-design/icons'
 import { CambiarContra } from "./pages/Usuarios/CambiarContra";
 import { Bitacoras } from "./pages/Bitacoras/Bitacoras";
+import { BuscarPorCentro } from "./pages/HistoriaClinica/Buscar/BuscarPorCentro.jsx";
+import { HistoriaCentro } from "./pages/HistoriaClinica/Buscar/HistoriaClinicaCentro.jsx";
 
 
 const { Header, Sider, Content } = Layout;
@@ -157,6 +159,8 @@ export const App = () => {
                 <Route path="/cambiar-contraseña" element={<CambiarContra/>} />
 
                 <Route path="/bitacoras" element={<Bitacoras/>} />
+                <Route path="/buscar-por-centro" element={<BuscarPorCentro/>} />
+                <Route path="/historia-centro/:numExp" element={<HistoriaCentro/>} />
               </Routes>
             </Content>
           </Layout>

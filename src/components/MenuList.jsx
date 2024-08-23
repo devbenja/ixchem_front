@@ -33,6 +33,10 @@ export const MenuList = () => {
 				<Menu.Item key="search" icon={<SearchOutlined />}>
 					<Link to="/buscar-historia-clinica">Buscar</Link>
 				</Menu.Item>
+
+				<Menu.Item key="search-centro" icon={<SearchOutlined />}>
+					<Link to="/buscar-por-centro">Centro</Link>
+				</Menu.Item>
 			</Menu.SubMenu>
 
 			<Menu.SubMenu className='sub-menu' key="lista-problemas" title="Problemas" icon={<OrderedListOutlined />}>

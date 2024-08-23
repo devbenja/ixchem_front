@@ -522,7 +522,7 @@ export const AgregarHistoria = () => {
                                         <label htmlFor="centros" className="form-label">Centro de Mujeres IXCHEN*</label>
                                         <select defaultValue="Managua" className="form-select" id="centro" {...registerPaciente("centro", { required: true })}>
                                             <option value="">Menú de selección</option>
-                                            <option value="1">Managua</option>
+                                            <option value="Managua">Managua</option>
                                             <option value="2">Ciudad Sandino</option>
                                             <option value="3">Villa Libertad</option>
                                             <option value="4">Tipitapa</option>

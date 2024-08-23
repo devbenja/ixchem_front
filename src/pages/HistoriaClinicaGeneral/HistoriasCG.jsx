@@ -143,21 +143,21 @@ export const HistoriasCG = () => {
     return (
         <div className='container-fluid'>
             <div className="container-fluid d-flex justify-content-between align-items-center">
-                <h3>Historias Clinicas Generales del Expediente: {numExpediente}</h3>
-                <div className='d-flex gap-2'>
+                <h4>Historias Clinicas Generales del Expediente: {numExpediente}</h4>
 
-                </div>
                 <Button style={{ backgroundColor: 'red', color: 'white' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
             </div>
-            <Table
-                columns={columnHCG}
-                rowKey="coD_HISTORIA_CLINICA"
-                dataSource={hcgeneral}
-                className='mt-3 custom-table'
-                onRow={(record) => ({
-                    onClick: () => handleRowClickHCGeneral(record.coD_HISTORIA_CLINICA),
-                })}
-            />
+            <div className='container-fluid'>
+                <Table
+                    columns={columnHCG}
+                    rowKey="coD_HISTORIA_CLINICA"
+                    dataSource={hcgeneral}
+                    className='mt-3 custom-table'
+                    onRow={(record) => ({
+                        onClick: () => handleRowClickHCGeneral(record.coD_HISTORIA_CLINICA),
+                    })}
+                />
+            </div>
         </div>
     )
 }
