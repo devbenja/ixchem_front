@@ -7,23 +7,24 @@ import { Spinner } from 'react-bootstrap';
 
 import { baseURL } from '../../api/apiURL';
 
-export const BuscarNota = () => {
+export const Bitacoras = () => {
     
-    const [notas, setNotas] = useState([]);
+    const [bitacoras, setBitacoras] = useState([]);
     const [loading, setLoading] = useState(true);
     const [errors, setErrors] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetchNotas();
+        fetchBitacoras();
     }, []);
 
-    const fetchNotas = async () => {
+    const fetchBitacoras = async () => {
+
         try {
-            const response = await axios.get(`${baseURL}/bdtbnotaevolucion/listar`);
+            const response = await axios.get(`${baseURL}/bdtbitacora/listar`);
             console.log(response.data)
-            setNotas(response.data);
+            setBitacoras(response.data);
         } catch (error) {
             setErrors(error.response ? error.response.data : 'Error al cargar los datos');
         } finally {
@@ -39,49 +40,24 @@ export const BuscarNota = () => {
         navigate(`/notas-de-evolucion/${nuM_EXPEDIENTE}`);
     };
 
-    const filteredNotas = notas
-        .filter(nota => nota.nuM_EXPEDIENTE && nota.nuM_EXPEDIENTE.includes(searchTerm))
-        .reduce((acc, nota) => {
-            if (!acc.find(n => n.nuM_EXPEDIENTE === nota.nuM_EXPEDIENTE)) {
-                acc.push(nota);
-            }
-            return acc;
-        }, []);
+
 
     const columns = [
         {
-            title: 'Número de Expediente',
-            dataIndex: 'nuM_EXPEDIENTE',
-            key: 'nuM_EXPEDIENTE',
-            render: (nuM_EXPEDIENTE) => <a>{nuM_EXPEDIENTE}</a>,
+            title: 'Usuario',
+            dataIndex: 'usuario',
+            key: 'usuario',
+            render: (usuario) => <a>{usuario}</a>,
         },
         {
-            title: 'Nombre del Paciente',
-            dataIndex: 'primeR_NOMBRE',
-            key: 'primeR_NOMBRE',
-            render: (text, record) => (
-                <div>{record.primeR_NOMBRE} {record.primeR_APELLIDO}</div>
-            ),
+            title: 'Información',
+            dataIndex: 'informacion',
+            key: 'informacion',
         },
-        // {
-        //     title: 'Código de Nota',
-        //     dataIndex: 'coD_NOTA',
-        //     key: 'coD_NOTA',
-        // },
-        // {
-        //     title: 'Código de Doctor',
-        //     dataIndex: 'coD_DOCTOR',
-        //     key: 'coD_DOCTOR',
-        // },
         {
-            title: 'Acciones',
-            key: 'acciones',
-            render: (text, record) => (
-                <Space align="center" size="middle">
-                    <Button icon={<FileSearchOutlined />} onClick={() => handleRowClick(record.nuM_EXPEDIENTE)} />
-                </Space>
-            ),
-            align: 'center',
+            title: 'Detalles',
+            dataIndex: 'detalles',
+            key: 'detalles',
         },
     ];
 
@@ -96,13 +72,13 @@ export const BuscarNota = () => {
     return (
         <div className="container">
             <div className='d-flex align-items-start justify-content-between'>
-                <h4>Buscar Notas de Evolución</h4>
+                <h4>Bitacoras del Sistema</h4>
             </div>
             
             {errors && <p className="text-danger">{errors}</p>}
 
             <Input
-                placeholder="Buscar por número de expediente"
+                placeholder="Buscar por Usuario"
                 value={searchTerm}
                 onChange={handleSearch}
                 className="mb-3"
@@ -113,14 +89,12 @@ export const BuscarNota = () => {
                 pagination={{ pageSize: 7 }}
                 className='custom-table'
                 columns={columns}
-                dataSource={filteredNotas}
-                rowKey="coD_NOTA" 
+                dataSource={bitacoras}
+                rowKey="id" 
                 onRow={(record) => ({
-                    onClick: () => handleRowClick(record.nuM_EXPEDIENTE),
+                    onClick: () => handleRowClick(record.id),
                 })}
             />
         </div>
     );
 };
-
-

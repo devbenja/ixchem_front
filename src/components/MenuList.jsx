@@ -1,5 +1,5 @@
 import { Menu } from 'antd';
-import { HomeOutlined, UserOutlined, UsergroupAddOutlined, PlusOutlined, SearchOutlined, LineChartOutlined, OrderedListOutlined, FileDoneOutlined, WarningOutlined, HistoryOutlined } from '@ant-design/icons';
+import { HomeOutlined, UserOutlined, UsergroupAddOutlined, PlusOutlined, SearchOutlined, CodeOutlined, LineChartOutlined, OrderedListOutlined, FileDoneOutlined, WarningOutlined, HistoryOutlined } from '@ant-design/icons';
 
 import { Link } from 'react-router-dom';
 
@@ -103,6 +103,10 @@ export const MenuList = () => {
 			)}
 
 			<Menu.Item key="change_pass" icon={<HomeOutlined />}><Link to="/cambiar-contraseña">Contraseña</Link></Menu.Item>
+
+			{user && user.codRol === 1 && (
+				<Menu.Item key="bitacoras" icon={<CodeOutlined />}><Link to="/bitacoras">Bitacoras</Link></Menu.Item>
+			)}
 
 		</Menu>
 	)

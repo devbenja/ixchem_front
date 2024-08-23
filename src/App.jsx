@@ -56,6 +56,7 @@ import { EditarEmbarazo } from "./pages/HistoriaClinicaGeneral/EditarEmbarazo";
 import { useAuth } from "./context/AuthContext";
 import { LogoutOutlined } from '@ant-design/icons'
 import { CambiarContra } from "./pages/Usuarios/CambiarContra";
+import { Bitacoras } from "./pages/Bitacoras/Bitacoras";
 
 
 const { Header, Sider, Content } = Layout;
@@ -154,6 +155,8 @@ export const App = () => {
                 <Route path="/editar-usuario/:codAdmin" element={<EditarUsuario />} />
 
                 <Route path="/cambiar-contraseña" element={<CambiarContra/>} />
+
+                <Route path="/bitacoras" element={<Bitacoras/>} />
               </Routes>
             </Content>
           </Layout>

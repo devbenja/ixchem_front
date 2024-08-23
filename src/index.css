@@ -48,7 +48,7 @@
     height: 100vh;
     display: flex; 
     flex-direction: column;
-    gap: 15px; 
+    gap: 9px;
     position: relative;
     background-color: #780650 !important;
     color: #ffff;
