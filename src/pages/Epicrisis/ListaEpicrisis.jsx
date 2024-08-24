@@ -128,7 +128,7 @@ export const ListaEpicrisis = () => {
             icon: <ExclamationCircleOutlined />,
             content: 'Esta acción no se puede deshacer.',
             okText: 'Sí',
-            okType: 'danger',
+            okType: 'primary',
             cancelText: 'No',
             onOk() {
                 deleteEpicrisis(id);
@@ -136,6 +136,7 @@ export const ListaEpicrisis = () => {
             onCancel() {
                 console.log('Cancelado');
             },
+            className: 'custom-confirm'
         });
     };
 

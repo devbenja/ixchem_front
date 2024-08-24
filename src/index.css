@@ -76,3 +76,15 @@
     background-color: #c41d7f;
     color: #fff;
 }
+
+
+.custom-confirm .ant-modal-confirm-btns .ant-btn-primary {
+    background-color: #28a745;  
+    border-color: #28a745;      
+}
+
+.custom-confirm .ant-modal-confirm-btns .ant-btn-default {
+    background-color: #dc3545;       
+    border-color: #dc3545;      
+    color: #fff;
+}

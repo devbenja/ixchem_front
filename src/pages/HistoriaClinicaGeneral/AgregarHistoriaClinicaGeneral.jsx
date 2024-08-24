@@ -442,7 +442,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
             icon: <ExclamationCircleOutlined />,
             content: 'Esta acción no se puede deshacer.',
             okText: 'Sí',
-            okType: 'danger',
+            okType: 'primary',
             cancelText: 'No',
             onOk() {
                 handleSubmit();
@@ -450,6 +450,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
             onCancel() {
                 console.log('Cancelado');
             },
+            className: 'custom-confirm'
         });
     };
 
@@ -470,7 +471,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
             icon: <ExclamationCircleOutlined />,
             content: 'Esta acción no se puede deshacer.',
             okText: 'Sí',
-            okType: 'danger',
+            okType: 'primary',
             cancelText: 'No',
             onOk() {
                 handleSubmitObs();
@@ -478,6 +479,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
             onCancel() {
                 console.log('Cancelado');
             },
+            className: 'custom-confirm'
         });
     };
 
@@ -498,7 +500,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
             icon: <ExclamationCircleOutlined />,
             content: 'Esta acción no se puede deshacer.',
             okText: 'Sí',
-            okType: 'danger',
+            okType: 'primary',
             cancelText: 'No',
             onOk() {
                 handleSubmitActual();
@@ -506,6 +508,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
             onCancel() {
                 console.log('Cancelado');
             },
+            className: 'custom-confirm'
         });
     };
 

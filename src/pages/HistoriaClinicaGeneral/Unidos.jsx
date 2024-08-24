@@ -731,7 +731,7 @@ export const Unidos = () => {
 
                     {
                         user && (user.codRol === 1 || user.codRol === 3) && (
-                            <PDFDownloadLink document={<MyDocument data={unidosExp} />} fileName="clasificacio_de_riesgo.pdf">
+                            <PDFDownloadLink document={<MyDocument data={unidosExp} />} fileName="clasificacion_de_riesgo.pdf">
                                 {({ loading }) =>
                                     loading ? 'Cargando documento...' : <Button><FilePdfOutlined style={{ fontSize: '20px', color: 'red' }} />Exportar a PDF</Button>
                                 }

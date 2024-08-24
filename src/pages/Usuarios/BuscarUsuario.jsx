@@ -115,7 +115,7 @@ export const BuscarUsuario = () => {
             icon: <ExclamationCircleOutlined />,
             content: 'Esta acción no se puede deshacer.',
             okText: 'Sí',
-            okType: 'danger',
+            okType: 'primary',
             cancelText: 'No',
             onOk() {
                 deleteUsuario(id);
@@ -123,6 +123,7 @@ export const BuscarUsuario = () => {
             onCancel() {
                 console.log('Cancelado');
             },
+            className: 'custom-confirm'
         });
     };
 

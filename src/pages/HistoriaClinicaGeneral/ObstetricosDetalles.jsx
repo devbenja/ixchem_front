@@ -120,7 +120,7 @@ export const ObstetricosDetalles = () => {
             icon: <ExclamationCircleOutlined />,
             content: 'Esta acción no se puede deshacer.',
             okText: 'Sí',
-            okType: 'danger',
+            okType: 'primary',
             cancelText: 'No',
             onOk() {
                 deleteObs(id);
@@ -128,6 +128,7 @@ export const ObstetricosDetalles = () => {
             onCancel() {
                 console.log('Cancelado');
             },
+            className: 'custom-confirm'
         });
     };
 

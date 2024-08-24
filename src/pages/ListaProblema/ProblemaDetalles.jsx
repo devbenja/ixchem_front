@@ -294,7 +294,7 @@ export const ProblemaDetalles = () => {
             icon: <ExclamationCircleOutlined />,
             content: 'Esta acción no se puede deshacer.',
             okText: 'Sí',
-            okType: 'danger',
+            okType: 'primary',
             cancelText: 'No',
             onOk() {
                 deleteProblema(id);
@@ -302,6 +302,7 @@ export const ProblemaDetalles = () => {
             onCancel() {
                 console.log('Cancelado');
             },
+            className: 'custom-confirm'
         });
     };
 
@@ -396,7 +397,7 @@ export const ProblemaDetalles = () => {
 
                     {
                         user && (user.codRol === 1 || user.codRol === 3) && (
-                            <PDFDownloadLink document={<MyDocument problemas={problemas} />} fileName="problemas.pdf">
+                            <PDFDownloadLink document={<MyDocument problemas={problemas} />} fileName="lista_de_problemas.pdf">
                                 {({ loading }) =>
                                     loading ? 'Cargando documento...' : <Button><FilePdfOutlined style={{ fontSize: '20px', color: 'red' }} />Exportar a PDF</Button>
                                 }

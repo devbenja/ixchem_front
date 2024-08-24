@@ -39,7 +39,7 @@ export const AgregarUsuarios = () => {
     };
 
     const handleBack = () => {
-        navigate('/home');
+        navigate('/buscar-usuario');
     }
 
     const handleSubmit = async (event) => {
@@ -64,6 +64,10 @@ export const AgregarUsuarios = () => {
                 contraseña: "",
                 codRol: 2
             });
+
+            setTimeout(() => {
+                navigate('/buscar-usuario');
+            }, 1000);
 
         } catch (error) {
 

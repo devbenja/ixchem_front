@@ -58,6 +58,13 @@ export const Bitacoras = () => {
             title: 'Detalles',
             dataIndex: 'detalles',
             key: 'detalles',
+            onCell: () => ({
+                style: { 
+                    wordWrap: 'break-word', 
+                    whiteSpace: 'pre-wrap', 
+                    maxWidth: 300 
+                },
+            }),
         },
     ];
 

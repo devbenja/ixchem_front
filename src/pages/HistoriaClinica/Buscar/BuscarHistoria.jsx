@@ -1016,7 +1016,7 @@ export const BuscarHistoria = () => {
                         user && (user.codRol === 1 || user.codRol === 3) && (
                             <PDFDownloadLink
                                 document={<MyDocument data={data} />}
-                                fileName="informe_paciente.pdf"
+                                fileName="historia_clinica.pdf"
                             >
                                 {({ loading }) => (loading ? 'Generando PDF...' : <Button><FilePdfOutlined style={{ fontSize: '20px', color: 'red' }} />Exportar</Button>)}
                             </PDFDownloadLink>

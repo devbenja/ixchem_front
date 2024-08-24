@@ -241,7 +241,7 @@ export const NotaEvolucion = () => {
 
                     {
                         user && (user.codRol === 1 || user.codRol === 3) && (
-                            <PDFDownloadLink document={<MyDocument formData={formData} />} fileName="problemas.pdf">
+                            <PDFDownloadLink document={<MyDocument formData={formData} />} fileName="nota_de_evolucion.pdf">
                                 {({ loading }) =>
                                     loading ? 'Cargando documento...' : <Button><FilePdfOutlined style={{ fontSize: '20px', color: 'red' }} />Exportar a PDF</Button>
                                 }

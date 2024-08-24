@@ -399,7 +399,7 @@ export const EpicrisisDetalle = () => {
 
                     {
                         user && (user.codRol === 1 || user.codRol === 3) && (
-                            <PDFDownloadLink document={<MyDocument formData={formData} />} fileName="problemas.pdf">
+                            <PDFDownloadLink document={<MyDocument formData={formData} />} fileName="epicrisis.pdf">
                                 {({ loading }) =>
                                     loading ? 'Cargando documento...' : <Button><FilePdfOutlined style={{ fontSize: '20px', color: 'red' }} />Exportar a PDF</Button>
                                 }

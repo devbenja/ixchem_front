@@ -73,6 +73,10 @@ export const EditarUsuario = () => {
                 description: `Usuario Editado con éxito`,
                 duration: 3
             });
+
+            setTimeout(() => {
+                navigate('/buscar-usuario');
+            }, 1000);
             
         } catch (error) {
             
@@ -98,7 +102,7 @@ export const EditarUsuario = () => {
             icon: <ExclamationCircleOutlined />,
             content: 'Esta acción no se puede deshacer.',
             okText: 'Sí',
-            okType: 'danger',
+            okType: 'primary',
             cancelText: 'No',
             onOk() {
                 handleSubmit();
@@ -106,6 +110,7 @@ export const EditarUsuario = () => {
             onCancel() {
                 console.log('Cancelado');
             },
+            className: 'custom-confirm'
         });
     };
 
