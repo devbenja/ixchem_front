@@ -553,14 +553,14 @@ export const AgregarHistoria = () => {
                                         <select defaultValue="Managua" className="form-select" id="centro" {...registerPaciente("centro", { required: true })}>
                                             <option value="">Menú de selección</option>
                                             <option value="Managua">Managua</option>
-                                            <option value="2">Ciudad Sandino</option>
-                                            <option value="3">Villa Libertad</option>
-                                            <option value="4">Tipitapa</option>
-                                            <option value="5">Masaya</option>
-                                            <option value="6">Granada</option>
-                                            <option value="7">Matagalpa</option>
-                                            <option value="8">Estelí</option>
-                                            <option value="9">León</option>
+                                            <option value="Ciudad Sandino">Ciudad Sandino</option>
+                                            <option value="Villa Libertad">Villa Libertad</option>
+                                            <option value="Tipitapa">Tipitapa</option>
+                                            <option value="Masaya">Masaya</option>
+                                            <option value="Granada">Granada</option>
+                                            <option value="Matagalpa">Matagalpa</option>
+                                            <option value="Estelí">Estelí</option>
+                                            <option value="León">León</option>
                                         </select>
                                     </div>
 
@@ -657,22 +657,24 @@ export const AgregarHistoria = () => {
 
                                         <select defaultValue="Condón" className="form-select" id="MAC" {...registerAntecPer('mac')}>
                                             <option value="">Menú de selección</option>
-                                            <option value="1">Condón</option>
-                                            <option value="2">DIU - Nuevo</option>
-                                            <option value="3">DIU - Subsecuente</option>
-                                            <option value="4">Gestageno oral - Nuevo</option>
-                                            <option value="5">Gestageno oral - Subsecuente</option>
-                                            <option value="6">Implante C/P - Nuevo</option>
-                                            <option value="7">Implante C/P - Subsecuente</option>
-                                            <option value="8">Implante L/P - Nuevo</option>
-                                            <option value="9">Implante L/P - Subsecuente</option>
-                                            <option value="10">Inyec. Mensual - Nuevo</option>
-                                            <option value="11">Inyec. Mensual - Subsecuente</option>
-                                            <option value="12">Inyec. Trimes. - Nuevo</option>
-                                            <option value="13">Inyec. Trimes. - Subsecuente</option>
-                                            <option value="14">MINILAP</option>
-                                            <option value="15">No planifica</option>
-                                            <option value="16">Parche</option>
+                                            
+                                            <option value="No planifica">No planifica</option>
+                                            <option value="Condón">Condón</option>
+                                            <option value="DIU - Nuevo">DIU - Nuevo</option>
+                                            <option value="DIU - Subsecuente">DIU - Subsecuente</option>
+                                            <option value="Gestageno oral - Nuevo">Gestageno oral - Nuevo</option>
+                                            <option value="Gestageno oral - Subsecuente">Gestageno oral - Subsecuente</option>
+                                            <option value="Implante C/P - Nuevo">Implante C/P - Nuevo</option>
+                                            <option value="Implante C/P - Subsecuente">Implante C/P - Subsecuente</option>
+                                            <option value="Implante L/P - Nuevo">Implante L/P - Nuevo</option>
+                                            <option value="Implante L/P - Subsecuente">Implante L/P - Subsecuente</option>
+                                            <option value="Inyec. Mensual - Nuevo">Inyec. Mensual - Nuevo</option>
+                                            <option value="Inyec. Mensual - Subsecuente">Inyec. Mensual - Subsecuente</option>
+                                            <option value="Inyec. Trimes. - Nuevo">Inyec. Trimes. - Nuevo</option>
+                                            <option value="Inyec. Trimes. - Subsecuente">Inyec. Trimes. - Subsecuente</option>
+                                            <option value="MINILAP">MINILAP</option>
+                                            <option value="Parche">Parche</option>
+                                            <option value="Otros">Otros</option>
                                         </select>
                                     </div>
 
@@ -1446,7 +1448,7 @@ export const AgregarHistoria = () => {
 
                                     <div className="col-sm-2">
                                         <label htmlFor="parentesco_ca_mama" className="form-label">Parentesco</label>
-                                        <input {...registerAntecPatFam('camParentesco', { required: true })} name="camParentesco" type="text" maxLength="20" className="form-control" id="parentesco_ca_mama" />
+                                        <input {...registerAntecPatFam('camParentesco')} name="camParentesco" type="text" maxLength="20" className="form-control" id="parentesco_ca_mama" />
                                     </div>
 
                                     <div className="col-sm-2">
@@ -1465,7 +1467,7 @@ export const AgregarHistoria = () => {
 
                                     <div className="col-sm-2">
                                         <label htmlFor="parentesco_CA_Colon" className="form-label">Parentesco</label>
-                                        <input {...registerAntecPatFam('cacoParentesco', { required: true })} name="cacoParentesco" type="text" maxLength="20" className="form-control" id="parentesco_CA_Colon" />
+                                        <input {...registerAntecPatFam('cacoParentesco')} name="cacoParentesco" type="text" maxLength="20" className="form-control" id="parentesco_CA_Colon" />
                                     </div>
 
 
@@ -1486,7 +1488,7 @@ export const AgregarHistoria = () => {
 
                                     <div className="col-sm-2">
                                         <label htmlFor="parentesco_diabetes" className="form-label">Parentesco</label>
-                                        <input {...registerAntecPatFam('diabetesParentesco', { required: true })} type="text" maxLength="20" className="form-control" id="parentesco_diabetes" />
+                                        <input {...registerAntecPatFam('diabetesParentesco')} type="text" maxLength="20" className="form-control" id="parentesco_diabetes" />
                                     </div>
 
 
@@ -1506,7 +1508,7 @@ export const AgregarHistoria = () => {
 
                                     <div className="col-sm-2">
                                         <label htmlFor="parentesco_Ca_CU" className="form-label">Parentesco</label>
-                                        <input {...registerAntecPatFam('cacuParentesco', { required: true })} type="text" maxLength="20" className="form-control" id="parentesco_Ca_CU" />
+                                        <input {...registerAntecPatFam('cacuParentesco')} type="text" maxLength="20" className="form-control" id="parentesco_Ca_CU" />
                                     </div>
 
 
@@ -1526,7 +1528,7 @@ export const AgregarHistoria = () => {
 
                                     <div className="col-sm-2">
                                         <label htmlFor="parentesco_hipert" className="form-label">Parentesco</label>
-                                        <input {...registerAntecPatFam('hipertensionParentesco', { required: true })} type="text" maxLength="20" className="form-control" id="parentesco_hipert" />
+                                        <input {...registerAntecPatFam('hipertensionParentesco')} type="text" maxLength="20" className="form-control" id="parentesco_hipert" />
                                     </div>
 
 
@@ -1546,7 +1548,7 @@ export const AgregarHistoria = () => {
 
                                     <div className="col-sm-2">
                                         <label htmlFor="parentesco_enf_card" className="form-label">Parentesco</label>
-                                        <input {...registerAntecPatFam('enfcarParentesco', { required: true })} type="text" maxLength="20" className="form-control" id="parentesco_enf_card" />
+                                        <input {...registerAntecPatFam('enfcarParentesco')} type="text" maxLength="20" className="form-control" id="parentesco_enf_card" />
                                     </div>
 
 
@@ -1567,7 +1569,7 @@ export const AgregarHistoria = () => {
 
                                     <div className="col-sm-2">
                                         <label htmlFor="parentesco_Ca_ovario" className="form-label">Parentesco</label>
-                                        <input {...registerAntecPatFam('caovaParentesco', { required: true })} type="text" maxLength="20" className="form-control" id="parentesco_Ca_ovario" />
+                                        <input {...registerAntecPatFam('caovaParentesco')} type="text" maxLength="20" className="form-control" id="parentesco_Ca_ovario" />
                                     </div>
 
                                     <div className="col-sm-2">
@@ -1586,7 +1588,7 @@ export const AgregarHistoria = () => {
 
                                     <div className="col-sm-2">
                                         <label htmlFor="parentesco_Hepatitis" className="form-label">Parentesco</label>
-                                        <input {...registerAntecPatFam('hepatitisParentesco', { required: true })} type="text" maxLength="20" className="form-control" id="parentesco_Hepatitis" />
+                                        <input {...registerAntecPatFam('hepatitisParentesco')} type="text" maxLength="20" className="form-control" id="parentesco_Hepatitis" />
                                     </div>
 
 
@@ -1606,7 +1608,7 @@ export const AgregarHistoria = () => {
 
                                     <div className="col-sm-2">
                                         <label htmlFor="parentesco_Enf_ren" className="form-label">Parentesco</label>
-                                        <input {...registerAntecPatFam('enfrenParentesco', { required: true })} type="text" maxLength="20" className="form-control" id="parentesco_Enf_ren" />
+                                        <input {...registerAntecPatFam('enfrenParentesco')} type="text" maxLength="20" className="form-control" id="parentesco_Enf_ren" />
                                     </div>
 
                                     <div className="col-sm-2">

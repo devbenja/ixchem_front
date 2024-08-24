@@ -131,8 +131,29 @@ export const EditarAntPersonales = () => {
                         <input type="number" name="compSexuales" value={formData.compSexuales} onChange={handleChange} className="form-control" />
                     </div>
                     <div className="col">
+                        {/* <label className="form-label">Métodos anticonceptivos (MAC)</label>
+                        <input type="text" name="mac" value={formData.mac} onChange={handleChange} className="form-control" /> */}
                         <label className="form-label">Métodos anticonceptivos (MAC)</label>
-                        <input type="text" name="mac" value={formData.mac} onChange={handleChange} className="form-control" />
+                        <select name="mac" value={formData.mac} onChange={handleChange} className="form-select">
+                            <option value="">{formData.mac}</option>
+                            <option value="No planifica">No planifica</option>
+                            <option value="Condón">Condón</option>
+                            <option value="DIU - Nuevo">DIU - Nuevo</option>
+                            <option value="DIU - Subsecuente">DIU - Subsecuente</option>
+                            <option value="Gestageno oral - Nuevo">Gestageno oral - Nuevo</option>
+                            <option value="Gestageno oral - Subsecuente">Gestageno oral - Subsecuente</option>
+                            <option value="Implante C/P - Nuevo">Implante C/P - Nuevo</option>
+                            <option value="Implante C/P - Subsecuente">Implante C/P - Subsecuente</option>
+                            <option value="Implante L/P - Nuevo">Implante L/P - Nuevo</option>
+                            <option value="Implante L/P - Subsecuente">Implante L/P - Subsecuente</option>
+                            <option value="Inyec. Mensual - Nuevo">Inyec. Mensual - Nuevo</option>
+                            <option value="Inyec. Mensual - Subsecuente">Inyec. Mensual - Subsecuente</option>
+                            <option value="Inyec. Trimes. - Nuevo">Inyec. Trimes. - Nuevo</option>
+                            <option value="Inyec. Trimes. - Subsecuente">Inyec. Trimes. - Subsecuente</option>
+                            <option value="MINILAP">MINILAP</option>
+                            <option value="Parche">Parche</option>
+                            <option value="Otros">Otros</option>
+                        </select>
                     </div>
                 </div>
 
