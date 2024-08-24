@@ -50,6 +50,16 @@ export const Bitacoras = () => {
             render: (usuario) => <a>{usuario}</a>,
         },
         {
+            title: 'Fecha',
+            dataIndex: 'fecha',
+            key: 'fecha',
+        },
+        {
+            title: 'Hora',
+            dataIndex: 'hora',
+            key: 'hora',
+        },
+        {
             title: 'Información',
             dataIndex: 'informacion',
             key: 'informacion',

@@ -170,14 +170,35 @@ export const EditarPaciente = () => {
                     </div>
                     <div className="col-sm-2">
                         <div className="mb-3">
-                            <label className="form-label">Escolaridad</label>
-                            <input type="text" name="escolaridad" value={formData.escolaridad} onChange={handleChange} className="form-control" />
+                            {/* <label className="form-label">Escolaridad</label>
+                            <input type="text" name="escolaridad" value={formData.escolaridad} onChange={handleChange} className="form-control" /> */}
+
+                            <label htmlFor="escolaridad" className="form-label">Escolaridad*</label>
+                            <select defaultValue="Bachiller" className="form-select" name="escolaridad" value={formData.escolaridad} onChange={handleChange}>
+                                <option value="">{formData.escolaridad}</option>
+                                <option value="Bachiller">Bachiller</option>
+                                <option value="Primaria completa">Primaria completa</option>
+                                <option value="Primaria incompleta">Primaria incompleta</option>
+                                <option value="Secundaria incompleta">Secundaria incompleta</option>
+                                <option value="Técnico superior">Técnico superior</option>
+                                <option value="Universitario">Universitario</option>
+                            </select>
                         </div>
                     </div>
                     <div className="col-sm-2">
                         <div className="mb-3">
-                            <label className="form-label">Profesión/Oficio</label>
-                            <input type="text" name="profesion" value={formData.profesion} onChange={handleChange} className="form-control" />
+                            {/* <label className="form-label">Profesión/Oficio</label>
+                            <input type="text" name="profesion" value={formData.profesion} onChange={handleChange} className="form-control" /> */}
+
+                            <label htmlFor="profesion" className="form-label">Profesión*</label>
+                            <select defaultValue="Ama de casa" className="form-select" name="profesion" value={formData.profesion} onChange={handleChange}>
+                                <option value="">{formData.profesion}</option>
+                                <option value="Ama de casa">Ama de casa</option>
+                                <option value="Estudiante">Estudiante</option>
+                                <option value="Oficinista">Oficinista</option>
+                                <option value="Operaria">Operaria</option>
+                                <option value="Sector informal">Sector informal</option>
+                            </select>
                         </div>
                     </div>
                     <div className="col-sm-3">
@@ -206,7 +227,28 @@ export const EditarPaciente = () => {
                     <div className="col-sm-2">
                         <div className="mb-3">
                             <label className="form-label">Departamento</label>
-                            <input type="number" name="codDepartamento" value={formData.codDepartamento} onChange={handleChange} className="form-control" />
+                            {/* <input type="number" name="codDepartamento" value={formData.codDepartamento} onChange={handleChange} className="form-control" /> */}
+
+                            <select defaultValue="3" className="form-select" name="codDepartamento" value={formData.codDepartamento} onChange={handleChange}>
+                                <option value="">{formData.codDepartamento}</option>
+                                <option value="1">Chinandega</option>
+                                <option value="2">Leon</option>
+                                <option value="3">Managua</option>
+                                <option value="4">Masaya</option>
+                                <option value="5">Carazo</option>
+                                <option value="6">Granada</option>
+                                <option value="7">RIVAS</option>
+                                <option value="8">RIO SAN JUAN</option>
+                                <option value="9">Madriz</option>
+                                <option value="10">Nueva Segovia</option>
+                                <option value="11">Jinotega</option>
+                                <option value="12">Esteli</option>
+                                <option value="13">Matagalpa</option>
+                                <option value="14">Boaco</option>
+                                <option value="15">Chontales</option>
+                                <option value="16">RAAN</option>
+                                <option value="17">RAAS</option>
+                            </select>
                         </div>
                     </div>
                     <div className="col-sm-2">
@@ -251,8 +293,21 @@ export const EditarPaciente = () => {
                     </div>
                     <div className="col-sm-3">
                         <div className="mb-3">
-                            <label className="form-label">Centro de mujeres IXCHEN</label>
-                            <input type="text" name="centro" value={formData.centro} onChange={handleChange} className="form-control" />
+                            {/* <label className="form-label">Centro de mujeres IXCHEN</label>
+                            <input type="text" name="centro" value={formData.centro} onChange={handleChange} className="form-control" /> */}
+
+                            <select defaultValue="Managua" className="form-select" name="centro" value={formData.centro} onChange={handleChange}>
+                                <option value="">{formData.centro}</option>
+                                <option value="Managua">Managua</option>
+                                <option value="Ciudad Sandino">Ciudad Sandino</option>
+                                <option value="Villa Libertad">Villa Libertad</option>
+                                <option value="Tipitapa">Tipitapa</option>
+                                <option value="Masaya">Masaya</option>
+                                <option value="Granada">Granada</option>
+                                <option value="Matagalpa">Matagalpa</option>
+                                <option value="Estelí">Estelí</option>
+                                <option value="León">León</option>
+                            </select>
                         </div>
                     </div>
                     <div className="col-sm-2">
