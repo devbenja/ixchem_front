@@ -44,6 +44,11 @@ export const BuscarUsuario = () => {
             key: 'nombre',
         },
         {
+            title: 'Código MINSA',
+            dataIndex: 'correo',
+            key: 'correo',
+        },
+        {
             title: 'Apellido',
             dataIndex: 'apellido',
             key: 'apellido',
@@ -66,6 +71,14 @@ export const BuscarUsuario = () => {
                     return 'Director';
                 }
             }
+        },
+        {
+            title: 'Estado',
+            dataIndex: 'estado',
+            key: 'estado',
+            render: (estado) => (
+                estado ? 'Habilitado' : 'Inhabilitado'
+            ),
         },
         {
             title: 'Acciones',

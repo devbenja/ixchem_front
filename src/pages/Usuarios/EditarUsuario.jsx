@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { notification, Button, Modal as AntModal } from "antd";
+import { notification, Button, Modal as AntModal, Switch } from "antd";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeftOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 
@@ -17,7 +17,8 @@ export const EditarUsuario = () => {
         apellido: "",
         correo: "",
         contraseña: "",
-        codRol: 0
+        codRol: 0,
+        estado: false
     });
 
 
@@ -38,6 +39,14 @@ export const EditarUsuario = () => {
         });
 
     };
+
+    const handleSwitchChange = (checked) => {
+        setFormData({
+            ...formData,
+            estado: checked,
+        });
+    };
+
 
     useEffect(() => {
 
@@ -77,9 +86,9 @@ export const EditarUsuario = () => {
             setTimeout(() => {
                 navigate('/buscar-usuario');
             }, 1000);
-            
+
         } catch (error) {
-            
+
             notification.error({
                 message: '¡Error!',
                 description: error.response?.data?.message || 'Ocurrió un error inesperado',
@@ -120,7 +129,7 @@ export const EditarUsuario = () => {
                 <h4>Editar Usuario</h4>
                 <Button style={{ backgroundColor: 'red', color: 'white' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
             </div>
-            
+
             <form className='container-fluid mt-4' onSubmit={(e) => e.preventDefault()}>
                 <div className="row mb-3">
                     <div className="col">
@@ -152,6 +161,18 @@ export const EditarUsuario = () => {
                             <option value={2}>Normal</option>
                             <option value={3}>Director</option>
                         </select>
+                    </div>
+
+                    <div className="col-sm-2">
+                        <div className="d-flex flex-column">
+                            <label className="form-label">Estado</label>
+                            <Switch
+                                checked={formData.estado}
+                                onChange={handleSwitchChange}
+                                checkedChildren="Habilitado"
+                                unCheckedChildren="Inhabilitado"
+                            />
+                        </div>
                     </div>
 
                 </div>
