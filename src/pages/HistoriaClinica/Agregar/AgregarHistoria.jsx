@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import axios from "axios";
 import { useForm } from "react-hook-form";
-import { Toast, ToastBody, ToastHeader } from 'reactstrap';
 
 import { notification } from 'antd';
 
@@ -17,6 +16,12 @@ export const AgregarHistoria = () => {
     const { register: registerInformacion, handleSubmit: handleSubmitInformacion, setValue: setValueInfo, reset:  resetInfo } = useForm();
 
     const [numExp, setNumExp] = useState('');
+
+    const refPaciente = useRef(null);
+    const refAntPer = useRef(null);
+    const refAntPerPat = useRef(null);
+    const refAntPatFam = useRef(null);
+    const refInfo = useRef(null);
 
     //POST PACIENTE - DATOS PERSONALES
     const onSubmitPaciente = handleSubmitPaciente(async (data) => {
@@ -33,6 +38,11 @@ export const AgregarHistoria = () => {
             setNumExp(response.data.numExpediente);
 
             reset();
+
+            if (refAntPer.current) {
+                const tab = new window.bootstrap.Tab(refAntPer.current);
+                tab.show();
+            }
 
         } catch (error) {
 
@@ -87,6 +97,11 @@ export const AgregarHistoria = () => {
 
             resetAntecPer();
 
+            if (refAntPerPat.current) {
+                const tab = new window.bootstrap.Tab(refAntPerPat.current);
+                tab.show();
+            }
+
         } catch (error) {
 
             notification.error({
@@ -137,6 +152,11 @@ export const AgregarHistoria = () => {
 
             resetAntPerPat();
 
+            if (refAntPatFam.current) {
+                const tab = new window.bootstrap.Tab(refAntPatFam.current);
+                tab.show();
+            }
+
         } catch (error) {
 
             notification.error({
@@ -179,6 +199,11 @@ export const AgregarHistoria = () => {
 
             resetAntPatFam();
 
+            if (refInfo.current) {
+                const tab = new window.bootstrap.Tab(refInfo.current);
+                tab.show();
+            }
+
         } catch (error) {
 
             notification.error({
@@ -207,6 +232,11 @@ export const AgregarHistoria = () => {
             });
 
             resetInfo();
+
+            if (refPaciente.current) {
+                const tab = new window.bootstrap.Tab(refPaciente.current);
+                tab.show();
+            }
 
         } catch (error) {
 
@@ -251,19 +281,19 @@ export const AgregarHistoria = () => {
                 </div>
                 <ul className="nav nav-tabs" id="myTab" role="tablist">
                     <li className="nav-item" role="presentation">
-                        <a className="nav-link active" id="DG-tab" data-bs-toggle="tab" href="#DG" role="tab" aria-controls="DG" aria-selected="true">Paciente</a>
+                        <a className="nav-link active" id="DG-tab" data-bs-toggle="tab" href="#DG" role="tab" aria-controls="DG" aria-selected="true" ref={refPaciente}>Paciente</a>
                     </li>
                     <li className="nav-item" role="presentation">
-                        <a className="nav-link" id="AP-tab" data-bs-toggle="tab" role="tab" href="#AP" aria-controls="AP" aria-selected="false">A. Personales</a>
+                        <a className="nav-link" id="AP-tab" data-bs-toggle="tab" role="tab" href="#AP" aria-controls="AP" aria-selected="false" ref={refAntPer}>A. Personales</a>
                     </li>
                     <li className="nav-item" role="presentation">
-                        <a className="nav-link" id="APP-tab" data-bs-toggle="tab" role="tab" href="#APP" aria-controls="APP" aria-selected="false">A. Patológicos Personales</a>
+                        <a className="nav-link" id="APP-tab" data-bs-toggle="tab" role="tab" href="#APP" aria-controls="APP" aria-selected="false" ref={refAntPerPat}>A. Patológicos Personales</a>
                     </li>
                     <li className="nav-item" role="presentation">
-                        <a className="nav-link" id="APF-tab" data-bs-toggle="tab" role="tab" href="#APF" aria-controls="APF" aria-selected="false">A. Patológicos Familiares</a>
+                        <a className="nav-link" id="APF-tab" data-bs-toggle="tab" role="tab" href="#APF" aria-controls="APF" aria-selected="false" ref={refAntPatFam}>A. Patológicos Familiares</a>
                     </li>                   
                     <li className="nav-item" role="presentation">
-                        <a className="nav-link" id="Motivo-tab" data-bs-toggle="tab" role="tab" href="#Motivo" aria-controls="Motivo" aria-selected="false">Información</a>
+                        <a className="nav-link" id="Motivo-tab" data-bs-toggle="tab" role="tab" href="#Motivo" aria-controls="Motivo" aria-selected="false" ref={refInfo}>Información</a>
                     </li>
                 </ul>
                 <div className="tab-content" id="myTabContent">
