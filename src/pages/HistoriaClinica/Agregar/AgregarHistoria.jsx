@@ -28,6 +28,10 @@ export const AgregarHistoria = () => {
         try {
 
             const response = await axios.post(`${baseURL}/bdtpaciente/post`, data);
+            const dataWithAge={
+                ...data,
+                EDAD: 0
+            }
 
             notification.success({
                 message: '¡Éxito!',
