@@ -422,44 +422,43 @@ export const BuscarHistoria = () => {
         let unidosData;
 
         try {
-
+            if (!searchType) {
+                notification.warning({
+                    message: '¡Atención!',
+                    description: 'Por favor, seleccione una opción',
+                    duration: 3
+                });
+                return; // Salir de la función si no hay selección
+            }
+        
+            let unidosData;
+        
             if (searchType === 'opcion_expediente') {
-
                 unidosData = await axios.get(`${baseURL}/bdtpaciente/buscarpornumexpedienteunidos`, {
                     params: { NUM_EXPEDIENTE: searchValue }
                 });
-
-
             } else if (searchType === 'opcion_cedula') {
-
-                // unidosData = await axios.get(`${baseURL}/bdtpaciente/buscarpornumexpedienteunidos`, {
-                //     params: { cedula: searchValue }
-                // });
-
+                unidosData = await axios.get(`${baseURL}/bdtpaciente/buscarporcedula`, {
+                    params: { cedula: searchValue }
+                });
             } else if (searchType === 'opcion_nombre') {
-
                 unidosData = await axios.get(`${baseURL}/bdtpaciente/buscarpacientesunidosnombre`, {
                     params: {
                         PRIMER_NOMBRE: firstName,
                         PRIMER_APELLIDO: firstLastName,
                     }
                 });
-
             }
-
+        
             setData(unidosData.data[0]);
-
             console.log(unidosData.data[0]);
-
-
+        
         } catch (error) {
-
             notification.error({
                 message: '¡Error!',
-                description: `${error.response.data.message}`,
+                description: 'No se encuentra el usuario',
                 duration: 3
             });
-
         }
     };
 
@@ -925,7 +924,7 @@ export const BuscarHistoria = () => {
                             <option value="opcion_cedula">Cédula de identidad</option>
                             <option value="opcion_nombre">Nombre</option>
                         </select>
-                    </div>
+                    </div> 
 
                     <div className="col-sm-9 d-flex">
                         <div className="input-group" role="search">
@@ -1016,7 +1015,7 @@ export const BuscarHistoria = () => {
                         user && (user.codRol === 1 || user.codRol === 3) && (
                             <PDFDownloadLink
                                 document={<MyDocument data={data} />}
-                                fileName="historia_clinica.pdf"
+                                fileName="Historia Clinica.pdf"
                             >
                                 {({ loading }) => (loading ? 'Generando PDF...' : <Button><FilePdfOutlined style={{ fontSize: '20px', color: 'red' }} />Exportar</Button>)}
                             </PDFDownloadLink>

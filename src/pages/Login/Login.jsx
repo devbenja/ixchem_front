@@ -1,21 +1,21 @@
 import './Login.css';
 import { useAuth } from '../../context/AuthContext';
 import { useState, useEffect } from 'react';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { notification } from 'antd';
 
 const images = [
-    "./logo.png", 
-    // "./imagen2.jpg", 
-    // "./imagen3.jpg", 
-    "./imagen_ixchem6.jpeg"
+    "./logo.png",
+    "./Logo-Anfam-Ixchen.png"
 ];
 
 export const Login = () => {
 
     const [backgroundImage, setBackgroundImage] = useState(images[0]);
+    const [showPassword, setShowPassword] = useState(false);
 
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { login, errors: loginErrors } = useAuth();
@@ -30,6 +30,10 @@ export const Login = () => {
 
         return () => clearInterval(intervalId);
     }, []);
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
 
     const onSubmit = handleSubmit(async (data) => {
 
@@ -82,12 +86,21 @@ export const Login = () => {
                         </div>
                         <div className="mb-3">
                             <label htmlFor="contrasena" className='form-label'>Contraseña</label>
-                            <input
-                                type="password"
-                                className="form-control"
-                                placeholder="Ingrese su contraseña"
-                                {...register('contraseña', { required: true })}
-                            />
+                            <div className="input-group">
+                                <input
+                                    type={showPassword ? "text" : "password"}
+                                    className="form-control"
+                                    placeholder="Ingrese su contraseña"
+                                    {...register('contraseña', { required: true })}
+                                />
+                                <button
+                                    type="button"
+                                    className="btn btn-outline-secondary"
+                                    onClick={togglePasswordVisibility}
+                                >
+                                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                                </button>
+                            </div>
                         </div>
 
                         <button className="btn w-100" style={{ backgroundColor: '#572364', color: '#fff' }}>Iniciar Sesion</button>

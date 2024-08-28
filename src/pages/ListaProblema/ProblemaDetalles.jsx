@@ -397,7 +397,7 @@ export const ProblemaDetalles = () => {
 
                     {
                         user && (user.codRol === 1 || user.codRol === 3) && (
-                            <PDFDownloadLink document={<MyDocument problemas={problemas} />} fileName="lista_de_problemas.pdf">
+                            <PDFDownloadLink document={<MyDocument problemas={problemas} />} fileName="Lista de Problemas.pdf">
                                 {({ loading }) =>
                                     loading ? 'Cargando documento...' : <Button><FilePdfOutlined style={{ fontSize: '20px', color: 'red' }} />Exportar a PDF</Button>
                                 }

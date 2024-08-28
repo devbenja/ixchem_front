@@ -651,7 +651,7 @@ export const UnidoIndividual = () => {
             <div className='container-fluid d-flex align-items-center justify-content-between'>
                 <h4>Clasificación de Riesgo</h4>
                 <div className='d-flex gap-2'>
-                    <PDFDownloadLink document={<MyDocument data={formData} />} fileName="clasificacio_de_riesgo.pdf">
+                    <PDFDownloadLink document={<MyDocument data={formData} />} fileName="Clasifiación de Riesgo.pdf">
                         {({ loading }) =>
                             loading ? 'Cargando documento...' : <Button><FilePdfOutlined style={{ fontSize: '20px', color: 'red' }} />Exportar a PDF</Button>
                         }

@@ -120,51 +120,57 @@ export const AgregarHistoriaClinicaGeneral = () => {
         let response;
 
         try {
-
+            if (!searchType) {
+                notification.warning({
+                    message: '¡Atención!',
+                    description: 'Por favor, seleccione una opción',
+                    duration: 3
+                });
+                return; // Salir de la función si no hay selección
+            }
+        
+            let response;
+        
             if (searchType === 'num_expediente') {
-                console.log(searchValue)
-
+                console.log(searchValue);
+        
                 response = await axios.get(`${baseURL}/bdtpaciente/buscarpornumexpedienteunidos`, {
                     params: { NUM_EXPEDIENTE: searchValue }
-                })
-
+                });
+        
             } else if (searchType === 'nombre') {
-
-                console.log(firstName)
-
+                console.log(firstName);
+        
                 response = await axios.get(`${baseURL}/bdtpaciente/Buscarpacienteunidosnombre`, {
                     params: { PRIMER_NOMBRE: firstName, PRIMER_APELLIDO: firstLastName }
-                })
-
+                });
             }
-
+        
             const result = response.data[0];
             setData(result);
-
-            console.log(result)
+        
+            console.log(result);
             setFormData(prevFormData => ({
                 ...prevFormData,
                 numExpediente: result.nuM_EXPEDIENTE
             }));
-
+        
             setObstetrico(prevObstetrico => ({
                 ...prevObstetrico,
                 numExpediente: result.nuM_EXPEDIENTE
             }));
-
+        
             setActual(prevActual => ({
                 ...prevActual,
                 numExpediente: result.nuM_EXPEDIENTE
             }));
-
+        
         } catch (error) {
-
             notification.error({
                 message: '¡Error!',
-                description: `${error.response?.data ?? 'Error desconocido'}`,
+                description: 'No se encuentra el usuario',
                 duration: 3
             });
-
         }
 
     };

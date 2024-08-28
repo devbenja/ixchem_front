@@ -1,5 +1,7 @@
 import { Menu } from 'antd';
-import { HomeOutlined, UserOutlined, UsergroupAddOutlined, PlusOutlined, SearchOutlined, CodeOutlined, LineChartOutlined, OrderedListOutlined, FileDoneOutlined, WarningOutlined, HistoryOutlined } from '@ant-design/icons';
+import { HomeOutlined, UserOutlined, UsergroupAddOutlined, PlusOutlined, SearchOutlined, CodeOutlined, LineChartOutlined, 
+	    OrderedListOutlined, FileDoneOutlined, WarningOutlined, HistoryOutlined, SignatureOutlined, BookOutlined, FundViewOutlined } 
+from '@ant-design/icons';
 
 import { Link } from 'react-router-dom';
 
@@ -34,8 +36,8 @@ export const MenuList = () => {
 					<Link to="/buscar-historia-clinica">Buscar</Link>
 				</Menu.Item>
 
-				<Menu.Item key="search-centro" icon={<SearchOutlined />}>
-					<Link to="/buscar-por-centro">Centro</Link>
+				<Menu.Item key="search-centro" icon={<BookOutlined />}>
+					<Link to="/buscar-por-centro">Pacientes Centros</Link>
 				</Menu.Item>
 			</Menu.SubMenu>
 
@@ -52,7 +54,7 @@ export const MenuList = () => {
 				</Menu.Item>
 			</Menu.SubMenu>
 
-			<Menu.SubMenu key="nota-sub" title="Nota Evolución" icon={<LineChartOutlined />}>
+			<Menu.SubMenu key="nota-sub" title="Nota Evolución" icon={<FundViewOutlined />}>
 				{
 					user && (user.codRol === 1 || user.codRol === 2) && (
 						<Menu.Item key="nota" icon={<PlusOutlined />}>
@@ -62,15 +64,6 @@ export const MenuList = () => {
 				}
 				<Menu.Item key="nota-search" icon={<SearchOutlined />}><Link to="/buscar-nota-evolucion">Buscar</Link></Menu.Item>
 			</Menu.SubMenu>
-
-			{user && user.codRol === 1 && (
-
-				<Menu.SubMenu key="doc-sub" title="Doctores" icon={<UserOutlined />}>
-					<Menu.Item key="doctores-add" icon={<PlusOutlined />}><Link to="/agregar-doctor">Agregar</Link></Menu.Item>
-					<Menu.Item key="doctores-search" icon={<SearchOutlined />}><Link to="/buscar-doctor">Buscar</Link></Menu.Item>
-				</Menu.SubMenu>
-
-			)}
 
 			<Menu.SubMenu key="epi-sub" title="Epicrisis" icon={<FileDoneOutlined />}>
 				{
@@ -96,7 +89,15 @@ export const MenuList = () => {
 
 				<Menu.Item key="hist-search" icon={<SearchOutlined />}><Link to="/buscar-historia-clinica-general">Buscar</Link></Menu.Item>
 			</Menu.SubMenu>
+			
+			{user && user.codRol === 1 && (
 
+				<Menu.SubMenu key="doc-sub" title="Doctores" icon={<UserOutlined />}>
+					<Menu.Item key="doctores-add" icon={<PlusOutlined />}><Link to="/agregar-doctor">Agregar</Link></Menu.Item>
+					<Menu.Item key="doctores-search" icon={<SearchOutlined />}><Link to="/buscar-doctor">Buscar</Link></Menu.Item>
+				</Menu.SubMenu>
+
+			)}
 			{user && user.codRol === 1 && (
 
 				<Menu.SubMenu key="users-sub" title="Usuarios" icon={<UsergroupAddOutlined />}>
@@ -106,7 +107,7 @@ export const MenuList = () => {
 
 			)}
 
-			<Menu.Item key="change_pass" icon={<HomeOutlined />}><Link to="/cambiar-contraseña">Contraseña</Link></Menu.Item>
+			<Menu.Item key="change_pass" icon={<SignatureOutlined />}><Link to="/cambiar-contraseña">Contraseña</Link></Menu.Item>
 
 			{user && user.codRol === 1 && (
 				<Menu.Item key="bitacoras" icon={<CodeOutlined />}><Link to="/bitacoras">Bitacoras</Link></Menu.Item>

@@ -57,7 +57,7 @@ export const BuscarEpicrisis = () => {
         }, []);
 
     
-    console.log('xd', filteredEpicrisis)
+    console.log('Epicrisis', filteredEpicrisis)
 
     const columns = [
         {

@@ -2,10 +2,15 @@ import { Carousel } from "react-bootstrap";
 import './Home.css';
 
 const images = [
-	"./imagen_ixchem1.jpeg",
-	"./imagen_ixchem3.jpeg",
-	"./imagen_ixchem4.jpeg",
-	"./imagen_ixchem5.jpeg",
+	"./logo.png",
+	"./Granada.jpeg",
+	"./Leon.jpeg",
+	"./Managua.jpeg",
+	"./Matagalpa.jpeg",
+	"./Sandino.jpeg",
+	"./Tipitapa.jpeg",
+	"./Villa.jpeg",
+	"./Logo-Anfam-Ixchen.png",
 ];
 
 export const Home = () => {

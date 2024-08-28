@@ -237,8 +237,8 @@ export const EditarPaciente = () => {
                                 <option value="4">Masaya</option>
                                 <option value="5">Carazo</option>
                                 <option value="6">Granada</option>
-                                <option value="7">RIVAS</option>
-                                <option value="8">RIO SAN JUAN</option>
+                                <option value="7">Rivas</option>
+                                <option value="8">Rio San Juan</option>
                                 <option value="9">Madriz</option>
                                 <option value="10">Nueva Segovia</option>
                                 <option value="11">Jinotega</option>
