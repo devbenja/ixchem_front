@@ -14,7 +14,8 @@ export const AgregarUsuarios = () => {
         apellido: "",
         correo: "",
         contraseña: "",
-        codRol: 2
+        codRol: 2,
+        estado: true // Valor por defecto true
     });
 
     const navigate = useNavigate();
@@ -62,7 +63,8 @@ export const AgregarUsuarios = () => {
                 apellido: "",
                 correo: "",
                 contraseña: "",
-                codRol: 2
+                codRol: 2,
+                estado: true // Valor por defecto true
             });
 
             setTimeout(() => {
@@ -111,7 +113,7 @@ export const AgregarUsuarios = () => {
                         <label className="form-label">Rol</label>
                         <select name="codRol" value={formData.codRol} onChange={handleChange} className="form-select">
                             <option value={1}>Administrador</option>
-                            <option value={2}>Normal</option>
+                            <option value={2}>Doctor</option>
                             <option value={3}>Director</option>
                         </select>
                     </div>

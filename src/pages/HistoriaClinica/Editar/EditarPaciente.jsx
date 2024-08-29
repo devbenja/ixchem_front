@@ -162,12 +162,12 @@ export const EditarPaciente = () => {
                             <input type="date" name="fechaNac" value={formData.fechaNac} onChange={handleChange} className="form-control" />
                         </div>
                     </div>
-                    <div className="col-sm-2">
+                    {/* <div className="col-sm-2">
                         <div className="mb-3">
                             <label className="form-label">Edad</label>
                             <input type="number" name="edad" value={formData.edad} onChange={handleChange} className="form-control" />
                         </div>
-                    </div>
+                    </div> */}
                     <div className="col-sm-2">
                         <div className="mb-3">
                             {/* <label className="form-label">Escolaridad</label>

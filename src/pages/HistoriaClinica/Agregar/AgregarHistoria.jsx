@@ -27,42 +27,82 @@ export const AgregarHistoria = () => {
 
     //POST PACIENTE - DATOS PERSONALES
     const onSubmitPaciente = handleSubmitPaciente(async (data) => {
-
+ 
         setIsSelectDisabled(true);
-
+ 
         try {
-
             const response = await axios.post(`${baseURL}/bdtpaciente/post`, data);
-
-            const dataWithAge={
+            const dataWithAge = {
                 ...data,
-                EDAD: 0
-            }
-
+                EDAD: 0
+            };
             notification.success({
                 message: '¡Éxito!',
                 description: `Paciente ${response.data.primerNombre} creado!`,
                 duration: 3
             });
-
             setNumExp(response.data.numExpediente);
-
             reset();
-
             if (refAntPer.current) {
                 const tab = new window.bootstrap.Tab(refAntPer.current);
                 tab.show();
             }
-
         } catch (error) {
-
-            notification.error({
-                message: 'Error al Crear Paciente',
-                description: `${error.response.data.message}`,
-                duration: 3
-            });
+            console.log(error);
+            // Manejo del error y validación específica
+            if (error.response && error.response.data && error.response.data.message) {
+                notification.error({
+                    message: 'Error al Crear Paciente',
+                    description: error.response.data.message,
+                    duration: 3
+                });
+            } else {
+                notification.error({
+                    message: 'Error al Crear Paciente',
+                    description: 'Ha ocurrido un error inesperado.',
+                    duration: 3
+                });
+            }
         }
+ 
     });
+//     const onSubmitPaciente = handleSubmitPaciente(async (data) => {
+
+//         setIsSelectDisabled(true);
+
+//         try {
+
+//             const response = await axios.post(`${baseURL}/bdtpaciente/post`, data);
+
+//             const dataWithAge={
+//                 ...data,
+//                 EDAD: 0
+//             }
+
+//             notification.success({
+//                 message: '¡Éxito!',
+//                 description: `Paciente ${response.data.primerNombre} creado!`,
+//                 duration: 3
+//             });
+
+//             setNumExp(response.data.numExpediente);
+
+//             reset();
+
+//             if (refAntPer.current) {
+//                 const tab = new window.bootstrap.Tab(refAntPer.current);
+//                 tab.show();
+//             }
+
+//         } catch (error) {
+
+//             notification.error({
+//                 message: 'Error al Crear Paciente',
+//                 description: `${error.response.data.message}`,
+//                 duration: 3
+//             });
+//         }
+//     });
 
     // POST ANTECEDENTES PERSONALES
     const onSubmitAntPersonales = handleSubmitAntPer(async (data) => {

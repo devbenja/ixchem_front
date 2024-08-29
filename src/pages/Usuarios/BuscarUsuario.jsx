@@ -66,7 +66,7 @@ export const BuscarUsuario = () => {
                 if (codRol === 1) {
                     return 'Administrador';
                 } else if (codRol === 2) {
-                    return 'Normal';
+                    return 'Doctor';
                 } else if (codRol === 3) {
                     return 'Director';
                 }

@@ -294,9 +294,8 @@ export const AgregarHistoriaClinicaGeneral = () => {
     }
 
     const handleSubmit = async () => {
-
         try {
-
+            // Verifica si el número de cita es válido
             if (!cita.num_cita || cita.num_cita === "0") {
                 notification.warning({
                     message: '¡Atención!',
@@ -305,33 +304,82 @@ export const AgregarHistoriaClinicaGeneral = () => {
                 });
                 return;
             }
-
+    
             console.log(formData);
-
+    
+            // Realiza la solicitud POST al backend
             await axios.post(`${baseURL}/bdtbhistoriaclinicageneral/post`, formData);
-
+    
+            // Muestra notificación de éxito
             notification.success({
                 message: '¡Éxito!',
-                description: `Historia Clinica General Creada con Exito`,
+                description: 'Historia Clínica General Creada con Éxito',
                 duration: 3
             });
-
+    
+            // Muestra el tab si está disponible
             if (AOTab.current) {
-                console.log('xd')
                 const tab = new window.bootstrap.Tab(AOTab.current);
                 tab.show();
             }
-
+    
         } catch (error) {
-
-            notification.error({
-                message: '¡Error!',
-                description: error,
-                duration: 3
-            });
-
+            // Manejo del error y validación específica
+            if (error.response && error.response.data && error.response.data.message) {
+                notification.error({
+                    message: 'Error al Crear Historia Clínica',
+                    description: error.response.data.message,
+                    duration: 3
+                });
+            } else {
+                notification.error({
+                    message: 'Error al Crear Historia Clínica',
+                    description: 'Ha ocurrido un error inesperado.',
+                    duration: 3
+                });
+            }
         }
     }
+
+    // const handleSubmit = async () => {
+
+    //     try {
+
+    //         if (!cita.num_cita || cita.num_cita === "0") {
+    //             notification.warning({
+    //                 message: '¡Atención!',
+    //                 description: 'Por favor, registre el ciclo de control.',
+    //                 duration: 3
+    //             });
+    //             return;
+    //         }
+
+    //         console.log(formData);
+
+    //         await axios.post(`${baseURL}/bdtbhistoriaclinicageneral/post`, formData);
+
+    //         notification.success({
+    //             message: '¡Éxito!',
+    //             description: `Historia Clinica General Creada con Exito`,
+    //             duration: 3
+    //         });
+
+    //         if (AOTab.current) {
+    //             console.log('xd')
+    //             const tab = new window.bootstrap.Tab(AOTab.current);
+    //             tab.show();
+    //         }
+
+    //     } catch (error) {
+
+    //         notification.error({
+    //             message: '¡Error!',
+    //             description: error,
+    //             duration: 3
+    //         });
+
+    //     }
+    // }
 
     const handleSubmitObs = async () => {
 
