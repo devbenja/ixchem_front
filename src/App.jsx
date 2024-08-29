@@ -106,7 +106,7 @@ export const App = () => {
             
               {isAuth && (
                 <div className="d-flex align-items-center gap-3">
-                  <p className="m-0">Bienvenido al Sistema ANFAM, {user.nombre}</p>
+                  <p className="m-0">BIENVENIDO AL SISTEMA DE IXCHEM, {user.nombre}</p>
                   <Button onClick={showModal} style={{ marginRight: '40px', backgroundColor: 'red', color: 'white' }}>
                     <LogoutOutlined />Cerrar Sesión
                   </Button>

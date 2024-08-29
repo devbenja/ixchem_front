@@ -238,6 +238,16 @@ export const AgregarHistoriaClinicaGeneral = () => {
 
         try {
 
+            if (!cita.num_cita || cita.num_cita === "0") {
+                notification.warning({
+                    message: '¡Atención!',
+                    description: 'Por favor, registre el ciclo de control.',
+                    duration: 3
+                });
+                setIsSelectDisabled(false);
+                return;
+            }
+
             const parseCita = {
                 ...cita,
                 num_cita: Number(cita.num_cita)
@@ -286,6 +296,15 @@ export const AgregarHistoriaClinicaGeneral = () => {
     const handleSubmit = async () => {
 
         try {
+
+            if (!cita.num_cita || cita.num_cita === "0") {
+                notification.warning({
+                    message: '¡Atención!',
+                    description: 'Por favor, registre el ciclo de control.',
+                    duration: 3
+                });
+                return;
+            }
 
             console.log(formData);
 
@@ -348,7 +367,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
 
     const handleSubmitActual = async () => {
 
-        setIsSelectDisabled(false);
+        setIsSelectDisabled(true);
 
         try {
 
