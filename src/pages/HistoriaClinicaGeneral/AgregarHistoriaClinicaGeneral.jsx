@@ -15,6 +15,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
     const AOTab = useRef(null);
     const EmbActual = useRef(null);
 
+    
     const navigate = useNavigate();
 
     const [searchType, setSearchType] = useState('');
@@ -331,10 +332,11 @@ export const AgregarHistoriaClinicaGeneral = () => {
                     description: error.response.data.message,
                     duration: 3
                 });
+                setIsSelectDisabled(false);
             } else {
                 notification.error({
                     message: 'Error al Crear Historia Clínica',
-                    description: 'Ha ocurrido un error inesperado.',
+                    description: 'Revisa todos los campos',
                     duration: 3
                 });
             }

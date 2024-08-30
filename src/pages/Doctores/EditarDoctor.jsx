@@ -17,7 +17,7 @@ export const EditarDoctor = () => {
         segundoApellido: '',
         cedula: '',
         clinica: '',
-        estado: false
+        estado: true
     });
 
     useEffect(() => {
@@ -107,7 +107,7 @@ export const EditarDoctor = () => {
                         <input
                             type="text"
                             className="form-control"
-                            name="primerNombre"
+                            name="primerNombred"
                             onChange={handleChange}
                             value={formData.primerNombred}
                         />
@@ -127,7 +127,7 @@ export const EditarDoctor = () => {
                         <input
                             type="text"
                             className="form-control"
-                            name="primerApellido"
+                            name="primerApellidod"
                             onChange={handleChange}
                             value={formData.primerApellidod}
                         />

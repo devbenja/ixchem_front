@@ -52,7 +52,7 @@ export const Bitacoras = () => {
             title: 'Hora',
             dataIndex: 'hora',
             key: 'hora',
-            render: (hora) => hora.substring(0, 8), // Limitar a 10 caracteres
+            render: (hora) => hora.substring(0, 8), // Limitar a 8 caracteres
         },
         {
             title: 'Información',

@@ -10,7 +10,7 @@ import { baseURL } from '../../../api/apiURL.js';
 export const AgregarHistoria = () => {
 
     const { register: registerPaciente, handleSubmit: handleSubmitPaciente, reset } = useForm();
-    const { register: registerAntecPer, handleSubmit: handleSubmitAntPer, setValue, reset: resetAntecPer } = useForm();
+    const { register: registerAntecPer, handleSubmit: handleSubmitAntPer, setValue, watch, reset: resetAntecPer } = useForm();
     const { register: registerAntecPerPat, handleSubmit: handleSubmitAntPerPat, setValue: setValueAntPer, reset: resetAntPerPat } = useForm();
     const { register: registerAntecPatFam, handleSubmit: handleSubmitAntecPatFam, setValue: setValueAntPatFam, reset: resetAntPatFam } = useForm();
     const { register: registerInformacion, handleSubmit: handleSubmitInformacion, setValue: setValueInfo, reset:  resetInfo } = useForm();
@@ -24,6 +24,9 @@ export const AgregarHistoria = () => {
     const refInfo = useRef(null);
 
     const [isSelectDisabled, setIsSelectDisabled] = useState(false);
+    const [isHerited, setIsHerited] = useState(false);
+    const fuma = watch('fuma'); // Obtenemos el valor actual de "fuma"
+    
 
     //POST PACIENTE - DATOS PERSONALES
     const onSubmitPaciente = handleSubmitPaciente(async (data) => {
@@ -42,6 +45,7 @@ export const AgregarHistoria = () => {
                 duration: 3
             });
             setNumExp(response.data.numExpediente);
+            setIsHerited(true); // Marcar que el valor ha sido heredado
             reset();
             if (refAntPer.current) {
                 const tab = new window.bootstrap.Tab(refAntPer.current);
@@ -135,7 +139,8 @@ export const AgregarHistoria = () => {
                 sa: Number(data.sa),
                 histPap: Number(data.histPap),
                 menopausia: Number(data.menopausia),
-                cigarrosDia: Number(data.cigarrosDia),
+                //cigarrosDia: Number(data.cigarrosDia),
+                cigarrosDia: data.fuma === 'true' ? Number(data.cigarrosDia) : 0, // Usar 0 si no fuma
             };
 
             const response = await axios.post(`${baseURL}/bdtbantecedentespersonale/post`, transformedData);
@@ -289,6 +294,8 @@ export const AgregarHistoria = () => {
             });
 
             resetInfo();
+            setNumExp('');
+            setIsHerited(false);
 
             if (refPaciente.current) {
                 const tab = new window.bootstrap.Tab(refPaciente.current);
@@ -366,6 +373,9 @@ export const AgregarHistoria = () => {
                                             className="form-control"
                                             title="El Núm. Expediente debe tener 5 números, un guión (-) y el año al final"
                                             {...registerPaciente('numExpediente', { required: true, maxLength: 20 })}
+                                            onChange={(e) => {
+                                                setIsHerited(false); // Permite editar si se cambia manualmente
+                                            }}
                                             //disabled={isSelectDisabled}
                                         />
                                     </div>
@@ -557,7 +567,7 @@ export const AgregarHistoria = () => {
                                         <label htmlFor="temperatura" className="form-label">Temperatura*</label>
                                         <input
                                             type="number"
-                                            min="0"
+                                            min="1"
                                             className="form-control"
                                             id="temperatura"
                                             step="0.01"
@@ -570,7 +580,7 @@ export const AgregarHistoria = () => {
                                         <label htmlFor="peso" className="form-label">Peso*</label>
                                         <input
                                             type="number"
-                                            min="0"
+                                            min="1"
                                             className="form-control"
                                             id="peso"
                                             step="0.01"
@@ -583,7 +593,7 @@ export const AgregarHistoria = () => {
                                         <label htmlFor="talla" className="form-label">Talla*</label>
                                         <input
                                             type="number"
-                                            min="0"
+                                            min="1"
                                             className="form-control"
                                             id="talla"
                                             step="0.01"
@@ -670,11 +680,17 @@ export const AgregarHistoria = () => {
                                         <input
                                             type="text"
                                             className="form-control"
-                                            //value={numExp}
+                                            value={numExp}
                                             title="El Núm. Expediente debe tener 5 números, un guión (-) y el año al final"
                                             {...registerAntecPer('numExpediente')}
                                             //readOnly
-                                            disabled={isSelectDisabled}
+                                            //disabled={isSelectDisabled}
+                                            readOnly={isHerited} // Solo es de solo lectura si se ha heredado
+                                            onChange={(e) => {
+                                                if (!isHerited) {
+                                                    setNumExp(e.target.value); // Permite editar si no se ha heredado
+                                                }
+                                            }}
                                         />
                                     </div>
                                     <div className="col-sm-2">
@@ -1011,7 +1027,7 @@ export const AgregarHistoria = () => {
                                         </div>
                                     </div>
 
-                                    <div className="col-sm-1">
+                                    <div className="col-sm-2">
                                         <label htmlFor="fuma" className="form-label">¿Fuma?*</label>
                                         <div className="form-check">
                                             <input
@@ -1019,7 +1035,8 @@ export const AgregarHistoria = () => {
                                                 name="fuma"
                                                 type="radio"
                                                 className="form-check-input"
-                                                value={true}
+                                                //value={true}
+                                                value="true"
                                                 {...registerAntecPer('fuma', { required: true })}
                                             />
                                             <label className="form-check-label" htmlFor="fuma_si">Si</label>
@@ -1030,7 +1047,8 @@ export const AgregarHistoria = () => {
                                                 name="fuma"
                                                 type="radio"
                                                 className="form-check-input"
-                                                value={false}
+                                                //value={false}
+                                                value="false"
                                                 {...registerAntecPer('fuma', { required: true })}
                                             />
                                             <label className="form-check-label" htmlFor="fuma_no">No</label>
@@ -1044,8 +1062,9 @@ export const AgregarHistoria = () => {
                                             min="1"
                                             className="form-control"
                                             id="cigarros"
-                                            
+                                            disabled={fuma !== 'true'} // Habilitar solo si "fuma" es verdadero
                                             {...registerAntecPer('cigarrosDia')}
+                                            defaultValue={0} // Valor por defecto 0 
                                         />
                                     </div>
 
@@ -1183,11 +1202,17 @@ export const AgregarHistoria = () => {
                                         <input
                                             type="text"
                                             className="form-control"
-                                            //value={numExp}
+                                            value={numExp}
                                             title="El Núm. Expediente debe tener 5 números, un guión (-) y el año al final"
                                             {...registerAntecPerPat('numExpediente')}
                                             //readOnly
-                                            disabled={isSelectDisabled}
+                                            //disabled={isSelectDisabled}
+                                            readOnly={isHerited} // Solo es de solo lectura si se ha heredado
+                                            onChange={(e) => {
+                                                if (!isHerited) {
+                                                    setNumExp(e.target.value); // Permite editar si no se ha heredado
+                                                }
+                                            }}
                                         />
                                     </div>
                                     <div className="col-sm-2">
@@ -1678,11 +1703,17 @@ export const AgregarHistoria = () => {
                                             type="text"
                                             className="form-control"
                                             name="numExpediente"
-                                            //value={numExp}
+                                            value={numExp}
                                             title="El Núm. Expediente debe tener 5 números, un guión (-) y el año al final"
                                             {...registerAntecPatFam('numExpediente')}
                                             //readOnly
-                                            disabled={isSelectDisabled}
+                                            //disabled={isSelectDisabled}
+                                            readOnly={isHerited} // Solo es de solo lectura si se ha heredado
+                                            onChange={(e) => {
+                                                if (!isHerited) {
+                                                    setNumExp(e.target.value); // Permite editar si no se ha heredado
+                                                }
+                                            }}
                                         />
                                     </div>
 
@@ -1711,11 +1742,17 @@ export const AgregarHistoria = () => {
                                     <input
                                         type="text"
                                         className="form-control"
-                                        //value={numExp}
+                                        value={numExp}
                                         title="El Núm. Expediente debe tener 5 números, un guión (-) y el año al final"
                                         {...registerInformacion('numExpediente')}
                                         //readOnly
-                                        disabled={isSelectDisabled}
+                                        //disabled={isSelectDisabled}
+                                        readOnly={isHerited} // Solo es de solo lectura si se ha heredado
+                                            onChange={(e) => {
+                                                if (!isHerited) {
+                                                    setNumExp(e.target.value); // Permite editar si no se ha heredado
+                                                }
+                                            }}
                                     />
                                 </div>
                                 <div className="mt-3">
