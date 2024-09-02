@@ -293,9 +293,9 @@ export const AgregarHistoria = () => {
                 duration: 3
             });
 
-            resetInfo();
-            setNumExp('');
-            setIsHerited(false);
+            resetInfo(); //Reset de toda la información
+            setNumExp(''); //Reset especificamente el ultimo campo de texto
+            setIsHerited(false); //Reset del estado de herencia del valor
 
             if (refPaciente.current) {
                 const tab = new window.bootstrap.Tab(refPaciente.current);

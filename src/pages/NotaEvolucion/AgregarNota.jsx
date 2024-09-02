@@ -172,6 +172,7 @@ export const AgregarNota = () => {
                         <label htmlFor="primerApellido" className="form-label">Talla*</label>
                         <input
                             type="number"
+                            min="1"
                             className="form-control"
                             name="talla"
                             onChange={handleChange}
@@ -182,6 +183,7 @@ export const AgregarNota = () => {
                         <label htmlFor="segundoApellido" className="form-label">Peso*</label>
                         <input
                             type="number"
+                            min="1"
                             className="form-control"
                             name="peso"
                             onChange={handleChange}
@@ -192,6 +194,7 @@ export const AgregarNota = () => {
                         <label htmlFor="segundoApellido" className="form-label">Temperatura*</label>
                         <input
                             type="number"
+                            min="1"
                             className="form-control"
                             name="temperatura"
                             onChange={handleChange}
@@ -212,6 +215,7 @@ export const AgregarNota = () => {
                         <label htmlFor="segundoApellido" className="form-label">No. Nota</label>
                         <input
                             type="number"
+                            min="1"
                             className="form-control"
                             name="numeroNota"
                             onChange={handleChange}
@@ -223,6 +227,7 @@ export const AgregarNota = () => {
                         <label htmlFor="segundoApellido" className="form-label">Frecuencia Cardiaca</label>
                         <input
                             type="number"
+                            min="1"
                             className="form-control"
                             name="frecCardiaca"
                             value={formData.frecCardiaca}
@@ -234,6 +239,7 @@ export const AgregarNota = () => {
                         <label htmlFor="segundoApellido" className="form-label">Frecuencia Respiratoria</label>
                         <input
                             type="number"
+                            min="1"
                             className="form-control"
                             name="frecResp"
                             value={formData.frecResp}

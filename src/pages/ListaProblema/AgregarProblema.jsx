@@ -32,6 +32,16 @@ export const AgregarProblema = () => {
 
     const onSubmitProblema = handleSubmit(async (data) => {
 
+        // Validación adicional para el número de nota
+        if (data.numeroNota < 1) {
+            notification.error({
+                message: 'Error en el número de nota',
+                description: 'El número de nota no puede ser menor a 1',
+                duration: 3
+            });
+            return; // Detiene la ejecución si la nota es menor a 0
+        }
+
         try {
 
             const transformedData = {
@@ -122,6 +132,7 @@ export const AgregarProblema = () => {
                                 <label htmlFor="PrimerN" className="form-label">Numero de Nota*</label>
                                 <input
                                     type="number"
+                                    min="1"
                                     className="form-control"
                                     title="El nombre debe ir escrito como aparezca en la cédula o la partida de nacimiento"
                                     {...register('numeroNota', { required: true, maxLength: 30 })}

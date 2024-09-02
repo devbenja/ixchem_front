@@ -132,7 +132,7 @@ export const BuscarPorCentro = () => {
     );
 }
 
-// Respaldo en caso que el codigo nuevo falle
+// Respaldo en caso que el codigo nuevo falle #2
 // import { useState } from "react";
 // import axios from "axios";
 // import { notification, Table, message, Button, Space, Input } from "antd";

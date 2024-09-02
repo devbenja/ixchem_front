@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { notification, Button, Modal } from "antd";
+import { notification, Modal } from "antd";
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 import { baseURL } from '../../api/apiURL.js';
@@ -428,7 +428,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
             notification.success({
                 message: '¡Éxito!',
                 description: `Embarazo Actual Creado con Exito`,
-                duration: 3
+                duration: 3,
             });
 
             setFormData({
@@ -502,7 +502,6 @@ export const AgregarHistoriaClinicaGeneral = () => {
             });
 
         }
-
     }
 
     const handleBack = () => {
