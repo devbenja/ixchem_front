@@ -75,7 +75,7 @@ export const NotaDetalle = () => {
                     {/* <Button icon={<EditOutlined />} onClick={() => handleEdit(record.coD_NOTA)} /> */}
 
                     {user && user.codRol === 1 && (
-                        <Button icon={<DeleteOutlined />} onClick={() => showDeleteConfirm(record.coD_NOTA)} />
+                        <Button style={{ variant:'outlined', color: 'red' }} icon={<DeleteOutlined />} onClick={() => showDeleteConfirm(record.coD_NOTA)} />
                     )}
 
                 </Space>

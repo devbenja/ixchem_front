@@ -108,7 +108,7 @@ export const CambiarContra = () => {
             setTimeout(() => {
                 logout();
                 navigate('/');
-            }, 7000); // Esperar 3 segundos (3000 ms) antes de redirigir
+            }, 7000); // Esperar 7 segundos (7000 ms) antes de redirigir
 
         } catch (error) {
             notification.error({
@@ -117,6 +117,18 @@ export const CambiarContra = () => {
                 duration: 3
             });
         }
+    };
+
+    const handleClearFields = () => {
+        setFormData((prevData) => ({
+            ...prevData,
+            nuevaContraseña: "",
+            confirmarContraseña: ""
+        }));
+    };
+
+    const preventCopyPaste = (e) => {
+        e.preventDefault();
     };
 
     return (
@@ -130,15 +142,32 @@ export const CambiarContra = () => {
                     </div>
                     <div className="col">
                         <label className="form-label">Contraseña Nueva</label>
-                        <input type="password" name="nuevaContraseña" value={formData.nuevaContraseña} onChange={handleChange} className="form-control" />
+                        <input 
+                            type="password" 
+                            name="nuevaContraseña" 
+                            value={formData.nuevaContraseña} 
+                            onChange={handleChange} 
+                            className="form-control" 
+                            onCopy={preventCopyPaste}
+                            onPaste={preventCopyPaste}
+                        />
                     </div>
                     <div className="col">
                         <label className="form-label">Confirmar Contraseña Nueva</label>
-                        <input type="password" name="confirmarContraseña" value={formData.confirmarContraseña} onChange={handleChange} className="form-control" />
+                        <input 
+                            type="password" 
+                            name="confirmarContraseña" 
+                            value={formData.confirmarContraseña} 
+                            onChange={handleChange} 
+                            className="form-control" 
+                            onCopy={preventCopyPaste}
+                            onPaste={preventCopyPaste}
+                        />
                     </div>
                 </div>
                 <div className='mt-4 d-flex gap-2'>
                     <button type="submit" className="btn btn-primary">Guardar Contraseña</button>
+                    <button type="button" onClick={handleClearFields} className="btn btn-danger">Limpiar Campos</button>
                 </div>
             </form>
         </div>

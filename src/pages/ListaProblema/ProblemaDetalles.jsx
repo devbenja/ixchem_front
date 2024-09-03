@@ -341,7 +341,7 @@ export const ProblemaDetalles = () => {
             render: (text, record) => (
                 <Space size="middle">
                     <Button icon={<EditOutlined />} onClick={() => handleEdit(record)} />
-                    <Button icon={<DeleteOutlined />} onClick={() => showDeleteConfirm(record.coD_PROBLEMAS)} />
+                    <Button style={{ variant:'outlined', color: 'red' }} icon={<DeleteOutlined />} onClick={() => showDeleteConfirm(record.coD_PROBLEMAS)} />
                 </Space>
             ),
             align: 'center'

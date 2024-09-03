@@ -72,7 +72,7 @@ export const ObstetricosDetalles = () => {
                         user && user.codRol === 1 && (
                             <>
                                 <Button icon={<EditOutlined />} onClick={() => handleEdit(record.codHojariesgo)} />
-                                <Button icon={<DeleteOutlined />} onClick={() => showDeleteConfirm(record.codHojariesgo)} />
+                                <Button style={{ variant:'outlined', color: 'red' }} icon={<DeleteOutlined />} onClick={() => showDeleteConfirm(record.codHojariesgo)} />
                             </>
                         )
                     }

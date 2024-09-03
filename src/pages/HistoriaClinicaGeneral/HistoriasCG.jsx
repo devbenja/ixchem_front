@@ -76,7 +76,7 @@ export const HistoriasCG = () => {
                         user && user.codRol === 1 && (
                             <>
                                 <Button icon={<EditOutlined />} onClick={(e) => { e.stopPropagation(); handleEdit(record.coD_HISTORIA_CLINICA); }} />
-                                <Button icon={<DeleteOutlined onClick={(e) => { e.stopPropagation(); showDeleteConfirm(record.coD_HISTORIA_CLINICA); }} />} />
+                                <Button style={{ variant:'outlined', color: 'red' }} icon={<DeleteOutlined onClick={(e) => { e.stopPropagation(); showDeleteConfirm(record.coD_HISTORIA_CLINICA); }} />} />
                             </>
 
                         )

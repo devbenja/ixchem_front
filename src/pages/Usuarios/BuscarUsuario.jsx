@@ -86,7 +86,7 @@ export const BuscarUsuario = () => {
             render: (text, record) => (
                 <Space size="middle">
                     <Button icon={<EditOutlined onClick={() => handleEdit(record.codAdmin)} />} />
-                    <Button icon={<DeleteOutlined onClick={() => showDeleteConfirm(record.codAdmin)}/> }/>
+                    <Button style={{ variant:'outlined', color: 'red' }} icon={<DeleteOutlined onClick={() => showDeleteConfirm(record.codAdmin)}/> }/>
                 </Space>
             ),
             align: 'center',

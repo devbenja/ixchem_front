@@ -75,7 +75,7 @@ export const Embarazos = () => {
 							<>
 								<Button icon={<EditOutlined />} onClick={(e) => { e.stopPropagation(); handleEdit(record.codEmbarazo); }} />
 
-								<Button icon={<DeleteOutlined onClick={(e) => { e.stopPropagation(); showDeleteConfirm(record.codEmbarazo); }} />} />
+								<Button style={{ variant:'outlined', color: 'red' }} icon={<DeleteOutlined onClick={(e) => { e.stopPropagation(); showDeleteConfirm(record.codEmbarazo); }} />} />
 							</>
 						)
 					}

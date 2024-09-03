@@ -83,7 +83,7 @@ export const ListaEpicrisis = () => {
                     {/* <Button icon={<EditOutlined />} onClick={() => handleEdit(record.coD_EPICRISIS)} /> */}
 
                     {user && user.codRol === 1 && (
-                        <Button icon={<DeleteOutlined />} onClick={() => showDeleteConfirm(record.coD_EPICRISIS)} />
+                        <Button style={{ variant:'outlined', color: 'red' }} icon={<DeleteOutlined />} onClick={() => showDeleteConfirm(record.coD_EPICRISIS)} />
                     )}
                 </Space>
             ),

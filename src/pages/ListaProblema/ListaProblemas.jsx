@@ -160,7 +160,7 @@ export const ListaProblemas = () => {
                     <Button icon={<EditOutlined />} onClick={() => handleEdit(record)} />
 
                     
-                    <Button icon={<DeleteOutlined />} onClick={() => deleteProblema(record.codProblemas)} />
+                    <Button style={{ variant:'outlined', color: 'red' }} icon={<DeleteOutlined />} onClick={() => deleteProblema(record.codProblemas)} />
                 </Space>
             ),
         },

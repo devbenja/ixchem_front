@@ -124,7 +124,7 @@ export const Doctores = () => {
             render: (text, record) => (
                 <Space size="middle">
                     <Button icon={<EditOutlined />} onClick={() => handleEdit(record)} />
-                    <Button icon={<DeleteOutlined />} onClick={() => deleteDoctor(record.codDoctor)} />
+                    <Button style={{ variant:'outlined', color: 'red' }} icon={<DeleteOutlined />} onClick={() => deleteDoctor(record.codDoctor)} />
                 </Space>
             ),
         },
