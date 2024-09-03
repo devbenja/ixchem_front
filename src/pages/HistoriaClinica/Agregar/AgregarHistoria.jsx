@@ -25,9 +25,11 @@ export const AgregarHistoria = () => {
 
     const [isHerited, setIsHerited] = useState(false);
     const fuma = watch('fuma'); // Obtenemos el valor actual de "fuma"
+
+    const [isSelectDisabled, setIsSelectDisabled] = useState(false);
     
     const [tipoIdentificacion, setTipoIdentificacion] = useState("");
-    const [identificacion, setIdentificacion] = useState("");
+    const [cedula, setIdentificacion] = useState("");
 
     const handleTipoIdentificacionChange = (e) => {
         setTipoIdentificacion(e.target.value);
@@ -35,6 +37,17 @@ export const AgregarHistoria = () => {
     };
 
     const handleIdentificacionChange = (e) => {
+
+        if (!tipoIdentificacion) {
+            // Notificación si no se ha seleccionado el tipo de identificación
+            notification.error({
+                message: "Error",
+                description: "Debe seleccionar un tipo de identificación antes de llenar el campo 'Identificación'.",
+                duration: 3,
+            });
+            return;
+        }
+
         let valor = e.target.value;
 
         if (tipoIdentificacion === "categoria1") {
@@ -66,7 +79,17 @@ export const AgregarHistoria = () => {
 
     //POST PACIENTE - DATOS PERSONALES
     const onSubmitPaciente = handleSubmitPaciente(async (data) => {
- 
+
+        if (!tipoIdentificacion) {
+            // Notificación si no se ha seleccionado el tipo de identificación
+            notification.error({
+                message: "Error",
+                description: "Debe seleccionar un tipo de identificación antes de llenar el campo 'Identificación'.",
+                duration: 3,
+            });
+            return;
+        }
+
         setIsSelectDisabled(true);
  
         try {
@@ -366,7 +389,8 @@ export const AgregarHistoria = () => {
                             <form onSubmit={onSubmitPaciente}>
                                 <div className="row g-3">
                                     <div className="col-sm-2">
-                                        <label htmlFor="expediente" className="form-label">Núm. Expediente*</label>
+                                        <label htmlFor="expediente" className="form-label">Núm. Expediente<span style={{color: 'red'}}> * </span> 
+                                        </label>
                                         <input
                                             type="text"
                                             className="form-control"
@@ -379,7 +403,8 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="PrimerN" className="form-label">Primer nombre*</label>
+                                        <label htmlFor="PrimerN" className="form-label">Primer nombre<span style={{color: 'red'}}> * </span>
+                                        </label>
                                         <input
                                             type="text"
                                             className="form-control"
@@ -399,7 +424,8 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="P_apellido" className="form-label">Primer apellido*</label>
+                                        <label htmlFor="P_apellido" className="form-label">Primer apellido<span style={{color: 'red'}}> * </span>
+                                        </label>
                                         <input
                                             type="text"
                                             className="form-control"
@@ -419,68 +445,8 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="cedula" className="form-label">Tipo de Identificación</label>
-                                        <select className="form-select" value={tipoIdentificacion} onChange={handleTipoIdentificacionChange}>
-                                            <option value="">Seleccionar...</option>
-                                            <option value="categoria1">Fecha de Nacimiento</option>
-                                            <option value="categoria2">Cedula de Identificación</option>
-                                            <option value="categoria3">Pasaporte</option>
-                                        </select>
-                                    </div>
-
-                                    <div className="row g-3"></div>
-                                        <div className="col-sm-2">
-                                            <label htmlFor="expediente" className="form-label">Identificación</label>
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                title="Insertar Identificación"
-                                                value={identificacion}
-                                                onChange={handleIdentificacionChange} // Me permite hacer el cambio y la validación
-                                            />
-                                    </div>
-
-                                    <div className="col-sm-2">
-                                        <label htmlFor="nacimiento" className="form-label">Fecha de nacimiento*</label>
-                                        <input
-                                            type="date"
-                                            className="form-control"
-                                            id="fechaNac"
-                                            {...registerPaciente('fechaNac', { required: true })}
-                                        />
-                                    </div>
-
-                                    <div className="col-sm-3">
-                                        <label htmlFor="escolaridad" className="form-label">Escolaridad*</label>
-                                        <select defaultValue="Menu de Selección" className="form-select" id="escolaridad" {...registerPaciente("escolaridad", { required: true })}>
-                                            <option value="">Menu de Selección</option>
-                                            <option value="Primaria completa">Primaria completa</option>
-                                            <option value="Primaria incompleta">Primaria incompleta</option>
-                                            <option value="Bachiller">Bachiller</option>
-                                            <option value="Secundaria incompleta">Secundaria incompleta</option>
-                                            <option value="Técnico superior">Técnico superior</option>
-                                            <option value="Universitario">Universitario</option>
-                                            <option value="Otros">Otros</option>
-                                        </select>
-
-                                    </div>
-
-                                    <div className="col-sm-3">
-                                        <label htmlFor="profesion" className="form-label">Profesión*</label>
-                                        <select defaultValue="Menu de Selección" className="form-select" id="profesion" {...registerPaciente("profesion", { required: true })}>
-                                            <option value="">Menu de Selección</option>
-                                            <option value="Estudiante">Estudiante</option>
-                                            <option value="Ama de casa">Ama de casa</option>
-                                            <option value="Oficinista">Oficinista</option>
-                                            <option value="Operaria">Operaria</option>
-                                            <option value="Sector informal">Sector informal</option>
-                                            <option value="Otros">Otros</option>
-                                        </select>
-
-                                    </div>
-
-                                    <div className="col-sm-2">
-                                        <label htmlFor="sexo" className="form-label">Sexo*</label>
+                                        <label htmlFor="sexo" className="form-label">Sexo<span style={{color: 'red'}}> * </span>
+                                        </label>
                                         <div className="d-flex align-items-center justify-content-center gap-4 form-control">
                                             <div className="form-check">
                                                 <input
@@ -505,6 +471,73 @@ export const AgregarHistoria = () => {
                                         </div>
                                     </div>
 
+                                    <div className="col-sm-2">
+                                        <label htmlFor="cedula" className="form-label">Tipo de Identificación</label>
+                                        <select className="form-select" value={tipoIdentificacion} onChange={handleTipoIdentificacionChange}>
+                                            <option value="">Seleccionar...</option>
+                                            <option value="categoria1">Fecha de Nacimiento</option>
+                                            <option value="categoria2">Cedula de Identificación</option>
+                                            <option value="categoria3">Pasaporte</option>
+                                        </select>
+                                    </div>
+
+                                    
+                                    <div className="col-sm-2">
+                                        <label htmlFor="expediente" className="form-label">Identificación<span style={{color: 'red'}}> * </span>
+                                        </label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            title="Insertar Identificación"
+                                            value={cedula}
+                                            {...registerPaciente('cedula', { required: true, maxLength: 20 })}
+                                            onChange={handleIdentificacionChange} // Me permite hacer el cambio y la validación
+                                            disabled={!tipoIdentificacion} // Deshabilitar si no se ha seleccionado el tipo de identificación
+                                        />
+                                    </div>
+
+                                    <div className="col-sm-2">
+                                        <label htmlFor="nacimiento" className="form-label">Fecha de nacimiento<span style={{color: 'red'}}> * </span> 
+                                        </label>
+                                        <input
+                                            type="date"
+                                            className="form-control"
+                                            id="fechaNac"
+                                            {...registerPaciente('fechaNac', { required: true })}
+                                        />
+                                    </div>
+
+                                    <div className="col-sm-3">
+                                        <label htmlFor="escolaridad" className="form-label">Escolaridad<span style={{color: 'red'}}> * </span>
+                                        </label>
+                                        <select defaultValue="Menu de Selección" className="form-select" id="escolaridad" {...registerPaciente("escolaridad", { required: true })}>
+                                            <option value="">Menu de Selección</option>
+                                            <option value="Primaria completa">Primaria completa</option>
+                                            <option value="Primaria incompleta">Primaria incompleta</option>
+                                            <option value="Bachiller">Bachiller</option>
+                                            <option value="Secundaria incompleta">Secundaria incompleta</option>
+                                            <option value="Técnico superior">Técnico superior</option>
+                                            <option value="Universitario">Universitario</option>
+                                            <option value="Otros">Otros</option>
+                                        </select>
+
+                                    </div>
+
+                                    <div className="col-sm-3">
+                                        <label htmlFor="profesion" className="form-label">Profesión<span style={{color: 'red'}}> * </span>
+                                        </label>
+                                        <select defaultValue="Menu de Selección" className="form-select" id="profesion" {...registerPaciente("profesion", { required: true })}>
+                                            <option value="">Menu de Selección</option>
+                                            <option value="Estudiante">Estudiante</option>
+                                            <option value="Ama de casa">Ama de casa</option>
+                                            <option value="Oficinista">Oficinista</option>
+                                            <option value="Operaria">Operaria</option>
+                                            <option value="Sector informal">Sector informal</option>
+                                            <option value="Otros">Otros</option>
+                                        </select>
+
+                                    </div>
+
                                     <div className="col-sm-7">
                                         <label htmlFor="direccion" className="form-label">Dirección</label>
                                         <input
@@ -516,7 +549,8 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-3">
-                                        <label htmlFor="departamento" className="form-label">Departamento*</label>
+                                        <label htmlFor="departamento" className="form-label">Departamento<span style={{color: 'red'}}> * </span>
+                                        </label>
                                         <select defaultValue="Managua" className="form-select" id="departamento" {...registerPaciente("codDepartamento", { required: true })}>
                                             <option value="">Menú de selección</option>
                                             <option value="1">Chinandega</option>
@@ -541,7 +575,8 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-1">
-                                        <label htmlFor="presion" className="form-label">Presión*</label>
+                                        <label htmlFor="presion" className="form-label">Presión<span style={{color: 'red'}}> * </span>
+                                        </label>
                                         <input
                                             type="number"
                                             className="form-control"
@@ -551,7 +586,8 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-1">
-                                        <label htmlFor="temperatura" className="form-label">Temperatura*</label>
+                                        <label htmlFor="temperatura" className="form-label">Temperatura<span style={{color: 'red'}}>* </span>
+                                        </label>
                                         <input
                                             type="number"
                                             min="1"
@@ -564,7 +600,8 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-1">
-                                        <label htmlFor="peso" className="form-label">Peso*</label>
+                                        <label htmlFor="peso" className="form-label">Peso<span style={{color: 'red'}}> * </span>
+                                        </label>
                                         <input
                                             type="number"
                                             min="1"
@@ -577,7 +614,8 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-1">
-                                        <label htmlFor="talla" className="form-label">Talla*</label>
+                                        <label htmlFor="talla" className="form-label">Talla<span style={{color: 'red'}}> * </span>
+                                        </label>
                                         <input
                                             type="number"
                                             min="1"
@@ -595,7 +633,8 @@ export const AgregarHistoria = () => {
                                     </div> */}
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="fechaIngreso" className="form-label">Fecha de ingreso*</label>
+                                        <label htmlFor="fechaIngreso" className="form-label">Fecha de ingreso<span style={{color: 'red'}}> * </span>
+                                        </label>
                                         <input
                                             type="date"
                                             className="form-control"
@@ -605,7 +644,8 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-3">
-                                        <label htmlFor="centros" className="form-label">Centro de Mujeres IXCHEN*</label>
+                                        <label htmlFor="centros" className="form-label">Centro de Mujeres IXCHEN<span style={{color: 'red'}}> * </span>
+                                        </label>
                                         <select defaultValue="Menú de selección" className="form-select" id="centro" {...registerPaciente("centro", { required: true })}>
                                             <option value="">Menú de selección</option>
                                             <option value="Managua">Managua</option>
@@ -621,7 +661,8 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-3">
-                                        <label htmlFor="usuaria" className="form-label">Usuaria*</label>
+                                        <label htmlFor="usuaria" className="form-label">Usuaria<span style={{color: 'red'}}> * </span>
+                                        </label>
                                         <div className="d-flex align-items-center justify-content-center gap-4 border form-control">
                                             <div className="form-check">
                                                 <input
@@ -663,7 +704,8 @@ export const AgregarHistoria = () => {
                             <form onSubmit={onSubmitAntPersonales}>
                                 <div className="row g-3">
                                     <div className="col-sm-2">
-                                        <label htmlFor="expediente" className="form-label">Núm. Expediente*</label>
+                                        <label htmlFor="expediente" className="form-label">Núm. Expediente<span style={{color: 'red'}}> * </span>
+                                        </label>
                                         <input
                                             type="text"
                                             className="form-control"
@@ -717,8 +759,8 @@ export const AgregarHistoria = () => {
                                     <div className="col-sm-2">
                                         <label htmlFor="MAC" className="form-label">MAC</label>
 
-                                        <select defaultValue="Condón" className="form-select" id="MAC" {...registerAntecPer('mac')}>
-                                            <option value="">Menú de selección</option>
+                                        <select defaultValue="Menú de selección" className="form-select" id="MAC" {...registerAntecPer('mac')}>
+                                            <option value="No planifica">Menú de selección</option>
                                             
                                             <option value="No planifica">No planifica</option>
                                             <option value="Condón">Condón</option>
@@ -741,7 +783,8 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="embarazada" className="form-label">¿Has estado embarazada?*</label>
+                                        <label htmlFor="embarazada" className="form-label">¿Has estado embarazada?<span style={{color: 'red'}}> * </span>
+                                        </label>
                                         <div className="form-check">
                                             <input
                                                 id="si"
@@ -815,7 +858,8 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="FUM" className="form-label">FUM*</label>
+                                        <label htmlFor="FUM" className="form-label">FUM<span style={{color: 'red'}}> * </span>
+                                        </label>
                                         <input
                                             type="date"
                                             className="form-control"
@@ -835,8 +879,8 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="lactancia" className="form-label">Lactancia materna*</label>
-
+                                        <label htmlFor="lactancia" className="form-label">Lactancia materna<span style={{color: 'red'}}> * </span> 
+                                        </label>
                                         <div className="form-check">
                                             <input
                                                 id="lac_si"
@@ -862,7 +906,8 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="esta_emb" className="form-label">¿Está embarazada?*</label>
+                                        <label htmlFor="esta_emb" className="form-label">¿Está embarazada?<span style={{color: 'red'}}> * </span>
+                                        </label>
                                         <div className="form-check">
                                             <input
                                                 id="emb_si"
@@ -888,7 +933,8 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="mamografia" className="form-label">¿Mamografía al día?*</label>
+                                        <label htmlFor="mamografia" className="form-label">¿Mamografía al día?<span style={{color: 'red'}}> * </span>
+                                        </label>
                                         <div className="form-check">
                                             <input
                                                 id="mamografia_si"
@@ -914,7 +960,8 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="pap_dia" className="form-label">¿PAP al día?*</label>
+                                        <label htmlFor="pap_dia" className="form-label">¿PAP al día?<span style={{color: 'red'}}> * </span>
+                                        </label>
                                         <div className="form-check">
                                             <input
                                                 id="pap_si"
@@ -940,7 +987,8 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="pap_alterado" className="form-label">¿PAP alterado?*</label>
+                                        <label htmlFor="pap_alterado" className="form-label">¿PAP alterado?<span style={{color: 'red'}}> * </span>
+                                        </label>
                                         <div className="form-check">
                                             <input
                                                 id="pap_alt_si"
@@ -988,7 +1036,8 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-3">
-                                        <label htmlFor="TRH" className="form-label">¿Terapia Reemplazo Hormonal?*</label>
+                                        <label htmlFor="TRH" className="form-label">¿Terapia Reemplazo Hormonal?<span style={{color: 'red'}}> * </span>
+                                        </label>
                                         <div className="form-check">
                                             <input
                                                 id="TRH_si"
@@ -1014,7 +1063,8 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="fuma" className="form-label">¿Fuma?*</label>
+                                        <label htmlFor="fuma" className="form-label">¿Fuma?<span style={{color: 'red'}}> * </span>
+                                        </label>
                                         <div className="form-check">
                                             <input
                                                 id="fuma_si"
@@ -1055,7 +1105,8 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-3">
-                                        <label htmlFor="compania" className="form-label">¿Actualmente está sola o acompañada?*</label>
+                                        <label htmlFor="compania" className="form-label">¿Actualmente está sola o acompañada?<span style={{color: 'red'}}> * </span>
+                                        </label>
                                         <div className="form-check">
                                             <input
                                                 id="sola"
@@ -1184,7 +1235,8 @@ export const AgregarHistoria = () => {
                             <form onSubmit={onSubmitAntPersonalesPat}>
                                 <div className="row g-4">
                                     <div className="col-sm-2">
-                                        <label htmlFor="expediente" className="form-label">Núm. Expediente*</label>
+                                        <label htmlFor="expediente" className="form-label">Núm. Expediente<span style={{color: 'red'}}> * </span>
+                                        </label>
                                         <input
                                             type="text"
                                             className="form-control"
@@ -1201,7 +1253,8 @@ export const AgregarHistoria = () => {
                                         />
                                     </div>
                                     <div className="col-sm-2">
-                                        <label htmlFor="fibroadenoma" className="form-label">Fibroadenoma*</label>
+                                        <label htmlFor="fibroadenoma" className="form-label">Fibroadenoma<span style={{color: 'red'}}> * </span>
+                                        </label>
 
                                         <div className="d-flex align-items-center justify-content-center gap-3 form-control">
                                             <div className="form-check">
@@ -1216,7 +1269,8 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="Ca_mama_izq" className="form-label">Ca Mama Izq*</label>
+                                        <label htmlFor="Ca_mama_izq" className="form-label">Ca Mama Izq<span style={{color: 'red'}}> * </span>
+                                        </label>
 
                                         <div className="d-flex align-items-center justify-content-center gap-3 form-control">
                                             <div className="form-check">
@@ -1231,7 +1285,8 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="Ca_mama_der" className="form-label">Ca Mama Der*</label>
+                                        <label htmlFor="Ca_mama_der" className="form-label">Ca Mama Der<span style={{color: 'red'}}> * </span>
+                                        </label>
 
                                         <div className="d-flex align-items-center justify-content-center gap-3 form-control">
                                             <div className="form-check">
@@ -1246,7 +1301,8 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="Ca_cervico_uterino" className="form-label">Ca Cervico Uterino*</label>
+                                        <label htmlFor="Ca_cervico_uterino" className="form-label">Ca Cervico Uterino<span style={{color: 'red'}}> * </span>
+                                        </label>
 
                                         <div className="d-flex align-items-center justify-content-center gap-3 form-control">
                                             <div className="form-check">
@@ -1276,7 +1332,8 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="extirpacion" className="form-label">Extirpación Qx Ovario*</label>
+                                        <label htmlFor="extirpacion" className="form-label">Extirpación Qx Ovario<span style={{color: 'red'}}> * </span>
+                                        </label>
 
                                         <div className="d-flex align-items-center justify-content-center gap-3 form-control">
                                             <div className="form-check">
@@ -1311,7 +1368,8 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="VIH" className="form-label">VIH*</label>
+                                        <label htmlFor="VIH" className="form-label">VIH<span style={{color: 'red'}}> * </span>
+                                        </label>
 
                                         <div className="d-flex align-items-center justify-content-center gap-3 form-control">
                                             <div className="form-check">
@@ -1341,7 +1399,8 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="diabetes" className="form-label">Diabetes*</label>
+                                        <label htmlFor="diabetes" className="form-label">Diabetes<span style={{color: 'red'}}> * </span>
+                                        </label>
 
                                         <div className="d-flex align-items-center justify-content-center gap-3 form-control">
                                             <div className="form-check">
@@ -1356,7 +1415,8 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="cardiopatia" className="form-label">Cardiopatía*</label>
+                                        <label htmlFor="cardiopatia" className="form-label">Cardiopatía<span style={{color: 'red'}}> * </span>
+                                        </label>
 
                                         <div className="d-flex align-items-center justify-content-center gap-3 form-control">
                                             <div className="form-check">
@@ -1371,7 +1431,8 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="hipertension" className="form-label">Hipertensión*</label>
+                                        <label htmlFor="hipertension" className="form-label">Hipertensión<span style={{color: 'red'}}> * </span>
+                                        </label>
 
                                         <div className="d-flex align-items-center justify-content-center gap-3 form-control">
                                             <div className="form-check">
@@ -1386,7 +1447,8 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="hepatopatias" className="form-label">Hepatopatías*</label>
+                                        <label htmlFor="hepatopatias" className="form-label">Hepatopatías<span style={{color: 'red'}}> * </span>
+                                        </label>
 
                                         <div className="d-flex align-items-center justify-content-center gap-3 form-control">
                                             <div className="form-check">
@@ -1401,8 +1463,8 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="nefropatias" className="form-label">Nefropatías*</label>
-
+                                        <label htmlFor="nefropatias" className="form-label">Nefropatías<span style={{color: 'red'}}> * </span> 
+                                        </label>
                                         <div className="d-flex align-items-center justify-content-center gap-3 form-control">
                                             <div className="form-check">
                                                 <input value={true} {...registerAntecPerPat('nefropatia', { required: true })} id="nefropatias_si" name="nefropatia" type="radio" className="form-check-input" required />
@@ -1416,7 +1478,8 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="cirugias" className="form-label">Cirugías*</label>
+                                        <label htmlFor="cirugias" className="form-label">Cirugías<span style={{color: 'red'}}> * </span>
+                                        </label>
 
                                         <div className="d-flex align-items-center justify-content-center gap-3 form-control">
                                             <div className="form-check">
@@ -1432,7 +1495,8 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="anemia" className="form-label">Anemia*</label>
+                                        <label htmlFor="anemia" className="form-label">Anemia<span style={{color: 'red'}}> * </span>
+                                        </label>
 
                                         <div className="d-flex align-items-center justify-content-center gap-3 form-control">
                                             <div className="form-check">
@@ -1462,7 +1526,8 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="alergia_ali" className="form-label">Alergia Alimentos*</label>
+                                        <label htmlFor="alergia_ali" className="form-label">Alergia Alimentos<span style={{color: 'red'}}> * </span>
+                                        </label>
 
                                         <div className="d-flex align-items-center justify-content-center gap-3 form-control">
                                             <div className="form-check">
@@ -1495,7 +1560,8 @@ export const AgregarHistoria = () => {
                             <form onSubmit={onSubmitAntPatFam}>
                                 <div className="row g-3">
                                     <div className="col-sm-2">
-                                        <label htmlFor="Ca_de_Mama" className="form-label">Ca de Mama*</label>
+                                        <label htmlFor="Ca_de_Mama" className="form-label">Ca de Mama<span style={{color: 'red'}}> * </span>
+                                        </label>
 
                                         <div className="form-check">
                                             <input value={true} {...registerAntecPatFam('caMama', { required: true })} id="Ca_de_Mama_si" name="caMama" type="radio" className="form-check-input" required />
@@ -1513,7 +1579,8 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="Ca_de_colon" className="form-label">Ca de Colon*</label>
+                                        <label htmlFor="Ca_de_colon" className="form-label">Ca de Colon<span style={{color: 'red'}}> * </span>
+                                        </label>
 
                                         <div className="form-check">
                                             <input value={true} {...registerAntecPatFam('caColon', { required: true })} id="Ca_de_colon_si" name="caColon" type="radio" className="form-check-input" required />
@@ -1533,7 +1600,8 @@ export const AgregarHistoria = () => {
 
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="APF_diabetes" className="form-label">Diabetes*</label>
+                                        <label htmlFor="APF_diabetes" className="form-label">Diabetes<span style={{color: 'red'}}> * </span>
+                                        </label>
 
                                         <div className="form-check">
                                             <input value={true} {...registerAntecPatFam('diabetes', { required: true })} id="diabet_si" name="diabetes" type="radio" className="form-check-input" required />
@@ -1554,7 +1622,8 @@ export const AgregarHistoria = () => {
 
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="Ca_CU" className="form-label">Ca de CU*</label>
+                                        <label htmlFor="Ca_CU" className="form-label">Ca de CU<span style={{color: 'red'}}> * </span>
+                                        </label>
 
                                         <div className="form-check">
                                             <input value={true} {...registerAntecPatFam('caCu', { required: true })} id="Ca_CU_si" name="caCu" type="radio" className="form-check-input" required />
@@ -1574,7 +1643,8 @@ export const AgregarHistoria = () => {
 
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="APF_hipertension" className="form-label">Hipertensión*</label>
+                                        <label htmlFor="APF_hipertension" className="form-label">Hipertensión<span style={{color: 'red'}}> * </span>
+                                        </label>
 
                                         <div className="form-check">
                                             <input value={true} {...registerAntecPatFam('hipertension', { required: true })} id="APF_hipertension_si" name="hipertension" type="radio" className="form-check-input" required />
@@ -1594,7 +1664,8 @@ export const AgregarHistoria = () => {
 
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="Enf_card" className="form-label">Enf. Cardíacas*</label>
+                                        <label htmlFor="Enf_card" className="form-label">Enf. Cardíacas<span style={{color: 'red'}}> * </span>
+                                        </label>
 
                                         <div className="form-check">
                                             <input value={true} {...registerAntecPatFam('enfCardiacas', { required: true })} id="Enf_card_si" name="enfCardiacas" type="radio" className="form-check-input" required />
@@ -1614,7 +1685,8 @@ export const AgregarHistoria = () => {
 
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="Ca_ovario" className="form-label">Ca de Ovario*</label>
+                                        <label htmlFor="Ca_ovario" className="form-label">Ca de Ovario<span style={{color: 'red'}}> * </span>
+                                        </label>
 
                                         <div className="form-check">
                                             <input value={true} {...registerAntecPatFam('caOvario', { required: true })} id="Ca_ovario_si" name="caOvario" type="radio" className="form-check-input" required />
@@ -1634,7 +1706,8 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="Hepatitis" className="form-label">Hepatitis*</label>
+                                        <label htmlFor="Hepatitis" className="form-label">Hepatitis<span style={{color: 'red'}}> * </span>
+                                        </label>
 
                                         <div className="form-check">
                                             <input value={true} {...registerAntecPatFam('hepatitis', { required: true })} id="Hepatitis_si" name="hepatitis" type="radio" className="form-check-input" required />
@@ -1654,7 +1727,8 @@ export const AgregarHistoria = () => {
 
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="Enf_ren" className="form-label">Enf. Renales*</label>
+                                        <label htmlFor="Enf_ren" className="form-label">Enf. Renales<span style={{color: 'red'}}> * </span>
+                                        </label>
 
                                         <div className="form-check">
                                             <input value={true} {...registerAntecPatFam('enfRenales', { required: true })} id="Enf_ren_si" name="enfRenales" type="radio" className="form-check-input" required />
@@ -1673,7 +1747,8 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="expediente" className="form-label">Núm. Expediente*</label>
+                                        <label htmlFor="expediente" className="form-label">Núm. Expediente<span style={{color: 'red'}}> * </span>
+                                        </label>
                                         <input
                                             type="text"
                                             className="form-control"
@@ -1712,7 +1787,8 @@ export const AgregarHistoria = () => {
                         <div className="container-fluid mt-3">
                             <form onSubmit={onSubmitInformacion}>
                                 <div>
-                                    <label htmlFor="expediente" className="form-label">Núm. Expediente*</label>
+                                    <label htmlFor="expediente" className="form-label">Núm. Expediente<span style={{color: 'red'}}> * </span>
+                                    </label>
                                     <input
                                         type="text"
                                         className="form-control"
@@ -1729,7 +1805,8 @@ export const AgregarHistoria = () => {
                                     />
                                 </div>
                                 <div className="mt-3">
-                                    <label className="form-label" htmlFor="motivo_visita">Motivo de la visita*</label>
+                                    <label className="form-label" htmlFor="motivo_visita">Motivo de la visita<span style={{color: 'red'}}> * </span>
+                                    </label>
                                     <textarea
                                         className="form-control"
                                         rows="10"
