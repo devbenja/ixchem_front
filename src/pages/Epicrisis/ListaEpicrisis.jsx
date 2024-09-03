@@ -148,7 +148,8 @@ export const ListaEpicrisis = () => {
         <div className="container-fluid">
             <div className='d-flex justify-content-between align-intems-center mb-4'>
                 <h4>Epicrisis del Expediente: {numExpediente}</h4>
-                <Button style={{ backgroundColor: 'red', color: 'white' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
+                {/* <Button style={{ backgroundColor: 'red', color: 'white' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button> */}
+                <Button style={{ variant:'outlined', color: 'Black' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
             </div>
             <Table
                 responsive={true}

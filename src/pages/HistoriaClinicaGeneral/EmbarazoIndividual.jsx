@@ -107,7 +107,8 @@ export const EmbarazoIndividual = () => {
     <div className='container-fluid'>
       <div className="container-fluid d-flex justify-content-between align-items-center">
         <h4>Embarazo Actual del Expediente</h4>
-        <Button style={{ backgroundColor: 'red', color: 'white' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
+        {/* <Button style={{ backgroundColor: 'red', color: 'white' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button> */}
+        <Button style={{ variant:'outlined', color: 'Black' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
       </div>
       <Table columns={columns1} dataSource={[formData]} className='custom-table mt-4' pagination={false} />
       <Table columns={columns2} dataSource={[formData]} className='custom-table mt-4' pagination={false} />

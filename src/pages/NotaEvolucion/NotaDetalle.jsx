@@ -147,7 +147,8 @@ export const NotaDetalle = () => {
         <div className="container-fluid">
             <div className='d-flex align-items-center justify-content-between mb-4'>
                 <h4>Notas de Evolución del Expediente: {numExpediente}</h4>
-                <Button style={{ backgroundColor: 'red', color: 'white' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
+                {/* <Button style={{ backgroundColor: 'red', color: 'white' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button> */}
+                <Button style={{ variant:'outlined', color: 'Black' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
             </div>
             <Table
                 responsive={true}

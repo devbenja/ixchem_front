@@ -14,7 +14,6 @@ const images = [
 export const Login = () => {
     const [backgroundImage, setBackgroundImage] = useState(images[0]);
     const [showPassword, setShowPassword] = useState(false);
-
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { login, errors: loginErrors } = useAuth();
     const navigate = useNavigate();
@@ -47,10 +46,13 @@ export const Login = () => {
             const user = await login(data);
 
             if (user) {
-                if (!validatePassword(data.contraseña)) {
+                const isPasswordValid = validatePassword(data.contraseña);
+                localStorage.setItem('passwordValid', JSON.stringify(isPasswordValid)); // Guardamos la validez de la contraseña
+
+                if (!isPasswordValid) {
                     notification.warning({
                         message: 'Actualización Necesaria',
-                        description: 'Tu contraseña no cumple con los requisitos de seguridad. Por favor, actualízala.',
+                        description: 'Debes actualizar tu contraseña para que puedas utilizar las funcionalidades del sistema',
                         duration: 10
                     });
                     navigate('/cambiar-contraseña');
@@ -122,12 +124,12 @@ export const Login = () => {
     )
 }
 
-//Codigo de respaldo en caso que el codigo nuevo no funcione
+
+//Codigo actualizado
 // import './Login.css';
 // import { useAuth } from '../../context/AuthContext';
 // import { useState, useEffect } from 'react';
 // import { FaEye, FaEyeSlash } from 'react-icons/fa';
-
 // import { useNavigate } from 'react-router-dom';
 // import { useForm } from 'react-hook-form';
 // import { notification } from 'antd';
@@ -138,7 +140,6 @@ export const Login = () => {
 // ];
 
 // export const Login = () => {
-
 //     const [backgroundImage, setBackgroundImage] = useState(images[0]);
 //     const [showPassword, setShowPassword] = useState(false);
 
@@ -160,28 +161,40 @@ export const Login = () => {
 //         setShowPassword(!showPassword);
 //     };
 
+//     const validatePassword = (password) => {
+//         const hasUpperCase = /[A-Z]/.test(password);
+//         const hasNumbers = /[0-9].*[0-9].*[0-9]/.test(password);
+//         const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+//         const isValidLength = password.length >= 6;
+
+//         return hasUpperCase && hasNumbers && hasSpecialChar && isValidLength;
+//     };
+
 //     const onSubmit = handleSubmit(async (data) => {
-
 //         try {
-
 //             const user = await login(data);
 
-//             console.log(user)
-
 //             if (user) {
-//                 navigate('/home');
-
-//                 notification.success({
-//                     message: '¡Inicio de Sesión Exitoso!',
-//                     description: `Bienvenido ${user.nombre}`,
-//                     duration: 3
-//                 });
+//                 if (!validatePassword(data.contraseña)) {
+//                     notification.warning({
+//                         message: 'Actualización Necesaria',
+//                         description: 'Debes actualizar tu contraseña para que puedas utilizar las funcionalidades del sistema',
+//                         duration: 10
+//                     });
+//                     navigate('/cambiar-contraseña');
+//                 } else {
+//                     navigate('/home');
+//                     notification.success({
+//                         message: '¡Inicio de Sesión Exitoso!',
+//                         description: `Bienvenido ${user.nombre}`,
+//                         duration: 3
+//                     });
+//                 }
 //             }
 
 //         } catch (error) {
 //             console.log(error);
 //         }
-
 //     });
 
 //     return (

@@ -146,7 +146,8 @@ export const HistoriasCG = () => {
             <div className="container-fluid d-flex justify-content-between align-items-center">
                 <h4>Historias Clinicas Generales del Expediente: {numExpediente}</h4>
 
-                <Button style={{ backgroundColor: 'red', color: 'white' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
+                {/* <Button style={{ backgroundColor: 'red', color: 'white' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button> */}
+                <Button style={{ variant:'outlined', color: 'Black' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
             </div>
             <div className='container-fluid'>
                 <Table

@@ -117,7 +117,8 @@ export const EditarNota = () => {
         <div className="container-fluid">
             <div className="d-flex justify-content-between align-items-center">
                 <h4>Editar Nota de Evolución</h4>
-                <Button style={{ backgroundColor: 'red', color: 'white' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
+                {/* <Button style={{ backgroundColor: 'red', color: 'white' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button> */}
+                <Button style={{ variant:'outlined', color: 'Black' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
             </div>
 
             <form onSubmit={handleEditNota} className='mt-4'>

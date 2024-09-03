@@ -889,7 +889,8 @@ export const HistoriaCentro = () => {
         <>
             <div className='container-fluid d-flex align-items-center justify-content-between'>
                 <h4>Buscar Historia Clinica</h4>
-                <Button style={{ backgroundColor: 'red', color: 'white' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
+                {/* <Button style={{ backgroundColor: 'red', color: 'white' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button> */}
+                <Button style={{ variant:'outlined', color: 'Black' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
             </div>
  
             <div className="container-fluid mt-3">

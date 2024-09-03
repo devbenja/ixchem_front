@@ -127,7 +127,8 @@ export const EditarUsuario = () => {
         <div className="container-fluid">
             <div className="container-fluid d-flex align-items-center justify-content-between">
                 <h4>Editar Usuario</h4>
-                <Button style={{ backgroundColor: 'red', color: 'white' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
+                {/* <Button style={{ backgroundColor: 'red', color: 'white' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button> */}
+                <Button style={{ variant:'outlined', color: 'Black' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
             </div>
 
             <form className='container-fluid mt-4' onSubmit={(e) => e.preventDefault()}>
