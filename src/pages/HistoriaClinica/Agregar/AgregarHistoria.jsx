@@ -23,10 +23,46 @@ export const AgregarHistoria = () => {
     const refAntPatFam = useRef(null);
     const refInfo = useRef(null);
 
-    const [isSelectDisabled, setIsSelectDisabled] = useState(false);
     const [isHerited, setIsHerited] = useState(false);
     const fuma = watch('fuma'); // Obtenemos el valor actual de "fuma"
     
+    const [tipoIdentificacion, setTipoIdentificacion] = useState("");
+    const [identificacion, setIdentificacion] = useState("");
+
+    const handleTipoIdentificacionChange = (e) => {
+        setTipoIdentificacion(e.target.value);
+        setIdentificacion("");
+    };
+
+    const handleIdentificacionChange = (e) => {
+        let valor = e.target.value;
+
+        if (tipoIdentificacion === "categoria1") {
+            // Insertar guiones en las posiciones 3 y 5
+            valor = valor.replace(/[^0-9]/g, ""); // La función me permite eliminar cualquier caracter no numerico
+            if (valor.length > 2) valor = valor.slice(0, 2) + "-" + valor.slice(2);
+            if (valor.length > 5) valor = valor.slice(0, 5) + "-" + valor.slice(5);
+            if (valor.length > 10) valor = valor.slice(0, 10); // Limitar la longitud a 10 caracteres (dd-mm-yyyy)
+        } else if (tipoIdentificacion === "categoria2") {
+            // Insertar guiones en las posiciones 4 y 11 y permitir una letra en la posición 16
+            valor = valor.replace(/[^0-9A-Za-z]/g, ""); // Eliminar caracteres que no sean números o letras
+            if (valor.length > 3) valor = valor.slice(0, 3) + "-" + valor.slice(3);
+            if (valor.length > 10) valor = valor.slice(0, 10) + "-" + valor.slice(10);
+            if (valor.length > 15) {
+                let letra = valor.slice(15, 16).toUpperCase(); // Obtengo y convierto la letra a mayúscula
+                if (/[^A-Z]/.test(letra)) { // Verificar si no es una letra del abecedario
+                    letra = ""; // Si no es válida, eliminarla
+                }
+                valor = valor.slice(0, 15) + letra; // Insertar la letra validada
+            }
+            if (valor.length > 16) valor = valor.slice(0, 16); // Limitar la longitud a 16 caracteres
+        } else if (tipoIdentificacion === "categoria3") {
+            // Limitar la longitud a 30 caracteres no estamos seguros de cuantos tiene el pasaporte INVESTIGAR
+            valor = valor.slice(0, 30);
+        }
+
+        setIdentificacion(valor);
+    };
 
     //POST PACIENTE - DATOS PERSONALES
     const onSubmitPaciente = handleSubmitPaciente(async (data) => {
@@ -70,44 +106,7 @@ export const AgregarHistoria = () => {
         }
  
     });
-//     const onSubmitPaciente = handleSubmitPaciente(async (data) => {
-
-//         setIsSelectDisabled(true);
-
-//         try {
-
-//             const response = await axios.post(`${baseURL}/bdtpaciente/post`, data);
-
-//             const dataWithAge={
-//                 ...data,
-//                 EDAD: 0
-//             }
-
-//             notification.success({
-//                 message: '¡Éxito!',
-//                 description: `Paciente ${response.data.primerNombre} creado!`,
-//                 duration: 3
-//             });
-
-//             setNumExp(response.data.numExpediente);
-
-//             reset();
-
-//             if (refAntPer.current) {
-//                 const tab = new window.bootstrap.Tab(refAntPer.current);
-//                 tab.show();
-//             }
-
-//         } catch (error) {
-
-//             notification.error({
-//                 message: 'Error al Crear Paciente',
-//                 description: `${error.response.data.message}`,
-//                 duration: 3
-//             });
-//         }
-//     });
-
+    
     // POST ANTECEDENTES PERSONALES
     const onSubmitAntPersonales = handleSubmitAntPer(async (data) => {
 
@@ -376,7 +375,6 @@ export const AgregarHistoria = () => {
                                             onChange={(e) => {
                                                 setIsHerited(false); // Permite editar si se cambia manualmente
                                             }}
-                                            //disabled={isSelectDisabled}
                                         />
                                     </div>
 
@@ -422,7 +420,7 @@ export const AgregarHistoria = () => {
 
                                     <div className="col-sm-2">
                                         <label htmlFor="cedula" className="form-label">Tipo de Identificación</label>
-                                        <select className="form-select">
+                                        <select className="form-select" value={tipoIdentificacion} onChange={handleTipoIdentificacionChange}>
                                             <option value="">Seleccionar...</option>
                                             <option value="categoria1">Fecha de Nacimiento</option>
                                             <option value="categoria2">Cedula de Identificación</option>
@@ -431,15 +429,17 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="row g-3"></div>
-                                    <div className="col-sm-2">
-                                        <label htmlFor="expediente" className="form-label">Identificación</label>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            title="Insertar Identificacion"
-                                            {...registerPaciente('cedula', { required: true, maxLength: 20 })}
-                                        />
+                                        <div className="col-sm-2">
+                                            <label htmlFor="expediente" className="form-label">Identificación</label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                title="Insertar Identificación"
+                                                value={identificacion}
+                                                onChange={handleIdentificacionChange} // Me permite hacer el cambio y la validación
+                                            />
                                     </div>
+
                                     <div className="col-sm-2">
                                         <label htmlFor="nacimiento" className="form-label">Fecha de nacimiento*</label>
                                         <input
@@ -450,31 +450,17 @@ export const AgregarHistoria = () => {
                                         />
                                     </div>
 
-                                    {/* <div className="col-sm-2">
-                                        <label htmlFor="edad" className="form-label">Edad</label>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            title="Insertar Identificacion"
-                                            {...registerPaciente('edad', { maxLength: 2 })}
-                                        />
-                                    </div> */}
-
-                                    {/* <div className="col-sm-1">
-                                        <label htmlFor="telefono" className="form-label">Teléfono*</label>
-                                        <input type="text" maxLength="8" className="form-control" id="telefono" title="El número telefónico debe tener 8 digitos " required / />
-                                    </div> */}
-
                                     <div className="col-sm-3">
                                         <label htmlFor="escolaridad" className="form-label">Escolaridad*</label>
                                         <select defaultValue="Menu de Selección" className="form-select" id="escolaridad" {...registerPaciente("escolaridad", { required: true })}>
                                             <option value="">Menu de Selección</option>
-                                            <option value="Bachiller">Bachiller</option>
                                             <option value="Primaria completa">Primaria completa</option>
                                             <option value="Primaria incompleta">Primaria incompleta</option>
+                                            <option value="Bachiller">Bachiller</option>
                                             <option value="Secundaria incompleta">Secundaria incompleta</option>
                                             <option value="Técnico superior">Técnico superior</option>
                                             <option value="Universitario">Universitario</option>
+                                            <option value="Otros">Otros</option>
                                         </select>
 
                                     </div>
@@ -483,11 +469,12 @@ export const AgregarHistoria = () => {
                                         <label htmlFor="profesion" className="form-label">Profesión*</label>
                                         <select defaultValue="Menu de Selección" className="form-select" id="profesion" {...registerPaciente("profesion", { required: true })}>
                                             <option value="">Menu de Selección</option>
-                                            <option value="Ama de casa">Ama de casa</option>
                                             <option value="Estudiante">Estudiante</option>
+                                            <option value="Ama de casa">Ama de casa</option>
                                             <option value="Oficinista">Oficinista</option>
                                             <option value="Operaria">Operaria</option>
                                             <option value="Sector informal">Sector informal</option>
+                                            <option value="Otros">Otros</option>
                                         </select>
 
                                     </div>
@@ -684,7 +671,6 @@ export const AgregarHistoria = () => {
                                             title="El Núm. Expediente debe tener 5 números, un guión (-) y el año al final"
                                             {...registerAntecPer('numExpediente')}
                                             //readOnly
-                                            //disabled={isSelectDisabled}
                                             readOnly={isHerited} // Solo es de solo lectura si se ha heredado
                                             onChange={(e) => {
                                                 if (!isHerited) {
@@ -1206,7 +1192,6 @@ export const AgregarHistoria = () => {
                                             title="El Núm. Expediente debe tener 5 números, un guión (-) y el año al final"
                                             {...registerAntecPerPat('numExpediente')}
                                             //readOnly
-                                            //disabled={isSelectDisabled}
                                             readOnly={isHerited} // Solo es de solo lectura si se ha heredado
                                             onChange={(e) => {
                                                 if (!isHerited) {
@@ -1340,7 +1325,6 @@ export const AgregarHistoria = () => {
                                         </div>
                                     </div>
 
-
                                     <div className="col-sm-2">
                                         <label htmlFor="VIF" className="form-label">Violencia Intrafamiliar</label>
 
@@ -1386,7 +1370,6 @@ export const AgregarHistoria = () => {
                                         </div>
                                     </div>
 
-
                                     <div className="col-sm-2">
                                         <label htmlFor="hipertension" className="form-label">Hipertensión*</label>
 
@@ -1401,7 +1384,6 @@ export const AgregarHistoria = () => {
                                             </div>
                                         </div>
                                     </div>
-
 
                                     <div className="col-sm-2">
                                         <label htmlFor="hepatopatias" className="form-label">Hepatopatías*</label>
@@ -1418,7 +1400,6 @@ export const AgregarHistoria = () => {
                                         </div>
                                     </div>
 
-
                                     <div className="col-sm-2">
                                         <label htmlFor="nefropatias" className="form-label">Nefropatías*</label>
 
@@ -1433,7 +1414,6 @@ export const AgregarHistoria = () => {
                                             </div>
                                         </div>
                                     </div>
-
 
                                     <div className="col-sm-2">
                                         <label htmlFor="cirugias" className="form-label">Cirugías*</label>
@@ -1451,7 +1431,6 @@ export const AgregarHistoria = () => {
 
                                     </div>
 
-
                                     <div className="col-sm-2">
                                         <label htmlFor="anemia" className="form-label">Anemia*</label>
 
@@ -1466,7 +1445,6 @@ export const AgregarHistoria = () => {
                                             </div>
                                         </div>
                                     </div>
-
 
                                     <div className="col-sm-2">
                                         <label htmlFor="alergia_medi" className="form-label">Alergia Medicamentos</label>
@@ -1483,7 +1461,6 @@ export const AgregarHistoria = () => {
                                         </div>
                                     </div>
 
-
                                     <div className="col-sm-2">
                                         <label htmlFor="alergia_ali" className="form-label">Alergia Alimentos*</label>
 
@@ -1499,12 +1476,10 @@ export const AgregarHistoria = () => {
                                         </div>
                                     </div>
 
-
                                     {/* <div className="col-sm-12">
                                         <label htmlFor="Observaciones" className="form-label">Observaciones</label>
                                         <input type="text" maxLength="140" className="form-control" id="Observaciones" />
                                     </div> */}
-
 
                                     <div className="d-grid gap-2 d-md-flex justify-content-md-end mt-5">
                                         <button className="btn btn-success btn-save me-md-2" type="submit">Guardar</button>
@@ -1707,7 +1682,6 @@ export const AgregarHistoria = () => {
                                             title="El Núm. Expediente debe tener 5 números, un guión (-) y el año al final"
                                             {...registerAntecPatFam('numExpediente')}
                                             //readOnly
-                                            //disabled={isSelectDisabled}
                                             readOnly={isHerited} // Solo es de solo lectura si se ha heredado
                                             onChange={(e) => {
                                                 if (!isHerited) {
@@ -1746,7 +1720,6 @@ export const AgregarHistoria = () => {
                                         title="El Núm. Expediente debe tener 5 números, un guión (-) y el año al final"
                                         {...registerInformacion('numExpediente')}
                                         //readOnly
-                                        //disabled={isSelectDisabled}
                                         readOnly={isHerited} // Solo es de solo lectura si se ha heredado
                                             onChange={(e) => {
                                                 if (!isHerited) {
