@@ -51,9 +51,10 @@ export const ListaEpicrisis = () => {
 
     const columns = [
         {
-            title: 'Fecha',
-            dataIndex: 'fecha',
-            key: 'fecha',
+            title: 'Número de Expediente',
+            dataIndex: 'nuM_EXPEDIENTE',
+            key: 'nuM_EXPEDIENTE',
+            render: (nuM_EXPEDIENTE) => <a>{nuM_EXPEDIENTE}</a>,
         },
         {
             title: 'Nombre del Paciente',
@@ -64,10 +65,9 @@ export const ListaEpicrisis = () => {
             ),
         },
         {
-            title: 'Número de Expediente',
-            dataIndex: 'nuM_EXPEDIENTE',
-            key: 'nuM_EXPEDIENTE',
-            render: (nuM_EXPEDIENTE) => <a>{nuM_EXPEDIENTE}</a>,
+            title: 'Fecha',
+            dataIndex: 'fecha',
+            key: 'fecha',
         },
         {
             title: 'Código MINSA',

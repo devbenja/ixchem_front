@@ -481,14 +481,13 @@ export const AgregarHistoria = () => {
                                         </select>
                                     </div>
 
-                                    
                                     <div className="col-sm-2">
                                         <label htmlFor="expediente" className="form-label">Identificación<span style={{color: 'red'}}> * </span>
                                         </label>
                                         <input
                                             type="text"
                                             className="form-control"
-                                            title="Insertar Identificación"
+                                            title="Selecciona el tipo de identificación para llenar este campo"
                                             value={cedula}
                                             {...registerPaciente('cedula', { required: true, maxLength: 20 })}
                                             onChange={handleIdentificacionChange} // Me permite hacer el cambio y la validación
@@ -502,6 +501,7 @@ export const AgregarHistoria = () => {
                                         <input
                                             type="date"
                                             className="form-control"
+                                            title="Fecha de nacimiento"
                                             id="fechaNac"
                                             {...registerPaciente('fechaNac', { required: true })}
                                         />
@@ -529,10 +529,22 @@ export const AgregarHistoria = () => {
                                         <select defaultValue="Menu de Selección" className="form-select" id="profesion" {...registerPaciente("profesion", { required: true })}>
                                             <option value="">Menu de Selección</option>
                                             <option value="Estudiante">Estudiante</option>
+                                            <option value="Administrador(a)">Adminitrador(a)</option>
                                             <option value="Ama de casa">Ama de casa</option>
+                                            <option value="Arquitecto(a)">Arquitecto(a)</option>
+                                            <option value="Cocinero(a)">Cocinero(a)</option>
+                                            <option value="Contador(a)">Contador(a)</option>
+                                            <option value="Docente">Docente</option>
+                                            <option value="Doctor(a)">Doctor(a)</option>
+                                            <option value="Enfermero(a)">Enfermero(a)</option>
+                                            <option value="Ingeniero(a)">Ingeniero(a)</option>
+                                            <option value="Licenciado(a)">Licenciado(a)</option>
                                             <option value="Oficinista">Oficinista</option>
                                             <option value="Operaria">Operaria</option>
+                                            <option value="Recepcionista">Recepcionista</option>
+                                            <option value="Secretario(a)">Secretario(a)</option>
                                             <option value="Sector informal">Sector informal</option>
+                                            <option value="Sector informal">Sector formal</option>
                                             <option value="Otros">Otros</option>
                                         </select>
 
@@ -582,6 +594,7 @@ export const AgregarHistoria = () => {
                                             min="1"
                                             className="form-control"
                                             id="presion"
+                                            placeholder="mm/Hg"
                                             {...registerPaciente("presion", { required: true })}
                                         />
                                     </div>
@@ -662,7 +675,7 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-3">
-                                        <label htmlFor="usuaria" className="form-label">Usuaria<span style={{color: 'red'}}> * </span>
+                                        <label htmlFor="usuaria" className="form-label">Usuaria(o)<span style={{color: 'red'}}> * </span>
                                         </label>
                                         <div className="d-flex align-items-center justify-content-center gap-4 border form-control">
                                             <div className="form-check">
@@ -673,7 +686,7 @@ export const AgregarHistoria = () => {
                                                     className="form-check-input"
                                                     {...registerPaciente('usuaria', { required: true })}
                                                 />
-                                                <label className="form-check-label" htmlFor="nueva">Nueva</label>
+                                                <label className="form-check-label" htmlFor="nueva">Nueva(o)</label>
                                             </div>
                                             <div className="form-check">
                                                 <input
@@ -784,7 +797,7 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="embarazada" className="form-label">¿Has estado embarazada?<span style={{color: 'red'}}> * </span>
+                                        <label htmlFor="embarazada" className="form-label">¿Has estado embarazada?<span style={{color: 'red'}}>* </span>
                                         </label>
                                         <div className="form-check">
                                             <input
@@ -1117,7 +1130,7 @@ export const AgregarHistoria = () => {
                                                 value={true}
                                                 {...registerAntecPer('estadoPareja', { required: true })}
                                             />
-                                            <label className="form-check-label" htmlFor="sola">Sola</label>
+                                            <label className="form-check-label" htmlFor="sola">Sola(o)</label>
                                         </div>
                                         <div className="form-check">
                                             <input
@@ -1128,7 +1141,7 @@ export const AgregarHistoria = () => {
                                                 value={false}
                                                 {...registerAntecPer('estadoPareja', { required: true })}
                                             />
-                                            <label className="form-check-label" htmlFor="acompaniada">Acompañada</label>
+                                            <label className="form-check-label" htmlFor="acompaniada">Acompañada(o)</label>
                                         </div>
                                     </div>
 

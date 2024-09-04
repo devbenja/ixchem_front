@@ -61,9 +61,10 @@ export const BuscarEpicrisis = () => {
 
     const columns = [
         {
-            title: 'Fecha',
-            dataIndex: 'fecha',
-            key: 'fecha',
+            title: 'No. de Expediente',
+            dataIndex: 'nuM_EXPEDIENTE',
+            key: 'nuM_EXPEDIENTE',
+            render: (nuM_EXPEDIENTE) => <a>{nuM_EXPEDIENTE}</a>
         },
         {
             title: 'Nombre del Paciente',
@@ -74,10 +75,9 @@ export const BuscarEpicrisis = () => {
             ),
         },
         {
-            title: 'No. de Expediente',
-            dataIndex: 'nuM_EXPEDIENTE',
-            key: 'nuM_EXPEDIENTE',
-            render: (nuM_EXPEDIENTE) => <a>{nuM_EXPEDIENTE}</a>
+            title: 'Fecha',
+            dataIndex: 'fecha',
+            key: 'fecha',
         },
         {
             title: 'Acciones',

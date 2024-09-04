@@ -101,7 +101,7 @@ export const AgregarEpicrisis = () => {
             newErrors.resultado = "El resultado es obligatorio";
         }
         if (!formData.tratamiento.trim()) {
-            newErrors.tratamiento = "El tratamiento de egreso es obligatorio";
+            newErrors.tratamiento = "El tratamiento es obligatorio";
         }
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -125,6 +125,24 @@ export const AgregarEpicrisis = () => {
                 description: `Epicrisis Creada con Éxito`,
                 duration: 3
             });
+            // Limpiar los campos del formulario después de guardar exitosamente
+            setFormData({
+                codEpicrisis: 0,
+                fecha: "",
+                hora: "",
+                fechaIngreso: "",
+                fechaEgreso: "",
+                diagIngreso: "",
+                diagEgreso: "",
+                resultado: "",
+                tratamiento: "",
+                descartes: "",
+                complicaciones: "",
+                recomendaciones: "",
+                datosRelevantes: "",
+                numExpediente: "",
+            });
+
         } catch (error) {
             notification.error({
                 message: '¡Error!',
