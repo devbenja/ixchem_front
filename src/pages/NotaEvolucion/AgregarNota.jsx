@@ -60,12 +60,15 @@ export const AgregarNota = () => {
         if (!formData.temperatura) newErrors.temperatura = "La temperatura es un campo requerido.";
         if (!formData.presion) newErrors.presion = "La presión es un campo requerido.";
         if (!formData.numeroNota) newErrors.nota = "El número de nota es un campo requerido.";
+        if (!formData.frecCardiaca) newErrors.frecCardiaca = "La frecuencia cardiaca es un campo requerido.";
+        if (!formData.frecResp) newErrors.frecResp = "La frecuencia respiratoria es un campo requerido.";
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0; // Si no hay errores, devuelve true
     };
 
     const handleSubmitNota = async () => {
+        
         if (!validateForm()) {
             notification.error({
                 message: '¡Error!',
@@ -148,6 +151,32 @@ export const AgregarNota = () => {
             <h4>Agregar Nota de Evolución</h4>
             <form onSubmit={(e) => e.preventDefault()} className='mt-4'>
                 <div className="row g-3">
+                <div className="col-sm-3">
+                        <label htmlFor="numExpediente" className="form-label">Numero Expediente<span style={{ color: 'red' }}> *</span></label>
+                        <input
+                            type="text"
+                            className={`form-control ${errors.numExpediente ? 'is-invalid' : ''}`} // Aplicación de clase de error
+                            name="numExpediente"
+                            onChange={handleChange}
+                            value={formData.numExpediente}
+                        />
+                        {errors.numExpediente && <div className="invalid-feedback">{errors.numExpediente}</div>} {/* Mensaje de error */}
+                    </div>
+
+                    <div className="col-sm-3">
+                        <label htmlFor="numeroNota" className="form-label">No. Nota<span style={{ color: 'red' }}> *</span></label>
+                        <input
+                            type="number"
+                            min="1"
+                            className={`form-control ${errors.nota ? 'is-invalid' : ''}`}
+                            //className="form-control"
+                            name="numeroNota"
+                            onChange={handleChange}
+                            value={formData.numeroNota}
+                        />
+                        {errors.nota && <div className="invalid-feedback">{errors.nota}</div>} {/* Mensaje de error */}
+                    </div>
+
                     <div className="col-sm-3">
                         <label htmlFor="fecha" className="form-label">Fecha<span style={{ color: 'red' }}> *</span></label>
                         <input
@@ -159,6 +188,7 @@ export const AgregarNota = () => {
                         />
                         {errors.fecha && <div className="invalid-feedback">{errors.fecha}</div>} {/* Mensaje de error */}
                     </div>
+                    
                     <div className="col-sm-3">
                         <label htmlFor="hora" className="form-label">Hora<span style={{ color: 'red' }}> *</span></label>
                         <input
@@ -170,17 +200,7 @@ export const AgregarNota = () => {
                         />
                         {errors.hora && <div className="invalid-feedback">{errors.hora}</div>} {/* Mensaje de error */}
                     </div>
-                    <div className="col-sm-3">
-                        <label htmlFor="numExpediente" className="form-label">Numero Expediente<span style={{ color: 'red' }}> *</span></label>
-                        <input
-                            type="text"
-                            className={`form-control ${errors.numExpediente ? 'is-invalid' : ''}`} // Aplicación de clase de error
-                            name="numExpediente"
-                            onChange={handleChange}
-                            value={formData.numExpediente}
-                        />
-                        {errors.numExpediente && <div className="invalid-feedback">{errors.numExpediente}</div>} {/* Mensaje de error */}
-                    </div>
+
                     <div className="col-sm-3">
                         <label htmlFor="codDoctor" className="form-label">Codigo MINSA<span style={{ color: 'red' }}> *</span></label>
                         <input
@@ -241,42 +261,33 @@ export const AgregarNota = () => {
                         />
                         {errors.presion && <div className="invalid-feedback">{errors.presion}</div>} {/* Mensaje de error */}
                     </div>
-                    <div className="col-sm-3">
-                        <label htmlFor="numeroNota" className="form-label">No. Nota<span style={{ color: 'red' }}> *</span></label>
-                        <input
-                            type="number"
-                            min="1"
-                            className={`form-control ${errors.nota ? 'is-invalid' : ''}`}
-                            //className="form-control"
-                            name="numeroNota"
-                            onChange={handleChange}
-                            value={formData.numeroNota}
-                        />
-                        {errors.nota && <div className="invalid-feedback">{errors.nota}</div>} {/* Mensaje de error */}
-                    </div>
 
                     <div className="col-sm-3">
-                        <label htmlFor="frecCardiaca" className="form-label">Frecuencia Cardiaca</label>
+                        <label htmlFor="frecCardiaca" className="form-label">Frecuencia Cardiaca<span style={{ color: 'red' }}> *</span></label>
                         <input
                             type="number"
                             min="1"
-                            className="form-control"
+                            //className="form-control"
+                            className={`form-control ${errors.frecCardiaca ? 'is-invalid' : ''}`} // Aplicación de clase de error
                             name="frecCardiaca"
                             value={formData.frecCardiaca}
                             onChange={handleChange}
                         />
+                        {errors.frecCardiaca && <div className="invalid-feedback">{errors.frecCardiaca}</div>} {/* Mensaje de error */}
                     </div>
 
                     <div className="col-sm-3">
-                        <label htmlFor="frecResp" className="form-label">Frecuencia Respiratoria</label>
+                        <label htmlFor="frecResp" className="form-label">Frecuencia Respiratoria<span style={{ color: 'red' }}> *</span></label>
                         <input
                             type="number"
                             min="1"
-                            className="form-control"
+                            //className="form-control"
+                            className={`form-control ${errors.frecResp ? 'is-invalid' : ''}`} // Aplicación de clase de error
                             name="frecResp"
                             value={formData.frecResp}
                             onChange={handleChange}
                         />
+                        {errors.frecResp && <div className="invalid-feedback">{errors.frecResp}</div>} {/* Mensaje de error */}
                     </div>
 
                     <div className="col-sm-12">
@@ -291,6 +302,7 @@ export const AgregarNota = () => {
                         >
                         </textarea>
                     </div>
+
                     <div className="col-sm-12">
                         <label htmlFor="planes" className="form-label">Planes</label>
                         <textarea

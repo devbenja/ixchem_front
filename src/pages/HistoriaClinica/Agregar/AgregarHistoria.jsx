@@ -122,7 +122,7 @@ export const AgregarHistoria = () => {
             } else {
                 notification.error({
                     message: 'Error al Crear Paciente',
-                    description: 'Ha ocurrido un error inesperado.',
+                    description: 'El usuario con ese numero de expediente ya esta registrado, ingresar uno diferente',
                     duration: 3
                 });
             }
@@ -579,6 +579,7 @@ export const AgregarHistoria = () => {
                                         </label>
                                         <input
                                             type="number"
+                                            min="1"
                                             className="form-control"
                                             id="presion"
                                             {...registerPaciente("presion", { required: true })}

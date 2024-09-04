@@ -441,7 +441,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
                 altoRiesgo: false,
                 fecha: "",
                 numExpediente: '',
-                codDoctor: "",
+                //codDoctor: "",
                 nuM_CITA: 0,
                 iD_CITA: 0
             });
@@ -491,6 +491,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
                 console.log('xd')
                 const tab = new window.bootstrap.Tab(HCGTab.current);
                 tab.show();
+                setIsSelectDisabled(false);
             }
 
         } catch (error) {
