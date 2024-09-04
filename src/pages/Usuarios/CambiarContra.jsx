@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { notification } from "antd";
 import { useNavigate } from "react-router-dom";
-
 import { baseURL } from "../../api/apiURL";
 import { useAuth } from "../../context/AuthContext";
+import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons'; 
 
 export const CambiarContra = () => {
     const { user, logout } = useAuth();
@@ -15,6 +15,12 @@ export const CambiarContra = () => {
         contraseñaActual: "",
         nuevaContraseña: "",
         confirmarContraseña: ""
+    });
+
+    const [showPassword, setShowPassword] = useState({
+        actual: false,
+        nueva: false,
+        confirmar: false,
     });
 
     useEffect(() => {
@@ -34,11 +40,18 @@ export const CambiarContra = () => {
         });
     };
 
+    const togglePasswordVisibility = (field) => {
+        setShowPassword((prevState) => ({
+            ...prevState,
+            [field]: !prevState[field]
+        }));
+    };
+
     const validatePassword = (password) => {
         const hasUpperCase = /[A-Z]/.test(password);
         const hasNumbers = /[0-9].*[0-9].*[0-9]/.test(password);
         const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-        const isValidLength = password.length >= 6;
+        const isValidLength = password.length >= 8;
 
         let errorMessage = '';
 
@@ -52,7 +65,7 @@ export const CambiarContra = () => {
             errorMessage += 'La contraseña debe contener al menos un símbolo especial. Por ejemplo: !¡ # $ & - ¿?';
         }
         if (!isValidLength) {
-            errorMessage += 'La contraseña debe tener al menos 6 caracteres. ';
+            errorMessage += 'La contraseña debe tener al menos 8 caracteres. ';
         }
 
         return errorMessage;
@@ -96,7 +109,6 @@ export const CambiarContra = () => {
                 duration: 5
             });
 
-            // Limpiar los campos después de una actualización exitosa
             setFormData({
                 codAdmin: user.codAdmin,
                 contraseñaActual: "",
@@ -104,11 +116,10 @@ export const CambiarContra = () => {
                 confirmarContraseña: ""
             });
 
-            // Esperar unos segundos antes de cerrar sesión
             setTimeout(() => {
                 logout();
                 navigate('/');
-            }, 7000); // Esperar 7 segundos (7000 ms) antes de redirigir
+            }, 7000); 
 
         } catch (error) {
             notification.error({
@@ -138,31 +149,52 @@ export const CambiarContra = () => {
                 <div className="row mb-3">
                     <div className="col">
                         <label className="form-label">Contraseña Actual</label>
-                        <input type="text" name="contraseñaActual" value={formData.contraseñaActual} onChange={handleChange} className="form-control" />
+                        <div className="input-group">
+                            <input 
+                                type={showPassword.actual ? "text" : "password"} 
+                                name="contraseñaActual" 
+                                value={formData.contraseñaActual} 
+                                onChange={handleChange} 
+                                className="form-control" 
+                            />
+                            <span className="input-group-text" onClick={() => togglePasswordVisibility('actual')}>
+                                {showPassword.actual ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+                            </span>
+                        </div>
                     </div>
                     <div className="col">
                         <label className="form-label">Contraseña Nueva</label>
-                        <input 
-                            type="password" 
-                            name="nuevaContraseña" 
-                            value={formData.nuevaContraseña} 
-                            onChange={handleChange} 
-                            className="form-control" 
-                            onCopy={preventCopyPaste}
-                            onPaste={preventCopyPaste}
-                        />
+                        <div className="input-group">
+                            <input 
+                                type={showPassword.nueva ? "text" : "password"} 
+                                name="nuevaContraseña" 
+                                value={formData.nuevaContraseña} 
+                                onChange={handleChange} 
+                                className="form-control" 
+                                onCopy={preventCopyPaste}
+                                onPaste={preventCopyPaste}
+                            />
+                            <span className="input-group-text" onClick={() => togglePasswordVisibility('nueva')}>
+                                {showPassword.nueva ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+                            </span>
+                        </div>
                     </div>
                     <div className="col">
                         <label className="form-label">Confirmar Contraseña Nueva</label>
-                        <input 
-                            type="password" 
-                            name="confirmarContraseña" 
-                            value={formData.confirmarContraseña} 
-                            onChange={handleChange} 
-                            className="form-control" 
-                            onCopy={preventCopyPaste}
-                            onPaste={preventCopyPaste}
-                        />
+                        <div className="input-group">
+                            <input 
+                                type={showPassword.confirmar ? "text" : "password"} 
+                                name="confirmarContraseña" 
+                                value={formData.confirmarContraseña} 
+                                onChange={handleChange} 
+                                className="form-control" 
+                                onCopy={preventCopyPaste}
+                                onPaste={preventCopyPaste}
+                            />
+                            <span className="input-group-text" onClick={() => togglePasswordVisibility('confirmar')}>
+                                {showPassword.confirmar ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+                            </span>
+                        </div>
                     </div>
                 </div>
                 <div className='mt-4 d-flex gap-2'>
@@ -172,19 +204,20 @@ export const CambiarContra = () => {
             </form>
         </div>
     );
-}
+};
 
 //Ultimo codigo
 // import { useState, useEffect } from "react";
 // import axios from "axios";
 // import { notification } from "antd";
+// import { useNavigate } from "react-router-dom";
 
 // import { baseURL } from "../../api/apiURL";
 // import { useAuth } from "../../context/AuthContext";
-// import { Navigate } from "react-router-dom";
 
 // export const CambiarContra = () => {
-//     const { user } = useAuth();
+//     const { user, logout } = useAuth();
+//     const navigate = useNavigate();
 
 //     const [formData, setFormData] = useState({
 //         codAdmin: 0,
@@ -210,12 +243,11 @@ export const CambiarContra = () => {
 //         });
 //     };
 
-//     //Validación para los caracteres que deben tener las contraseñas ojito
 //     const validatePassword = (password) => {
 //         const hasUpperCase = /[A-Z]/.test(password);
 //         const hasNumbers = /[0-9].*[0-9].*[0-9]/.test(password);
 //         const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-//         const isValidLength = password.length >= 6;
+//         const isValidLength = password.length >= 8;
 
 //         let errorMessage = '';
 
@@ -229,7 +261,7 @@ export const CambiarContra = () => {
 //             errorMessage += 'La contraseña debe contener al menos un símbolo especial. Por ejemplo: !¡ # $ & - ¿?';
 //         }
 //         if (!isValidLength) {
-//             errorMessage += 'La contraseña debe tener al menos 6 caracteres. ';
+//             errorMessage += 'La contraseña debe tener al menos 8 caracteres. ';
 //         }
 
 //         return errorMessage;
@@ -240,7 +272,6 @@ export const CambiarContra = () => {
 
 //         const errorMessage = validatePassword(formData.nuevaContraseña);
 
-//         //Ojito esta es la validación de la contraseña, es un aviso, no un error por eso el .info
 //         if (errorMessage) {
 //             notification.info({
 //                 message: '¡Atención!',
@@ -250,7 +281,6 @@ export const CambiarContra = () => {
 //             return;
 //         }
 
-//         //Validación en caso que el usuario se equivoque en las contraseñas 
 //         if (formData.nuevaContraseña !== formData.confirmarContraseña) {
 //             notification.error({
 //                 message: '¡Error!',
@@ -261,14 +291,18 @@ export const CambiarContra = () => {
 //         }
 
 //         try {
-//             console.log(formData);
-
 //             await axios.put(`${baseURL}/bdtbusuario/actualizarcontraseña/${user.codAdmin}`, formData);
 
 //             notification.success({
 //                 message: '¡Éxito!',
 //                 description: 'Contraseña actualizada correctamente',
 //                 duration: 3
+//             });
+
+//             notification.info({
+//                 message: 'Información',
+//                 description: 'Se cerrará sesión para reiniciar el sistema',
+//                 duration: 5
 //             });
 
 //             // Limpiar los campos después de una actualización exitosa
@@ -278,8 +312,13 @@ export const CambiarContra = () => {
 //                 nuevaContraseña: "",
 //                 confirmarContraseña: ""
 //             });
-        
-//         //Validación en caso que la contraseña actual sea erronea 
+
+//             // Esperar unos segundos antes de cerrar sesión
+//             setTimeout(() => {
+//                 logout();
+//                 navigate('/');
+//             }, 7000); // Esperar 7 segundos (7000 ms) antes de redirigir
+
 //         } catch (error) {
 //             notification.error({
 //                 message: '¡Error!',
@@ -289,6 +328,18 @@ export const CambiarContra = () => {
 //         }
 //     };
 
+//     const handleClearFields = () => {
+//         setFormData((prevData) => ({
+//             ...prevData,
+//             nuevaContraseña: "",
+//             confirmarContraseña: ""
+//         }));
+//     };
+
+//     const preventCopyPaste = (e) => {
+//         e.preventDefault();
+//     };
+
 //     return (
 //         <div className="container-fluid">
 //             <h4>Cambiar Contraseña</h4>
@@ -296,20 +347,42 @@ export const CambiarContra = () => {
 //                 <div className="row mb-3">
 //                     <div className="col">
 //                         <label className="form-label">Contraseña Actual</label>
-//                         <input type="text" name="contraseñaActual" value={formData.contraseñaActual} onChange={handleChange} className="form-control" />
+//                         <input 
+//                         type="text" 
+//                         name="contraseñaActual" 
+//                         value={formData.contraseñaActual} 
+//                         onChange={handleChange} 
+//                         className="form-control" 
+//                         />
 //                     </div>
 //                     <div className="col">
 //                         <label className="form-label">Contraseña Nueva</label>
-//                         <input type="password" name="nuevaContraseña" value={formData.nuevaContraseña} onChange={handleChange} className="form-control" />
+//                         <input 
+//                             type="password" 
+//                             name="nuevaContraseña" 
+//                             value={formData.nuevaContraseña} 
+//                             onChange={handleChange} 
+//                             className="form-control" 
+//                             onCopy={preventCopyPaste}
+//                             onPaste={preventCopyPaste}
+//                         />
 //                     </div>
 //                     <div className="col">
 //                         <label className="form-label">Confirmar Contraseña Nueva</label>
-//                         <input type="password" name="confirmarContraseña" value={formData.confirmarContraseña} onChange={handleChange} className="form-control" />
+//                         <input 
+//                             type="password" 
+//                             name="confirmarContraseña" 
+//                             value={formData.confirmarContraseña} 
+//                             onChange={handleChange} 
+//                             className="form-control" 
+//                             onCopy={preventCopyPaste}
+//                             onPaste={preventCopyPaste}
+//                         />
 //                     </div>
 //                 </div>
 //                 <div className='mt-4 d-flex gap-2'>
 //                     <button type="submit" className="btn btn-primary">Guardar Contraseña</button>
-//                     {/* <button type="reset" className="btn btn-danger">Cancelar</button> */}
+//                     <button type="button" onClick={handleClearFields} className="btn btn-danger">Limpiar Campos</button>
 //                 </div>
 //             </form>
 //         </div>

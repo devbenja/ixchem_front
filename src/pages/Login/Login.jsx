@@ -1,7 +1,7 @@
 import './Login.css';
 import { useAuth } from '../../context/AuthContext';
 import { useState, useEffect } from 'react';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { FaEye, FaEyeSlash, FaUser, FaLock } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { notification } from 'antd';
@@ -47,7 +47,7 @@ export const Login = () => {
 
             if (user) {
                 const isPasswordValid = validatePassword(data.contraseña);
-                localStorage.setItem('passwordValid', JSON.stringify(isPasswordValid)); // Guardamos la validez de la contraseña
+                localStorage.setItem('passwordValid', JSON.stringify(isPasswordValid));
 
                 if (!isPasswordValid) {
                     notification.warning({
@@ -73,32 +73,34 @@ export const Login = () => {
 
     return (
         <div className="container card-container d-flex justify-content-center align-items-center login-container" style={{ height: '100vh', backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover' }}>
-            <div className="card card-login" style={{ borderRadius: '10px' }}>
+            <div className="card card-login d-flex flex-column">
                 <div className="card-header text-center">
                     <h4 className="mb-0">IXCHEN</h4>
                 </div>
 
                 <div className="card-body border">
-                    {
-                        loginErrors && (
-                            loginErrors.map(err => (
-                                <p key={err} className="text-red-500 text-center">{err}</p>
-                            ))
-                        )
-                    }
+                    {loginErrors && (
+                        loginErrors.map(err => (
+                            <p key={err} className="text-red-500 text-center">{err}</p>
+                        ))
+                    )}
                     <form onSubmit={onSubmit}>
                         <div className="form-group mb-3">
                             <label htmlFor="correo" className='form-label'>Código MINSA</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Ingrese su código MINSA"
-                                {...register('correo', { required: true })}
-                            />
+                            <div className="input-group">
+                                <span className="input-group-text input-icon"><FaUser /></span>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Ingrese su código MINSA"
+                                    {...register('correo', { required: true })}
+                                />
+                            </div>
                         </div>
                         <div className="mb-3">
                             <label htmlFor="contrasena" className='form-label'>Contraseña</label>
                             <div className="input-group">
+                                <span className="input-group-text input-icon"><FaLock /></span>
                                 <input
                                     type={showPassword ? "text" : "password"}
                                     className="form-control"
@@ -107,10 +109,10 @@ export const Login = () => {
                                 />
                                 <button
                                     type="button"
-                                    className="btn btn-outline-secondary"
+                                    className="btn-outline-secondary"
                                     onClick={togglePasswordVisibility}
                                 >
-                                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                                    {showPassword ? <FaEyeSlash color="red" /> : <FaEye color="green" />}
                                 </button>
                             </div>
                         </div>
@@ -121,9 +123,8 @@ export const Login = () => {
                 </div>
             </div>
         </div>
-    )
+    );
 }
-
 
 //Codigo actualizado
 // import './Login.css';

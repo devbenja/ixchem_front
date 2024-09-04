@@ -1,3 +1,40 @@
+.input-group {
+    position: relative;
+}
+
+.input-group-text.input-icon {
+    font-size: 1.2rem; 
+    width: 50px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent; 
+    border: none;
+    color: #572364; 
+    margin-top: 5px; 
+}
+
+.form-control {
+    border-radius: 25px; 
+}
+
+.form-control:focus {
+    box-shadow: none; 
+    outline: none; 
+}
+
+.btn-outline-secondary {
+    border: none;
+    background: transparent;
+    padding: 0;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 10px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 .card-login {
     width: 400px;
@@ -12,4 +49,3 @@
     padding-top: 12px;
     padding-bottom: 12px;
 }
-

@@ -472,7 +472,7 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="cedula" className="form-label">Tipo de Identificación</label>
+                                        <label htmlFor="cedula" className="form-label">Tipo de Identificación <span style={{color: 'red'}}> * </span> </label>
                                         <select className="form-select" value={tipoIdentificacion} onChange={handleTipoIdentificacionChange}>
                                             <option value="">Seleccionar...</option>
                                             <option value="categoria1">Fecha de Nacimiento</option>
