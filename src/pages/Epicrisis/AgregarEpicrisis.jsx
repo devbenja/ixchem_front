@@ -62,17 +62,125 @@ export const AgregarEpicrisis = () => {
 
     }, []);
 
+    //Primer codigo zzz
+    // const handleChange = (e) => {
+    //     const { name, value, type, checked } = e.target;
+        
+    //     setFormData({
+    //         ...formData,
+    //         [name]: type === 'checkbox' ? checked : value
+    //     });
+    //     setErrors((prevErrors) => ({
+    //         ...prevErrors,
+    //         [name]: undefined
+    //     }));
+    // };
+
+    //Posible uso de codigo en caso que el otro falle
+    // const handleChange = (e) => {
+    //     const { name, value } = e.target;
+
+    //     // Si estamos en el campo de hora
+    //     if (name === 'hora') {
+    //         let formattedValue = value.replace(/\D/g, ''); // Eliminar todo excepto números osea horas y minutos
+    //         if (formattedValue.length >= 3) {
+    //             formattedValue = `${formattedValue.slice(0, 2)}:${formattedValue.slice(2, 4)}`;
+    //         }
+
+    //         // Validar que la hora no sea mayor a 23 y los minutos no excedan 59
+    //         const [hours, minutes] = formattedValue.split(':');
+    //         if (hours > 23 || minutes > 59) {
+    //             setErrors(prevErrors => ({
+    //                 ...prevErrors,
+    //                 hora: "Ingrese una hora válida (HH:mm)"
+    //             }));
+    //         } else {
+    //             setErrors(prevErrors => ({
+    //                 ...prevErrors,
+    //                 hora: undefined
+    //             }));
+    //         }
+
+    //         setFormData(prevData => ({
+    //             ...prevData,
+    //             [name]: formattedValue
+    //         }));
+
+    //     } else {
+    //         setFormData({
+    //             ...formData,
+    //             [name]: value
+    //         });
+    //         setErrors(prevErrors => ({
+    //             ...prevErrors,
+    //             [name]: undefined
+    //         }));
+    //     }
+    // };
+
     const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
-        setFormData({
-            ...formData,
-            [name]: type === 'checkbox' ? checked : value
-        });
-        setErrors((prevErrors) => ({
-            ...prevErrors,
-            [name]: undefined
-        }));
-    };
+        const { name, value } = e.target;
+    
+        // Si estamos en el campo de hora
+        if (name === 'hora') {
+            let formattedValue = value.replace(/\D/g, ''); // Eliminar todo excepto números
+    
+            if (formattedValue.length >= 3) {
+                formattedValue = `${formattedValue.slice(0, 2)}:${formattedValue.slice(2, 4)}`;
+            }
+    
+            // Solo aplicar validación si hay una hora con el formato correcto
+            if (formattedValue.length === 5) {
+                const [hours, minutes] = formattedValue.split(':');
+                const hourInt = parseInt(hours, 10);
+                const minutesInt = parseInt(minutes, 10);
+    
+                // Validar horas y minutos
+                if (hourInt > 23 || minutesInt > 59) {
+                    setErrors((prevErrors) => ({
+                        ...prevErrors,
+                        hora: "Ingrese una hora válida (HH:mm)"
+                    }));
+                } else {
+                    setErrors((prevErrors) => ({
+                        ...prevErrors,
+                        hora: undefined
+                    }));
+    
+                    // Lógica para agregar AM/PM
+                    let period = "AM";
+                    let hourFormatted = hourInt;
+    
+                    if (hourInt >= 12) {
+                        period = "PM";
+                        if (hourInt > 12) {
+                            hourFormatted = hourInt - 12; // Convertir a formato 12 horas
+                        }
+                    } else if (hourInt === 0) {
+                        hourFormatted = 12; // 12 AM
+                    }
+    
+                    // Actualizar el valor con AM/PM
+                    formattedValue = `${String(hourFormatted).padStart(2, '0')}:${minutes} ${period}`;
+                }
+            }
+    
+            setFormData((prevData) => ({
+                ...prevData,
+                [name]: formattedValue // Guardar el valor formateado
+            }));
+    
+        } else {
+            setFormData({
+                ...formData,
+                [name]: value
+            });
+            setErrors((prevErrors) => ({
+                ...prevErrors,
+                [name]: undefined
+            }));
+        }
+    };    
 
     const validateForm = () => {
         const newErrors = {};
@@ -147,6 +255,7 @@ export const AgregarEpicrisis = () => {
             notification.error({
                 message: '¡Error!',
                 description: 'Error al crear la epicrisis.',
+                //description: `${error.response.data.message}`,
                 duration: 3
             });
         }
@@ -180,7 +289,23 @@ export const AgregarEpicrisis = () => {
     };
 
     const handleBack = () => {
-        navigate('/home')
+        //navigate('/home')
+        setFormData({
+            codEpicrisis: 0,
+            fecha: "",
+            hora: "",
+            fechaIngreso: "",
+            fechaEgreso: "",
+            diagIngreso: "",
+            diagEgreso: "",
+            resultado: "",
+            tratamiento: "",
+            descartes: "",
+            complicaciones: "",
+            recomendaciones: "",
+            datosRelevantes: "",
+            numExpediente: "",
+        });
     };
 
     return (
@@ -225,7 +350,7 @@ export const AgregarEpicrisis = () => {
                 </div>
 
                 <div className="row mb-3">
-                    <div className="col sm-mt-3">
+                    {/* <div className="col sm-mt-3">
                         <label className="form-label">Hora<span style={{ color: 'red' }}> * </span></label>
                         <input 
                             type="text" 
@@ -236,7 +361,20 @@ export const AgregarEpicrisis = () => {
                             className={`form-control ${errors.hora ? 'is-invalid' : ''}`}
                         />
                         {errors.hora && <div className="invalid-feedback">{errors.hora}</div>}
+                    </div> */}
+
+                    <div className="col sm-mt-3">
+                        <label className="form-label">Hora<span style={{ color: 'red' }}> * </span></label>
+                        <input 
+                            type="text" 
+                            name="hora" 
+                            value={formData.hora} 
+                            onChange={handleChange} 
+                            className={`form-control ${errors.hora ? 'is-invalid' : ''}`}
+                        />
+                        {errors.hora && <div className="invalid-feedback">{errors.hora}</div>}
                     </div>
+
                     <div className="col sm-mt-3">
                         <label className="form-label">Fecha Ingreso<span style={{ color: 'red' }}> * </span></label>
                         <input 

@@ -115,7 +115,7 @@ const MyDocument = ({ formData }) => (
                     <Text style={styles.value}>{formData.fecha}</Text>
                 </View>
                 <View style={styles.row}>
-                    <Text style={styles.label}>hora:</Text>
+                    <Text style={styles.label}>Hora:</Text>
                     <Text style={styles.value}>{formData.hora}</Text>
                 </View>
             </View>
@@ -363,7 +363,7 @@ export const EpicrisisDetalle = () => {
                     {
                         user && (user.codRol === 1) && (
                             <Button onClick={handleEdit}>
-                                <EditOutlined style={{ fontSize: '20px', color: 'blue' }} />Editar
+                                <EditOutlined style={{ fontSize: '20px', color: 'green' }} />Editar
                             </Button>
                         )
                     }

@@ -41,13 +41,81 @@ export const AgregarNota = () => {
         }
     }, [user]);
 
+    //Logica anterior zzz
+    // const handleChange = (e) => {
+    //     const { name, value, type } = e.target;
+    //     setFormData({
+    //         ...formData,
+    //         [name]: type === 'number' && value !== "" ? Number(value) : value
+    //     });
+    // };
+
     const handleChange = (e) => {
         const { name, value, type } = e.target;
-        setFormData({
-            ...formData,
-            [name]: type === 'number' && value !== "" ? Number(value) : value
-        });
-    };
+    
+        // Si estamos en el campo de hora
+        if (name === 'hora') {
+            let formattedValue = value.replace(/\D/g, ''); // Eliminar todo excepto números
+    
+            if (formattedValue.length >= 3) {
+                formattedValue = `${formattedValue.slice(0, 2)}:${formattedValue.slice(2, 4)}`;
+            }
+    
+            // Solo aplicar validación si hay una hora con el formato correcto
+            if (formattedValue.length === 5) {
+                const [hours, minutes] = formattedValue.split(':');
+                const hourInt = parseInt(hours, 10);
+                const minutesInt = parseInt(minutes, 10);
+    
+                // Validar horas y minutos
+                if (hourInt > 23 || minutesInt > 59) {
+                    setErrors((prevErrors) => ({
+                        ...prevErrors,
+                        hora: "Ingrese una hora válida (HH:mm)"
+                    }));
+                } else {
+                    setErrors((prevErrors) => ({
+                        ...prevErrors,
+                        hora: undefined
+                    }));
+    
+                    // Lógica para agregar AM/PM
+                    let period = "AM";
+                    let hourFormatted = hourInt;
+    
+                    if (hourInt >= 12) {
+                        period = "PM";
+                        if (hourInt > 12) {
+                            hourFormatted = hourInt - 12; // Convertir a formato 12 horas
+                        }
+                    } else if (hourInt === 0) {
+                        hourFormatted = 12; // 12 AM
+                    }
+    
+                    // Actualizar el valor con AM/PM
+                    formattedValue = `${String(hourFormatted).padStart(2, '0')}:${minutes} ${period}`;
+                }
+            }
+    
+            setFormData((prevData) => ({
+                ...prevData,
+                [name]: formattedValue // Guardar el valor formateado
+            }));
+    
+        } else {
+            // Manejo de otros campos
+            setFormData({
+                ...formData,
+                [name]: type === 'number' && value !== "" ? Number(value) : value
+            });
+    
+            // Limpiar errores para otros campos
+            setErrors((prevErrors) => ({
+                ...prevErrors,
+                [name]: undefined
+            }));
+        }
+    };    
 
     const validateForm = () => {
         const newErrors = {};
@@ -109,7 +177,8 @@ export const AgregarNota = () => {
         } catch (error) {
             notification.error({
                 message: '¡Error!',
-                description: error.response?.data?.message || 'Ocurrió un error inesperado',
+                //description: error.response?.data?.message || 'Ocurrió un error inesperado',
+                description: `${error.response.data.message}`,
                 duration: 3
             });
         }

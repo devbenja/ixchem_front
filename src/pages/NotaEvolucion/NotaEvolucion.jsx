@@ -205,7 +205,7 @@ export const NotaEvolucion = () => {
                     {
                         user && (user.codRol === 1 ) && (
                             <Button onClick={handleEdit}>
-                                <EditOutlined style={{ fontSize: '20px', color: 'blue' }} /> Editar
+                                <EditOutlined style={{ fontSize: '20px', color: 'green' }} /> Editar
                             </Button>
                         )
                     }
