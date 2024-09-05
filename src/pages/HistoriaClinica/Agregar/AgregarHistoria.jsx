@@ -9,7 +9,8 @@ import { baseURL } from '../../../api/apiURL.js';
 
 export const AgregarHistoria = () => {
 
-    const { register: registerPaciente, handleSubmit: handleSubmitPaciente, reset } = useForm();
+    //const { register: registerPaciente, handleSubmit: handleSubmitPaciente, reset } = useForm();
+    const { register: registerPaciente, handleSubmit: handleSubmitPaciente, setValue: setValuePaciente, watch: watchPaciente, reset } = useForm();
     const { register: registerAntecPer, handleSubmit: handleSubmitAntPer, setValue, watch, reset: resetAntecPer } = useForm();
     const { register: registerAntecPerPat, handleSubmit: handleSubmitAntPerPat, setValue: setValueAntPer, reset: resetAntPerPat } = useForm();
     const { register: registerAntecPatFam, handleSubmit: handleSubmitAntecPatFam, setValue: setValueAntPatFam, reset: resetAntPatFam } = useForm();
@@ -29,12 +30,46 @@ export const AgregarHistoria = () => {
     const [isSelectDisabled, setIsSelectDisabled] = useState(false);
     
     const [tipoIdentificacion, setTipoIdentificacion] = useState("");
-    const [cedula, setIdentificacion] = useState("");
+    const [identificacion, setIdentificacion] = useState("");
 
+    // Manejar el cambio de tipo de identificación
     const handleTipoIdentificacionChange = (e) => {
-        setTipoIdentificacion(e.target.value);
-        setIdentificacion("");
+        
+        // Uso viejo del codigo
+        // setTipoIdentificacion(e.target.value);
+        // setIdentificacion("");
+
+        const tipo = e.target.value;
+        setTipoIdentificacion(tipo);
+
+        // Si el tipo de identificación es "Fecha de Nacimiento", actualiza automáticamente
+        if (tipo === "categoria1") {
+            const fechaNacimiento = watchPaciente('fechaNac');
+            if (fechaNacimiento) {
+                const [year, month, day] = fechaNacimiento.split("-");
+                const formattedDate = `${day}-${month}-${year}`;
+                setIdentificacion(formattedDate); // Actualiza visualmente
+                setValue('cedula', formattedDate); // Almacena el valor en el campo de texto
+            }
+        } else {
+            setIdentificacion(""); // Limpia el campo si se selecciona otro tipo
+            setValue('cedula', ""); // Limpia el valor en el formulario
+        }
     };
+
+    // useEffect para observar cambios en la fecha de nacimiento si el tipo de identificación es "Fecha de Nacimiento"
+    useEffect(() => {
+        // Si el tipo de identificación es "Fecha de Nacimiento", actualiza el campo de identificación
+        if (tipoIdentificacion === "categoria1") {
+            const fechaNacimiento = watchPaciente('fechaNac'); // Obtenemos la fecha de nacimiento
+            if (fechaNacimiento) {
+                const [year, month, day] = fechaNacimiento.split("-");
+                const formattedDate = `${day}-${month}-${year}`;
+                setIdentificacion(formattedDate); // Actualizar el campo de identificación
+                setValue('cedula', formattedDate); // Almacena el valor actualizado en el campo de texto
+            }
+        }
+    }, [watchPaciente('fechaNac'), tipoIdentificacion]); // Escuchar cambios en la fecha de nacimiento y el tipo de identificación
 
     const handleIdentificacionChange = (e) => {
 
@@ -48,21 +83,38 @@ export const AgregarHistoria = () => {
             return;
         }
 
-        let valor = e.target.value;
+        let valor = e.target.value;   
 
         if (tipoIdentificacion === "categoria1") {
-            // Insertar guiones en las posiciones 3 y 5
-            valor = valor.replace(/[^0-9]/g, ""); // La función me permite eliminar cualquier caracter no numerico
-            if (valor.length > 2) valor = valor.slice(0, 2) + "-" + valor.slice(2);
-            if (valor.length > 5) valor = valor.slice(0, 5) + "-" + valor.slice(5);
-            if (valor.length > 10) valor = valor.slice(0, 10); // Limitar la longitud a 10 caracteres (dd-mm-yyyy)
+            valor = valor.replace(/[^0-9]/g, ""); // Eliminar cualquier carácter no numérico
+            // Validar día (primer dos dígitos)
+            const dia = parseInt(valor.slice(0, 2), 10);
+            if (dia > 31 ) {
+                valor = ""; // Restablecer si el día no está en el rango permitido
+            } else {
+                // Validar mes (siguientes dos dígitos)
+                const mes = parseInt(valor.slice(2, 4), 10);
+                if (mes > 12 ) {
+                    valor = valor.slice(0, 2); // Mantener solo el día si el mes no es válido
+                } else {
+                    // Validar año (últimos cuatro dígitos)
+                    const anio = valor.slice(4, 8);
+                    if (anio === "0000") {
+                        valor = valor.slice(0, 4); // Mantener solo el día y mes si el año no es válido
+                    } else {
+                        // Insertar guiones en las posiciones 3 y 5
+                        if (valor.length > 2) valor = valor.slice(0, 2) + "-" + valor.slice(2);
+                        if (valor.length > 5) valor = valor.slice(0, 5) + "-" + valor.slice(5);
+                        if (valor.length > 10) valor = valor.slice(0, 10); // Limitar la longitud a 10 caracteres (dd-mm-yyyy)
+                    }
+                }
+            }
         } else if (tipoIdentificacion === "categoria2") {
-            // Insertar guiones en las posiciones 4 y 11 y permitir una letra en la posición 16
             valor = valor.replace(/[^0-9A-Za-z]/g, ""); // Eliminar caracteres que no sean números o letras
             if (valor.length > 3) valor = valor.slice(0, 3) + "-" + valor.slice(3);
             if (valor.length > 10) valor = valor.slice(0, 10) + "-" + valor.slice(10);
             if (valor.length > 15) {
-                let letra = valor.slice(15, 16).toUpperCase(); // Obtengo y convierto la letra a mayúscula
+                let letra = valor.slice(15, 16).toUpperCase(); // Obtener y convertir la letra a mayúscula
                 if (/[^A-Z]/.test(letra)) { // Verificar si no es una letra del abecedario
                     letra = ""; // Si no es válida, eliminarla
                 }
@@ -70,9 +122,33 @@ export const AgregarHistoria = () => {
             }
             if (valor.length > 16) valor = valor.slice(0, 16); // Limitar la longitud a 16 caracteres
         } else if (tipoIdentificacion === "categoria3") {
-            // Limitar la longitud a 30 caracteres no estamos seguros de cuantos tiene el pasaporte INVESTIGAR
+            // Limitar la longitud a 30 caracteres no estamos seguros de cuántos tiene el pasaporte INVESTIGAR
             valor = valor.slice(0, 30);
-        }
+        }     
+
+        // if (tipoIdentificacion === "categoria1") {
+        //     // Insertar guiones en las posiciones 3 y 5
+        //     valor = valor.replace(/[^0-9]/g, ""); // La función me permite eliminar cualquier caracter no numerico
+        //     if (valor.length > 2) valor = valor.slice(0, 2) + "-" + valor.slice(2);
+        //     if (valor.length > 5) valor = valor.slice(0, 5) + "-" + valor.slice(5);
+        //     if (valor.length > 10) valor = valor.slice(0, 10); // Limitar la longitud a 10 caracteres (dd-mm-yyyy)
+        // } else if (tipoIdentificacion === "categoria2") {
+        //     // Insertar guiones en las posiciones 4 y 11 y permitir una letra en la posición 16
+        //     valor = valor.replace(/[^0-9A-Za-z]/g, ""); // Eliminar caracteres que no sean números o letras
+        //     if (valor.length > 3) valor = valor.slice(0, 3) + "-" + valor.slice(3);
+        //     if (valor.length > 10) valor = valor.slice(0, 10) + "-" + valor.slice(10);
+        //     if (valor.length > 15) {
+        //         let letra = valor.slice(15, 16).toUpperCase(); // Obtengo y convierto la letra a mayúscula
+        //         if (/[^A-Z]/.test(letra)) { // Verificar si no es una letra del abecedario
+        //             letra = ""; // Si no es válida, eliminarla
+        //         }
+        //         valor = valor.slice(0, 15) + letra; // Insertar la letra validada
+        //     }
+        //     if (valor.length > 16) valor = valor.slice(0, 16); // Limitar la longitud a 16 caracteres
+        // } else if (tipoIdentificacion === "categoria3") {
+        //     // Limitar la longitud a 30 caracteres no estamos seguros de cuantos tiene el pasaporte INVESTIGAR
+        //     valor = valor.slice(0, 30);
+        // }
 
         setIdentificacion(valor);
     };
@@ -106,6 +182,8 @@ export const AgregarHistoria = () => {
             setNumExp(response.data.numExpediente);
             setIsHerited(true); // Marcar que el valor ha sido heredado
             reset();
+            setTipoIdentificacion(''); // Limpia el tipo de identificación
+            setIdentificacion(''); // Limpia el valor del campo de identificación
             if (refAntPer.current) {
                 const tab = new window.bootstrap.Tab(refAntPer.current);
                 tab.show();
@@ -472,6 +550,18 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-2">
+                                        <label htmlFor="nacimiento" className="form-label">Fecha de nacimiento<span style={{color: 'red'}}> * </span> 
+                                        </label>
+                                        <input
+                                            type="date"
+                                            className="form-control"
+                                            title="Fecha de nacimiento"
+                                            id="fechaNac"
+                                            {...registerPaciente('fechaNac', { required: true })}
+                                        />
+                                    </div>
+
+                                    <div className="col-sm-2">
                                         <label htmlFor="cedula" className="form-label">Tipo de Identificación <span style={{color: 'red'}}> * </span> </label>
                                         <select className="form-select" value={tipoIdentificacion} onChange={handleTipoIdentificacionChange}>
                                             <option value="">Seleccionar...</option>
@@ -488,22 +578,10 @@ export const AgregarHistoria = () => {
                                             type="text"
                                             className="form-control"
                                             title="Selecciona el tipo de identificación para llenar este campo"
-                                            value={cedula}
+                                            value={identificacion}
                                             {...registerPaciente('cedula', { required: true, maxLength: 20 })}
                                             onChange={handleIdentificacionChange} // Me permite hacer el cambio y la validación
                                             disabled={!tipoIdentificacion} // Deshabilitar si no se ha seleccionado el tipo de identificación
-                                        />
-                                    </div>
-
-                                    <div className="col-sm-2">
-                                        <label htmlFor="nacimiento" className="form-label">Fecha de nacimiento<span style={{color: 'red'}}> * </span> 
-                                        </label>
-                                        <input
-                                            type="date"
-                                            className="form-control"
-                                            title="Fecha de nacimiento"
-                                            id="fechaNac"
-                                            {...registerPaciente('fechaNac', { required: true })}
                                         />
                                     </div>
 

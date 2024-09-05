@@ -70,10 +70,10 @@ const { Header, Sider, Content } = Layout;
     const [currentMessage, setCurrentMessage] = useState(`BIENVENIDO AL SISTEMA DE IXCHEN, ${user?.nombre ?? ''} ${user?.apellido ?? ''}`);
 
     // Cambiar el mensaje dinámico cada ciertos segundos
-  useEffect(() => {
-    const messages = [
-      `Bienvenido, ${user?.nombre ?? ''} ${user?.apellido ?? ''}`,
-      "SISTEMA DE EXPEDIENTES CLINICOS DIGITALES IXCHEN"
+    useEffect(() => {
+      const messages = [
+        `Bienvenido, ${user?.nombre ?? ''} ${user?.apellido ?? ''}`,
+        "SISTEMA DE EXPEDIENTES CLINICOS DIGITALES IXCHEN"
     ];
 
     let index = 0;
@@ -223,29 +223,29 @@ const { Header, Sider, Content } = Layout;
       </Modal>
 
       {/* Estilos del mensaje de bienvenida */}
-    <style jsx>{`
-      .bounce-message {
-        font-size: 1.2rem;
-        font-weight: bold;
-        color: #c41d7f; 
-        text-transform: uppercase;
-        letter-spacing: 3px;
-        text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
-        animation: bounce 1.5s infinite;
-      }
+      <style jsx>{`
+        .bounce-message {
+          font-size: 1.2rem;
+          font-weight: bold;
+          color: #c41d7f; 
+          text-transform: uppercase;
+          letter-spacing: 3px;
+          text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+          animation: bounce 1.5s infinite;
+        }
 
-      @keyframes bounce {
-        0%, 20%, 50%, 80%, 100% {
-          transform: translateY(0);
+        @keyframes bounce {
+          0%, 20%, 50%, 80%, 100% {
+            transform: translateY(0);
+          }
+          40% {
+            transform: translateY(-20px);
+          }
+          60% {
+            transform: translateY(-10px);
+          }
         }
-        40% {
-          transform: translateY(-20px);
-        }
-        60% {
-          transform: translateY(-10px);
-        }
-      }
-    `}</style>
+     `}</style>
 
     </>
   )

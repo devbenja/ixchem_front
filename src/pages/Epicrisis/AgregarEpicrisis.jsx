@@ -254,8 +254,8 @@ export const AgregarEpicrisis = () => {
         } catch (error) {
             notification.error({
                 message: '¡Error!',
-                description: 'Error al crear la epicrisis.',
-                //description: `${error.response.data.message}`,
+                //description: 'Error al crear la epicrisis.',
+                description: `${error.response.data.message}`,
                 duration: 3
             });
         }

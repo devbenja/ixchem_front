@@ -23,7 +23,7 @@ export const Login = () => {
         const intervalId = setInterval(() => {
             imageIndex = (imageIndex + 1) % images.length;
             setBackgroundImage(images[imageIndex]);
-        }, 2500);
+        }, 8000);
 
         return () => clearInterval(intervalId);
     }, []);

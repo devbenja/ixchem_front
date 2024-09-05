@@ -15,7 +15,7 @@ const images = [
 
 export const Home = () => {
 	return (
-		<Carousel interval={1000}>
+		<Carousel interval={7000}>
 			{images.map((image, index) => (
 				<Carousel.Item key={index}>
 					<img
