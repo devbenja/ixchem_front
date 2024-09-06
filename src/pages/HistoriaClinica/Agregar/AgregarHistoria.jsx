@@ -49,11 +49,11 @@ export const AgregarHistoria = () => {
                 const [year, month, day] = fechaNacimiento.split("-");
                 const formattedDate = `${day}-${month}-${year}`;
                 setIdentificacion(formattedDate); // Actualiza visualmente
-                setValue('cedula', formattedDate); // Almacena el valor en el campo de texto
+                setValuePaciente('cedula', formattedDate); // Almacena el valor en el campo de texto
             }
         } else {
             setIdentificacion(""); // Limpia el campo si se selecciona otro tipo
-            setValue('cedula', ""); // Limpia el valor en el formulario
+            setValuePaciente('cedula', ""); // Limpia el valor en el formulario
         }
     };
 
@@ -66,7 +66,7 @@ export const AgregarHistoria = () => {
                 const [year, month, day] = fechaNacimiento.split("-");
                 const formattedDate = `${day}-${month}-${year}`;
                 setIdentificacion(formattedDate); // Actualizar el campo de identificación
-                setValue('cedula', formattedDate); // Almacena el valor actualizado en el campo de texto
+                setValuePaciente('cedula', formattedDate); // Almacena el valor actualizado en el campo de texto
             }
         }
     }, [watchPaciente('fechaNac'), tipoIdentificacion]); // Escuchar cambios en la fecha de nacimiento y el tipo de identificación
@@ -480,6 +480,17 @@ export const AgregarHistoria = () => {
                                         />
                                     </div>
 
+                                    {/* <div className="col-sm-2">
+                                        <label htmlFor="PrimerN" className="form-label">Primer nombre<span style={{color: 'red'}}> * </span>
+                                        </label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            title="El nombre debe ir escrito como aparezca en la cédula o la partida de nacimiento"
+                                            {...registerPaciente('primerNombre', { required: "El primer nombre es obligatorio", maxLength: 30 })}
+                                        />
+                                    </div> */}
+
                                     <div className="col-sm-2">
                                         <label htmlFor="PrimerN" className="form-label">Primer nombre<span style={{color: 'red'}}> * </span>
                                         </label>
@@ -490,7 +501,6 @@ export const AgregarHistoria = () => {
                                             {...registerPaciente('primerNombre', { required: "El primer nombre es obligatorio", maxLength: 30 })}
                                         />
                                     </div>
-
                                     <div className="col-sm-2">
                                         <label htmlFor="SegundoN" className="form-label">Segundo nombre</label>
                                         <input
@@ -581,7 +591,7 @@ export const AgregarHistoria = () => {
                                             value={identificacion}
                                             {...registerPaciente('cedula', { required: true, maxLength: 20 })}
                                             onChange={handleIdentificacionChange} // Me permite hacer el cambio y la validación
-                                            disabled={!tipoIdentificacion} // Deshabilitar si no se ha seleccionado el tipo de identificación
+                                            disabled={tipoIdentificacion === "categoria1" || !tipoIdentificacion} // Deshabilitar si no se ha seleccionado el tipo de identificación
                                         />
                                     </div>
 
