@@ -102,7 +102,8 @@ export const AgregarUsuarios = () => {
         } catch (error) {
             notification.error({
                 message: '¡Error!',
-                description: error,
+                //description: error,
+                description: `${error.response.data.message}`,
                 duration: 3
             });
         }

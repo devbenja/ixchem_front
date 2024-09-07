@@ -58,6 +58,7 @@ export const CambiarContra = () => {
         const hasNumbers = /[0-9].*[0-9].*[0-9]/.test(password);
         const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
         const isValidLength = password.length >= 8;
+        const isValidLengthPlus = password.length <= 16;
 
         let errorMessage = '';
 
@@ -72,6 +73,9 @@ export const CambiarContra = () => {
         }
         if (!isValidLength) {
             errorMessage += 'La contraseña debe tener al menos 8 caracteres. ';
+        }
+        if (!isValidLengthPlus) {
+            errorMessage += 'La contraseña debe tener menos 16 caracteres. ';
         }
 
         return errorMessage;
@@ -95,6 +99,15 @@ export const CambiarContra = () => {
             notification.error({
                 message: '¡Error!',
                 description: 'Las nuevas contraseñas no coinciden',
+                duration: 3
+            });
+            return;
+        }
+
+        if (formData.contraseñaActual === formData.confirmarContraseña) {
+            notification.error({
+                message: '¡Error!',
+                description: 'La nueva contraseña no puede ser igual a la contraseña actual',
                 duration: 3
             });
             return;

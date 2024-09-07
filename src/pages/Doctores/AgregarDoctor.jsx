@@ -87,7 +87,8 @@ export const AgregarDoctor = () => {
         } catch (error) {
             notification.error({
                 message: '¡Error!',
-                description: error.response?.data?.message || 'Ocurrió un error inesperado',
+                //description: error.response?.data?.message || 'Ocurrió un error inesperado',
+                description: `${error.response.data.message}`,
                 duration: 3
             });
         }
