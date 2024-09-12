@@ -41,7 +41,16 @@ export const AgregarUsuarios = () => {
     };
 
     const handleBack = () => {
-        navigate('/buscar-usuario');
+        //navigate('/buscar-usuario');
+        setFormData({
+            codAdmin: 0,
+            nombre: "",
+            apellido: "",
+            correo: "",
+            contraseña: "",
+            codRol: 2,
+            estado: true // Valor por defecto true
+        });
     };
 
     const validateForm = () => {

@@ -103,8 +103,7 @@ export const AgregarDoctor = () => {
                 primerApellidod: '',
                 segundoApellido: '',
                 cedula: '',
-                clinica: '',
-                estado: true
+                clinica: ''
             });
 
         } catch (error) {
@@ -117,7 +116,16 @@ export const AgregarDoctor = () => {
     };
 
     const handleBack = () => {
-        navigate('/home');
+        //navigate('/home');
+        setFormData({
+            codDoctor: '',
+            primerNombred: '',
+            segundoNombre: '',
+            primerApellidod: '',
+            segundoApellido: '',
+            cedula: '',
+            clinica: ''
+        });
     };
 
     return (

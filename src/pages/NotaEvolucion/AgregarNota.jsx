@@ -212,7 +212,22 @@ export const AgregarNota = () => {
     };
 
     const handleBack = () => {
-        navigate('/home')
+        //navigate('/home')
+        setFormData({
+            numeroNota: "",
+            fecha: "",
+            hora: "",
+            presion: "",
+            temperatura: "",
+            talla: "",
+            peso: "",
+            frecCardiaca: "",
+            frecResp: "",
+            notaEvolucion1: "",
+            planes: "",
+            numExpediente: "",
+            codDoctor: user ? user.correo : ""
+        });
     };
 
     return (

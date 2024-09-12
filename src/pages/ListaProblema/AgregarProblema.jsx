@@ -73,7 +73,8 @@ export const AgregarProblema = () => {
     };
 
     const handleBack = () => {
-        navigate('/home')
+        //navigate('/home')
+        reset(); // Resetea el formulario después de enviar los datos exitosamente
     };
 
     const handleSave = () => {
