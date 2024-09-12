@@ -164,6 +164,26 @@ export const EditarDoctor = () => {
                             />
                         </div>
                         <div className="col-sm-2 col-12 mt-3">
+                            <label htmlFor="clinica" className="form-label">Clínica<span style={{color: 'red'}}> * </span></label>
+                            <select
+                                className="form-control"
+                                name="clinica"
+                                onChange={handleChange}
+                                value={formData.clinica}
+                            >
+                                <option value="">Menú de selección</option>
+                                <option value="Managua">Managua</option>
+                                <option value="Ciudad Sandino">Ciudad Sandino</option>
+                                <option value="Villa Libertad">Villa Libertad</option>
+                                <option value="Tipitapa">Tipitapa</option>
+                                <option value="Masaya">Masaya</option>
+                                <option value="Granada">Granada</option>
+                                <option value="Matagalpa">Matagalpa</option>
+                                <option value="Estelí">Estelí</option>
+                                <option value="León">León</option>
+                            </select>
+                        </div>
+                        {/* <div className="col-sm-2 col-12 mt-3">
                             <label htmlFor="clinica" className="form-label">Clinica</label>
                             <input
                                 type="text"
@@ -172,7 +192,7 @@ export const EditarDoctor = () => {
                                 onChange={handleChange}
                                 value={formData.clinica}
                             />
-                        </div>
+                        </div> */}
                         <div className="col-sm-2 col-12 mt-3">
                             <div className="d-flex flex-column">
                                 <label className="form-label">Estado</label>
