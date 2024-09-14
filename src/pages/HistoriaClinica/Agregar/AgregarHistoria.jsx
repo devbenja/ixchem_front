@@ -1296,7 +1296,7 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="biopasis" className="form-label">Biopsias por colposcopia</label>
+                                        <label htmlFor="biopasis" className="form-label">Biopsias por colposcopia<span style={{color: 'red'}}> * </span></label>
                                         <div className="form-check">
                                             <input
                                                 id="si"
@@ -1324,7 +1324,7 @@ export const AgregarHistoria = () => {
                                 </div>
                                 <div className="d-grid gap-2 d-md-flex justify-content-md-end mt-5">
                                     <button className="btn btn-success btn-save me-md-2" type="submit">Guardar</button>
-                                    <button type="reset" className="btn btn-danger">Cancelar</button>
+                                    {/* <button type="reset" className="btn btn-danger">Cancelar</button> */}
                                 </div>
                             </form>
                         </div>
@@ -1650,8 +1650,91 @@ export const AgregarHistoria = () => {
 
                                     <div className="d-grid gap-2 d-md-flex justify-content-md-end mt-5">
                                         <button className="btn btn-success btn-save me-md-2" type="submit">Guardar</button>
-                                        <button type="reset" className="btn btn-danger">Cancelar</button>
+                                        {/* <button type="reset" className="btn btn-danger">Cancelar</button> */}
+                                        {/* Botón para marcar todos como 'Sí' */}
+                                        <button
+                                            type="button"
+                                            style={{
+                                                backgroundColor: '#0039fa', /* Azul */
+                                                color: 'white',
+                                                fontWeight: 'bold',
+                                                border: '2px solid #092faf', /* Azul más oscuro */
+                                                padding: '10px 20px',
+                                                borderRadius: '5px',
+                                                transition: 'background-color 0.3s ease'
+                                            }}
+                                            onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#092faf'}
+                                            onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#0039fa'}
+                                            onClick={() => {
+                                                setValueAntPer('fibrodenoma', 'true');
+                                                setValueAntPer('camIzq', 'true');
+                                                setValueAntPer('camDer', 'true');
+                                                setValueAntPer('cacerut', 'true');
+                                                setValueAntPer('matriz', 'true');
+                                                setValueAntPer('extirpacion', 'true');
+                                                setValueAntPer('vih', 'true');
+                                                setValueAntPer('vif', 'true');
+                                                setValueAntPer('diabetes', 'true');
+                                                setValueAntPer('fibrodenoma', 'true');
+                                                setValueAntPer('camIzq', 'true');
+                                                setValueAntPer('camDer', 'true');
+                                                setValueAntPer('cacerut', 'true');
+                                                setValueAntPer('matriz', 'true');
+                                                setValueAntPer('extirpacion', 'true');
+                                                setValueAntPer('vih', 'true');
+                                                setValueAntPer('vif', 'true');
+                                                setValueAntPer('diabetes', 'true');
+                                                setValueAntPer('cardiopatia', 'true');
+                                                setValueAntPer('hipertension', 'true');
+                                                setValueAntPer('hepatopatias', 'true');
+                                                setValueAntPer('nefropatia', 'true');
+                                                setValueAntPer('cirugias', 'true');
+                                                setValueAntPer('anemia', 'true');
+                                                setValueAntPer('alergiaMed', 'true');
+                                                setValueAntPer('alergiaAli', 'true');
+                                            }}
+                                            >
+                                            Marcar Todos Sí
+                                        </button>
+                                            {/* Botón para marcar todos como 'No' */}
+                                            <button
+                                            type="button"
+                                            style={{
+                                                backgroundColor: '#dc3545', /* Rojo */
+                                                color: 'white',
+                                                fontWeight: 'bold',
+                                                border: '2px solid #c82333', /* Rojo más oscuro */
+                                                padding: '10px 20px',
+                                                borderRadius: '5px',
+                                                transition: 'background-color 0.3s ease'
+                                            }}
+                                            onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#c82333'}
+                                            onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#dc3545'}
+                                            onClick={() => {
+                                                setValueAntPer('fibrodenoma', 'false');
+                                                setValueAntPer('camIzq', 'false');
+                                                setValueAntPer('camDer', 'false');
+                                                setValueAntPer('cacerut', 'false');
+                                                setValueAntPer('matriz', 'false');
+                                                setValueAntPer('extirpacion', 'false');
+                                                setValueAntPer('vih', 'false');
+                                                setValueAntPer('vif', 'false');
+                                                setValueAntPer('diabetes', 'false');
+                                                setValueAntPer('cardiopatia', 'false');
+                                                setValueAntPer('hipertension', 'false');
+                                                setValueAntPer('hepatopatias', 'false');
+                                                setValueAntPer('nefropatia', 'false');
+                                                setValueAntPer('cirugias', 'false');
+                                                setValueAntPer('anemia', 'false');
+                                                setValueAntPer('alergiaMed', 'false');
+                                                setValueAntPer('alergiaAli', 'false');
+                                            }}
+                                            >
+                                            Marcar Todos No
+                                        </button>
                                     </div>
+
+                                    
                                 </div>
                             </form>
                         </div>
@@ -1837,7 +1920,7 @@ export const AgregarHistoria = () => {
                                             <label className="form-check-label" htmlFor="Enf_ren_si">Si</label>
                                         </div>
                                         <div className="form-check">
-                                            <input value={true} {...registerAntecPatFam('enfRenales', { required: true })} id="Enf_ren_no" name="enfRenales" type="radio" className="form-check-input" required />
+                                            <input value={false} {...registerAntecPatFam('enfRenales', { required: true })} id="Enf_ren_no" name="enfRenales" type="radio" className="form-check-input" required />
                                             <label className="form-check-label" htmlFor="Enf_ren_no">No</label>
                                         </div>
 
@@ -1870,8 +1953,64 @@ export const AgregarHistoria = () => {
 
 
                                     <div className="d-grid gap-2 d-md-flex justify-content-md-end mt-5">
-                                        <button className="btn btn-primary btn-save me-md-2" type="submit">Guardar</button>
-                                        <button type="reset" className="btn btn-danger">Cancelar</button>
+                                        {/* <button className="btn btn-primary btn-save me-md-2" type="submit">Guardar</button> */}
+                                        <button className="btn btn-success btn-save me-md-2" type="submit">Guardar</button>
+                                        <button
+                                            type="button"
+                                            style={{
+                                                backgroundColor: '#0039fa', /* Azul */
+                                                color: 'white',
+                                                fontWeight: 'bold',
+                                                border: '2px solid #092faf', /* Azul más oscuro */
+                                                padding: '10px 20px',
+                                                borderRadius: '5px',
+                                                transition: 'background-color 0.3s ease'
+                                            }}
+                                            onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#092faf'}
+                                            onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#0039fa'}
+                                            onClick={() => {
+                                                setValueAntPatFam('caMama', 'true');
+                                                setValueAntPatFam('caColon', 'true');
+                                                setValueAntPatFam('diabetes', 'true');
+                                                setValueAntPatFam('caCu', 'true');
+                                                setValueAntPatFam('hipertension', 'true');
+                                                setValueAntPatFam('enfCardiacas', 'true');
+                                                setValueAntPatFam('caOvario', 'true');
+                                                setValueAntPatFam('hepatitis', 'true');
+                                                setValueAntPatFam('enfRenales', 'true');
+                                            }}
+                                            >
+                                            Marcar Todos Sí
+                                        </button>
+                                            {/* Botón para marcar todos como 'No' */}
+                                            <button
+                                            type="button"
+                                            style={{
+                                                backgroundColor: '#dc3545', /* Rojo */
+                                                color: 'white',
+                                                fontWeight: 'bold',
+                                                border: '2px solid #c82333', /* Rojo más oscuro */
+                                                padding: '10px 20px',
+                                                borderRadius: '5px',
+                                                transition: 'background-color 0.3s ease'
+                                            }}
+                                            onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#c82333'}
+                                            onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#dc3545'}
+                                            onClick={() => {
+                                                setValueAntPatFam('caMama', 'false');
+                                                setValueAntPatFam('caColon', 'false');
+                                                setValueAntPatFam('diabetes', 'false');
+                                                setValueAntPatFam('caCu', 'false');
+                                                setValueAntPatFam('hipertension', 'false');
+                                                setValueAntPatFam('enfCardiacas', 'false');
+                                                setValueAntPatFam('caOvario', 'false');
+                                                setValueAntPatFam('hepatitis', 'false');
+                                                setValueAntPatFam('enfRenales', 'false');
+                                            }}
+                                            >
+                                            Marcar Todos No
+                                        </button>
+                                        {/* <button type="reset" className="btn btn-danger">Cancelar</button> */}
                                     </div>
 
 
@@ -1932,7 +2071,7 @@ export const AgregarHistoria = () => {
 
                                 <div className="d-grid gap-2 d-md-flex justify-content-md-end mt-5">
                                     <button className="btn btn-success btn-save me-md-2" type="submit">Guardar</button>
-                                    <button type="reset" className="btn btn-danger">Cancelar</button>
+                                    {/* <button type="reset" className="btn btn-danger">Cancelar</button> */}
                                 </div>
                             </form>
                         </div>

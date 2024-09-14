@@ -44,11 +44,6 @@ export const BuscarUsuario = () => {
             key: 'nombre',
         },
         {
-            title: 'Código MINSA',
-            dataIndex: 'correo',
-            key: 'correo',
-        },
-        {
             title: 'Apellido',
             dataIndex: 'apellido',
             key: 'apellido',
@@ -145,16 +140,20 @@ export const BuscarUsuario = () => {
     };
 
 
+    // Posible uso 
+    // const filteredUsuarios = usuarios
+    //     .filter(usuario => usuario.nombre && usuario.nombre.includes(searchTerm))
+
+    //      Reduce el uso de los usuarios con un push, primero que entra primero que se muestra
+    //     .reduce((acc, usuario) => {
+    //         if (!acc.find(u => u.nombre === usuario.nombre)) {
+    //             acc.push(usuario);
+    //         }
+    //         return acc;
+    //     }, []);
+
     const filteredUsuarios = usuarios
-        .filter(usuario => usuario.nombre && usuario.nombre.includes(searchTerm))
-        .reduce((acc, usuario) => {
-            if (!acc.find(u => u.nombre === usuario.nombre)) {
-                acc.push(usuario);
-            }
-            return acc;
-        }, []);
-
-
+    .filter(usuario => usuario.nombre && usuario.nombre.includes(searchTerm))
 
     if (loading) {
         return (
@@ -164,6 +163,8 @@ export const BuscarUsuario = () => {
         );
     }
 
+    // style={{ backgroundColor: 'white' }}
+    
     return (
         <div className="container-fluid">
             <h4>Buscar Usuario</h4>
