@@ -1,7 +1,7 @@
 import './Login.css';
 import { useAuth } from '../../context/AuthContext';
 import { useState, useEffect } from 'react';
-import { FaEye, FaEyeSlash, FaUser, FaLock } from 'react-icons/fa';
+import { FaEye, FaEyeSlash, FaUser, FaLock, FaExclamationCircle } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { notification } from 'antd';
@@ -79,11 +79,13 @@ export const Login = () => {
                 </div>
 
                 <div className="card-body border">
-                    {loginErrors && (
+
+                    {/* {loginErrors && (
                         loginErrors.map(err => (
                             <p key={err} className="text-red-500 text-center">{err}</p>
                         ))
-                    )}
+                    )} */}
+        
                     <form onSubmit={onSubmit}>
                         <div className="form-group mb-3">
                             <label htmlFor="correo" className='form-label'>Código MINSA</label>
@@ -116,6 +118,23 @@ export const Login = () => {
                                 </button>
                             </div>
                         </div>
+
+                        {/* {loginErrors && (
+                            loginErrors.map(err => (
+                                <p key={err} style={{ color: 'red', textAlign: 'center', fontSize: '15px', fontWeight: 'bold', margin: '10px 0' }}>
+                                    {err}
+                                </p>
+                            ))
+                        )} */}
+
+                        {loginErrors && (
+                            loginErrors.map(err => (
+                                <p key={err} style={{ color: 'red', textAlign: 'center', fontSize: '15px', fontWeight: 'bold', margin: '10px 0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <FaExclamationCircle style={{ marginRight: '8px', color: 'red', fontSize: '16px' }} /> {/* Icono de advertencia */}
+                                    {err}
+                                </p>
+                            ))
+                        )}
 
                         <button className="btn w-100" style={{ backgroundColor: '#572364', color: '#fff' }}>Iniciar Sesion</button>
 

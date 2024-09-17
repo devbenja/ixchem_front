@@ -107,9 +107,9 @@ export const EditarUsuario = () => {
 
         AntModal.confirm({
             centered: true,
-            title: '¿Está seguro de editar este usuario permanentemente? No podrá volver a Editarlo',
+            title: '¿Está seguro de editar este usuario?',
             icon: <ExclamationCircleOutlined />,
-            content: 'Esta acción no se puede deshacer.',
+            //content: 'Esta acción no se puede deshacer.',
             okText: 'Sí',
             okType: 'primary',
             cancelText: 'No',
