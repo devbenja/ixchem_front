@@ -43,7 +43,8 @@ export const AgregarProblema = () => {
 
             await axios.post(`${baseURL}/bdtblistaproblema/post`, transformedData);
             alerta();
-            reset(); // Resetea el formulario después de enviar los datos exitosamente
+            showContinue();
+
         } catch (error) {
             notification.error({
                 message: 'Error al Crear Problema',
@@ -63,13 +64,52 @@ export const AgregarProblema = () => {
             okType: 'primary',
             cancelText: 'No',
             onOk() {
-                onSubmitProblema(); // Llama al envío del formulario si el usuario confirma
+                onSubmitProblema(); // Llama al envío del formulario si el usuario confirma 
+                showContinue();
             },
             onCancel() {
                 console.log('Cancelado');
             },
             className: 'custom-confirm'
         });
+    };
+
+    const showContinue = () => {
+        Modal.confirm({
+            centered: true,
+            title: '¡Atención!',
+            content: '¿Desea seguir agregando con el mismo número de expediente?',
+            okText: 'Continuar reporte',
+            cancelText: 'Finalizar reporte',
+            onOk() {
+                // Limpia todos los campos excepto el número de expediente
+            },
+            onCancel() {
+                reset(); // Resetea el formulario después de enviar los datos exitosamente
+            },
+            okButtonProps: {
+                style: {
+                    backgroundColor: '#faad14', // Color mostaza
+                    color: 'white',
+                    borderColor: '#faad14',
+                    display: 'inline-block',
+                    marginRight: '25px',
+                }
+            },
+            cancelButtonProps: {
+                style: {
+                    backgroundColor: 'green',
+                    color: 'white',
+                    borderColor: 'green',
+                    display: 'inline-block',
+                }
+            },
+            icon: null, // Asegura que no se utilice ningún icono
+            className: 'custom-confirm',
+            style: {
+                textAlign: 'center' // Centra los botones dentro del modal
+            }
+        });                
     };
 
     const handleBack = () => {
