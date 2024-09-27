@@ -65,7 +65,6 @@ export const AgregarProblema = () => {
             cancelText: 'No',
             onOk() {
                 onSubmitProblema(); // Llama al envío del formulario si el usuario confirma 
-                showContinue();
             },
             onCancel() {
                 console.log('Cancelado');
