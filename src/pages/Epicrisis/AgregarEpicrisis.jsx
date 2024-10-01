@@ -233,23 +233,8 @@ export const AgregarEpicrisis = () => {
                 description: `Epicrisis Creada con Éxito`,
                 duration: 3
             });
-            // Limpiar los campos del formulario después de guardar exitosamente
-            setFormData({
-                codEpicrisis: 0,
-                fecha: "",
-                hora: "",
-                fechaIngreso: "",
-                fechaEgreso: "",
-                diagIngreso: "",
-                diagEgreso: "",
-                resultado: "",
-                tratamiento: "",
-                descartes: "",
-                complicaciones: "",
-                recomendaciones: "",
-                datosRelevantes: "",
-                numExpediente: "",
-            });
+            
+            showContinue();
 
         } catch (error) {
             notification.error({
@@ -286,6 +271,60 @@ export const AgregarEpicrisis = () => {
         } else {
             handleSubmit();
         }
+    };
+
+    const showContinue = () => {
+        Modal.confirm({
+            centered: true,
+            title: '¡Atención!',
+            content: '¿Desea seguir agregando con el mismo número de expediente?',
+            okText: 'Continuar reporte',
+            cancelText: 'Finalizar reporte',
+            onOk() {
+                // No limpia los campos para poder darles uso con lo ya llenado
+            },
+            onCancel() {
+                // Limpiar los campos del formulario después de guardar exitosamente
+                setFormData({
+                    codEpicrisis: 0,
+                    fecha: "",
+                    hora: "",
+                    fechaIngreso: "",
+                    fechaEgreso: "",
+                    diagIngreso: "",
+                    diagEgreso: "",
+                    resultado: "",
+                    tratamiento: "",
+                    descartes: "",
+                    complicaciones: "",
+                    recomendaciones: "",
+                    datosRelevantes: "",
+                    numExpediente: "",
+                });// Resetea el formulario después de enviar los datos exitosamente
+            },
+            okButtonProps: {
+                style: {
+                    backgroundColor: '#faad14', // Color mostaza
+                    color: 'white',
+                    borderColor: '#faad14',
+                    display: 'inline-block',
+                    marginRight: '25px',
+                }
+            },
+            cancelButtonProps: {
+                style: {
+                    backgroundColor: 'green',
+                    color: 'white',
+                    borderColor: 'green',
+                    display: 'inline-block',
+                }
+            },
+            icon: null, // Asegura que no se utilice ningún icono
+            className: 'custom-confirm',
+            style: {
+                textAlign: 'center' // Centra los botones dentro del modal
+            }
+        });                
     };
 
     const handleBack = () => {

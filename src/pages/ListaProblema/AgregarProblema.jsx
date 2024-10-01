@@ -81,7 +81,7 @@ export const AgregarProblema = () => {
             okText: 'Continuar reporte',
             cancelText: 'Finalizar reporte',
             onOk() {
-                // Limpia todos los campos excepto el número de expediente
+                // No limpia los campos para poder darles uso con lo ya llenado
             },
             onCancel() {
                 reset(); // Resetea el formulario después de enviar los datos exitosamente

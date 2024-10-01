@@ -334,10 +334,12 @@ export const AgregarNota = () => {
                         />
                         {errors.temperatura && <div className="invalid-feedback">{errors.temperatura}</div>} {/* Mensaje de error */}
                     </div>
+                    
                     <div className="col-sm-3">
                         <label htmlFor="presion" className="form-label">Presion<span style={{ color: 'red' }}> *</span></label>
                         <input
-                            type="text"
+                            type="number"
+                            min="1"
                             className={`form-control ${errors.presion ? 'is-invalid' : ''}`} // Aplicación de clase de error
                             name="presion"
                             onChange={handleChange}
