@@ -156,22 +156,7 @@ export const AgregarNota = () => {
                 duration: 3
             });
 
-            setFormData({
-                numeroNota: "",
-                fecha: "",
-                hora: "",
-                presion: "",
-                temperatura: "",
-                talla: "",
-                peso: "",
-                frecCardiaca: "",
-                frecResp: "",
-                notaEvolucion1: "",
-                planes: "",
-                numExpediente: "",
-                codDoctor: user ? user.correo : ""
-            });
-
+            showContinue();
             setErrors({}); // Resetea los errores después de guardar
 
         } catch (error) {
@@ -209,6 +194,59 @@ export const AgregarNota = () => {
         } else {
             handleSubmitNota();
         }
+    };
+
+    const showContinue = () => {
+        Modal.confirm({
+            centered: true,
+            title: '¡Atención!',
+            content: '¿Desea seguir agregando con el mismo número de expediente?',
+            okText: 'Continuar reporte',
+            cancelText: 'Finalizar reporte',
+            onOk() {
+                // No limpia los campos para poder darles uso con lo ya llenado
+            },
+            onCancel() {
+                // Limpiar los campos del formulario después de guardar exitosamente
+                setFormData({
+                    numeroNota: "",
+                    fecha: "",
+                    hora: "",
+                    presion: "",
+                    temperatura: "",
+                    talla: "",
+                    peso: "",
+                    frecCardiaca: "",
+                    frecResp: "",
+                    notaEvolucion1: "",
+                    planes: "",
+                    numExpediente: "",
+                    codDoctor: user ? user.correo : ""
+                });// Resetea el formulario después de enviar los datos exitosamente
+            },
+            okButtonProps: {
+                style: {
+                    backgroundColor: '#faad14', // Color mostaza
+                    color: 'white',
+                    borderColor: '#faad14',
+                    display: 'inline-block',
+                    marginRight: '25px',
+                }
+            },
+            cancelButtonProps: {
+                style: {
+                    backgroundColor: 'green',
+                    color: 'white',
+                    borderColor: 'green',
+                    display: 'inline-block',
+                }
+            },
+            icon: null, // Asegura que no se utilice ningún icono
+            className: 'custom-confirm',
+            style: {
+                textAlign: 'center' // Centra los botones dentro del modal
+            }
+        });                
     };
 
     const handleBack = () => {
@@ -310,6 +348,7 @@ export const AgregarNota = () => {
                         />
                         {errors.talla && <div className="invalid-feedback">{errors.talla}</div>} {/* Mensaje de error */}
                     </div>
+                    
                     <div className="col-sm-3">
                         <label htmlFor="peso" className="form-label">Peso<span style={{ color: 'red' }}> *</span></label>
                         <input
@@ -322,6 +361,7 @@ export const AgregarNota = () => {
                         />
                         {errors.peso && <div className="invalid-feedback">{errors.peso}</div>} {/* Mensaje de error */}
                     </div>
+
                     <div className="col-sm-3">
                         <label htmlFor="temperatura" className="form-label">Temperatura<span style={{ color: 'red' }}> *</span></label>
                         <input
@@ -334,12 +374,11 @@ export const AgregarNota = () => {
                         />
                         {errors.temperatura && <div className="invalid-feedback">{errors.temperatura}</div>} {/* Mensaje de error */}
                     </div>
-                    
+
                     <div className="col-sm-3">
                         <label htmlFor="presion" className="form-label">Presion<span style={{ color: 'red' }}> *</span></label>
                         <input
-                            type="number"
-                            min="1"
+                            type="text"
                             className={`form-control ${errors.presion ? 'is-invalid' : ''}`} // Aplicación de clase de error
                             name="presion"
                             onChange={handleChange}

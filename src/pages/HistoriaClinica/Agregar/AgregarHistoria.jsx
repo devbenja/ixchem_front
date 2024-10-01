@@ -439,7 +439,7 @@ export const AgregarHistoria = () => {
                 <div className="d-flex align-items-center justify-content-between mb-2">
                     <h4>Agregar Historia Clinica</h4>
                     <div className="d-flex gap-3">
-                        <p className="text-body-secondary text-smaller">Los datos con asterisco (*) son obligatorios,</p>
+                        <p className="text-body-secondary text-smaller">Los datos con asterisco (<span style={{color: 'red'}}> * </span>) son obligatorios,</p>
                         <p className="text-body-secondary text-smaller">A. = Antecedentes </p>
                     </div>
                 </div>

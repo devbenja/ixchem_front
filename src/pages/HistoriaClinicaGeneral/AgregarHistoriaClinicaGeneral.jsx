@@ -955,7 +955,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
 
                             <div className='mt-4 d-flex gap-2'>
                                 <button type="submit" onClick={handleSaveObs} className="btn btn-primary">Guardar</button>
-                                <button type="button" onClick={handleBack} className="btn btn-danger">Cancelar</button>
+                                {/* <button type="button" onClick={handleBack} className="btn btn-danger">Cancelar</button> */}
                             </div>
                         </form>
                     </div>
@@ -1087,7 +1087,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
 
                             <div className='mt-4 d-flex gap-2'>
                                 <button type="submit" onClick={handleSaveActual} className="btn btn-primary">Guardar</button>
-                                <button type="button" onClick={handleBack} className="btn btn-danger">Cancelar</button>
+                                {/* <button type="button" onClick={handleBack} className="btn btn-danger">Cancelar</button> */}
                             </div>
                         </form>
                     </div>

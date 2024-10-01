@@ -135,7 +135,7 @@ const { Header, Sider, Content } = Layout;
             {isAuth && (
               <div className="d-flex align-items-center gap-3">
                 <p className="bounce-message m-0">{currentMessage}</p>
-                <Button onClick={showModal} style={{ marginRight: '40px', backgroundColor: 'red', color: 'white' }}>
+                <Button onClick={showModal} style={{ marginRight: '40px', backgroundColor: 'red', color: 'white', fontSize: '16px'}}>
                   <LogoutOutlined />Cerrar Sesión
                 </Button>
               </div>
@@ -210,7 +210,7 @@ const { Header, Sider, Content } = Layout;
         </Routes>
       )}
 
-      {/* Modal de confirmación */}
+      {/* Modal de confirmación
       <Modal
         title="Confirmar Cierre de Sesión"
         visible={isModalVisible}
@@ -220,6 +220,39 @@ const { Header, Sider, Content } = Layout;
         cancelText="Cancelar"
       >
         <p>¿Está seguro que desea cerrar sesión?</p>
+      </Modal> */}
+
+      <Modal
+          title="¿Deseas cerrar sesión?"
+          visible={isModalVisible}
+          onOk={handleOk}
+          onCancel={handleCancel}
+          okText="Cerrar sesión"
+          cancelText="Cancelar"
+          okButtonProps={{
+              style: {
+                  backgroundColor: '#c41d7f',  // Rosa para el botón de "Cerrar sesión"
+                  color: 'white',              // Texto en blanco
+                  borderRadius: '20px',        // Bordes redondeados
+                  padding: '6px 20px',         // Espaciado interno
+                  fontSize: '16px',            // Tamaño de texto
+                  fontWeight: 'bold',          // Texto en negrita
+                  border: 'none',              // Sin borde
+              }
+          }}
+          cancelButtonProps={{
+              style: {
+                  backgroundColor: 'white',    // Fondo blanco para el botón de "Cancelar"
+                  color: '#c41d7f',            // Texto 
+                  borderRadius: '20px',        // Bordes redondeados
+                  padding: '6px 20px',         // Espaciado interno
+                  fontSize: '16px',            // Tamaño de texto
+                  fontWeight: 'bold',          // Texto en negrita
+                  border: '0.5px solid #c41d7f', // Borde 
+              }
+          }}
+      >
+          <p>¿Confirmas que deseas cerrar sesión?</p>
       </Modal>
 
       {/* Estilos del mensaje de bienvenida */}
