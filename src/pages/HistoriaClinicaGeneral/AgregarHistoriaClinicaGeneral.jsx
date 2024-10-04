@@ -494,6 +494,12 @@ export const AgregarHistoriaClinicaGeneral = () => {
                 setIsSelectDisabled(false);
             }
 
+            notification.success({
+                message: '¡Éxito!',
+                description: `Clasifiación de riesgos completa y creada`,
+                duration: 3,
+            });
+
         } catch (error) {
 
             notification.error({
@@ -828,6 +834,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
                                     name='ciclO_CONTROL'
                                     value={formData.nuM_CITA}
                                     onChange={handleChange}
+                                    readOnly
                                 />
                             </div>
 

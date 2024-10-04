@@ -151,6 +151,7 @@ export const EditarNota = () => {
                             name="numExpediente"
                             onChange={handleChange}
                             value={formData.numExpediente}
+                            readOnly
                         />
                     </div>
                     <div className="col-sm-3">
@@ -161,25 +162,10 @@ export const EditarNota = () => {
                             name="codDoctor"
                             onChange={handleChange}
                             value={formData.codDoctor}
-                            
+                            readOnly
                         />
                     </div>
-                    {/* <div className="col-sm-3">
-                        <label htmlFor="codDoctor" className="form-label">Codigo MINSA*</label>
-                        <select
-                            className="form-control"
-                            name="codDoctor"
-                            onChange={handleChange}
-                            value={formData.codDoctor}
-                        >
-                            <option value="">Seleccione un doctor</option>
-                            {doctors.map(doctor => (
-                                <option key={doctor.codDoctor} value={doctor.codDoctor}>
-                                    {doctor.primerNombred} {doctor.primerApellidod}
-                                </option>
-                            ))}
-                        </select>
-                    </div> */}
+                    
                     <div className="col-sm-3">
                         <label htmlFor="primerApellido" className="form-label">Talla*</label>
                         <input
@@ -190,6 +176,7 @@ export const EditarNota = () => {
                             value={formData.talla}
                         />
                     </div>
+
                     <div className="col-sm-3">
                         <label htmlFor="segundoApellido" className="form-label">Peso*</label>
                         <input
@@ -200,6 +187,7 @@ export const EditarNota = () => {
                             value={formData.peso}
                         />
                     </div>
+
                     <div className="col-sm-3">
                         <label htmlFor="segundoApellido" className="form-label">Temperatura*</label>
                         <input
@@ -210,6 +198,7 @@ export const EditarNota = () => {
                             value={formData.temperatura}
                         />
                     </div>
+                    
                     <div className="col-sm-3">
                         <label htmlFor="segundoApellido" className="form-label">Presion*</label>
                         <input

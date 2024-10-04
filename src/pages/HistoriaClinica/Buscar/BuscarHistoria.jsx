@@ -84,7 +84,7 @@ const MyDocument = ({ data }) => (
                 </View>
                 <View style={styles.twoValues}>
                     <View style={styles.row}>
-                        <Text style={styles.label}>Centro de mujeres IXCHEM:</Text>
+                        <Text style={styles.label}>Centro de mujeres IXCHEN:</Text>
                         <Text style={styles.value}>{data.centro}</Text>
                     </View>
                     <View style={styles.row}>
@@ -909,13 +909,103 @@ export const BuscarHistoria = () => {
 
     }
 
+    const formatCedula = (value) => {
+        // Elimina todos los caracteres que no sean números o letras
+        let cleanedValue = value.replace(/[^0-9a-zA-Z]/g, '');
+    
+        // Limitar a 14 caracteres: 13 números y 1 letra al final
+        if (cleanedValue.length > 14) {
+            cleanedValue = cleanedValue.slice(0, 14);
+        }
+    
+        // Verificar si el último carácter es una letra (solo si tiene 14 caracteres)
+        if (cleanedValue.length === 14 && !/[a-zA-Z]/.test(cleanedValue[13])) {
+            // Si el último carácter no es una letra, lo eliminamos
+            cleanedValue = cleanedValue.slice(0, 13);
+        }
+    
+        // Agrega el guion después del tercer y noveno carácter, pero antes de la letra final
+        let formattedValue = cleanedValue.slice(0, 3); // Primeros 3 caracteres
+        if (cleanedValue.length > 3) {
+            formattedValue += '-' + cleanedValue.slice(3, 9); // Agregar guion después del tercer y hasta el noveno
+        }
+        if (cleanedValue.length > 9) {
+            formattedValue += '-' + cleanedValue.slice(9, 13); // Agregar guion después del noveno carácter
+        }
+    
+        // Si tiene 14 caracteres, convertir el último a mayúscula y agregarlo
+        if (cleanedValue.length === 14) {
+            formattedValue += cleanedValue[13].toUpperCase(); // Convertir a mayúscula
+        }
+    
+        return formattedValue;
+    };
+    
 
     return (
         <>
             <div className='container-fluid'>
                 <h4>Buscar Historia Clinica</h4>
             </div>
+
             <form onSubmit={handleSearchSubmit} className="container-fluid mt-3 mb-3">
+                <div className="row g-3">
+                    
+                    <div className="col-sm-3">
+                        <select className="form-select" value={searchType} onChange={(e) => setSearchType(e.target.value)}>
+                            <option value="">Seleccionar Opción...</option>
+                            <option value="opcion_expediente">Número de expediente</option>
+                            <option value="opcion_cedula">Cédula de identidad</option>
+                            <option value="opcion_nombre">Nombre</option>
+                        </select>
+                    </div>
+
+                    <div className="col-sm-9 d-flex">
+                        <div className="input-group" role="search">
+                            {
+                                searchType === 'opcion_nombre' ? (
+                                    <div className="d-flex gap-2">
+                                        <div className="d-flex align-items-center justify-content-center">
+                                            <label>Primer Nombre</label>
+                                            <input className="form-control" type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                                        </div>
+
+                                        <div className="d-flex align-items-center justify-content-center">
+                                            <label>Primer Apellido</label>
+                                            <input className="form-control" type="text" value={firstLastName} onChange={(e) => setFirstLastName(e.target.value)} />
+                                        </div>
+                                        <button className="btn btn-success" type="submit">Buscar</button>
+                                    </div>
+                                ) : (
+                                    <>
+                                        <input
+                                            className="form-control me-2"
+                                            maxLength="80"
+                                            type="search"
+                                            aria-label="Search"
+                                            value={searchValue}
+                                            placeholder={searchType === 'opcion_cedula' ? '      -             -     ' : 'Buscar...'}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (searchType === 'opcion_cedula') {
+                                                    // Formatea el valor de la cédula
+                                                    const formattedValue = formatCedula(value);
+                                                    setSearchValue(formattedValue);
+                                                } else {
+                                                    setSearchValue(value);
+                                                }
+                                            }}
+                                        />
+                                        <button className="btn btn-success" type="submit">Buscar</button>
+                                    </>
+                                )
+                            }
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            {/* <form onSubmit={handleSearchSubmit} className="container-fluid mt-3 mb-3">
                 <div className="row g-3">
                     <div className="col-sm-3">
                         <select className="form-select" value={searchType} onChange={(e) => setSearchType(e.target.value)}>
@@ -953,16 +1043,13 @@ export const BuscarHistoria = () => {
                                         />
                                         <button className="btn btn-success" type="submit">Buscar</button>
                                     </>
-
-
                                 )
                             }
-
-
                         </div>
                     </div>
                 </div>
-            </form>
+            </form> */}
+
             <div className="container-fluid" >
                 <div className='d-flex align-items-center justify-content-between'>
                     <ul className="nav nav-tabs" id="tab-search-list" role="tablist">

@@ -45,10 +45,19 @@ export const BuscarPorCentro = () => {
         } catch (error) {
             notification.error({
                 message: '¡Error!',
-                description: "No existe ningún centro con ese nombre",
+                description: "No existe ningún paciente registrado en este centro",
                 duration: 3
             });
+            
+            //POSIBLE USO AUN NO ESTOY SEGURO
+            // setSearchValue('');  // Limpiar el valor del input 
+            // fetchData();  // Mostrar todos los registros
         }
+    };
+
+    const handleClear = () => {
+        setSearchValue('');  // Limpiar el valor del input
+        fetchData();  // Mostrar todos los registros
     };
 
     const columns = [
@@ -106,10 +115,48 @@ export const BuscarPorCentro = () => {
 
     return (
         <div className="container-fluid">
+
             <div className="container-fluid">
                 <h4>Buscar Pacientes por Centro</h4>
             </div>
+
             <form onSubmit={handleSubmit} className="container-fluid mt-3">
+                <div className="col-12">
+                    <div className="input-group" role="search">
+                        <select
+                            className="form-select"
+                            value={searchValue}
+                            onChange={(e) => setSearchValue(e.target.value)}
+                            aria-label="Search"
+                        >
+                            <option value="">Seleccione el nombre del centro</option>
+                            <option value="Managua">Managua</option>
+                            <option value="Ciudad Sandino">Ciudad Sandino</option>
+                            <option value="Villa Libertad">Villa Libertad</option>
+                            <option value="Tipitapa">Tipitapa</option>
+                            <option value="Masaya">Masaya</option>
+                            <option value="Granada">Granada</option>
+                            <option value="Matagalpa">Matagalpa</option>
+                            <option value="Estelí">Estelí</option>
+                            <option value="León">León</option>
+                        </select>
+
+                        <button className="btn btn-success" type="submit">Buscar</button>
+                        
+                        <button 
+                            type="button" 
+                            className="btn btn-primary ms-2" 
+                            onClick={handleClear}
+                        >
+                            Limpiar
+                        </button>
+
+
+                    </div>
+                </div>
+            </form>
+
+            {/* <form onSubmit={handleSubmit} className="container-fluid mt-3">
                 <div className="col-12">
                     <div className="input-group" role="search">
                         <Input
@@ -124,7 +171,8 @@ export const BuscarPorCentro = () => {
                         <button className="btn btn-success" type="submit">Buscar</button>
                     </div>
                 </div>
-            </form>
+            </form> */}
+            
             <div className="container-fluid">
                 <Table className="custom-table mt-4" rowKey="nuM_EXPEDIENTE" columns={columns} dataSource={data} pagination={false} />
             </div>

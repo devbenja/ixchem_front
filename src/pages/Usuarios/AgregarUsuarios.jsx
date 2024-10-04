@@ -90,7 +90,7 @@ export const AgregarUsuarios = () => {
             });
 
             setTimeout(() => {
-                navigate('/buscar-usuario');
+                navigate('/agregar-doctor');
             }, 1000);
 
         } catch (error) {

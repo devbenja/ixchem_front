@@ -126,7 +126,7 @@ export const EditarEpicrisis = () => {
 
             notification.error({
                 message: '¡Error!',
-                description: error,
+                description: `${error.response.data.message}`,
                 duration: 3
             });
 
@@ -149,8 +149,16 @@ export const EditarEpicrisis = () => {
                 <div className="row mb-3">
                     <div className="col">
                         <label className="form-label">Número de expediente</label>
-                        <input type="text" name="numExpediente" value={formData.numExpediente} onChange={handleChange} className="form-control" />
+                        <input 
+                            type="text" 
+                            name="numExpediente" 
+                            value={formData.numExpediente} 
+                            onChange={handleChange} 
+                            className="form-control" 
+                            readOnly
+                        />
                     </div>
+
                     <div className="col">
                         <label className="form-label">Codigo MINSA</label>
                         <input

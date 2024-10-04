@@ -85,7 +85,7 @@ const MyDocument = ({ data }) => (
                 </View>
                 <View style={styles.twoValues}>
                     <View style={styles.row}>
-                        <Text style={styles.label}>Centro de mujeres IXCHEM:</Text>
+                        <Text style={styles.label}>Centro de mujeres IXCHEN:</Text>
                         <Text style={styles.value}>{data.centro}</Text>
                     </View>
                     <View style={styles.row}>
@@ -262,7 +262,7 @@ const MyDocument = ({ data }) => (
                 </View>
                 <View style={styles.twoValues}>
                     <View style={styles.row}>
-                        <Text style={styles.label}>Fecha de Nacimiento del Hijo:</Text>
+                        <Text style={styles.label}>Fecha de Nacimiento del Hijo:    </Text>
                         <Text style={styles.value}>{data.feC_NAC_HIJO}</Text>
                     </View>
                     <View style={styles.row}>
