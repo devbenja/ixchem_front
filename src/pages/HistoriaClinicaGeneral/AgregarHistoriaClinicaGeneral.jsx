@@ -23,6 +23,10 @@ export const AgregarHistoriaClinicaGeneral = () => {
     const [firstName, setFirstName] = useState('');
     const [firstLastName, setFirstLastName] = useState('');
 
+    const [error, setError] = useState({
+        fecha: "" // Inicialmente vacío
+    });
+
     // Variables para el uso de la validación de telefono
     const [countries, setCountries] = useState([]);
     const [selectedCountryCode, setSelectedCountryCode] = useState('');
@@ -368,6 +372,34 @@ export const AgregarHistoriaClinicaGeneral = () => {
 
     const handleSubmit = async () => {
         try {
+            // Validaciones de campos obligatorios
+            let validationErrors = {};
+    
+            if (!formData.fecha) {
+                validationErrors.fecha = "La fecha es obligatoria.";
+            }
+    
+            if (!data.primeR_NOMBRE) {
+                validationErrors.primeR_NOMBRE = "El primer nombre es obligatorio.";
+            }
+    
+            if (!data.primeR_APELLIDO) {
+                validationErrors.primeR_APELLIDO = "El primer apellido es obligatorio.";
+            }
+    
+            if (!formData.numExpediente) {
+                validationErrors.numExpediente = "El número de expediente es obligatorio.";
+            }
+    
+            // Si hay errores, los mostramos y detenemos la ejecución
+            if (Object.keys(validationErrors).length > 0) {
+                setError(validationErrors);
+                return;
+            } else {
+                // Limpiar los errores si no hay
+                setError({});
+            }
+    
             // Verifica si el número de cita es válido
             if (!cita.num_cita || cita.num_cita === "0") {
                 notification.warning({
@@ -413,7 +445,57 @@ export const AgregarHistoriaClinicaGeneral = () => {
                 });
             }
         }
-    }
+    };
+        
+
+    // const handleSubmit = async () => {
+    //     try {
+    //         // Verifica si el número de cita es válido
+    //         if (!cita.num_cita || cita.num_cita === "0") {
+    //             notification.warning({
+    //                 message: '¡Atención!',
+    //                 description: 'Por favor, registre el ciclo de control.',
+    //                 duration: 3
+    //             });
+    //             return;
+    //         }
+    
+    //         console.log(formData);
+    
+    //         // Realiza la solicitud POST al backend
+    //         await axios.post(`${baseURL}/bdtbhistoriaclinicageneral/post`, formData);
+    
+    //         // Muestra notificación de éxito
+    //         notification.success({
+    //             message: '¡Éxito!',
+    //             description: 'Historia Clínica General Creada con Éxito',
+    //             duration: 3
+    //         });
+    
+    //         // Muestra el tab si está disponible
+    //         if (AOTab.current) {
+    //             const tab = new window.bootstrap.Tab(AOTab.current);
+    //             tab.show();
+    //         }
+    
+    //     } catch (error) {
+    //         // Manejo del error y validación específica
+    //         if (error.response && error.response.data && error.response.data.message) {
+    //             notification.error({
+    //                 message: 'Error al Crear Historia Clínica',
+    //                 description: error.response.data.message,
+    //                 duration: 3
+    //             });
+    //             setIsSelectDisabled(false);
+    //         } else {
+    //             notification.error({
+    //                 message: 'Error al Crear Historia Clínica',
+    //                 description: 'Revisa todos los campos',
+    //                 duration: 3
+    //             });
+    //         }
+    //     }
+    // }
 
     // const handleSubmit = async () => {
 
@@ -799,7 +881,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
                     <div className="tab-pane show active" id="HCG" role="tabpanel" aria-labelledby="HCG-tab">
                         <form className='mt-4' onSubmit={(e) => e.preventDefault()}>
                             <div className="row mb-3">
-                                <div className="col-sm-3">
+                                {/* <div className="col-sm-3">
                                     <label className="form-label">Primer Nombre<span style={{color: 'red'}}> * </span></label>
                                     <input type="text" name="primeR_NOMBRE" value={data.primeR_NOMBRE} onChange={handleChange} className="form-control" />
                                 </div>
@@ -818,7 +900,69 @@ export const AgregarHistoriaClinicaGeneral = () => {
                                 <div className="col-sm-3 mt-3">
                                     <label className="form-label">Número de expediente<span style={{color: 'red'}}> * </span></label>
                                     <input type="text" name="numExpediente" value={formData.numExpediente} onChange={handleChange} className="form-control" />
+                                </div> */}
+
+                                <div className="col-sm-3">
+                                    <label className="form-label">Primer Nombre<span style={{color: 'red'}}> * </span></label>
+                                    <input 
+                                        type="text" 
+                                        name="primeR_NOMBRE" 
+                                        value={data.primeR_NOMBRE} 
+                                        onChange={handleChange} 
+                                        className={`form-control ${error.primeR_NOMBRE ? 'is-invalid' : ''}`} 
+                                        style={{ borderColor: error.primeR_NOMBRE ? 'red' : '' }} 
+                                    />
+                                    {error.primeR_NOMBRE && <small className="text-danger">{error.primeR_NOMBRE}</small>}
                                 </div>
+
+                                <div className="col-sm-3">
+                                    <label className="form-label">Segundo Nombre</label>
+                                    <input 
+                                        type="text" 
+                                        name="segundO_NOMBRE" 
+                                        value={data.segundO_NOMBRE} 
+                                        onChange={handleChange} 
+                                        className="form-control" 
+                                    />
+                                </div>
+
+                                <div className="col-sm-3">
+                                    <label className="form-label">Primer Apellido<span style={{color: 'red'}}> * </span></label>
+                                    <input 
+                                        type="text" 
+                                        name="primeR_APELLIDO" 
+                                        value={data.primeR_APELLIDO} 
+                                        onChange={handleChange} 
+                                        className={`form-control ${error.primeR_APELLIDO ? 'is-invalid' : ''}`} 
+                                        style={{ borderColor: error.primeR_APELLIDO ? 'red' : '' }} 
+                                    />
+                                    {error.primeR_APELLIDO && <small className="text-danger">{error.primeR_APELLIDO}</small>}
+                                </div>
+
+                                <div className="col-sm-3">
+                                    <label className="form-label">Segundo Apellido</label>
+                                    <input 
+                                        type="text" 
+                                        name="segundO_APELLIDO" 
+                                        value={data.segundO_APELLIDO} 
+                                        onChange={handleChange} 
+                                        className="form-control" 
+                                    />
+                                </div>
+
+                                <div className="col-sm-3 mt-3">
+                                    <label className="form-label">Número de expediente<span style={{color: 'red'}}> * </span></label>
+                                    <input 
+                                        type="text" 
+                                        name="numExpediente" 
+                                        value={formData.numExpediente} 
+                                        onChange={handleChange} 
+                                        className={`form-control ${error.numExpediente ? 'is-invalid' : ''}`} 
+                                        style={{ borderColor: error.numExpediente ? 'red' : '' }} 
+                                    />
+                                    {error.numExpediente && <small className="text-danger">{error.numExpediente}</small>}
+                                </div>
+
                                 <div className="col-sm-3 mt-3">
                                     <label className="form-label">Código MINSA</label>
                                     <input
@@ -833,8 +977,17 @@ export const AgregarHistoriaClinicaGeneral = () => {
 
                                 <div className="col-sm-3 mt-3">
                                     <label className="form-label">Fecha<span style={{color: 'red'}}> * </span></label>
-                                    <input type="date" name="fecha" value={formData.fecha} onChange={handleChange} className="form-control" />
+                                    <input 
+                                        type="date" 
+                                        name="fecha" 
+                                        value={formData.fecha} 
+                                        onChange={handleChange} 
+                                        className={`form-control ${error.fecha ? 'is-invalid' : ''}`} 
+                                        style={{ borderColor: error.fecha ? 'red' : '' }} // Bordes rojos si hay error
+                                    />
+                                    {error.fecha && <small className="text-danger">{error.fecha}</small>} {/* Mostrar mensaje de error */}
                                 </div>
+
                                 <div className="col mt-3">
                                     <label className="form-label">Diabetes Mellitus</label>
                                     <div className='d-flex align-items-center justify-content-center form-control'>
