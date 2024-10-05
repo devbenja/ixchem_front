@@ -484,7 +484,6 @@ export const AgregarHistoriaClinicaGeneral = () => {
             });
 
         }
-
     }
 
     const handleSubmitActual = async () => {
@@ -503,7 +502,8 @@ export const AgregarHistoriaClinicaGeneral = () => {
                 duration: 3,
             });
 
-            setFormData({
+            setFormData(prevState => ({
+                ...prevState,
                 codHistoriaClinica: 0,
                 diabetesMellitus: false,
                 nefropatia: false,
@@ -512,11 +512,11 @@ export const AgregarHistoriaClinicaGeneral = () => {
                 cualquierOtro: false,
                 altoRiesgo: false,
                 fecha: "",
-                numExpediente: '',
+                numExpediente: "",
                 //codDoctor: "",
                 nuM_CITA: 0,
                 iD_CITA: 0
-            });
+            }));
 
             setObstetrico({
                 codHojariesgo: 0,
@@ -584,7 +584,30 @@ export const AgregarHistoriaClinicaGeneral = () => {
     }
 
     const handleBack = () => {
-        navigate('/home');
+
+        setData({
+            primeR_NOMBRE: '',
+            segundO_NOMBRE: '',
+            primeR_APELLIDO: '',
+            segundO_APELLIDO: '',
+            nuM_EXPEDIENTE: '',
+            direccion: ''
+        });
+
+        setFormData({
+            codHistoriaClinica: 0,
+            diabetesMellitus: false,
+            nefropatia: false,
+            cardiopatia: false,
+            consumoDrogas: false,
+            cualquierOtro: false,
+            altoRiesgo: false,
+            fecha: "",
+            numExpediente: '',
+            //codDoctor: "",
+            nuM_CITA: 0,
+            iD_CITA: 0
+        });
     }
 
     const showSaveConfirmHCG = () => {
