@@ -60,25 +60,24 @@ export const AgregarHistoriaClinicaGeneral = () => {
         '+598': 9, // Uruguay
     };
       
-
     useEffect(() => {
         // Consumir la API para obtener los códigos de país
         axios.get('https://restcountries.com/v3.1/all')
-        .then(response => {
-            const countryData = response.data
-            .filter(country => country.region === 'Americas') // Filtrar solo América
-            .map(country => ({
-                name: country.name.common,
-                code: country.idd.root + (country.idd.suffixes ? country.idd.suffixes[0] : '')
-            }))
-            .filter(country => Object.keys(allowedDigits).includes(country.code)); // Solo países con códigos permitidos
+            .then(response => {
+                const countryData = response.data
+                    .filter(country => country.region === 'Americas') // Filtrar solo América
+                    .map(country => ({
+                        name: country.name.common,
+                        code: country.idd.root + (country.idd.suffixes ? country.idd.suffixes[0] : '')
+                    }))
+                    .filter(country => Object.keys(allowedDigits).includes(country.code)); // Solo países con códigos permitidos
     
-            const sortedCountries = countryData.sort((a, b) => a.name.localeCompare(b.name));
-            setCountries(sortedCountries);
-        })
-        .catch(error => console.error('Error al cargar los países:', error));
+                const sortedCountries = countryData.sort((a, b) => a.name.localeCompare(b.name));
+                setCountries(sortedCountries);
+            })
+            .catch(error => console.error('Error al cargar los países:', error));
     }, []);
-
+    
     const handleCountryChange = (e) => {
         setSelectedCountryCode(e.target.value);
         setObstetrico((prevData) => ({
@@ -87,17 +86,92 @@ export const AgregarHistoriaClinicaGeneral = () => {
         }));
     };
     
+    // Función para formatear el número según la cantidad de dígitos
+    const formatPhoneNumber = (input, countryCode) => {
+        const digits = input.replace(/\D/g, ''); // Eliminar todos los caracteres no numéricos
+        
+        const maxDigits = allowedDigits[countryCode] || 10; // Obtener el máximo de dígitos permitidos según el código de país
+    
+        // Casos para países con diferentes cantidades de dígitos
+        if (digits.length <= maxDigits) {
+            if (digits.length === 8 && maxDigits === 8) {
+                // Formateo para países con 8 dígitos
+                return `(${countryCode}) ${digits.slice(0, 4)}-${digits.slice(4, 8)}`;
+            } else if (digits.length === 9 && maxDigits === 9) {
+                // Formateo para países con 9 dígitos
+                return `(${countryCode}) ${digits.slice(0, 3)} ${digits.slice(3, 6)}-${digits.slice(6, 9)}`;
+            } else if (digits.length === 10 && maxDigits === 10) {
+                // Formateo para países con 10 dígitos (como México, EE.UU, Canadá)
+                if (countryCode === '+52') {
+                    return `+52 (${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6, 10)}`;
+                } else if (countryCode === '+1' || countryCode === '+1201') {
+                    return `+1 (${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6, 10)}`;
+                }
+            } else if (digits.length === 11 && maxDigits === 11) {
+                // Formateo para países con 11 dígitos (Brasil, Venezuela)
+                return `(${countryCode}) ${digits.slice(0, 2)} ${digits.slice(2, 7)}-${digits.slice(7, 11)}`;
+            }
+        }
+    
+        return input; // Si no cumple ninguna condición, retornar sin formatear
+    };    
+
+    // Función para manejar el cambio del número de teléfono
     const handlePhoneNumberChange = (e) => {
         const input = e.target.value;
-        const maxDigits = allowedDigits[selectedCountryCode] || 0;
-    
-        if (input.length <= maxDigits) {
+        const digitsOnly = input.replace(/\D/g, ''); // Extraer solo los dígitos
+
+        const maxDigits = allowedDigits[selectedCountryCode] || 10; // Limitar según el país seleccionado
+
+        // Formatear el número con paréntesis y guiones si aplica
+        const formattedInput = formatPhoneNumber(input, selectedCountryCode);
+
+        // Validar longitud permitida basándonos solo en los dígitos
+        if (digitsOnly.length <= maxDigits) {
             setObstetrico((prevData) => ({
                 ...prevData,
-                telefono: input
+                telefono: formattedInput // Guardar el número formateado en el estado
             }));
         }
     };
+
+    // useEffect(() => {
+    //     // Consumir la API para obtener los códigos de país
+    //     axios.get('https://restcountries.com/v3.1/all')
+    //     .then(response => {
+    //         const countryData = response.data
+    //         .filter(country => country.region === 'Americas') // Filtrar solo América
+    //         .map(country => ({
+    //             name: country.name.common,
+    //             code: country.idd.root + (country.idd.suffixes ? country.idd.suffixes[0] : '')
+    //         }))
+    //         .filter(country => Object.keys(allowedDigits).includes(country.code)); // Solo países con códigos permitidos
+    
+    //         const sortedCountries = countryData.sort((a, b) => a.name.localeCompare(b.name));
+    //         setCountries(sortedCountries);
+    //     })
+    //     .catch(error => console.error('Error al cargar los países:', error));
+    // }, []);
+
+    // const handleCountryChange = (e) => {
+    //     setSelectedCountryCode(e.target.value);
+    //     setObstetrico((prevData) => ({
+    //         ...prevData,
+    //         telefono: "" // Limpiar el teléfono al cambiar de país
+    //     }));
+    // };
+    
+    // const handlePhoneNumberChange = (e) => {
+    //     const input = e.target.value;
+    //     const maxDigits = allowedDigits[selectedCountryCode] || 0;
+    
+    //     if (input.length <= maxDigits) {
+    //         setObstetrico((prevData) => ({
+    //             ...prevData,
+    //             telefono: input
+    //         }));
+    //     }
+    // };
 
     const [isSelectDisabled, setIsSelectDisabled] = useState(false);
 
@@ -494,46 +568,6 @@ export const AgregarHistoriaClinicaGeneral = () => {
     //                 duration: 3
     //             });
     //         }
-    //     }
-    // }
-
-    // const handleSubmit = async () => {
-
-    //     try {
-
-    //         if (!cita.num_cita || cita.num_cita === "0") {
-    //             notification.warning({
-    //                 message: '¡Atención!',
-    //                 description: 'Por favor, registre el ciclo de control.',
-    //                 duration: 3
-    //             });
-    //             return;
-    //         }
-
-    //         console.log(formData);
-
-    //         await axios.post(`${baseURL}/bdtbhistoriaclinicageneral/post`, formData);
-
-    //         notification.success({
-    //             message: '¡Éxito!',
-    //             description: `Historia Clinica General Creada con Exito`,
-    //             duration: 3
-    //         });
-
-    //         if (AOTab.current) {
-    //             console.log('xd')
-    //             const tab = new window.bootstrap.Tab(AOTab.current);
-    //             tab.show();
-    //         }
-
-    //     } catch (error) {
-
-    //         notification.error({
-    //             message: '¡Error!',
-    //             description: error,
-    //             duration: 3
-    //         });
-
     //     }
     // }
 
@@ -1134,7 +1168,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
                                         ))}
                                         </select>
                                         <input
-                                        type="number"
+                                        type="text"
                                         name="telefono"
                                         value={obstetrico.telefono}
                                         onChange={handlePhoneNumberChange}
