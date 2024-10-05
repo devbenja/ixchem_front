@@ -23,6 +23,78 @@ export const AgregarHistoriaClinicaGeneral = () => {
     const [firstName, setFirstName] = useState('');
     const [firstLastName, setFirstLastName] = useState('');
 
+    // Variables para el uso de la validación de telefono
+    const [countries, setCountries] = useState([]);
+    const [selectedCountryCode, setSelectedCountryCode] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+
+    // Cantidades de dígitos permitidos por código de país
+    const allowedDigits = {
+        '+1': 10, // Estados Unidos, Canadá
+        '+1201': 10, // Estados Unidos
+        '+502': 8, // Guatemala
+        '+503': 8, // El Salvador
+        '+504': 8, // Honduras
+        '+505': 8, // Nicaragua
+        '+506': 8, // Costa Rica
+        '+507': 8, // Panamá
+        '+51': 9, // Perú
+        '+52': 10, // México
+        '+53': 8, // Cuba
+        '+54': 10, // Argentina
+        '+55': 11, // Brasil
+        '+56': 9, // Chile
+        '+57': 10, // Colombia
+        '+58': 11, // Venezuela
+        '+591': 8, // Bolivia
+        '+592': 7, // Guyana
+        '+593': 9, // Ecuador
+        '+594': 9, // Guayana Francesa
+        '+595': 9, // Paraguay
+        '+596': 9, // Martinica
+        '+597': 6, // Surinam
+        '+598': 9, // Uruguay
+    };
+      
+
+    useEffect(() => {
+        // Consumir la API para obtener los códigos de país
+        axios.get('https://restcountries.com/v3.1/all')
+        .then(response => {
+            const countryData = response.data
+            .filter(country => country.region === 'Americas') // Filtrar solo América
+            .map(country => ({
+                name: country.name.common,
+                code: country.idd.root + (country.idd.suffixes ? country.idd.suffixes[0] : '')
+            }))
+            .filter(country => Object.keys(allowedDigits).includes(country.code)); // Solo países con códigos permitidos
+    
+            const sortedCountries = countryData.sort((a, b) => a.name.localeCompare(b.name));
+            setCountries(sortedCountries);
+        })
+        .catch(error => console.error('Error al cargar los países:', error));
+    }, []);
+
+    const handleCountryChange = (e) => {
+        setSelectedCountryCode(e.target.value);
+        setObstetrico((prevData) => ({
+            ...prevData,
+            telefono: "" // Limpiar el teléfono al cambiar de país
+        }));
+    };
+    
+    const handlePhoneNumberChange = (e) => {
+        const input = e.target.value;
+        const maxDigits = allowedDigits[selectedCountryCode] || 0;
+    
+        if (input.length <= maxDigits) {
+            setObstetrico((prevData) => ({
+                ...prevData,
+                telefono: input
+            }));
+        }
+    };
+
     const [isSelectDisabled, setIsSelectDisabled] = useState(false);
 
     const [data, setData] = useState({
@@ -868,9 +940,32 @@ export const AgregarHistoriaClinicaGeneral = () => {
                                     <label className="form-label">Número de expediente<span style={{color: 'red'}}> * </span></label>
                                     <input type="text" name="numExpediente" value={formData.numExpediente} onChange={handleChange} className="form-control" />
                                 </div>
-                                <div className="col-sm-3 mt-3">
+
+                                {/* <div className="col-sm-3 mt-3">
                                     <label className="form-label">Telefono</label>
                                     <input type="number" name="telefono" value={obstetrico.telefono} onChange={handleChangeObs} className="form-control" />
+                                </div> */}
+
+                                <div className="col-sm-3 mt-3">
+                                    <label className="form-label">Teléfono</label>
+                                    <div className="input-group">
+                                        <select onChange={handleCountryChange} className="form-select">
+                                        <option value="">Seleccionar Código de País</option>
+                                        {countries.map((country, index) => (
+                                            <option key={index} value={country.code}>
+                                            {country.name} ({country.code})
+                                            </option>
+                                        ))}
+                                        </select>
+                                        <input
+                                        type="number"
+                                        name="telefono"
+                                        value={obstetrico.telefono}
+                                        onChange={handlePhoneNumberChange}
+                                        className="form-control"
+                                        placeholder="Número de Teléfono"
+                                        />
+                                    </div>
                                 </div>
 
                                 <div className="col-sm-3 mt-3">

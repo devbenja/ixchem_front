@@ -20,10 +20,9 @@ export const Bitacoras = () => {
     }, []);
 
     const fetchBitacoras = async () => {
-
         try {
             const response = await axios.get(`${baseURL}/bdtbitacora/listar`);
-            console.log(response.data)
+            console.log(response.data);
             setBitacoras(response.data);
         } catch (error) {
             setErrors(error.response ? error.response.data : 'Error al cargar los datos');
@@ -35,6 +34,10 @@ export const Bitacoras = () => {
     const handleSearch = (event) => {
         setSearchTerm(event.target.value);
     };
+
+    const filteredBitacoras = bitacoras.filter(bitacora => 
+        bitacora.usuario && bitacora.usuario.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     const columns = [
         {
@@ -101,7 +104,7 @@ export const Bitacoras = () => {
                 pagination={{ pageSize: 7 }}
                 className='custom-table'
                 columns={columns}
-                dataSource={bitacoras}
+                dataSource={filteredBitacoras} // Usar todos los registros que coinciden
                 rowKey="id" 
                 onRow={(record) => ({
                     onClick: () => handleRowClick(record.id),
@@ -150,7 +153,6 @@ export const Bitacoras = () => {
 //         setSearchTerm(event.target.value);
 //     };
 
-
 //     const columns = [
 //         {
 //             title: 'Usuario',
@@ -167,6 +169,7 @@ export const Bitacoras = () => {
 //             title: 'Hora',
 //             dataIndex: 'hora',
 //             key: 'hora',
+//             render: (hora) => hora.substring(0, 8), // Limitar a 8 caracteres
 //         },
 //         {
 //             title: 'Información',
