@@ -160,7 +160,30 @@ const MyDocument = ({ data }) => {
                 </View>
 
                 <View>
-                    <View style={styles.table}>
+                <View style={styles.table}>
+                    <View style={styles.tableRow}>
+                        <View style={styles.tableColIndex}>
+                            <Text style={styles.tableCell}></Text>
+                        </View>
+                        <View style={styles.tableColDescription}>
+                            <Text style={styles.title}>Antecedente Obstétrico</Text>
+                        </View>
+                        {
+                            // Generamos 4 columnas con los valores 1CPN, 2CPN, 3CPN, 4CPN
+                            Array.from({ length: 4 }).map((_, index) => (
+                                <View style={styles.tableColYesNo} key={index}>
+                                    <Text style={styles.tableCell}>
+                                        {/* Se usa index + 1 para mostrar el número correspondiente */}
+                                        {`${index + 1}CPN`}
+                                    </Text>
+                                </View>
+                                ))
+                            }
+                        </View>
+                    </View>
+                    
+                    {/* Agrega los datos por array dependiendo del contol que ingresa  */}
+                    {/* <View style={styles.table}>
                         <View style={styles.tableRow}>
                             <View style={styles.tableColIndex}>
                                 <Text style={styles.tableCell}></Text>
@@ -178,7 +201,8 @@ const MyDocument = ({ data }) => {
                                 ))
                             }
                         </View>
-                    </View>
+                    </View> */}
+                    
                     <View style={styles.table}>
                         {/* Fila de ejemplo con índice */}
                         <View style={styles.tableRow}>
