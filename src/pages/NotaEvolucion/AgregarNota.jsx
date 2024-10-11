@@ -317,6 +317,7 @@ export const AgregarNota = () => {
                             type="text"
                             className={`form-control ${errors.hora ? 'is-invalid' : ''}`} // Aplicación de clase de error
                             name="hora"
+                            placeholder="Formato 24hrs"
                             onChange={handleChange}
                             value={formData.hora}
                         />

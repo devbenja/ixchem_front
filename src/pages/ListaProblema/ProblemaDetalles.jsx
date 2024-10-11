@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import './Problemas.css'
 
 import { Table, Space, Button, message, Modal as AntModal } from 'antd';
-import { EditOutlined, DeleteOutlined, ExclamationCircleOutlined, FilePdfOutlined, ArrowLeftOutlined } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined, ExclamationCircleOutlined, FilePdfOutlined, ArrowLeftOutlined, PrinterOutlined, RollbackOutlined } from '@ant-design/icons';
 import { Form, Col, Spinner, Modal } from 'react-bootstrap';
 import { Document, Page, Text, View, StyleSheet, PDFDownloadLink, Image, BlobProvider } from '@react-pdf/renderer';
 
@@ -366,47 +366,114 @@ export const ProblemaDetalles = () => {
             <div className='d-flex align-items-start justify-content-between'>
                 <h4 className='mb-4'>Problemas Asociados al Expediente: {numExpediente}</h4>
                 <div className='d-flex align-items-center gap-3'>
-                    <BlobProvider document={<MyDocument problemas={problemas} />}>
-                        {({ url }) => (
-                            <>
-                                <Button onClick={() => handlePreview(url)}>
-                                    <FilePdfOutlined style={{ fontSize: '20px', color: 'blue' }} /> Visualizar PDF
-                                </Button>
-                                <Modal
-                                    show={visible}
-                                    title="Previsualización del PDF"
-                                    footer={null}
-                                    size='xl'
-                                    onHide={handleClose}
-                                    centered
-                                >
-                                    <iframe
-                                        src={previewUrl}
-                                        style={{ width: '100%', height: '80vh' }}
-                                    ></iframe>
-
-                                    <Modal.Footer>
-                                        <Button danger key="close" onClick={handleClose}>
-                                            Cerrar
-                                        </Button>
-                                    </Modal.Footer>
-                                </Modal>
-                            </>
-                        )}
-                    </BlobProvider>
-
+                    
                     {
-                        user && (user.codRol === 1 || user.codRol === 3) && (
-                            <PDFDownloadLink document={<MyDocument problemas={problemas} />} fileName="Lista de Problemas.pdf">
-                                {({ loading }) =>
-                                    loading ? 'Cargando documento...' : <Button><FilePdfOutlined style={{ fontSize: '20px', color: 'red' }} />Exportar a PDF</Button>
-                                }
-                            </PDFDownloadLink>
+                        user && (user.codRol === 2) && (
+                            <BlobProvider document={<MyDocument problemas={problemas} />}>
+                                {({ url }) => (
+                                    <>
+                                        <Button onClick={() => handlePreview(url)}>
+                                            <FilePdfOutlined style={{ fontSize: '20px', color: 'blue' }} /> Visualizar PDF
+                                        </Button>
+                                        <Modal
+                                            show={visible}
+                                            title="Previsualización del PDF"
+                                            footer={null}
+                                            size='xl'
+                                            onHide={handleClose}
+                                            centered
+                                        >
+                                            <iframe
+                                                src={previewUrl}
+                                                style={{ width: '100%', height: '80vh' }}
+                                            ></iframe>
+
+                                            <Modal.Footer>
+                                                <Button danger key="close" onClick={handleClose}>
+                                                    Cerrar
+                                                </Button>
+                                            </Modal.Footer>
+                                        </Modal>
+                                    </>
+                                )}
+                            </BlobProvider>
                         )
                     }
 
+                    {
+                        user && (user.codRol === 1 || user.codRol === 3) && (
+                            <BlobProvider document={<MyDocument problemas={problemas} />}>
+                                {({ url, blob }) => (
+                                    <>
+                                    {/* Botón para previsualizar el PDF en un modal */}
+                                    <Button onClick={() => handlePreview(url)}>
+                                        <FilePdfOutlined style={{ fontSize: '20px', color: 'red' }} /> Imprimir PDF
+                                    </Button>
 
-                    {/* <Button style={{ backgroundColor: 'Green', color: 'white' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button> */}
+                                    {/* Modal para la previsualización */}
+                                    <Modal
+                                        show={visible}
+                                        title="Previsualización del PDF"
+                                        footer={null}
+                                        size='xl'
+                                        onHide={handleClose}
+                                        centered
+                                    >
+                                        <iframe
+                                        // Añade el uso para mostrar la barra de herramientas de PDF
+                                        src={previewUrl}
+                                        id="pdf-frame"
+                                        style={{ width: '100%', height: '80vh' }}
+                                        ></iframe>
+
+                                        {/* BOTON DE IMPRIMIR */}
+                                        {/* Añadimos un botón personalizado para imprimir el PDF */}
+                                        <Modal.Footer>
+                                        <Button
+                                            style={{ color: 'blue', border: '1px solid blue' }} // Aplica color al texto y al borde
+                                            onClick={() => {
+                                                const iframe = document.getElementById('pdf-frame');
+                                                if (iframe) {
+                                                    iframe.contentWindow.focus();
+                                                    iframe.contentWindow.print();
+                                                }
+                                            }}
+                                        >
+                                            <PrinterOutlined style={{ fontSize: '20px', color: 'blue' }} /> {/* El icono también es azul */}
+                                            Imprimir PDF
+                                        </Button>
+
+                                        {/* BOTON DE DESCARGAR */}
+                                        <PDFDownloadLink document={<MyDocument problemas={problemas} />} fileName="Lista de Problemas.pdf">
+                                            {({ loading }) =>
+                                                loading ? 'Cargando documento...' : (
+                                                    <Button style={{ color: 'red', border: '1px solid red' }}> {/* Estilos añadidos aquí */}
+                                                        <FilePdfOutlined style={{ fontSize: '20px', color: 'red' }} />
+                                                        Descargar PDF
+                                                    </Button>
+                                                )
+                                            }
+                                        </PDFDownloadLink>
+
+                                        <Button style={{ color: 'green', border: '1px solid green' }} onClick={handleClose}>
+                                            <RollbackOutlined style={{ fontSize: '20px', color: 'green' }} /> 
+                                            Cerrar
+                                        </Button>
+                                        </Modal.Footer>
+                                    </Modal>
+                                    </>
+                                )}
+                            </BlobProvider>
+
+                            // Logica solo para descargar 
+                            // <PDFDownloadLink document={<MyDocument problemas={problemas} />} fileName="Lista de Problemas.pdf">
+                            //     {({ loading }) =>
+                            //         loading ? 'Cargando documento...' : <Button><FilePdfOutlined style={{ fontSize: '20px', color: 'red' }} />Exportar a PDF</Button>
+                            //     }
+                            // </PDFDownloadLink>
+                        )
+                    }
+
                     <Button style={{ variant:'outlined', color: 'Black' }} onClick={handleBack}><ArrowLeftOutlined />Volver Atrás</Button>
                 </div>
             </div>

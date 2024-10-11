@@ -4,7 +4,7 @@ import axios from "axios";
 
 import { Page, Text, View, Document, StyleSheet, PDFDownloadLink, BlobProvider } from '@react-pdf/renderer';
 
-import { ArrowLeftOutlined, FileSearchOutlined, FilePdfOutlined } from '@ant-design/icons';
+import { ArrowLeftOutlined, FileSearchOutlined, FilePdfOutlined, PrinterOutlined, RollbackOutlined } from '@ant-design/icons';
 import { Table, Button, Input, Space } from "antd";
 import { Modal } from "react-bootstrap";
 
@@ -165,6 +165,7 @@ const MyDocument = ({ data }) => {
                         <View style={styles.tableColIndex}>
                             <Text style={styles.tableCell}></Text>
                         </View>
+                        
                         <View style={styles.tableColDescription}>
                             <Text style={styles.title}>Antecedente Obstétrico</Text>
                         </View>
@@ -202,7 +203,7 @@ const MyDocument = ({ data }) => {
                             }
                         </View>
                     </View> */}
-                    
+
                     <View style={styles.table}>
                         {/* Fila de ejemplo con índice */}
                         <View style={styles.tableRow}>
@@ -726,29 +727,98 @@ return (
         <div className="container-fluid d-flex justify-content-between align-items-center">
             <h4>Clasificación de Riesgo: {id}</h4>
             <div className="d-flex gap-2">
+                
+            {
+                    user && (user.codRol === 2) && (
+                        chunkedData.map((chunk, index) => (
+                            <BlobProvider key={index} document={<MyDocument data={chunk} />}>
+                                {({ url }) => (
+                                        <>
+                                            <Button onClick={() => handlePreview(url)}>
+                                                <FilePdfOutlined style={{ fontSize: '20px', color: 'blue' }} /> Visualizar PDF {index + 1}
+                                            </Button>
+                                            <Modal
+                                                show={visible}
+                                                title="Previsualización del PDF"
+                                                footer={null}
+                                                size='xl'
+                                                onHide={handleClose}
+                                                centered
+                                            >
+                                                <iframe
+                                                    src={previewUrl}
+                                                    style={{ width: '100%', height: '80vh' }}
+                                                ></iframe>
+            
+                                                <Modal.Footer>
+                                                    <Button danger key="close" onClick={handleClose}>
+                                                        Cerrar
+                                                    </Button>
+                                                </Modal.Footer>
+                                            </Modal>
+                                        </>
+                                )   }
+                            </BlobProvider>
+                        ))
+                    )
+                }
+
                 {
-                    chunkedData.map((chunk, index) => (
-                        <BlobProvider key={index} document={<MyDocument data={chunk} />}>
-                            {({ url }) => (
+                    user && (user.codRol === 1 || user.codRol === 3) && chunkedData.map((chunk, index) => (
+                        <BlobProvider document={<MyDocument data={chunk} />}>
+                            {({ url, blob }) => (
                                 <>
+                                    {/* Botón para previsualizar el PDF en un modal */}
                                     <Button onClick={() => handlePreview(url)}>
-                                        <FilePdfOutlined style={{ fontSize: '20px', color: 'blue' }} /> Visualizar PDF {index + 1}
+                                        <FilePdfOutlined style={{ fontSize: '20px', color: 'red' }} /> Imprimir PDF {index + 1}
                                     </Button>
+                                    {/* Modal para la previsualización */}
                                     <Modal
                                         show={visible}
-                                        title="Previsualización del PDF"
+                                        title="Imprimir PDF"
                                         footer={null}
                                         size='xl'
                                         onHide={handleClose}
                                         centered
                                     >
                                         <iframe
-                                            src={previewUrl}
-                                            style={{ width: '100%', height: '80vh' }}
+                                        // Añade el uso para mostrar la barra de herramientas de PDF
+                                        src={previewUrl}
+                                        id="pdf-frame"
+                                        style={{ width: '100%', height: '80vh' }}
                                         ></iframe>
 
+                                        {/* BOTON DE IMPRIMIR */}
+                                        {/* Añadimos un botón personalizado para imprimir el PDF */}
                                         <Modal.Footer>
-                                            <Button danger key="close" onClick={handleClose}>
+                                            <Button
+                                                style={{ color: 'blue', border: '1px solid blue' }} // Aplica color al texto y al borde
+                                                onClick={() => {
+                                                    const iframe = document.getElementById('pdf-frame');
+                                                    if (iframe) {
+                                                        iframe.contentWindow.focus();
+                                                        iframe.contentWindow.print();
+                                                    }
+                                                }}
+                                            >
+                                                <PrinterOutlined style={{ fontSize: '20px', color: 'blue' }} /> {/* El icono también es azul */}
+                                                Imprimir PDF
+                                            </Button>
+
+                                            {/* BOTON DE DESCARGAR */}
+                                            <PDFDownloadLink key={index} document={<MyDocument data={chunk} />} fileName={`Clasificación de Riesgo ${index + 1}.pdf`}>
+                                                    {({ loading }) =>
+                                                        loading ? 'Cargando documento...' : (
+                                                            <Button style={{ color: 'red', border: '1px solid red' }}> {/* Estilos añadidos aquí */}
+                                                                <FilePdfOutlined style={{ fontSize: '20px', color: 'red' }} />
+                                                                Descargar PDF
+                                                            </Button>
+                                                        )
+                                                    }
+                                            </PDFDownloadLink>
+                            
+                                            <Button style={{ color: 'green', border: '1px solid green' }} onClick={handleClose}>
+                                                <RollbackOutlined style={{ fontSize: '20px', color: 'green' }} /> 
                                                 Cerrar
                                             </Button>
                                         </Modal.Footer>
@@ -756,16 +826,13 @@ return (
                                 </>
                             )}
                         </BlobProvider>
-                    ))
-                }
 
-                {
-                    user && (user.codRol === 1 || user.codRol === 3) && chunkedData.map((chunk, index) => (
-                        <PDFDownloadLink key={index} document={<MyDocument data={chunk} />} fileName={`Clasificación de Riesgo ${index + 1}.pdf`}>
-                            {({ loading }) =>
-                                loading ? 'Cargando documento...' : <Button><FilePdfOutlined style={{ fontSize: '20px', color: 'red' }} />Exportar a PDF {index + 1}</Button>
-                            }
-                        </PDFDownloadLink>
+                        // Uso anterior
+                        //     <PDFDownloadLink key={index} document={<MyDocument data={chunk} />} fileName={`Clasificación de Riesgo ${index + 1}.pdf`}>
+                        //         {({ loading }) =>
+                        //             loading ? 'Cargando documento...' : <Button><FilePdfOutlined style={{ fontSize: '20px', color: 'red' }} />Exportar a PDF {index + 1}</Button>
+                        //         }
+                        //     </PDFDownloadLink>
                     ))
                 }
 

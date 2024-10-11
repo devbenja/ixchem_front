@@ -187,6 +187,7 @@ export const AgregarDoctor = () => {
                             />
                             {errors.codDoctor && <div className="invalid-feedback">{errors.codDoctor}</div>}
                         </div>
+                        
                         <div className="col-sm-2 col-12 mt-3">
                             <label htmlFor="cedula" className="form-label">Cedula<span style={{color: 'red'}}> * </span></label>
                             <input
@@ -198,6 +199,7 @@ export const AgregarDoctor = () => {
                             />
                             {errors.cedula && <div className="invalid-feedback">{errors.cedula}</div>}
                         </div>
+
                         <div className="col-sm-2 col-12 mt-3">
                             <label htmlFor="clinica" className="form-label">Clínica<span style={{color: 'red'}}> * </span></label>
                             <select

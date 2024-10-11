@@ -389,6 +389,7 @@ export const AgregarEpicrisis = () => {
                 </div>
 
                 <div className="row mb-3">
+                    
                     {/* <div className="col sm-mt-3">
                         <label className="form-label">Hora<span style={{ color: 'red' }}> * </span></label>
                         <input 
@@ -407,6 +408,7 @@ export const AgregarEpicrisis = () => {
                         <input 
                             type="text" 
                             name="hora" 
+                            placeholder="Formato 24hrs"
                             value={formData.hora} 
                             onChange={handleChange} 
                             className={`form-control ${errors.hora ? 'is-invalid' : ''}`}
