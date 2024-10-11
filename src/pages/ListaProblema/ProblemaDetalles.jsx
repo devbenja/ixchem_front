@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import './Problemas.css'
 
 import { Table, Space, Button, message, Modal as AntModal } from 'antd';
-import { EditOutlined, DeleteOutlined, ExclamationCircleOutlined, FilePdfOutlined, ArrowLeftOutlined, PrinterOutlined, RollbackOutlined } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined, ExclamationCircleOutlined, FilePdfOutlined, ArrowLeftOutlined, PrinterOutlined, RollbackOutlined, DownloadOutlined} from '@ant-design/icons';
 import { Form, Col, Spinner, Modal } from 'react-bootstrap';
 import { Document, Page, Text, View, StyleSheet, PDFDownloadLink, Image, BlobProvider } from '@react-pdf/renderer';
 
@@ -447,16 +447,16 @@ export const ProblemaDetalles = () => {
                                         <PDFDownloadLink document={<MyDocument problemas={problemas} />} fileName="Lista de Problemas.pdf">
                                             {({ loading }) =>
                                                 loading ? 'Cargando documento...' : (
-                                                    <Button style={{ color: 'red', border: '1px solid red' }}> {/* Estilos añadidos aquí */}
-                                                        <FilePdfOutlined style={{ fontSize: '20px', color: 'red' }} />
+                                                    <Button style={{ color: 'green', border: '1px solid green' }}> {/* Estilos añadidos aquí */}
+                                                        <DownloadOutlined style={{ fontSize: '20px', color: 'green' }} />
                                                         Descargar PDF
                                                     </Button>
                                                 )
                                             }
                                         </PDFDownloadLink>
 
-                                        <Button style={{ color: 'green', border: '1px solid green' }} onClick={handleClose}>
-                                            <RollbackOutlined style={{ fontSize: '20px', color: 'green' }} /> 
+                                        <Button style={{ color: 'red', border: '1px solid red' }} onClick={handleClose}>
+                                            <RollbackOutlined style={{ fontSize: '20px', color: 'red' }} /> 
                                             Cerrar
                                         </Button>
                                         </Modal.Footer>

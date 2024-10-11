@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Table, message, notification, Button } from 'antd';
 import { Modal } from 'react-bootstrap';
-import { FilePdfOutlined, PrinterOutlined, RollbackOutlined } from '@ant-design/icons'
+import { FilePdfOutlined, PrinterOutlined, RollbackOutlined, DownloadOutlined } from '@ant-design/icons'
 
 import { Image, Page, Text, View, Document, StyleSheet, BlobProvider, PDFDownloadLink } from '@react-pdf/renderer';
 
@@ -261,7 +261,7 @@ const MyDocument = ({ data }) => (
                 </View>
                 <View style={styles.twoValues}>
                     <View style={styles.row}>
-                        <Text style={styles.label}>Fecha de Nacimiento del Hijo:</Text>
+                        <Text style={styles.label}>Fecha de Nacimiento del Hijo:    </Text>
                         <Text style={styles.value}>{data.feC_NAC_HIJO}</Text>
                     </View>
                     <View style={styles.row}>
@@ -1132,37 +1132,39 @@ export const BuscarHistoria = () => {
                                         {/* BOTON DE IMPRIMIR */}
                                         {/* Añadimos un botón personalizado para imprimir el PDF */}
                                         <Modal.Footer>
-                                        <Button
-                                            style={{ color: 'blue', border: '1px solid blue' }} // Aplica color al texto y al borde
-                                            onClick={() => {
-                                                const iframe = document.getElementById('pdf-frame');
-                                                if (iframe) {
-                                                    iframe.contentWindow.focus();
-                                                    iframe.contentWindow.print();
-                                                }
-                                            }}
-                                        >
-                                            <PrinterOutlined style={{ fontSize: '20px', color: 'blue' }} /> {/* El icono también es azul */}
-                                            Imprimir PDF
-                                        </Button>
+                                            <Button
+                                                style={{ color: 'blue', border: '1px solid blue' }} // Aplica color al texto y al borde
+                                                onClick={() => {
+                                                    const iframe = document.getElementById('pdf-frame');
+                                                    if (iframe) {
+                                                        iframe.contentWindow.focus();
+                                                        iframe.contentWindow.print();
+                                                    }
+                                                }}
+                                            >
+                                                <PrinterOutlined style={{ fontSize: '20px', color: 'blue' }} /> {/* El icono también es azul */}
+                                                Imprimir PDF
+                                            </Button>
 
-                                        {/* BOTON DE DESCARGAR */}
-                                        
-                                        <PDFDownloadLink
-                                            document={<MyDocument data={data} />} fileName="Historia Clinica.pdf">
-                                            {({ loading }) =>
-                                                loading ? 'Cargando documento...' : (
-                                                    <Button style={{ color: 'red', border: '1px solid red' }}> {/* Estilos añadidos aquí */}
-                                                        <FilePdfOutlined style={{ fontSize: '20px', color: 'red' }} />
-                                                        Descargar PDF
-                                                    </Button>
-                                                )
-                                            }
-                                        </PDFDownloadLink>
-                                        <Button style={{ color: 'green', border: '1px solid green' }} onClick={handleClose}>
-                                            <RollbackOutlined style={{ fontSize: '20px', color: 'green' }} /> 
-                                            Cerrar
-                                        </Button>
+                                            {/* BOTON DE DESCARGAR */}
+                                            
+                                            <PDFDownloadLink
+                                                document={<MyDocument data={data} />} fileName="Historia Clinica.pdf">
+                                                {({ loading }) =>
+                                                    loading ? 'Cargando documento...' : (
+                                                        <Button style={{ color: 'green', border: '1px solid green' }}> {/* Estilos añadidos aquí */}
+                                                            <DownloadOutlined style={{ fontSize: '20px', color: 'green' }} />
+                                                            Descargar PDF
+                                                        </Button>
+                                                    )
+                                                }
+                                            </PDFDownloadLink>
+
+                                            <Button style={{ color: 'red', border: '1px solid red' }} onClick={handleClose}>
+                                                <RollbackOutlined style={{ fontSize: '20px', color: 'red' }} /> 
+                                                Cerrar
+                                            </Button>
+
                                         </Modal.Footer>
                                     </Modal>
                                     </>
