@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Table, message, notification, Button } from 'antd';
 import { Modal } from 'react-bootstrap';
-import { FilePdfOutlined, ArrowLeftOutlined } from '@ant-design/icons'
+import { FilePdfOutlined, ArrowLeftOutlined, RollbackOutlined, PrinterOutlined } from '@ant-design/icons'
 
 import { Image, Page, Text, View, Document, StyleSheet, BlobProvider, PDFDownloadLink } from '@react-pdf/renderer';
 

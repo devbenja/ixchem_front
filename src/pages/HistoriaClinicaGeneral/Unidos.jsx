@@ -144,8 +144,12 @@ const MyDocument = ({ data }) => {
                     </View>
                     <View style={styles.row}>
                         <Text style={styles.label}>No. Expediente:</Text>
-                        <Text style={styles.valueExp}>{data[0].nuM_EXPEDIENTE}</Text>
+                        <Text style={styles.valueExp}> {data[0].nuM_EXPEDIENTE.split('-').slice(0, 2).join('-')}</Text>
                     </View>
+                    {/* <View style={styles.row}>
+                        <Text style={styles.label}>No. Expediente:</Text>
+                        <Text style={styles.valueExp}>{data[0].nuM_EXPEDIENTE}</Text>
+                    </View> */}
                 </View>
 
                 <View style={styles.twoValues}>
