@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Table, message, notification, Button } from 'antd';
 import { Modal } from 'react-bootstrap';
-import { FilePdfOutlined, ArrowLeftOutlined, RollbackOutlined, PrinterOutlined } from '@ant-design/icons'
+import { FilePdfOutlined, ArrowLeftOutlined, RollbackOutlined, PrinterOutlined, DownloadOutlined} from '@ant-design/icons'
 
 import { Image, Page, Text, View, Document, StyleSheet, BlobProvider, PDFDownloadLink } from '@react-pdf/renderer';
 
@@ -997,15 +997,15 @@ export const HistoriaCentro = () => {
                                             document={<MyDocument data={data} />} fileName="historia_clinica.pdf">
                                             {({ loading }) =>
                                                 loading ? 'Cargando documento...' : (
-                                                    <Button style={{ color: 'red', border: '1px solid red' }}> {/* Estilos añadidos aquí */}
-                                                        <FilePdfOutlined style={{ fontSize: '20px', color: 'red' }} />
-                                                        Descargar PDF
-                                                    </Button>
+                                                    <Button style={{ color: 'green', border: '1px solid green' }}> {/* Estilos añadidos aquí */}
+                                                                <DownloadOutlined style={{ fontSize: '20px', color: 'green' }} />
+                                                                Descargar PDF
+                                                            </Button>
                                                 )
                                             }
                                         </PDFDownloadLink>
-                                        <Button style={{ color: 'green', border: '1px solid green' }} onClick={handleClose}>
-                                            <RollbackOutlined style={{ fontSize: '20px', color: 'green' }} /> 
+                                        <Button style={{ color: 'red', border: '1px solid red' }} onClick={handleClose}>
+                                            <RollbackOutlined style={{ fontSize: '20px', color: 'red' }} /> 
                                             Cerrar
                                         </Button>
                                         </Modal.Footer>
