@@ -675,17 +675,36 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-1">
+                                        <label htmlFor="presion" className="form-label">
+                                            Presión<span style={{color: 'red'}}> * </span>
+                                        </label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            id="presion"
+                                            placeholder="mm/Hg"
+                                            {...registerPaciente("presion", { required: true })}
+                                            onKeyPress={(e) => {
+                                                const charCode = e.charCode;
+
+                                                if (!(charCode >= 48 && charCode <= 57) && charCode !== 47) {
+                                                    e.preventDefault(); // Evita que se ingresen otros caracteres
+                                                }
+                                            }}
+                                        />
+                                    </div>
+
+                                    {/* <div className="col-sm-1">
                                         <label htmlFor="presion" className="form-label">Presión<span style={{color: 'red'}}> * </span>
                                         </label>
                                         <input
-                                            type="number"
-                                            min="1"
+                                            type="text"
                                             className="form-control"
                                             id="presion"
                                             placeholder="mm/Hg"
                                             {...registerPaciente("presion", { required: true })}
                                         />
-                                    </div>
+                                    </div> */}
 
                                     <div className="col-sm-1">
                                         <label htmlFor="temperatura" className="form-label">Temperatura<span style={{color: 'red'}}>* </span>
