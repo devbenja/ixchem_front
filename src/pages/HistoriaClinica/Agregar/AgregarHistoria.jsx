@@ -979,13 +979,12 @@ export const AgregarHistoria = () => {
                                     </div>
 
                                     <div className="col-sm-2">
-                                        <label htmlFor="FUM" className="form-label">FUM<span style={{color: 'red'}}> * </span>
-                                        </label>
+                                        <label htmlFor="FUM" className="form-label">FUM</label>
                                         <input
                                             type="date"
                                             className="form-control"
                                             id="FUM"
-                                            {...registerAntecPer('fum', { required: true })}
+                                            {...registerAntecPer('fum')}
                                         />
                                     </div>
 
@@ -2064,6 +2063,43 @@ export const AgregarHistoria = () => {
                                             }}
                                     />
                                 </div>
+
+                                {/* <div className="mt-3">
+                                    <label className="form-label" htmlFor="motivo_visita">
+                                        Motivo de la visita<span style={{color: 'red'}}> * </span>
+                                    </label>
+                                    <textarea
+                                        className="form-control"
+                                        rows="10"
+                                        id="motivo_visita"
+                                        {...registerInformacion('motVisita', { 
+                                            required: true,
+                                            onBlur: (e) => {
+                                                if (!e.target.value.trim()) {
+                                                    e.target.value = 'N/A'; // Establece 'N/A' si está vacío
+                                                }
+                                            }
+                                        })}
+                                    />
+                                </div>
+
+                                <div className="mt-3">
+                                    <label htmlFor="nota_med" className="form-label">Nota Médica</label>
+                                    <textarea
+                                        className="form-control"
+                                        rows="10"
+                                        id="nota_med"
+                                        {...registerInformacion('notaMedica', { 
+                                            required: true,
+                                            onBlur: (e) => {
+                                                if (!e.target.value.trim()) {
+                                                    e.target.value = 'N/A'; // Establece 'N/A' si está vacío
+                                                }
+                                            }
+                                        })}
+                                    />
+                                </div> */}
+
                                 <div className="mt-3">
                                     <label className="form-label" htmlFor="motivo_visita">Motivo de la visita<span style={{color: 'red'}}> * </span>
                                     </label>
@@ -2101,7 +2137,6 @@ export const AgregarHistoria = () => {
     )
 }
 
-//Respaldo en caso que el nuevo codigo falle
 // import { useState, useEffect, useRef } from "react";
 
 // import axios from "axios";
@@ -2113,8 +2148,9 @@ export const AgregarHistoria = () => {
 
 // export const AgregarHistoria = () => {
 
-//     const { register: registerPaciente, handleSubmit: handleSubmitPaciente, reset } = useForm();
-//     const { register: registerAntecPer, handleSubmit: handleSubmitAntPer, setValue, reset: resetAntecPer } = useForm();
+//     //const { register: registerPaciente, handleSubmit: handleSubmitPaciente, reset } = useForm();
+//     const { register: registerPaciente, handleSubmit: handleSubmitPaciente, setValue: setValuePaciente, watch: watchPaciente, reset } = useForm();
+//     const { register: registerAntecPer, handleSubmit: handleSubmitAntPer, setValue, watch, reset: resetAntecPer } = useForm();
 //     const { register: registerAntecPerPat, handleSubmit: handleSubmitAntPerPat, setValue: setValueAntPer, reset: resetAntPerPat } = useForm();
 //     const { register: registerAntecPatFam, handleSubmit: handleSubmitAntecPatFam, setValue: setValueAntPatFam, reset: resetAntPatFam } = useForm();
 //     const { register: registerInformacion, handleSubmit: handleSubmitInformacion, setValue: setValueInfo, reset:  resetInfo } = useForm();
@@ -2127,44 +2163,235 @@ export const AgregarHistoria = () => {
 //     const refAntPatFam = useRef(null);
 //     const refInfo = useRef(null);
 
+//     const [isHerited, setIsHerited] = useState(false);
+//     const fuma = watch('fuma'); // Obtenemos el valor actual de "fuma"
+
+//     const [isSelectDisabled, setIsSelectDisabled] = useState(false);
+    
+//     const [tipoIdentificacion, setTipoIdentificacion] = useState("");
+//     const [identificacion, setIdentificacion] = useState("");
+
+//     // Manejar el cambio de tipo de identificación
+//     const handleTipoIdentificacionChange = (e) => {
+        
+//         // Uso viejo del codigo
+//         // setTipoIdentificacion(e.target.value);
+//         // setIdentificacion("");
+
+//         const tipo = e.target.value;
+//         setTipoIdentificacion(tipo);
+
+//         // Si el tipo de identificación es "Fecha de Nacimiento", actualiza automáticamente
+//         if (tipo === "categoria1") {
+//             const fechaNacimiento = watchPaciente('fechaNac');
+//             if (fechaNacimiento) {
+//                 const [year, month, day] = fechaNacimiento.split("-");
+//                 const formattedDate = `${day}-${month}-${year}`;
+//                 setIdentificacion(formattedDate); // Actualiza visualmente
+//                 setValuePaciente('cedula', formattedDate); // Almacena el valor en el campo de texto
+//             }
+//         } else {
+//             setIdentificacion(""); // Limpia el campo si se selecciona otro tipo
+//             setValuePaciente('cedula', ""); // Limpia el valor en el formulario
+//         }
+//     };
+
+//     // useEffect para observar cambios en la fecha de nacimiento si el tipo de identificación es "Fecha de Nacimiento"
+//     useEffect(() => {
+//         // Si el tipo de identificación es "Fecha de Nacimiento", actualiza el campo de identificación
+//         if (tipoIdentificacion === "categoria1") {
+//             const fechaNacimiento = watchPaciente('fechaNac'); // Obtenemos la fecha de nacimiento
+//             if (fechaNacimiento) {
+//                 const [year, month, day] = fechaNacimiento.split("-");
+//                 const formattedDate = `${day}-${month}-${year}`;
+//                 setIdentificacion(formattedDate); // Actualizar el campo de identificación
+//                 setValuePaciente('cedula', formattedDate); // Almacena el valor actualizado en el campo de texto
+//             }
+//         }
+//     }, [watchPaciente('fechaNac'), tipoIdentificacion]); // Escuchar cambios en la fecha de nacimiento y el tipo de identificación
+
+//     const handleIdentificacionChange = (e) => {
+
+//         if (!tipoIdentificacion) {
+//             // Notificación si no se ha seleccionado el tipo de identificación
+//             notification.error({
+//                 message: "Error",
+//                 description: "Debe seleccionar un tipo de identificación antes de llenar el campo 'Identificación'.",
+//                 duration: 3,
+//             });
+//             return;
+//         }
+
+//         let valor = e.target.value;   
+
+//         if (tipoIdentificacion === "categoria1") {
+//             valor = valor.replace(/[^0-9]/g, ""); // Eliminar cualquier carácter no numérico
+//             // Validar día (primer dos dígitos)
+//             const dia = parseInt(valor.slice(0, 2), 10);
+//             if (dia > 31 ) {
+//                 valor = ""; // Restablecer si el día no está en el rango permitido
+//             } else {
+//                 // Validar mes (siguientes dos dígitos)
+//                 const mes = parseInt(valor.slice(2, 4), 10);
+//                 if (mes > 12 ) {
+//                     valor = valor.slice(0, 2); // Mantener solo el día si el mes no es válido
+//                 } else {
+//                     // Validar año (últimos cuatro dígitos)
+//                     const anio = valor.slice(4, 8);
+//                     if (anio === "0000") {
+//                         valor = valor.slice(0, 4); // Mantener solo el día y mes si el año no es válido
+//                     } else {
+//                         // Insertar guiones en las posiciones 3 y 5
+//                         if (valor.length > 2) valor = valor.slice(0, 2) + "-" + valor.slice(2);
+//                         if (valor.length > 5) valor = valor.slice(0, 5) + "-" + valor.slice(5);
+//                         if (valor.length > 10) valor = valor.slice(0, 10); // Limitar la longitud a 10 caracteres (dd-mm-yyyy)
+//                     }
+//                 }
+//             }
+//         } else if (tipoIdentificacion === "categoria2") {
+//             valor = valor.replace(/[^0-9A-Za-z]/g, ""); // Eliminar caracteres que no sean números o letras
+//             if (valor.length > 3) valor = valor.slice(0, 3) + "-" + valor.slice(3);
+//             if (valor.length > 10) valor = valor.slice(0, 10) + "-" + valor.slice(10);
+//             if (valor.length > 15) {
+//                 let letra = valor.slice(15, 16).toUpperCase(); // Obtener y convertir la letra a mayúscula
+//                 if (/[^A-Z]/.test(letra)) { // Verificar si no es una letra del abecedario
+//                     letra = ""; // Si no es válida, eliminarla
+//                 }
+//                 valor = valor.slice(0, 15) + letra; // Insertar la letra validada
+//             }
+//             if (valor.length > 16) valor = valor.slice(0, 16); // Limitar la longitud a 16 caracteres
+//         } else if (tipoIdentificacion === "categoria3") {
+//             // Limitar la longitud a 30 caracteres no estamos seguros de cuántos tiene el pasaporte INVESTIGAR
+//             valor = valor.slice(0, 30);
+//         }     
+
+//         setIdentificacion(valor);
+//     };
+
 //     //POST PACIENTE - DATOS PERSONALES
+
 //     const onSubmitPaciente = handleSubmitPaciente(async (data) => {
+//         if (!tipoIdentificacion) {
+//             // Notificación si no se ha seleccionado el tipo de identificación
+//             notification.error({
+//                 message: "Error",
+//                 description: "Debe seleccionar un tipo de identificación antes de llenar el campo 'Identificación'.",
+//                 duration: 3,
+//             });
+//             return;
+//         }
+    
+//         setIsSelectDisabled(true);
+    
 //         try {
-
 //             const response = await axios.post(`${baseURL}/bdtpaciente/post`, data);
-
-//             const dataWithAge={
+//             const dataWithAge = {
 //                 ...data,
-//                 EDAD: 0
-//             }
-
+//                 EDAD: 0
+//             };
+    
+//             // Notificación de éxito
 //             notification.success({
 //                 message: '¡Éxito!',
 //                 description: `Paciente ${response.data.primerNombre} creado!`,
 //                 duration: 3
 //             });
-
+    
+//             // Guardar el número de expediente y marcar valor heredado
 //             setNumExp(response.data.numExpediente);
-
-//             reset();
-
+//             setIsHerited(true); // Marcar que el valor ha sido heredado
+//             // reset(); // Limpia el formulario
+//             // setTipoIdentificacion(''); // Limpia el tipo de identificación
+//             // setIdentificacion(''); // Limpia el campo de identificación
+    
 //             if (refAntPer.current) {
 //                 const tab = new window.bootstrap.Tab(refAntPer.current);
 //                 tab.show();
 //             }
-
+    
+//             // Mostrar el botón de editar después de crear al paciente
+//             setShowEditButton(true); // Estado para mostrar el botón de editar
+    
 //         } catch (error) {
-
-//             notification.error({
-//                 message: 'Error al Crear Paciente',
-//                 description: `${error.response.data.message}`,
-//                 duration: 3
-//             });
+//             console.log(error);
+//             // Manejo del error y validación específica
+//             if (error.response && error.response.data && error.response.data.message) {
+//                 notification.error({
+//                     message: 'Error al Crear Paciente',
+//                     description: error.response.data.message,
+//                     duration: 3
+//                 });
+//             } else {
+//                 notification.error({
+//                     message: 'Error al Crear Paciente',
+//                     description: 'El usuario con ese número de expediente ya está registrado, ingresar uno diferente',
+//                     duration: 3
+//                 });
+//             }
 //         }
 //     });
 
+//     // Estado para controlar la visibilidad del botón de editar
+//     const [showEditButton, setShowEditButton] = useState(false);
+
+//     // const onSubmitPaciente = handleSubmitPaciente(async (data) => {
+
+//     //     if (!tipoIdentificacion) {
+//     //         // Notificación si no se ha seleccionado el tipo de identificación
+//     //         notification.error({
+//     //             message: "Error",
+//     //             description: "Debe seleccionar un tipo de identificación antes de llenar el campo 'Identificación'.",
+//     //             duration: 3,
+//     //         });
+//     //         return;
+//     //     }
+
+//     //     setIsSelectDisabled(true);
+ 
+//     //     try {
+//     //         const response = await axios.post(`${baseURL}/bdtpaciente/post`, data);
+//     //         const dataWithAge = {
+//     //             ...data,
+//     //             EDAD: 0
+//     //         };
+//     //         notification.success({
+//     //             message: '¡Éxito!',
+//     //             description: `Paciente ${response.data.primerNombre} creado!`,
+//     //             duration: 3
+//     //         });
+//     //         setNumExp(response.data.numExpediente);
+//     //         setIsHerited(true); // Marcar que el valor ha sido heredado
+//     //         reset();
+//     //         setTipoIdentificacion(''); // Limpia el tipo de identificación
+//     //         setIdentificacion(''); // Limpia el valor del campo de identificación
+//     //         if (refAntPer.current) {
+//     //             const tab = new window.bootstrap.Tab(refAntPer.current);
+//     //             tab.show();
+//     //         }
+//     //     } catch (error) {
+//     //         console.log(error);
+//     //         // Manejo del error y validación específica
+//     //         if (error.response && error.response.data && error.response.data.message) {
+//     //             notification.error({
+//     //                 message: 'Error al Crear Paciente',
+//     //                 description: error.response.data.message,
+//     //                 duration: 3
+//     //             });
+//     //         } else {
+//     //             notification.error({
+//     //                 message: 'Error al Crear Paciente',
+//     //                 description: 'El usuario con ese numero de expediente ya esta registrado, ingresar uno diferente',
+//     //                 duration: 3
+//     //             });
+//     //         }
+//     //     }
+ 
+//     // });
+    
 //     // POST ANTECEDENTES PERSONALES
 //     const onSubmitAntPersonales = handleSubmitAntPer(async (data) => {
+
+//         setIsSelectDisabled(true);
 
 //         try {
 
@@ -2192,7 +2419,8 @@ export const AgregarHistoria = () => {
 //                 sa: Number(data.sa),
 //                 histPap: Number(data.histPap),
 //                 menopausia: Number(data.menopausia),
-//                 cigarrosDia: Number(data.cigarrosDia),
+//                 //cigarrosDia: Number(data.cigarrosDia),
+//                 cigarrosDia: data.fuma === 'true' ? Number(data.cigarrosDia) : 0, // Usar 0 si no fuma
 //             };
 
 //             const response = await axios.post(`${baseURL}/bdtbantecedentespersonale/post`, transformedData);
@@ -2224,6 +2452,8 @@ export const AgregarHistoria = () => {
 
 //     // POST ANTECEDENTES PERSONALES PATERNALES
 //     const onSubmitAntPersonalesPat = handleSubmitAntPerPat(async (data) => {
+
+//         setIsSelectDisabled(true);
 
 //         try {
 
@@ -2278,6 +2508,8 @@ export const AgregarHistoria = () => {
 //     // POST ANTECEDENTES PATOLOGICOS FAMILIARES
 //     const onSubmitAntPatFam = handleSubmitAntecPatFam(async (data) => {
 
+//         setIsSelectDisabled(true);
+
 //         try {
 
 //             console.log(data);
@@ -2327,6 +2559,8 @@ export const AgregarHistoria = () => {
 //     // POST INFORMACION
 //     const onSubmitInformacion = handleSubmitInformacion(async (data) => {
 
+//         setIsSelectDisabled(true);
+
 //         try {
 
 //             console.log(data);
@@ -2339,7 +2573,9 @@ export const AgregarHistoria = () => {
 //                 duration: 3
 //             });
 
-//             resetInfo();
+//             resetInfo(); //Reset de toda la información
+//             setNumExp(''); //Reset especificamente el ultimo campo de texto
+//             setIsHerited(false); //Reset del estado de herencia del valor
 
 //             if (refPaciente.current) {
 //                 const tab = new window.bootstrap.Tab(refPaciente.current);
@@ -2383,7 +2619,7 @@ export const AgregarHistoria = () => {
 //                 <div className="d-flex align-items-center justify-content-between mb-2">
 //                     <h4>Agregar Historia Clinica</h4>
 //                     <div className="d-flex gap-3">
-//                         <p className="text-body-secondary text-smaller">Los datos con asterisco (*) son obligatorios,</p>
+//                         <p className="text-body-secondary text-smaller">Los datos con asterisco (<span style={{color: 'red'}}> * </span>) son obligatorios,</p>
 //                         <p className="text-body-secondary text-smaller">A. = Antecedentes </p>
 //                     </div>
 //                 </div>
@@ -2411,17 +2647,33 @@ export const AgregarHistoria = () => {
 //                             <form onSubmit={onSubmitPaciente}>
 //                                 <div className="row g-3">
 //                                     <div className="col-sm-2">
-//                                         <label htmlFor="expediente" className="form-label">Núm. Expediente*</label>
+//                                         <label htmlFor="expediente" className="form-label">Núm. Expediente<span style={{color: 'red'}}> * </span> 
+//                                         </label>
 //                                         <input
 //                                             type="text"
 //                                             className="form-control"
 //                                             title="El Núm. Expediente debe tener 5 números, un guión (-) y el año al final"
 //                                             {...registerPaciente('numExpediente', { required: true, maxLength: 20 })}
+//                                             onChange={(e) => {
+//                                                 setIsHerited(false); // Permite editar si se cambia manualmente
+//                                             }}
 //                                         />
 //                                     </div>
 
+//                                     {/* <div className="col-sm-2">
+//                                         <label htmlFor="PrimerN" className="form-label">Primer nombre<span style={{color: 'red'}}> * </span>
+//                                         </label>
+//                                         <input
+//                                             type="text"
+//                                             className="form-control"
+//                                             title="El nombre debe ir escrito como aparezca en la cédula o la partida de nacimiento"
+//                                             {...registerPaciente('primerNombre', { required: "El primer nombre es obligatorio", maxLength: 30 })}
+//                                         />
+//                                     </div> */}
+
 //                                     <div className="col-sm-2">
-//                                         <label htmlFor="PrimerN" className="form-label">Primer nombre*</label>
+//                                         <label htmlFor="PrimerN" className="form-label">Primer nombre<span style={{color: 'red'}}> * </span>
+//                                         </label>
 //                                         <input
 //                                             type="text"
 //                                             className="form-control"
@@ -2429,7 +2681,6 @@ export const AgregarHistoria = () => {
 //                                             {...registerPaciente('primerNombre', { required: "El primer nombre es obligatorio", maxLength: 30 })}
 //                                         />
 //                                     </div>
-
 //                                     <div className="col-sm-2">
 //                                         <label htmlFor="SegundoN" className="form-label">Segundo nombre</label>
 //                                         <input
@@ -2441,7 +2692,8 @@ export const AgregarHistoria = () => {
 //                                     </div>
 
 //                                     <div className="col-sm-2">
-//                                         <label htmlFor="P_apellido" className="form-label">Primer apellido*</label>
+//                                         <label htmlFor="P_apellido" className="form-label">Primer apellido<span style={{color: 'red'}}> * </span>
+//                                         </label>
 //                                         <input
 //                                             type="text"
 //                                             className="form-control"
@@ -2461,79 +2713,8 @@ export const AgregarHistoria = () => {
 //                                     </div>
 
 //                                     <div className="col-sm-2">
-//                                         <label htmlFor="cedula" className="form-label">Tipo de Identificación</label>
-//                                         <select className="form-select">
-//                                             <option value="">Seleccionar...</option>
-//                                             <option value="categoria1">Fecha de Nacimiento</option>
-//                                             <option value="categoria2">Cedula de Identificación</option>
-//                                             <option value="categoria3">Pasaporte</option>
-//                                         </select>
-//                                     </div>
-
-//                                     <div className="row g-3"></div>
-//                                     <div className="col-sm-2">
-//                                         <label htmlFor="expediente" className="form-label">Identificación</label>
-//                                         <input
-//                                             type="text"
-//                                             className="form-control"
-//                                             title="Insertar Identificacion"
-//                                             {...registerPaciente('cedula', { required: true, maxLength: 20 })}
-//                                         />
-//                                     </div>
-//                                     <div className="col-sm-2">
-//                                         <label htmlFor="nacimiento" className="form-label">Fecha de nacimiento*</label>
-//                                         <input
-//                                             type="date"
-//                                             className="form-control"
-//                                             id="fechaNac"
-//                                             {...registerPaciente('fechaNac', { required: true })}
-//                                         />
-//                                     </div>
-
-//                                     {/* <div className="col-sm-2">
-//                                         <label htmlFor="edad" className="form-label">Edad</label>
-//                                         <input
-//                                             type="text"
-//                                             className="form-control"
-//                                             title="Insertar Identificacion"
-//                                             {...registerPaciente('edad', { maxLength: 2 })}
-//                                         />
-//                                     </div> */}
-
-//                                     {/* <div className="col-sm-1">
-//                                         <label htmlFor="telefono" className="form-label">Teléfono*</label>
-//                                         <input type="text" maxLength="8" className="form-control" id="telefono" title="El número telefónico debe tener 8 digitos " required / />
-//                                     </div> */}
-
-//                                     <div className="col-sm-3">
-//                                         <label htmlFor="escolaridad" className="form-label">Escolaridad*</label>
-//                                         <select defaultValue="Menu de Selección" className="form-select" id="escolaridad" {...registerPaciente("escolaridad", { required: true })}>
-//                                             <option value="">Menu de Selección</option>
-//                                             <option value="Bachiller">Bachiller</option>
-//                                             <option value="Primaria completa">Primaria completa</option>
-//                                             <option value="Primaria incompleta">Primaria incompleta</option>
-//                                             <option value="Secundaria incompleta">Secundaria incompleta</option>
-//                                             <option value="Técnico superior">Técnico superior</option>
-//                                             <option value="Universitario">Universitario</option>
-//                                         </select>
-
-//                                     </div>
-
-//                                     <div className="col-sm-3">
-//                                         <label htmlFor="profesion" className="form-label">Profesión*</label>
-//                                         <select defaultValue="Menu de Selección" className="form-select" id="profesion" {...registerPaciente("profesion", { required: true })}>
-//                                             <option value="">Menu de Selección</option>
-//                                             <option value="Ama de casa">Ama de casa</option>
-//                                             <option value="Estudiante">Estudiante</option>
-//                                             <option value="Oficinista">Oficinista</option>
-//                                             <option value="Operaria">Operaria</option>
-//                                             <option value="Sector informal">Sector informal</option>
-//                                         </select>
-
-//                                     </div>
-
-//                                     <div className="col-sm-2">
-//                                         <label htmlFor="sexo" className="form-label">Sexo*</label>
+//                                         <label htmlFor="sexo" className="form-label">Sexo<span style={{color: 'red'}}> * </span>
+//                                         </label>
 //                                         <div className="d-flex align-items-center justify-content-center gap-4 form-control">
 //                                             <div className="form-check">
 //                                                 <input
@@ -2558,6 +2739,85 @@ export const AgregarHistoria = () => {
 //                                         </div>
 //                                     </div>
 
+//                                     <div className="col-sm-2">
+//                                         <label htmlFor="nacimiento" className="form-label">Fecha de nacimiento<span style={{color: 'red'}}> * </span> 
+//                                         </label>
+//                                         <input
+//                                             type="date"
+//                                             className="form-control"
+//                                             title="Fecha de nacimiento"
+//                                             id="fechaNac"
+//                                             {...registerPaciente('fechaNac', { required: true })}
+//                                         />
+//                                     </div>
+
+//                                     <div className="col-sm-2">
+//                                         <label htmlFor="cedula" className="form-label">Tipo de Identificación <span style={{color: 'red'}}> * </span> </label>
+//                                         <select className="form-select" value={tipoIdentificacion} onChange={handleTipoIdentificacionChange}>
+//                                             <option value="">Seleccionar...</option>
+//                                             <option value="categoria1">Fecha de Nacimiento</option>
+//                                             <option value="categoria2">Cedula de Identificación</option>
+//                                             <option value="categoria3">Pasaporte</option>
+//                                         </select>
+//                                     </div>
+
+//                                     <div className="col-sm-2">
+//                                         <label htmlFor="expediente" className="form-label">Identificación<span style={{color: 'red'}}> * </span>
+//                                         </label>
+//                                         <input
+//                                             type="text"
+//                                             className="form-control"
+//                                             title="Selecciona el tipo de identificación para llenar este campo"
+//                                             value={identificacion}
+//                                             {...registerPaciente('cedula', { required: true, maxLength: 20 })}
+//                                             onChange={handleIdentificacionChange} // Me permite hacer el cambio y la validación
+//                                             disabled={tipoIdentificacion === "categoria1" || !tipoIdentificacion} // Deshabilitar si no se ha seleccionado el tipo de identificación
+//                                         />
+//                                     </div>
+
+//                                     <div className="col-sm-3">
+//                                         <label htmlFor="escolaridad" className="form-label">Escolaridad<span style={{color: 'red'}}> * </span>
+//                                         </label>
+//                                         <select defaultValue="Menu de Selección" className="form-select" id="escolaridad" {...registerPaciente("escolaridad", { required: true })}>
+//                                             <option value="">Menu de Selección</option>
+//                                             <option value="Primaria completa">Primaria completa</option>
+//                                             <option value="Primaria incompleta">Primaria incompleta</option>
+//                                             <option value="Bachiller">Bachiller</option>
+//                                             <option value="Secundaria incompleta">Secundaria incompleta</option>
+//                                             <option value="Técnico superior">Técnico superior</option>
+//                                             <option value="Universitario">Universitario</option>
+//                                             <option value="Otros">Otros</option>
+//                                         </select>
+
+//                                     </div>
+
+//                                     <div className="col-sm-3">
+//                                         <label htmlFor="profesion" className="form-label">Profesión<span style={{color: 'red'}}> * </span>
+//                                         </label>
+//                                         <select defaultValue="Menu de Selección" className="form-select" id="profesion" {...registerPaciente("profesion", { required: true })}>
+//                                             <option value="">Menu de Selección</option>
+//                                             <option value="Estudiante">Estudiante</option>
+//                                             <option value="Administrador(a)">Adminitrador(a)</option>
+//                                             <option value="Ama de casa">Ama de casa</option>
+//                                             <option value="Arquitecto(a)">Arquitecto(a)</option>
+//                                             <option value="Cocinero(a)">Cocinero(a)</option>
+//                                             <option value="Contador(a)">Contador(a)</option>
+//                                             <option value="Docente">Docente</option>
+//                                             <option value="Doctor(a)">Doctor(a)</option>
+//                                             <option value="Enfermero(a)">Enfermero(a)</option>
+//                                             <option value="Ingeniero(a)">Ingeniero(a)</option>
+//                                             <option value="Licenciado(a)">Licenciado(a)</option>
+//                                             <option value="Oficinista">Oficinista</option>
+//                                             <option value="Operaria">Operaria</option>
+//                                             <option value="Recepcionista">Recepcionista</option>
+//                                             <option value="Secretario(a)">Secretario(a)</option>
+//                                             <option value="Sector informal">Sector informal</option>
+//                                             <option value="Sector informal">Sector formal</option>
+//                                             <option value="Otros">Otros</option>
+//                                         </select>
+
+//                                     </div>
+
 //                                     <div className="col-sm-7">
 //                                         <label htmlFor="direccion" className="form-label">Dirección</label>
 //                                         <input
@@ -2569,7 +2829,8 @@ export const AgregarHistoria = () => {
 //                                     </div>
 
 //                                     <div className="col-sm-3">
-//                                         <label htmlFor="departamento" className="form-label">Departamento*</label>
+//                                         <label htmlFor="departamento" className="form-label">Departamento<span style={{color: 'red'}}> * </span>
+//                                         </label>
 //                                         <select defaultValue="Managua" className="form-select" id="departamento" {...registerPaciente("codDepartamento", { required: true })}>
 //                                             <option value="">Menú de selección</option>
 //                                             <option value="1">Chinandega</option>
@@ -2594,20 +2855,43 @@ export const AgregarHistoria = () => {
 //                                     </div>
 
 //                                     <div className="col-sm-1">
-//                                         <label htmlFor="presion" className="form-label">Presión*</label>
+//                                         <label htmlFor="presion" className="form-label">
+//                                             Presión<span style={{color: 'red'}}> * </span>
+//                                         </label>
 //                                         <input
-//                                             type="number"
+//                                             type="text"
 //                                             className="form-control"
 //                                             id="presion"
+//                                             placeholder="mm/Hg"
 //                                             {...registerPaciente("presion", { required: true })}
+//                                             onKeyPress={(e) => {
+//                                                 const charCode = e.charCode;
+
+//                                                 if (!(charCode >= 48 && charCode <= 57) && charCode !== 47) {
+//                                                     e.preventDefault(); // Evita que se ingresen otros caracteres
+//                                                 }
+//                                             }}
 //                                         />
 //                                     </div>
 
+//                                     {/* <div className="col-sm-1">
+//                                         <label htmlFor="presion" className="form-label">Presión<span style={{color: 'red'}}> * </span>
+//                                         </label>
+//                                         <input
+//                                             type="text"
+//                                             className="form-control"
+//                                             id="presion"
+//                                             placeholder="mm/Hg"
+//                                             {...registerPaciente("presion", { required: true })}
+//                                         />
+//                                     </div> */}
+
 //                                     <div className="col-sm-1">
-//                                         <label htmlFor="temperatura" className="form-label">Temperatura*</label>
+//                                         <label htmlFor="temperatura" className="form-label">Temperatura<span style={{color: 'red'}}>* </span>
+//                                         </label>
 //                                         <input
 //                                             type="number"
-//                                             min="0"
+//                                             min="1"
 //                                             className="form-control"
 //                                             id="temperatura"
 //                                             step="0.01"
@@ -2617,10 +2901,11 @@ export const AgregarHistoria = () => {
 //                                     </div>
 
 //                                     <div className="col-sm-1">
-//                                         <label htmlFor="peso" className="form-label">Peso*</label>
+//                                         <label htmlFor="peso" className="form-label">Peso<span style={{color: 'red'}}> * </span>
+//                                         </label>
 //                                         <input
 //                                             type="number"
-//                                             min="0"
+//                                             min="1"
 //                                             className="form-control"
 //                                             id="peso"
 //                                             step="0.01"
@@ -2630,10 +2915,11 @@ export const AgregarHistoria = () => {
 //                                     </div>
 
 //                                     <div className="col-sm-1">
-//                                         <label htmlFor="talla" className="form-label">Talla*</label>
+//                                         <label htmlFor="talla" className="form-label">Talla<span style={{color: 'red'}}> * </span>
+//                                         </label>
 //                                         <input
 //                                             type="number"
-//                                             min="0"
+//                                             min="1"
 //                                             className="form-control"
 //                                             id="talla"
 //                                             step="0.01"
@@ -2648,7 +2934,8 @@ export const AgregarHistoria = () => {
 //                                     </div> */}
 
 //                                     <div className="col-sm-2">
-//                                         <label htmlFor="fechaIngreso" className="form-label">Fecha de ingreso*</label>
+//                                         <label htmlFor="fechaIngreso" className="form-label">Fecha de ingreso<span style={{color: 'red'}}> * </span>
+//                                         </label>
 //                                         <input
 //                                             type="date"
 //                                             className="form-control"
@@ -2658,7 +2945,8 @@ export const AgregarHistoria = () => {
 //                                     </div>
 
 //                                     <div className="col-sm-3">
-//                                         <label htmlFor="centros" className="form-label">Centro de Mujeres IXCHEN*</label>
+//                                         <label htmlFor="centros" className="form-label">Centro de Mujeres IXCHEN<span style={{color: 'red'}}> * </span>
+//                                         </label>
 //                                         <select defaultValue="Menú de selección" className="form-select" id="centro" {...registerPaciente("centro", { required: true })}>
 //                                             <option value="">Menú de selección</option>
 //                                             <option value="Managua">Managua</option>
@@ -2674,7 +2962,8 @@ export const AgregarHistoria = () => {
 //                                     </div>
 
 //                                     <div className="col-sm-3">
-//                                         <label htmlFor="usuaria" className="form-label">Usuaria*</label>
+//                                         <label htmlFor="usuaria" className="form-label">Usuaria(o)<span style={{color: 'red'}}> * </span>
+//                                         </label>
 //                                         <div className="d-flex align-items-center justify-content-center gap-4 border form-control">
 //                                             <div className="form-check">
 //                                                 <input
@@ -2684,7 +2973,7 @@ export const AgregarHistoria = () => {
 //                                                     className="form-check-input"
 //                                                     {...registerPaciente('usuaria', { required: true })}
 //                                                 />
-//                                                 <label className="form-check-label" htmlFor="nueva">Nueva</label>
+//                                                 <label className="form-check-label" htmlFor="nueva">Nueva(o)</label>
 //                                             </div>
 //                                             <div className="form-check">
 //                                                 <input
@@ -2704,6 +2993,14 @@ export const AgregarHistoria = () => {
 //                                 <div className="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
 //                                     <button className="btn btn-success btn-save me-md-2" type="submit" >Guardar</button>
 //                                     <button type="reset" className="btn btn-danger">Cancelar</button>
+//                                     {showEditButton && (
+//                                         <button 
+//                                             onClick={() => (`/editar-paciente/`)}
+//                                             className="btn btn-primary"
+//                                         >
+//                                             Editar Paciente
+//                                         </button>
+//                                     )}
 //                                 </div>
 
 //                             </form>
@@ -2716,14 +3013,21 @@ export const AgregarHistoria = () => {
 //                             <form onSubmit={onSubmitAntPersonales}>
 //                                 <div className="row g-3">
 //                                     <div className="col-sm-2">
-//                                         <label htmlFor="expediente" className="form-label">Núm. Expediente*</label>
+//                                         <label htmlFor="expediente" className="form-label">Núm. Expediente<span style={{color: 'red'}}> * </span>
+//                                         </label>
 //                                         <input
 //                                             type="text"
 //                                             className="form-control"
 //                                             value={numExp}
 //                                             title="El Núm. Expediente debe tener 5 números, un guión (-) y el año al final"
 //                                             {...registerAntecPer('numExpediente')}
-//                                             readOnly
+//                                             //readOnly
+//                                             readOnly={isHerited} // Solo es de solo lectura si se ha heredado
+//                                             onChange={(e) => {
+//                                                 if (!isHerited) {
+//                                                     setNumExp(e.target.value); // Permite editar si no se ha heredado
+//                                                 }
+//                                             }}
 //                                         />
 //                                     </div>
 //                                     <div className="col-sm-2">
@@ -2764,8 +3068,8 @@ export const AgregarHistoria = () => {
 //                                     <div className="col-sm-2">
 //                                         <label htmlFor="MAC" className="form-label">MAC</label>
 
-//                                         <select defaultValue="Condón" className="form-select" id="MAC" {...registerAntecPer('mac')}>
-//                                             <option value="">Menú de selección</option>
+//                                         <select defaultValue="Menú de selección" className="form-select" id="MAC" {...registerAntecPer('mac')}>
+//                                             <option value="No planifica">Menú de selección</option>
                                             
 //                                             <option value="No planifica">No planifica</option>
 //                                             <option value="Condón">Condón</option>
@@ -2788,7 +3092,8 @@ export const AgregarHistoria = () => {
 //                                     </div>
 
 //                                     <div className="col-sm-2">
-//                                         <label htmlFor="embarazada" className="form-label">¿Has estado embarazada?*</label>
+//                                         <label htmlFor="embarazada" className="form-label">¿Has estado embarazada?<span style={{color: 'red'}}>* </span>
+//                                         </label>
 //                                         <div className="form-check">
 //                                             <input
 //                                                 id="si"
@@ -2862,7 +3167,8 @@ export const AgregarHistoria = () => {
 //                                     </div>
 
 //                                     <div className="col-sm-2">
-//                                         <label htmlFor="FUM" className="form-label">FUM*</label>
+//                                         <label htmlFor="FUM" className="form-label">FUM<span style={{color: 'red'}}> * </span>
+//                                         </label>
 //                                         <input
 //                                             type="date"
 //                                             className="form-control"
@@ -2882,8 +3188,8 @@ export const AgregarHistoria = () => {
 //                                     </div>
 
 //                                     <div className="col-sm-2">
-//                                         <label htmlFor="lactancia" className="form-label">Lactancia materna*</label>
-
+//                                         <label htmlFor="lactancia" className="form-label">Lactancia materna<span style={{color: 'red'}}> * </span> 
+//                                         </label>
 //                                         <div className="form-check">
 //                                             <input
 //                                                 id="lac_si"
@@ -2909,7 +3215,8 @@ export const AgregarHistoria = () => {
 //                                     </div>
 
 //                                     <div className="col-sm-2">
-//                                         <label htmlFor="esta_emb" className="form-label">¿Está embarazada?*</label>
+//                                         <label htmlFor="esta_emb" className="form-label">¿Está embarazada?<span style={{color: 'red'}}> * </span>
+//                                         </label>
 //                                         <div className="form-check">
 //                                             <input
 //                                                 id="emb_si"
@@ -2935,7 +3242,8 @@ export const AgregarHistoria = () => {
 //                                     </div>
 
 //                                     <div className="col-sm-2">
-//                                         <label htmlFor="mamografia" className="form-label">¿Mamografía al día?*</label>
+//                                         <label htmlFor="mamografia" className="form-label">¿Mamografía al día?<span style={{color: 'red'}}> * </span>
+//                                         </label>
 //                                         <div className="form-check">
 //                                             <input
 //                                                 id="mamografia_si"
@@ -2961,7 +3269,8 @@ export const AgregarHistoria = () => {
 //                                     </div>
 
 //                                     <div className="col-sm-2">
-//                                         <label htmlFor="pap_dia" className="form-label">¿PAP al día?*</label>
+//                                         <label htmlFor="pap_dia" className="form-label">¿PAP al día?<span style={{color: 'red'}}> * </span>
+//                                         </label>
 //                                         <div className="form-check">
 //                                             <input
 //                                                 id="pap_si"
@@ -2987,7 +3296,8 @@ export const AgregarHistoria = () => {
 //                                     </div>
 
 //                                     <div className="col-sm-2">
-//                                         <label htmlFor="pap_alterado" className="form-label">¿PAP alterado?*</label>
+//                                         <label htmlFor="pap_alterado" className="form-label">¿PAP alterado?<span style={{color: 'red'}}> * </span>
+//                                         </label>
 //                                         <div className="form-check">
 //                                             <input
 //                                                 id="pap_alt_si"
@@ -3035,7 +3345,8 @@ export const AgregarHistoria = () => {
 //                                     </div>
 
 //                                     <div className="col-sm-3">
-//                                         <label htmlFor="TRH" className="form-label">¿Terapia Reemplazo Hormonal?*</label>
+//                                         <label htmlFor="TRH" className="form-label">¿Terapia Reemplazo Hormonal?<span style={{color: 'red'}}> * </span>
+//                                         </label>
 //                                         <div className="form-check">
 //                                             <input
 //                                                 id="TRH_si"
@@ -3060,15 +3371,17 @@ export const AgregarHistoria = () => {
 //                                         </div>
 //                                     </div>
 
-//                                     <div className="col-sm-1">
-//                                         <label htmlFor="fuma" className="form-label">¿Fuma?*</label>
+//                                     <div className="col-sm-2">
+//                                         <label htmlFor="fuma" className="form-label">¿Fuma?<span style={{color: 'red'}}> * </span>
+//                                         </label>
 //                                         <div className="form-check">
 //                                             <input
 //                                                 id="fuma_si"
 //                                                 name="fuma"
 //                                                 type="radio"
 //                                                 className="form-check-input"
-//                                                 value={true}
+//                                                 //value={true}
+//                                                 value="true"
 //                                                 {...registerAntecPer('fuma', { required: true })}
 //                                             />
 //                                             <label className="form-check-label" htmlFor="fuma_si">Si</label>
@@ -3079,7 +3392,8 @@ export const AgregarHistoria = () => {
 //                                                 name="fuma"
 //                                                 type="radio"
 //                                                 className="form-check-input"
-//                                                 value={false}
+//                                                 //value={false}
+//                                                 value="false"
 //                                                 {...registerAntecPer('fuma', { required: true })}
 //                                             />
 //                                             <label className="form-check-label" htmlFor="fuma_no">No</label>
@@ -3093,13 +3407,15 @@ export const AgregarHistoria = () => {
 //                                             min="1"
 //                                             className="form-control"
 //                                             id="cigarros"
-                                            
+//                                             disabled={fuma !== 'true'} // Habilitar solo si "fuma" es verdadero
 //                                             {...registerAntecPer('cigarrosDia')}
+//                                             defaultValue={0} // Valor por defecto 0 
 //                                         />
 //                                     </div>
 
 //                                     <div className="col-sm-3">
-//                                         <label htmlFor="compania" className="form-label">¿Actualmente está sola o acompañada?*</label>
+//                                         <label htmlFor="compania" className="form-label">¿Actualmente está sola o acompañada?<span style={{color: 'red'}}> * </span>
+//                                         </label>
 //                                         <div className="form-check">
 //                                             <input
 //                                                 id="sola"
@@ -3109,7 +3425,7 @@ export const AgregarHistoria = () => {
 //                                                 value={true}
 //                                                 {...registerAntecPer('estadoPareja', { required: true })}
 //                                             />
-//                                             <label className="form-check-label" htmlFor="sola">Sola</label>
+//                                             <label className="form-check-label" htmlFor="sola">Sola(o)</label>
 //                                         </div>
 //                                         <div className="form-check">
 //                                             <input
@@ -3120,7 +3436,7 @@ export const AgregarHistoria = () => {
 //                                                 value={false}
 //                                                 {...registerAntecPer('estadoPareja', { required: true })}
 //                                             />
-//                                             <label className="form-check-label" htmlFor="acompaniada">Acompañada</label>
+//                                             <label className="form-check-label" htmlFor="acompaniada">Acompañada(o)</label>
 //                                         </div>
 //                                     </div>
 
@@ -3187,7 +3503,7 @@ export const AgregarHistoria = () => {
 //                                     </div>
 
 //                                     <div className="col-sm-2">
-//                                         <label htmlFor="biopasis" className="form-label">Biopsias por colposcopia</label>
+//                                         <label htmlFor="biopasis" className="form-label">Biopsias por colposcopia<span style={{color: 'red'}}> * </span></label>
 //                                         <div className="form-check">
 //                                             <input
 //                                                 id="si"
@@ -3215,7 +3531,7 @@ export const AgregarHistoria = () => {
 //                                 </div>
 //                                 <div className="d-grid gap-2 d-md-flex justify-content-md-end mt-5">
 //                                     <button className="btn btn-success btn-save me-md-2" type="submit">Guardar</button>
-//                                     <button type="reset" className="btn btn-danger">Cancelar</button>
+//                                     {/* <button type="reset" className="btn btn-danger">Cancelar</button> */}
 //                                 </div>
 //                             </form>
 //                         </div>
@@ -3228,18 +3544,26 @@ export const AgregarHistoria = () => {
 //                             <form onSubmit={onSubmitAntPersonalesPat}>
 //                                 <div className="row g-4">
 //                                     <div className="col-sm-2">
-//                                         <label htmlFor="expediente" className="form-label">Núm. Expediente*</label>
+//                                         <label htmlFor="expediente" className="form-label">Núm. Expediente<span style={{color: 'red'}}> * </span>
+//                                         </label>
 //                                         <input
 //                                             type="text"
 //                                             className="form-control"
 //                                             value={numExp}
 //                                             title="El Núm. Expediente debe tener 5 números, un guión (-) y el año al final"
 //                                             {...registerAntecPerPat('numExpediente')}
-//                                             readOnly
+//                                             //readOnly
+//                                             readOnly={isHerited} // Solo es de solo lectura si se ha heredado
+//                                             onChange={(e) => {
+//                                                 if (!isHerited) {
+//                                                     setNumExp(e.target.value); // Permite editar si no se ha heredado
+//                                                 }
+//                                             }}
 //                                         />
 //                                     </div>
 //                                     <div className="col-sm-2">
-//                                         <label htmlFor="fibroadenoma" className="form-label">Fibroadenoma*</label>
+//                                         <label htmlFor="fibroadenoma" className="form-label">Fibroadenoma<span style={{color: 'red'}}> * </span>
+//                                         </label>
 
 //                                         <div className="d-flex align-items-center justify-content-center gap-3 form-control">
 //                                             <div className="form-check">
@@ -3254,7 +3578,8 @@ export const AgregarHistoria = () => {
 //                                     </div>
 
 //                                     <div className="col-sm-2">
-//                                         <label htmlFor="Ca_mama_izq" className="form-label">Ca Mama Izq*</label>
+//                                         <label htmlFor="Ca_mama_izq" className="form-label">Ca Mama Izq<span style={{color: 'red'}}> * </span>
+//                                         </label>
 
 //                                         <div className="d-flex align-items-center justify-content-center gap-3 form-control">
 //                                             <div className="form-check">
@@ -3269,7 +3594,8 @@ export const AgregarHistoria = () => {
 //                                     </div>
 
 //                                     <div className="col-sm-2">
-//                                         <label htmlFor="Ca_mama_der" className="form-label">Ca Mama Der*</label>
+//                                         <label htmlFor="Ca_mama_der" className="form-label">Ca Mama Der<span style={{color: 'red'}}> * </span>
+//                                         </label>
 
 //                                         <div className="d-flex align-items-center justify-content-center gap-3 form-control">
 //                                             <div className="form-check">
@@ -3284,7 +3610,8 @@ export const AgregarHistoria = () => {
 //                                     </div>
 
 //                                     <div className="col-sm-2">
-//                                         <label htmlFor="Ca_cervico_uterino" className="form-label">Ca Cervico Uterino*</label>
+//                                         <label htmlFor="Ca_cervico_uterino" className="form-label">Ca Cervico Uterino<span style={{color: 'red'}}> * </span>
+//                                         </label>
 
 //                                         <div className="d-flex align-items-center justify-content-center gap-3 form-control">
 //                                             <div className="form-check">
@@ -3314,7 +3641,8 @@ export const AgregarHistoria = () => {
 //                                     </div>
 
 //                                     <div className="col-sm-2">
-//                                         <label htmlFor="extirpacion" className="form-label">Extirpación Qx Ovario*</label>
+//                                         <label htmlFor="extirpacion" className="form-label">Extirpación Qx Ovario<span style={{color: 'red'}}> * </span>
+//                                         </label>
 
 //                                         <div className="d-flex align-items-center justify-content-center gap-3 form-control">
 //                                             <div className="form-check">
@@ -3349,7 +3677,8 @@ export const AgregarHistoria = () => {
 //                                     </div>
 
 //                                     <div className="col-sm-2">
-//                                         <label htmlFor="VIH" className="form-label">VIH*</label>
+//                                         <label htmlFor="VIH" className="form-label">VIH<span style={{color: 'red'}}> * </span>
+//                                         </label>
 
 //                                         <div className="d-flex align-items-center justify-content-center gap-3 form-control">
 //                                             <div className="form-check">
@@ -3362,7 +3691,6 @@ export const AgregarHistoria = () => {
 //                                             </div>
 //                                         </div>
 //                                     </div>
-
 
 //                                     <div className="col-sm-2">
 //                                         <label htmlFor="VIF" className="form-label">Violencia Intrafamiliar</label>
@@ -3380,7 +3708,8 @@ export const AgregarHistoria = () => {
 //                                     </div>
 
 //                                     <div className="col-sm-2">
-//                                         <label htmlFor="diabetes" className="form-label">Diabetes*</label>
+//                                         <label htmlFor="diabetes" className="form-label">Diabetes<span style={{color: 'red'}}> * </span>
+//                                         </label>
 
 //                                         <div className="d-flex align-items-center justify-content-center gap-3 form-control">
 //                                             <div className="form-check">
@@ -3395,7 +3724,8 @@ export const AgregarHistoria = () => {
 //                                     </div>
 
 //                                     <div className="col-sm-2">
-//                                         <label htmlFor="cardiopatia" className="form-label">Cardiopatía*</label>
+//                                         <label htmlFor="cardiopatia" className="form-label">Cardiopatía<span style={{color: 'red'}}> * </span>
+//                                         </label>
 
 //                                         <div className="d-flex align-items-center justify-content-center gap-3 form-control">
 //                                             <div className="form-check">
@@ -3409,9 +3739,9 @@ export const AgregarHistoria = () => {
 //                                         </div>
 //                                     </div>
 
-
 //                                     <div className="col-sm-2">
-//                                         <label htmlFor="hipertension" className="form-label">Hipertensión*</label>
+//                                         <label htmlFor="hipertension" className="form-label">Hipertensión<span style={{color: 'red'}}> * </span>
+//                                         </label>
 
 //                                         <div className="d-flex align-items-center justify-content-center gap-3 form-control">
 //                                             <div className="form-check">
@@ -3425,9 +3755,9 @@ export const AgregarHistoria = () => {
 //                                         </div>
 //                                     </div>
 
-
 //                                     <div className="col-sm-2">
-//                                         <label htmlFor="hepatopatias" className="form-label">Hepatopatías*</label>
+//                                         <label htmlFor="hepatopatias" className="form-label">Hepatopatías<span style={{color: 'red'}}> * </span>
+//                                         </label>
 
 //                                         <div className="d-flex align-items-center justify-content-center gap-3 form-control">
 //                                             <div className="form-check">
@@ -3441,10 +3771,9 @@ export const AgregarHistoria = () => {
 //                                         </div>
 //                                     </div>
 
-
 //                                     <div className="col-sm-2">
-//                                         <label htmlFor="nefropatias" className="form-label">Nefropatías*</label>
-
+//                                         <label htmlFor="nefropatias" className="form-label">Nefropatías<span style={{color: 'red'}}> * </span> 
+//                                         </label>
 //                                         <div className="d-flex align-items-center justify-content-center gap-3 form-control">
 //                                             <div className="form-check">
 //                                                 <input value={true} {...registerAntecPerPat('nefropatia', { required: true })} id="nefropatias_si" name="nefropatia" type="radio" className="form-check-input" required />
@@ -3457,9 +3786,9 @@ export const AgregarHistoria = () => {
 //                                         </div>
 //                                     </div>
 
-
 //                                     <div className="col-sm-2">
-//                                         <label htmlFor="cirugias" className="form-label">Cirugías*</label>
+//                                         <label htmlFor="cirugias" className="form-label">Cirugías<span style={{color: 'red'}}> * </span>
+//                                         </label>
 
 //                                         <div className="d-flex align-items-center justify-content-center gap-3 form-control">
 //                                             <div className="form-check">
@@ -3474,9 +3803,9 @@ export const AgregarHistoria = () => {
 
 //                                     </div>
 
-
 //                                     <div className="col-sm-2">
-//                                         <label htmlFor="anemia" className="form-label">Anemia*</label>
+//                                         <label htmlFor="anemia" className="form-label">Anemia<span style={{color: 'red'}}> * </span>
+//                                         </label>
 
 //                                         <div className="d-flex align-items-center justify-content-center gap-3 form-control">
 //                                             <div className="form-check">
@@ -3489,7 +3818,6 @@ export const AgregarHistoria = () => {
 //                                             </div>
 //                                         </div>
 //                                     </div>
-
 
 //                                     <div className="col-sm-2">
 //                                         <label htmlFor="alergia_medi" className="form-label">Alergia Medicamentos</label>
@@ -3506,9 +3834,9 @@ export const AgregarHistoria = () => {
 //                                         </div>
 //                                     </div>
 
-
 //                                     <div className="col-sm-2">
-//                                         <label htmlFor="alergia_ali" className="form-label">Alergia Alimentos*</label>
+//                                         <label htmlFor="alergia_ali" className="form-label">Alergia Alimentos<span style={{color: 'red'}}> * </span>
+//                                         </label>
 
 //                                         <div className="d-flex align-items-center justify-content-center gap-3 form-control">
 //                                             <div className="form-check">
@@ -3522,17 +3850,98 @@ export const AgregarHistoria = () => {
 //                                         </div>
 //                                     </div>
 
-
 //                                     {/* <div className="col-sm-12">
 //                                         <label htmlFor="Observaciones" className="form-label">Observaciones</label>
 //                                         <input type="text" maxLength="140" className="form-control" id="Observaciones" />
 //                                     </div> */}
 
-
 //                                     <div className="d-grid gap-2 d-md-flex justify-content-md-end mt-5">
 //                                         <button className="btn btn-success btn-save me-md-2" type="submit">Guardar</button>
-//                                         <button type="reset" className="btn btn-danger">Cancelar</button>
+//                                         {/* <button type="reset" className="btn btn-danger">Cancelar</button> */}
+//                                         {/* Botón para marcar todos como 'Sí' */}
+//                                         <button
+//                                             type="button"
+//                                             style={{
+//                                                 backgroundColor: '#0039fa', /* Azul */
+//                                                 color: 'white',
+//                                                 fontWeight: 'bold',
+//                                                 border: '2px solid #092faf', /* Azul más oscuro */
+//                                                 padding: '10px 20px',
+//                                                 borderRadius: '5px',
+//                                                 transition: 'background-color 0.3s ease'
+//                                             }}
+//                                             onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#092faf'}
+//                                             onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#0039fa'}
+//                                             onClick={() => {
+//                                                 setValueAntPer('fibrodenoma', 'true');
+//                                                 setValueAntPer('camIzq', 'true');
+//                                                 setValueAntPer('camDer', 'true');
+//                                                 setValueAntPer('cacerut', 'true');
+//                                                 setValueAntPer('matriz', 'true');
+//                                                 setValueAntPer('extirpacion', 'true');
+//                                                 setValueAntPer('vih', 'true');
+//                                                 setValueAntPer('vif', 'true');
+//                                                 setValueAntPer('diabetes', 'true');
+//                                                 setValueAntPer('fibrodenoma', 'true');
+//                                                 setValueAntPer('camIzq', 'true');
+//                                                 setValueAntPer('camDer', 'true');
+//                                                 setValueAntPer('cacerut', 'true');
+//                                                 setValueAntPer('matriz', 'true');
+//                                                 setValueAntPer('extirpacion', 'true');
+//                                                 setValueAntPer('vih', 'true');
+//                                                 setValueAntPer('vif', 'true');
+//                                                 setValueAntPer('diabetes', 'true');
+//                                                 setValueAntPer('cardiopatia', 'true');
+//                                                 setValueAntPer('hipertension', 'true');
+//                                                 setValueAntPer('hepatopatias', 'true');
+//                                                 setValueAntPer('nefropatia', 'true');
+//                                                 setValueAntPer('cirugias', 'true');
+//                                                 setValueAntPer('anemia', 'true');
+//                                                 setValueAntPer('alergiaMed', 'true');
+//                                                 setValueAntPer('alergiaAli', 'true');
+//                                             }}
+//                                             >
+//                                             Marcar Todos Sí
+//                                         </button>
+//                                             {/* Botón para marcar todos como 'No' */}
+//                                             <button
+//                                             type="button"
+//                                             style={{
+//                                                 backgroundColor: '#dc3545', /* Rojo */
+//                                                 color: 'white',
+//                                                 fontWeight: 'bold',
+//                                                 border: '2px solid #c82333', /* Rojo más oscuro */
+//                                                 padding: '10px 20px',
+//                                                 borderRadius: '5px',
+//                                                 transition: 'background-color 0.3s ease'
+//                                             }}
+//                                             onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#c82333'}
+//                                             onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#dc3545'}
+//                                             onClick={() => {
+//                                                 setValueAntPer('fibrodenoma', 'false');
+//                                                 setValueAntPer('camIzq', 'false');
+//                                                 setValueAntPer('camDer', 'false');
+//                                                 setValueAntPer('cacerut', 'false');
+//                                                 setValueAntPer('matriz', 'false');
+//                                                 setValueAntPer('extirpacion', 'false');
+//                                                 setValueAntPer('vih', 'false');
+//                                                 setValueAntPer('vif', 'false');
+//                                                 setValueAntPer('diabetes', 'false');
+//                                                 setValueAntPer('cardiopatia', 'false');
+//                                                 setValueAntPer('hipertension', 'false');
+//                                                 setValueAntPer('hepatopatias', 'false');
+//                                                 setValueAntPer('nefropatia', 'false');
+//                                                 setValueAntPer('cirugias', 'false');
+//                                                 setValueAntPer('anemia', 'false');
+//                                                 setValueAntPer('alergiaMed', 'false');
+//                                                 setValueAntPer('alergiaAli', 'false');
+//                                             }}
+//                                             >
+//                                             Marcar Todos No
+//                                         </button>
 //                                     </div>
+
+                                    
 //                                 </div>
 //                             </form>
 //                         </div>
@@ -3543,7 +3952,8 @@ export const AgregarHistoria = () => {
 //                             <form onSubmit={onSubmitAntPatFam}>
 //                                 <div className="row g-3">
 //                                     <div className="col-sm-2">
-//                                         <label htmlFor="Ca_de_Mama" className="form-label">Ca de Mama*</label>
+//                                         <label htmlFor="Ca_de_Mama" className="form-label">Ca de Mama<span style={{color: 'red'}}> * </span>
+//                                         </label>
 
 //                                         <div className="form-check">
 //                                             <input value={true} {...registerAntecPatFam('caMama', { required: true })} id="Ca_de_Mama_si" name="caMama" type="radio" className="form-check-input" required />
@@ -3561,7 +3971,8 @@ export const AgregarHistoria = () => {
 //                                     </div>
 
 //                                     <div className="col-sm-2">
-//                                         <label htmlFor="Ca_de_colon" className="form-label">Ca de Colon*</label>
+//                                         <label htmlFor="Ca_de_colon" className="form-label">Ca de Colon<span style={{color: 'red'}}> * </span>
+//                                         </label>
 
 //                                         <div className="form-check">
 //                                             <input value={true} {...registerAntecPatFam('caColon', { required: true })} id="Ca_de_colon_si" name="caColon" type="radio" className="form-check-input" required />
@@ -3581,7 +3992,8 @@ export const AgregarHistoria = () => {
 
 
 //                                     <div className="col-sm-2">
-//                                         <label htmlFor="APF_diabetes" className="form-label">Diabetes*</label>
+//                                         <label htmlFor="APF_diabetes" className="form-label">Diabetes<span style={{color: 'red'}}> * </span>
+//                                         </label>
 
 //                                         <div className="form-check">
 //                                             <input value={true} {...registerAntecPatFam('diabetes', { required: true })} id="diabet_si" name="diabetes" type="radio" className="form-check-input" required />
@@ -3602,7 +4014,8 @@ export const AgregarHistoria = () => {
 
 
 //                                     <div className="col-sm-2">
-//                                         <label htmlFor="Ca_CU" className="form-label">Ca de CU*</label>
+//                                         <label htmlFor="Ca_CU" className="form-label">Ca de CU<span style={{color: 'red'}}> * </span>
+//                                         </label>
 
 //                                         <div className="form-check">
 //                                             <input value={true} {...registerAntecPatFam('caCu', { required: true })} id="Ca_CU_si" name="caCu" type="radio" className="form-check-input" required />
@@ -3622,7 +4035,8 @@ export const AgregarHistoria = () => {
 
 
 //                                     <div className="col-sm-2">
-//                                         <label htmlFor="APF_hipertension" className="form-label">Hipertensión*</label>
+//                                         <label htmlFor="APF_hipertension" className="form-label">Hipertensión<span style={{color: 'red'}}> * </span>
+//                                         </label>
 
 //                                         <div className="form-check">
 //                                             <input value={true} {...registerAntecPatFam('hipertension', { required: true })} id="APF_hipertension_si" name="hipertension" type="radio" className="form-check-input" required />
@@ -3642,7 +4056,8 @@ export const AgregarHistoria = () => {
 
 
 //                                     <div className="col-sm-2">
-//                                         <label htmlFor="Enf_card" className="form-label">Enf. Cardíacas*</label>
+//                                         <label htmlFor="Enf_card" className="form-label">Enf. Cardíacas<span style={{color: 'red'}}> * </span>
+//                                         </label>
 
 //                                         <div className="form-check">
 //                                             <input value={true} {...registerAntecPatFam('enfCardiacas', { required: true })} id="Enf_card_si" name="enfCardiacas" type="radio" className="form-check-input" required />
@@ -3662,7 +4077,8 @@ export const AgregarHistoria = () => {
 
 
 //                                     <div className="col-sm-2">
-//                                         <label htmlFor="Ca_ovario" className="form-label">Ca de Ovario*</label>
+//                                         <label htmlFor="Ca_ovario" className="form-label">Ca de Ovario<span style={{color: 'red'}}> * </span>
+//                                         </label>
 
 //                                         <div className="form-check">
 //                                             <input value={true} {...registerAntecPatFam('caOvario', { required: true })} id="Ca_ovario_si" name="caOvario" type="radio" className="form-check-input" required />
@@ -3682,7 +4098,8 @@ export const AgregarHistoria = () => {
 //                                     </div>
 
 //                                     <div className="col-sm-2">
-//                                         <label htmlFor="Hepatitis" className="form-label">Hepatitis*</label>
+//                                         <label htmlFor="Hepatitis" className="form-label">Hepatitis<span style={{color: 'red'}}> * </span>
+//                                         </label>
 
 //                                         <div className="form-check">
 //                                             <input value={true} {...registerAntecPatFam('hepatitis', { required: true })} id="Hepatitis_si" name="hepatitis" type="radio" className="form-check-input" required />
@@ -3702,14 +4119,15 @@ export const AgregarHistoria = () => {
 
 
 //                                     <div className="col-sm-2">
-//                                         <label htmlFor="Enf_ren" className="form-label">Enf. Renales*</label>
+//                                         <label htmlFor="Enf_ren" className="form-label">Enf. Renales<span style={{color: 'red'}}> * </span>
+//                                         </label>
 
 //                                         <div className="form-check">
 //                                             <input value={true} {...registerAntecPatFam('enfRenales', { required: true })} id="Enf_ren_si" name="enfRenales" type="radio" className="form-check-input" required />
 //                                             <label className="form-check-label" htmlFor="Enf_ren_si">Si</label>
 //                                         </div>
 //                                         <div className="form-check">
-//                                             <input value={true} {...registerAntecPatFam('enfRenales', { required: true })} id="Enf_ren_no" name="enfRenales" type="radio" className="form-check-input" required />
+//                                             <input value={false} {...registerAntecPatFam('enfRenales', { required: true })} id="Enf_ren_no" name="enfRenales" type="radio" className="form-check-input" required />
 //                                             <label className="form-check-label" htmlFor="Enf_ren_no">No</label>
 //                                         </div>
 
@@ -3721,7 +4139,8 @@ export const AgregarHistoria = () => {
 //                                     </div>
 
 //                                     <div className="col-sm-2">
-//                                         <label htmlFor="expediente" className="form-label">Núm. Expediente*</label>
+//                                         <label htmlFor="expediente" className="form-label">Núm. Expediente<span style={{color: 'red'}}> * </span>
+//                                         </label>
 //                                         <input
 //                                             type="text"
 //                                             className="form-control"
@@ -3729,14 +4148,76 @@ export const AgregarHistoria = () => {
 //                                             value={numExp}
 //                                             title="El Núm. Expediente debe tener 5 números, un guión (-) y el año al final"
 //                                             {...registerAntecPatFam('numExpediente')}
-//                                             readOnly
+//                                             //readOnly
+//                                             readOnly={isHerited} // Solo es de solo lectura si se ha heredado
+//                                             onChange={(e) => {
+//                                                 if (!isHerited) {
+//                                                     setNumExp(e.target.value); // Permite editar si no se ha heredado
+//                                                 }
+//                                             }}
 //                                         />
 //                                     </div>
 
 
 //                                     <div className="d-grid gap-2 d-md-flex justify-content-md-end mt-5">
-//                                         <button className="btn btn-primary btn-save me-md-2" type="submit">Guardar</button>
-//                                         <button type="reset" className="btn btn-danger">Cancelar</button>
+//                                         {/* <button className="btn btn-primary btn-save me-md-2" type="submit">Guardar</button> */}
+//                                         <button className="btn btn-success btn-save me-md-2" type="submit">Guardar</button>
+//                                         <button
+//                                             type="button"
+//                                             style={{
+//                                                 backgroundColor: '#0039fa', /* Azul */
+//                                                 color: 'white',
+//                                                 fontWeight: 'bold',
+//                                                 border: '2px solid #092faf', /* Azul más oscuro */
+//                                                 padding: '10px 20px',
+//                                                 borderRadius: '5px',
+//                                                 transition: 'background-color 0.3s ease'
+//                                             }}
+//                                             onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#092faf'}
+//                                             onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#0039fa'}
+//                                             onClick={() => {
+//                                                 setValueAntPatFam('caMama', 'true');
+//                                                 setValueAntPatFam('caColon', 'true');
+//                                                 setValueAntPatFam('diabetes', 'true');
+//                                                 setValueAntPatFam('caCu', 'true');
+//                                                 setValueAntPatFam('hipertension', 'true');
+//                                                 setValueAntPatFam('enfCardiacas', 'true');
+//                                                 setValueAntPatFam('caOvario', 'true');
+//                                                 setValueAntPatFam('hepatitis', 'true');
+//                                                 setValueAntPatFam('enfRenales', 'true');
+//                                             }}
+//                                             >
+//                                             Marcar Todos Sí
+//                                         </button>
+//                                             {/* Botón para marcar todos como 'No' */}
+//                                             <button
+//                                             type="button"
+//                                             style={{
+//                                                 backgroundColor: '#dc3545', /* Rojo */
+//                                                 color: 'white',
+//                                                 fontWeight: 'bold',
+//                                                 border: '2px solid #c82333', /* Rojo más oscuro */
+//                                                 padding: '10px 20px',
+//                                                 borderRadius: '5px',
+//                                                 transition: 'background-color 0.3s ease'
+//                                             }}
+//                                             onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#c82333'}
+//                                             onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#dc3545'}
+//                                             onClick={() => {
+//                                                 setValueAntPatFam('caMama', 'false');
+//                                                 setValueAntPatFam('caColon', 'false');
+//                                                 setValueAntPatFam('diabetes', 'false');
+//                                                 setValueAntPatFam('caCu', 'false');
+//                                                 setValueAntPatFam('hipertension', 'false');
+//                                                 setValueAntPatFam('enfCardiacas', 'false');
+//                                                 setValueAntPatFam('caOvario', 'false');
+//                                                 setValueAntPatFam('hepatitis', 'false');
+//                                                 setValueAntPatFam('enfRenales', 'false');
+//                                             }}
+//                                             >
+//                                             Marcar Todos No
+//                                         </button>
+//                                         {/* <button type="reset" className="btn btn-danger">Cancelar</button> */}
 //                                     </div>
 
 
@@ -3754,18 +4235,63 @@ export const AgregarHistoria = () => {
 //                         <div className="container-fluid mt-3">
 //                             <form onSubmit={onSubmitInformacion}>
 //                                 <div>
-//                                     <label htmlFor="expediente" className="form-label">Núm. Expediente*</label>
+//                                     <label htmlFor="expediente" className="form-label">Núm. Expediente<span style={{color: 'red'}}> * </span>
+//                                     </label>
 //                                     <input
 //                                         type="text"
 //                                         className="form-control"
 //                                         value={numExp}
 //                                         title="El Núm. Expediente debe tener 5 números, un guión (-) y el año al final"
 //                                         {...registerInformacion('numExpediente')}
-//                                         readOnly
+//                                         //readOnly
+//                                         readOnly={isHerited} // Solo es de solo lectura si se ha heredado
+//                                             onChange={(e) => {
+//                                                 if (!isHerited) {
+//                                                     setNumExp(e.target.value); // Permite editar si no se ha heredado
+//                                                 }
+//                                             }}
 //                                     />
 //                                 </div>
+
+//                                 {/* <div className="mt-3">
+//                                     <label className="form-label" htmlFor="motivo_visita">
+//                                         Motivo de la visita<span style={{color: 'red'}}> * </span>
+//                                     </label>
+//                                     <textarea
+//                                         className="form-control"
+//                                         rows="10"
+//                                         id="motivo_visita"
+//                                         {...registerInformacion('motVisita', { 
+//                                             required: true,
+//                                             onBlur: (e) => {
+//                                                 if (!e.target.value.trim()) {
+//                                                     e.target.value = 'N/A'; // Establece 'N/A' si está vacío
+//                                                 }
+//                                             }
+//                                         })}
+//                                     />
+//                                 </div>
+
 //                                 <div className="mt-3">
-//                                     <label className="form-label" htmlFor="motivo_visita">Motivo de la visita*</label>
+//                                     <label htmlFor="nota_med" className="form-label">Nota Médica</label>
+//                                     <textarea
+//                                         className="form-control"
+//                                         rows="10"
+//                                         id="nota_med"
+//                                         {...registerInformacion('notaMedica', { 
+//                                             required: true,
+//                                             onBlur: (e) => {
+//                                                 if (!e.target.value.trim()) {
+//                                                     e.target.value = 'N/A'; // Establece 'N/A' si está vacío
+//                                                 }
+//                                             }
+//                                         })}
+//                                     />
+//                                 </div> */}
+
+//                                 <div className="mt-3">
+//                                     <label className="form-label" htmlFor="motivo_visita">Motivo de la visita<span style={{color: 'red'}}> * </span>
+//                                     </label>
 //                                     <textarea
 //                                         className="form-control"
 //                                         rows="10"
@@ -3789,7 +4315,7 @@ export const AgregarHistoria = () => {
 
 //                                 <div className="d-grid gap-2 d-md-flex justify-content-md-end mt-5">
 //                                     <button className="btn btn-success btn-save me-md-2" type="submit">Guardar</button>
-//                                     <button type="reset" className="btn btn-danger">Cancelar</button>
+//                                     {/* <button type="reset" className="btn btn-danger">Cancelar</button> */}
 //                                 </div>
 //                             </form>
 //                         </div>

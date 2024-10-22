@@ -251,12 +251,35 @@ export const EditarPaciente = () => {
                             </select>
                         </div>
                     </div>
+
                     <div className="col-sm-2">
+                        <div className="mb-3">
+                            <label className="form-label">Presión</label>
+                            <input
+                                type="text"
+                                name="presion"
+                                value={formData.presion}
+                                onChange={handleChange}
+                                className="form-control"
+                                onKeyPress={(e) => {
+                                    const charCode = e.charCode;
+
+                                    // Permitir solo números (0-9) y la barra "/"
+                                    if (!(charCode >= 48 && charCode <= 57) && charCode !== 47) {
+                                        e.preventDefault(); // Evita que se ingresen otros caracteres
+                                    }
+                                }}
+                            />
+                        </div>
+                    </div>
+
+                    {/* <div className="col-sm-2">
                         <div className="mb-3">
                             <label className="form-label">Presión</label>
                             <input type="text" name="presion" value={formData.presion} onChange={handleChange} className="form-control" />
                         </div>
-                    </div>
+                    </div> */}
+                    
                     <div className="col-sm-2">
                         <div className="mb-3">
                             <label className="form-label">Temperatura (°C)</label>
