@@ -49,7 +49,7 @@ export const BuscarProblema = () => {
                 acc.push(problema);
             }
             return acc;
-        }, []);
+    }, []);
 
     const columns = [
         {
@@ -102,7 +102,7 @@ export const BuscarProblema = () => {
 
             <Table
                 responsive={true}
-                pagination={{ pageSize: 7 }}
+                pagination={{ pageSize: 10 }}
                 className='custom-table'
                 columns={columns}
                 dataSource={filteredProblemas}

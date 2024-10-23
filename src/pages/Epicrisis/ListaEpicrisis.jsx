@@ -153,7 +153,7 @@ export const ListaEpicrisis = () => {
             </div>
             <Table
                 responsive={true}
-                pagination={{ pageSize: 7 }}
+                pagination={{ pageSize: 10 }}
                 className='custom-table'
                 columns={columns}
                 dataSource={epicrisis}
