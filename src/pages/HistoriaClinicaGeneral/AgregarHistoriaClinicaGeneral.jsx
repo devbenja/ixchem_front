@@ -915,27 +915,6 @@ export const AgregarHistoriaClinicaGeneral = () => {
                     <div className="tab-pane show active" id="HCG" role="tabpanel" aria-labelledby="HCG-tab">
                         <form className='mt-4' onSubmit={(e) => e.preventDefault()}>
                             <div className="row mb-3">
-                                {/* <div className="col-sm-3">
-                                    <label className="form-label">Primer Nombre<span style={{color: 'red'}}> * </span></label>
-                                    <input type="text" name="primeR_NOMBRE" value={data.primeR_NOMBRE} onChange={handleChange} className="form-control" />
-                                </div>
-                                <div className="col-sm-3">
-                                    <label className="form-label">Segundo Nombre</label>
-                                    <input type="text" name="segundO_NOMBRE" value={data.segundO_NOMBRE} onChange={handleChange} className="form-control" />
-                                </div>
-                                <div className="col-sm-3">
-                                    <label className="form-label">Primer Apellido<span style={{color: 'red'}}> * </span></label>
-                                    <input type="text" name="primeR_APELLIDO" value={data.primeR_APELLIDO} onChange={handleChange} className="form-control" />
-                                </div>
-                                <div className="col-sm-3">
-                                    <label className="form-label">Segundo Apellido</label>
-                                    <input type="text" name="segundO_APELLIDO" value={data.segundO_APELLIDO} onChange={handleChange} className="form-control" />
-                                </div>
-                                <div className="col-sm-3 mt-3">
-                                    <label className="form-label">Número de expediente<span style={{color: 'red'}}> * </span></label>
-                                    <input type="text" name="numExpediente" value={formData.numExpediente} onChange={handleChange} className="form-control" />
-                                </div> */}
-
                                 <div className="col-sm-3">
                                     <label className="form-label">Primer Nombre<span style={{color: 'red'}}> * </span></label>
                                     <input 
@@ -1134,27 +1113,26 @@ export const AgregarHistoriaClinicaGeneral = () => {
                                     <label className="form-label">Primer Nombre<span style={{color: 'red'}}> * </span></label>
                                     <input type="text" name="primeR_NOMBRE" value={data.primeR_NOMBRE} onChange={handleChange} className="form-control" />
                                 </div>
+
                                 <div className="col-sm-3">
                                     <label className="form-label">Segundo Nombre</label>
                                     <input type="text" name="segundO_NOMBRE" value={data.segundO_NOMBRE} onChange={handleChange} className="form-control" />
                                 </div>
+
                                 <div className="col-sm-3">
                                     <label className="form-label">Primer Apellido<span style={{color: 'red'}}> * </span></label>
                                     <input type="text" name="primeR_APELLIDO" value={data.primeR_APELLIDO} onChange={handleChange} className="form-control" />
                                 </div>
+
                                 <div className="col-sm-3">
                                     <label className="form-label">Segundo Apellido</label>
                                     <input type="text" name="segundO_APELLIDO" value={data.segundO_APELLIDO} onChange={handleChange} className="form-control" />
                                 </div>
+
                                 <div className="col-sm-3 mt-3">
                                     <label className="form-label">Número de expediente<span style={{color: 'red'}}> * </span></label>
                                     <input type="text" name="numExpediente" value={formData.numExpediente} onChange={handleChange} className="form-control" />
                                 </div>
-
-                                {/* <div className="col-sm-3 mt-3">
-                                    <label className="form-label">Telefono</label>
-                                    <input type="number" name="telefono" value={obstetrico.telefono} onChange={handleChangeObs} className="form-control" />
-                                </div> */}
 
                                 <div className="col-sm-3 mt-3">
                                     <label className="form-label">Teléfono</label>
@@ -1193,7 +1171,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
                                 </div>
 
                                 <div className="col-sm-3 mt-3">
-                                    <label className="form-label">Peso 250</label>
+                                    <label className="form-label">Peso 2,500</label>
                                     <div className='d-flex align-items-center justify-content-center form-control'>
                                         <div className="form-check form-check-inline">
                                             <input type="radio" name="peso250" value="true" checked={obstetrico.peso250 === true} onChange={handleRadioChangeObs} className="form-check-input" />
@@ -1210,7 +1188,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
                             <div className="row mb-3">
 
                                 <div className="col-sm-3">
-                                    <label className="form-label">Peso 450</label>
+                                    <label className="form-label">Peso 4,500</label>
                                     <div className='d-flex align-items-center justify-content-center form-control'>
                                         <div className="form-check form-check-inline">
                                             <input type="radio" name="peso450" value="true" checked={obstetrico.peso450 === true} onChange={handleRadioChangeObs} className="form-check-input" />
@@ -1297,7 +1275,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
                                 </div>
 
                                 <div className="col-sm-3 mt-3">
-                                    <label className="form-label">Diagnostico</label>
+                                    <label className="form-label">Sospecha de embarazo múltiple</label>
                                     <div className='d-flex align-items-center justify-content-center form-control'>
                                         <div className="form-check form-check-inline">
                                             <input type="radio" name="diagnostico" value="true" checked={actual.diagnostico === true} onChange={handleRadioChangeActual} className="form-check-input" />
@@ -1342,7 +1320,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
                             <div className="row mb-3">
 
                                 <div className="col-sm-3">
-                                    <label className="form-label">Inmunizacion</label>
+                                    <label className="form-label">Isoinmunizacion RH negativa</label>
                                     <div className='d-flex align-items-center justify-content-center form-control'>
                                         <div className="form-check form-check-inline">
                                             <input type="radio" name="isoinmunizacion" value="true" checked={actual.isoinmunizacion === true} onChange={handleRadioChangeActual} className="form-check-input" />

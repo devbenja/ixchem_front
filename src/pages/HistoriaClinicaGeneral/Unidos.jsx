@@ -152,15 +152,29 @@ const MyDocument = ({ data }) => {
                     </View> */}
                 </View>
 
+                {/* <View style={styles.twoValues}>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Dirección:</Text>
+                        <Text style={styles.valueFullName}>{data[0].direccion}</Text>
+                    </View>
+                    
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Telefono:</Text>
+                        <Text style={styles.valueExp}>{data[0].telefono}</Text>
+                    </View>
+                </View> */}
+
                 <View style={styles.twoValues}>
                     <View style={styles.row}>
                         <Text style={styles.label}>Dirección:</Text>
                         <Text style={styles.valueFullName}>{data[0].direccion}</Text>
                     </View>
-                    <View style={styles.row}>
-                        <Text style={styles.label}>Telefono:</Text>
-                        <Text style={styles.valueExp}>{data[0].telefono}</Text>
-                    </View>
+                    
+                    <View style={[styles.row, { marginRight: -130 }]}>
+                    <Text style={styles.label}>Telf:</Text>
+                    <Text style={styles.valueExp}>{data[0].telefono}</Text>
+                </View>
+
                 </View>
 
                 <View>
@@ -339,7 +353,7 @@ const MyDocument = ({ data }) => {
                                 <Text style={styles.tableCell}>7</Text>
                             </View>
                             <View style={styles.tableColDescription}>
-                                <Text style={styles.tableCellDesc}>Diagnóstico</Text>
+                                <Text style={styles.tableCellDesc}>Diagnóstico o sospecha de embarazo múltiple</Text>
                             </View>
                             {
                                 Array.from({ length: 4 }).map((_, index) => (
@@ -390,7 +404,7 @@ const MyDocument = ({ data }) => {
                                 <Text style={styles.tableCell}>10</Text>
                             </View>
                             <View style={styles.tableColDescription}>
-                                <Text style={styles.tableCellDesc}>Isoinmunización RH negativa en el embarazo actual</Text>
+                                <Text style={styles.tableCellDesc}>Isoinmunización RH negativa en el embarazo actual o en embarazos anteriores</Text>
                             </View>
                             {
                                 Array.from({ length: 4 }).map((_, index) => (
@@ -441,7 +455,7 @@ const MyDocument = ({ data }) => {
                                 <Text style={styles.tableCell}>13</Text>
                             </View>
                             <View style={styles.tableColDescription}>
-                                <Text style={styles.tableCellDesc}>Presión Arterial</Text>
+                                <Text style={styles.tableCellDesc}>Presión Arterial Diastólica de 90mmHg o más durante el registro de datos</Text>
                             </View>
                             {
                                 Array.from({ length: 4 }).map((_, index) => (
@@ -555,7 +569,7 @@ const MyDocument = ({ data }) => {
                                 <Text style={styles.tableCell}>18</Text>
                             </View>
                             <View style={styles.tableColDescription}>
-                                <Text style={styles.tableCellDesc}>Cualquier enfermedad o afección médica severa/obesidad (indice mayor de 30), especifique.</Text>
+                                <Text style={styles.tableCellDesc}>Cualquier enfermedad o afección médica severa/obesidad (indice mayor de 30), por favor especifique.</Text>
                             </View>
 
                             {
