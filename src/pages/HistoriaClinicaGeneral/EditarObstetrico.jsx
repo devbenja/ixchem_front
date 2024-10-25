@@ -114,7 +114,7 @@ export const EditarObstetrico = () => {
                     </div>
                     <div className="col-sm-3 mt-3">
                         <label className="form-label">Telefono</label>
-                        <input type="number" name="telefono" value={obstetrico.telefono} onChange={handleChangeObs} className="form-control" />
+                        <input type="text" name="telefono" value={obstetrico.telefono} onChange={handleChangeObs} className="form-control" />
                     </div>
 
                     <div className="col-sm-3 mt-3">

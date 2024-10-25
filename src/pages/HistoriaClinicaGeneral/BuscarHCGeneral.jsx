@@ -148,7 +148,7 @@ export const BuscarHCGeneral = () => {
             key: 'numExpediente',
         },
         {
-            title: 'Código MINSA',
+            title: 'Telefono',
             dataIndex: 'telefono',
             key: 'telefono',
         },
