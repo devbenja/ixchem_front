@@ -113,12 +113,12 @@ export const BuscarPorCentro = () => {
     };
 
     const filteredPacientes = data
-        .filter(dataList => dataList.nuM_EXPEDIENTE && dataList.nuM_EXPEDIENTE.includes(searchValue))
-        .reduce((acc, dataList) => {
-            if (!acc.find(p => p.nuM_EXPEDIENTE === dataList.nuM_EXPEDIENTE)) {
-                acc.push(dataList);
-            }
-            return acc;
+    .filter(dataList => dataList.centro && dataList.centro.includes(searchValue))
+    .reduce((acc, dataList) => {
+        if (!acc.find(p => p.nuM_EXPEDIENTE === dataList.nuM_EXPEDIENTE)) {
+            acc.push(dataList);
+        }
+        return acc;
     }, []);
 
     return (
@@ -163,11 +163,11 @@ export const BuscarPorCentro = () => {
             
             <div className="container-fluid">
                 <Table 
-                    pagination={{ pageSize: 10 }}
+                    pagination={{ pageSize: 20 }}
                     className="custom-table mt-4" 
                     rowKey="nuM_EXPEDIENTE" 
                     columns={columns} 
-                    dataSource={filteredPacientes} 
+                    dataSource={data} 
                 />
             </div>
         </div>

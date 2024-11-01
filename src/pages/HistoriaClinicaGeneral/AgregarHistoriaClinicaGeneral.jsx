@@ -1058,7 +1058,7 @@ export const AgregarHistoriaClinicaGeneral = () => {
                                 </div>
 
                                 <div className="col-sm-2">
-                                    <label className="form-label">Cualquier Otro</label>
+                                    <label className="form-label">Indice Corporal (IMC)</label>
                                     <div className='d-flex align-items-center justify-content-center form-control'>
                                         <div className="form-check form-check-inline">
                                             <input type="radio" name="cualquierOtro" value="true" checked={formData.cualquierOtro === true} onChange={handleRadioChange} className="form-check-input" />

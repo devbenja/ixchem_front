@@ -50,7 +50,7 @@ export const MenuList = () => {
 
             <Menu.SubMenu className='sub-menu' key="historia" icon={<HistoryOutlined />} title="Historia Clinica">
                 {
-                    user && (user.codRol === 1 || user.codRol === 2) && (
+                    user && (user.codRol === 1 || user.codRol === 2 || user.codRol === 4) && (
                         <Menu.Item key="add" icon={<PlusOutlined />}>
                             <Link to="/agregar-historia-clinica" style={linkStyle}>Agregar</Link>
                         </Menu.Item>
@@ -64,58 +64,67 @@ export const MenuList = () => {
                 </Menu.Item>
             </Menu.SubMenu>
 
-            <Menu.SubMenu className='sub-menu' key="lista-problemas" title="Problemas" icon={<OrderedListOutlined />}>
-                {
-                    user && (user.codRol === 1 || user.codRol === 2) && (
-                        <Menu.Item key="agregar-problema" icon={<PlusOutlined />}>
-                            <Link to="/agregar-problema" style={linkStyle}>Agregar</Link>
-                        </Menu.Item>
-                    )
-                }
-                <Menu.Item key="buscar-problema" icon={<SearchOutlined />}>
-                    <Link to="/buscar-problema" style={linkStyle}>Buscar</Link>
-                </Menu.Item>
-            </Menu.SubMenu>
-
-            <Menu.SubMenu key="nota-sub" title="Nota Evolución" icon={<FundViewOutlined />}>
-                {
-                    user && (user.codRol === 1 || user.codRol === 2) && (
-                        <Menu.Item key="nota" icon={<PlusOutlined />}>
-                            <Link to="/agregar-nota-evolucion" style={linkStyle}>Agregar</Link>
-                        </Menu.Item>
-                    )
-                }
-                <Menu.Item key="nota-search" icon={<SearchOutlined />}>
-                    <Link to="/buscar-nota-evolucion" style={linkStyle}>Buscar</Link>
-                </Menu.Item>
-            </Menu.SubMenu>
-
-            <Menu.SubMenu key="epi-sub" title="Epicrisis" icon={<FileDoneOutlined />}>
-                {
-                    user && (user.codRol === 1 || user.codRol === 2) && (
-                        <Menu.Item key="epi-add" icon={<PlusOutlined />}>
-                            <Link to="/agregar-epicrisis" style={linkStyle}>Agregar</Link>
-                        </Menu.Item>
-                    )
-                }
-                <Menu.Item key="epi-search" icon={<SearchOutlined />}>
-                    <Link to="/buscar-epicrisis" style={linkStyle}>Buscar</Link>
-                </Menu.Item>
-            </Menu.SubMenu>
-
-            <Menu.SubMenu key="hist-sub" title="Clfn. Riesgo" icon={<WarningOutlined />}>
-                {
-                    user && (user.codRol === 1 || user.codRol === 2) && (
-                        <Menu.Item key="hist-add" icon={<PlusOutlined />}>
-                            <Link to="/agregar-historia-clinica-general" style={linkStyle}>Agregar</Link>
-                        </Menu.Item>
-                    )
-                }
-                <Menu.Item key="hist-search" icon={<SearchOutlined />}>
-                    <Link to="/buscar-historia-clinica-general" style={linkStyle}>Buscar</Link>
-                </Menu.Item>
-            </Menu.SubMenu>
+            {user && (user.codRol === 1 || user.codRol === 2 || user.codRol === 3) && (
+                <Menu.SubMenu className='sub-menu' key="lista-problemas" title="Problemas" icon={<OrderedListOutlined />}>
+                    {
+                        user && (user.codRol === 1 || user.codRol === 2) && (
+                            <Menu.Item key="agregar-problema" icon={<PlusOutlined />}>
+                                <Link to="/agregar-problema" style={linkStyle}>Agregar</Link>
+                            </Menu.Item>
+                        )
+                    }
+                    
+                    <Menu.Item key="buscar-problema" icon={<SearchOutlined />}>
+                        <Link to="/buscar-problema" style={linkStyle}>Buscar</Link>
+                    </Menu.Item>
+                </Menu.SubMenu>
+            )}
             
+            {user && (user.codRol === 1 || user.codRol === 2 || user.codRol === 3) && (
+                <Menu.SubMenu key="nota-sub" title="Nota Evolución" icon={<FundViewOutlined />}>
+                    {
+                        user && (user.codRol === 1 || user.codRol === 2) && (
+                            <Menu.Item key="nota" icon={<PlusOutlined />}>
+                                <Link to="/agregar-nota-evolucion" style={linkStyle}>Agregar</Link>
+                            </Menu.Item>
+                        )
+                    }
+                    <Menu.Item key="nota-search" icon={<SearchOutlined />}>
+                        <Link to="/buscar-nota-evolucion" style={linkStyle}>Buscar</Link>
+                    </Menu.Item>
+                </Menu.SubMenu>
+            )}
+
+            {user && (user.codRol === 1 || user.codRol === 2 || user.codRol === 3) && (
+                <Menu.SubMenu key="epi-sub" title="Epicrisis" icon={<FileDoneOutlined />}>
+                    {
+                        user && (user.codRol === 1 || user.codRol === 2) && (
+                            <Menu.Item key="epi-add" icon={<PlusOutlined />}>
+                                <Link to="/agregar-epicrisis" style={linkStyle}>Agregar</Link>
+                            </Menu.Item>
+                        )
+                    }
+                    <Menu.Item key="epi-search" icon={<SearchOutlined />}>
+                        <Link to="/buscar-epicrisis" style={linkStyle}>Buscar</Link>
+                    </Menu.Item>
+                </Menu.SubMenu>
+            )}
+
+            {user && (user.codRol === 1 || user.codRol === 2 || user.codRol === 3) && (
+                <Menu.SubMenu key="hist-sub" title="Clfn. Riesgo" icon={<WarningOutlined />}>
+                    {
+                        user && (user.codRol === 1 || user.codRol === 2) && (
+                            <Menu.Item key="hist-add" icon={<PlusOutlined />}>
+                                <Link to="/agregar-historia-clinica-general" style={linkStyle}>Agregar</Link>
+                            </Menu.Item>
+                        )
+                    }
+                    <Menu.Item key="hist-search" icon={<SearchOutlined />}>
+                        <Link to="/buscar-historia-clinica-general" style={linkStyle}>Buscar</Link>
+                    </Menu.Item>
+                </Menu.SubMenu>
+            )}
+
             {user && user.codRol === 1 && (
                 <Menu.SubMenu key="doc-sub" title="Doctores" icon={<UserOutlined />}>
                     <Menu.Item key="doctores-add" icon={<PlusOutlined />}>

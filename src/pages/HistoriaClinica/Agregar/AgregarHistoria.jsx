@@ -153,6 +153,19 @@ export const AgregarHistoria = () => {
         setIdentificacion(valor);
     };
 
+    const [selectedCentro, setSelectedCentro] = useState('');
+
+    useEffect(() => {
+        // Obtener el valor del centro almacenado en localStorage
+        const storedCentro = localStorage.getItem('selectedCentro');
+        if (storedCentro) {
+            setSelectedCentro(storedCentro);
+        }
+        
+        // Registrar el valor en el formulario para que sea reconocido al guardar
+        registerPaciente("centro", { value: storedCentro || "" });
+    }, [registerPaciente]);
+
     //POST PACIENTE - DATOS PERSONALES
     const onSubmitPaciente = handleSubmitPaciente(async (data) => {
 
@@ -499,8 +512,13 @@ export const AgregarHistoria = () => {
                                             className="form-control"
                                             title="El nombre debe ir escrito como aparezca en la cédula o la partida de nacimiento"
                                             {...registerPaciente('primerNombre', { required: "El primer nombre es obligatorio", maxLength: 30 })}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                e.target.value = value.charAt(0).toUpperCase() + value.slice(1);
+                                            }}
                                         />
                                     </div>
+
                                     <div className="col-sm-2">
                                         <label htmlFor="SegundoN" className="form-label">Segundo nombre</label>
                                         <input
@@ -508,6 +526,10 @@ export const AgregarHistoria = () => {
                                             className="form-control"
                                             title="El nombre debe ir escrito como aparezca en la cédula o la partida de nacimiento"
                                             {...registerPaciente('segundoNombre', { maxLength: 30 })}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                e.target.value = value.charAt(0).toUpperCase() + value.slice(1);
+                                            }}
                                         />
                                     </div>
 
@@ -519,6 +541,10 @@ export const AgregarHistoria = () => {
                                             className="form-control"
                                             title="El apellido debe ir escrito como aparezca en la cédula o la partida de nacimiento"
                                             {...registerPaciente('primerApellido', { required: true, maxLength: 30 })}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                e.target.value = value.charAt(0).toUpperCase() + value.slice(1);
+                                            }}
                                         />
                                     </div>
 
@@ -529,6 +555,10 @@ export const AgregarHistoria = () => {
                                             className="form-control"
                                             title="El apellido debe ir escrito como aparezca en la cédula o la partida de nacimiento"
                                             {...registerPaciente('segundoApellido', { required: true, maxLength: 30 })}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                e.target.value = value.charAt(0).toUpperCase() + value.slice(1);
+                                            }}
                                         />
                                     </div>
 
@@ -645,6 +675,10 @@ export const AgregarHistoria = () => {
                                             className="form-control"
                                             id="direccion"
                                             {...registerPaciente('direccion')}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                e.target.value = value.charAt(0).toUpperCase() + value.slice(1);
+                                            }}
                                         />
                                     </div>
 
@@ -694,18 +728,6 @@ export const AgregarHistoria = () => {
                                         />
                                     </div>
 
-                                    {/* <div className="col-sm-1">
-                                        <label htmlFor="presion" className="form-label">Presión<span style={{color: 'red'}}> * </span>
-                                        </label>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            id="presion"
-                                            placeholder="mm/Hg"
-                                            {...registerPaciente("presion", { required: true })}
-                                        />
-                                    </div> */}
-
                                     <div className="col-sm-1">
                                         <label htmlFor="temperatura" className="form-label">Temperatura<span style={{color: 'red'}}>* </span>
                                         </label>
@@ -748,11 +770,6 @@ export const AgregarHistoria = () => {
                                         />
                                     </div>
 
-                                    {/* <div className="col-sm-1">
-                                        <label htmlFor="IMC" className="form-label">IMC</label>
-                                        <input className="form-control" type="text" maxLength="5" title="Este campo es de sólo lectura" / />
-                                    </div> */}
-
                                     <div className="col-sm-2">
                                         <label htmlFor="fechaIngreso" className="form-label">Fecha de ingreso<span style={{color: 'red'}}> * </span>
                                         </label>
@@ -767,7 +784,7 @@ export const AgregarHistoria = () => {
                                     <div className="col-sm-3">
                                         <label htmlFor="centros" className="form-label">Centro de Mujeres IXCHEN<span style={{color: 'red'}}> * </span>
                                         </label>
-                                        <select defaultValue="Menú de selección" className="form-select" id="centro" {...registerPaciente("centro", { required: true })}>
+                                        <select defaultValue="Menú de selección" className="form-select" id="centro" value={selectedCentro} disabled>
                                             <option value="">Menú de selección</option>
                                             <option value="Managua">Managua</option>
                                             <option value="Ciudad Sandino">Ciudad Sandino</option>
@@ -2265,12 +2282,36 @@ export const AgregarHistoria = () => {
 //             valor = valor.slice(0, 30);
 //         }     
 
+//         // if (tipoIdentificacion === "categoria1") {
+//         //     // Insertar guiones en las posiciones 3 y 5
+//         //     valor = valor.replace(/[^0-9]/g, ""); // La función me permite eliminar cualquier caracter no numerico
+//         //     if (valor.length > 2) valor = valor.slice(0, 2) + "-" + valor.slice(2);
+//         //     if (valor.length > 5) valor = valor.slice(0, 5) + "-" + valor.slice(5);
+//         //     if (valor.length > 10) valor = valor.slice(0, 10); // Limitar la longitud a 10 caracteres (dd-mm-yyyy)
+//         // } else if (tipoIdentificacion === "categoria2") {
+//         //     // Insertar guiones en las posiciones 4 y 11 y permitir una letra en la posición 16
+//         //     valor = valor.replace(/[^0-9A-Za-z]/g, ""); // Eliminar caracteres que no sean números o letras
+//         //     if (valor.length > 3) valor = valor.slice(0, 3) + "-" + valor.slice(3);
+//         //     if (valor.length > 10) valor = valor.slice(0, 10) + "-" + valor.slice(10);
+//         //     if (valor.length > 15) {
+//         //         let letra = valor.slice(15, 16).toUpperCase(); // Obtengo y convierto la letra a mayúscula
+//         //         if (/[^A-Z]/.test(letra)) { // Verificar si no es una letra del abecedario
+//         //             letra = ""; // Si no es válida, eliminarla
+//         //         }
+//         //         valor = valor.slice(0, 15) + letra; // Insertar la letra validada
+//         //     }
+//         //     if (valor.length > 16) valor = valor.slice(0, 16); // Limitar la longitud a 16 caracteres
+//         // } else if (tipoIdentificacion === "categoria3") {
+//         //     // Limitar la longitud a 30 caracteres no estamos seguros de cuantos tiene el pasaporte INVESTIGAR
+//         //     valor = valor.slice(0, 30);
+//         // }
+
 //         setIdentificacion(valor);
 //     };
 
 //     //POST PACIENTE - DATOS PERSONALES
-
 //     const onSubmitPaciente = handleSubmitPaciente(async (data) => {
+
 //         if (!tipoIdentificacion) {
 //             // Notificación si no se ha seleccionado el tipo de identificación
 //             notification.error({
@@ -2280,38 +2321,29 @@ export const AgregarHistoria = () => {
 //             });
 //             return;
 //         }
-    
+
 //         setIsSelectDisabled(true);
-    
+ 
 //         try {
 //             const response = await axios.post(`${baseURL}/bdtpaciente/post`, data);
 //             const dataWithAge = {
 //                 ...data,
 //                 EDAD: 0
 //             };
-    
-//             // Notificación de éxito
 //             notification.success({
 //                 message: '¡Éxito!',
 //                 description: `Paciente ${response.data.primerNombre} creado!`,
 //                 duration: 3
 //             });
-    
-//             // Guardar el número de expediente y marcar valor heredado
 //             setNumExp(response.data.numExpediente);
 //             setIsHerited(true); // Marcar que el valor ha sido heredado
-//             // reset(); // Limpia el formulario
-//             // setTipoIdentificacion(''); // Limpia el tipo de identificación
-//             // setIdentificacion(''); // Limpia el campo de identificación
-    
+//             reset();
+//             setTipoIdentificacion(''); // Limpia el tipo de identificación
+//             setIdentificacion(''); // Limpia el valor del campo de identificación
 //             if (refAntPer.current) {
 //                 const tab = new window.bootstrap.Tab(refAntPer.current);
 //                 tab.show();
 //             }
-    
-//             // Mostrar el botón de editar después de crear al paciente
-//             setShowEditButton(true); // Estado para mostrar el botón de editar
-    
 //         } catch (error) {
 //             console.log(error);
 //             // Manejo del error y validación específica
@@ -2324,69 +2356,13 @@ export const AgregarHistoria = () => {
 //             } else {
 //                 notification.error({
 //                     message: 'Error al Crear Paciente',
-//                     description: 'El usuario con ese número de expediente ya está registrado, ingresar uno diferente',
+//                     description: 'El usuario con ese numero de expediente ya esta registrado, ingresar uno diferente',
 //                     duration: 3
 //                 });
 //             }
 //         }
+ 
 //     });
-
-//     // Estado para controlar la visibilidad del botón de editar
-//     const [showEditButton, setShowEditButton] = useState(false);
-
-//     // const onSubmitPaciente = handleSubmitPaciente(async (data) => {
-
-//     //     if (!tipoIdentificacion) {
-//     //         // Notificación si no se ha seleccionado el tipo de identificación
-//     //         notification.error({
-//     //             message: "Error",
-//     //             description: "Debe seleccionar un tipo de identificación antes de llenar el campo 'Identificación'.",
-//     //             duration: 3,
-//     //         });
-//     //         return;
-//     //     }
-
-//     //     setIsSelectDisabled(true);
- 
-//     //     try {
-//     //         const response = await axios.post(`${baseURL}/bdtpaciente/post`, data);
-//     //         const dataWithAge = {
-//     //             ...data,
-//     //             EDAD: 0
-//     //         };
-//     //         notification.success({
-//     //             message: '¡Éxito!',
-//     //             description: `Paciente ${response.data.primerNombre} creado!`,
-//     //             duration: 3
-//     //         });
-//     //         setNumExp(response.data.numExpediente);
-//     //         setIsHerited(true); // Marcar que el valor ha sido heredado
-//     //         reset();
-//     //         setTipoIdentificacion(''); // Limpia el tipo de identificación
-//     //         setIdentificacion(''); // Limpia el valor del campo de identificación
-//     //         if (refAntPer.current) {
-//     //             const tab = new window.bootstrap.Tab(refAntPer.current);
-//     //             tab.show();
-//     //         }
-//     //     } catch (error) {
-//     //         console.log(error);
-//     //         // Manejo del error y validación específica
-//     //         if (error.response && error.response.data && error.response.data.message) {
-//     //             notification.error({
-//     //                 message: 'Error al Crear Paciente',
-//     //                 description: error.response.data.message,
-//     //                 duration: 3
-//     //             });
-//     //         } else {
-//     //             notification.error({
-//     //                 message: 'Error al Crear Paciente',
-//     //                 description: 'El usuario con ese numero de expediente ya esta registrado, ingresar uno diferente',
-//     //                 duration: 3
-//     //             });
-//     //         }
-//     //     }
- 
-//     // });
     
 //     // POST ANTECEDENTES PERSONALES
 //     const onSubmitAntPersonales = handleSubmitAntPer(async (data) => {
@@ -2679,8 +2655,13 @@ export const AgregarHistoria = () => {
 //                                             className="form-control"
 //                                             title="El nombre debe ir escrito como aparezca en la cédula o la partida de nacimiento"
 //                                             {...registerPaciente('primerNombre', { required: "El primer nombre es obligatorio", maxLength: 30 })}
+//                                             onChange={(e) => {
+//                                                 const value = e.target.value;
+//                                                 e.target.value = value.charAt(0).toUpperCase() + value.slice(1);
+//                                             }}
 //                                         />
 //                                     </div>
+
 //                                     <div className="col-sm-2">
 //                                         <label htmlFor="SegundoN" className="form-label">Segundo nombre</label>
 //                                         <input
@@ -2688,6 +2669,10 @@ export const AgregarHistoria = () => {
 //                                             className="form-control"
 //                                             title="El nombre debe ir escrito como aparezca en la cédula o la partida de nacimiento"
 //                                             {...registerPaciente('segundoNombre', { maxLength: 30 })}
+//                                             onChange={(e) => {
+//                                                 const value = e.target.value;
+//                                                 e.target.value = value.charAt(0).toUpperCase() + value.slice(1);
+//                                             }}
 //                                         />
 //                                     </div>
 
@@ -2699,6 +2684,10 @@ export const AgregarHistoria = () => {
 //                                             className="form-control"
 //                                             title="El apellido debe ir escrito como aparezca en la cédula o la partida de nacimiento"
 //                                             {...registerPaciente('primerApellido', { required: true, maxLength: 30 })}
+//                                             onChange={(e) => {
+//                                                 const value = e.target.value;
+//                                                 e.target.value = value.charAt(0).toUpperCase() + value.slice(1);
+//                                             }}
 //                                         />
 //                                     </div>
 
@@ -2709,6 +2698,10 @@ export const AgregarHistoria = () => {
 //                                             className="form-control"
 //                                             title="El apellido debe ir escrito como aparezca en la cédula o la partida de nacimiento"
 //                                             {...registerPaciente('segundoApellido', { required: true, maxLength: 30 })}
+//                                             onChange={(e) => {
+//                                                 const value = e.target.value;
+//                                                 e.target.value = value.charAt(0).toUpperCase() + value.slice(1);
+//                                             }}
 //                                         />
 //                                     </div>
 
@@ -2993,14 +2986,6 @@ export const AgregarHistoria = () => {
 //                                 <div className="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
 //                                     <button className="btn btn-success btn-save me-md-2" type="submit" >Guardar</button>
 //                                     <button type="reset" className="btn btn-danger">Cancelar</button>
-//                                     {showEditButton && (
-//                                         <button 
-//                                             onClick={() => (`/editar-paciente/`)}
-//                                             className="btn btn-primary"
-//                                         >
-//                                             Editar Paciente
-//                                         </button>
-//                                     )}
 //                                 </div>
 
 //                             </form>
@@ -3167,13 +3152,12 @@ export const AgregarHistoria = () => {
 //                                     </div>
 
 //                                     <div className="col-sm-2">
-//                                         <label htmlFor="FUM" className="form-label">FUM<span style={{color: 'red'}}> * </span>
-//                                         </label>
+//                                         <label htmlFor="FUM" className="form-label">FUM</label>
 //                                         <input
 //                                             type="date"
 //                                             className="form-control"
 //                                             id="FUM"
-//                                             {...registerAntecPer('fum', { required: true })}
+//                                             {...registerAntecPer('fum')}
 //                                         />
 //                                     </div>
 

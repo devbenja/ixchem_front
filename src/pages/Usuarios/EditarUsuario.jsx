@@ -156,6 +156,7 @@ export const EditarUsuario = () => {
                             <option value={1}>Administrador</option>
                             <option value={2}>Normal</option>
                             <option value={3}>Director</option>
+                            <option value={4}>Admisionista</option>
                         </select>
                     </div>
 

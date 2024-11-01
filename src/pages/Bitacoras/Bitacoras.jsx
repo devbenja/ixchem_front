@@ -101,7 +101,7 @@ export const Bitacoras = () => {
 
             <Table
                 responsive={true}
-                pagination={{ pageSize: 7 }}
+                pagination={{ pageSize: 20 }}
                 className='custom-table'
                 columns={columns}
                 dataSource={filteredBitacoras} // Usar todos los registros que coinciden

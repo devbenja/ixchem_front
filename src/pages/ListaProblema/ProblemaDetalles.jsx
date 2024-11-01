@@ -486,7 +486,7 @@ export const ProblemaDetalles = () => {
                 rowKey="coD_PROBLEMAS"
                 className='custom-table'
                 responsive={true}
-                pagination={{ pageSize: 10 }}
+                pagination={{ pageSize: 20 }}
             />
 
             <Modal show={isModalVisible} onHide={handleCancel}>

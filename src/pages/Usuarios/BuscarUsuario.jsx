@@ -64,6 +64,8 @@ export const BuscarUsuario = () => {
                     return 'Doctor';
                 } else if (codRol === 3) {
                     return 'Director';
+                } else if (codRol === 4) {
+                    return 'Admisionista';
                 }
             }
         },
@@ -138,7 +140,6 @@ export const BuscarUsuario = () => {
     const handleEdit = (id) => {
         navigate(`/editar-usuario/${id}`);
     };
-
 
     // Posible uso 
     // const filteredUsuarios = usuarios

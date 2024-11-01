@@ -120,7 +120,7 @@ export const EditarPaciente = () => {
                     <div className='col-sm-2'>
                         <div className="mb-3">
                             <label className="form-label">No. de expediente</label>
-                            <input type="text" name="numExpediente" value={formData.numExpediente} onChange={handleChange} className="form-control" />
+                            <input type="text" name="numExpediente" value={formData.numExpediente} onChange={handleChange} className="form-control" readOnly />
                         </div>
                     </div>
                     <div className='col-sm-2'>
@@ -272,13 +272,6 @@ export const EditarPaciente = () => {
                             />
                         </div>
                     </div>
-
-                    {/* <div className="col-sm-2">
-                        <div className="mb-3">
-                            <label className="form-label">Presión</label>
-                            <input type="text" name="presion" value={formData.presion} onChange={handleChange} className="form-control" />
-                        </div>
-                    </div> */}
                     
                     <div className="col-sm-2">
                         <div className="mb-3">
@@ -308,18 +301,19 @@ export const EditarPaciente = () => {
                             <input type="number" name="imc" value={formData.imc} onChange={handleChange} className="form-control" />
                         </div>
                     </div>
+                    
                     <div className="col-sm-2">
                         <div className="mb-3">
                             <label className="form-label">Fecha de ingreso</label>
                             <input type="date" name="fechaIngreso" value={formData.fechaIngreso} onChange={handleChange} className="form-control" />
                         </div>
                     </div>
+                    
                     <div className="col-sm-3">
                         <div className="mb-3">
-                            {/* <label className="form-label">Centro de mujeres IXCHEN</label>
-                            <input type="text" name="centro" value={formData.centro} onChange={handleChange} className="form-control" /> */}
+                            <label className="form-label">Centro de mujeres IXCHEN</label>
 
-                            <select defaultValue="Managua" className="form-select" name="centro" value={formData.centro} onChange={handleChange}>
+                            <select defaultValue="Managua" className="form-select" name="centro" value={formData.centro} onChange={handleChange} disabled>
                                 <option value="">{formData.centro}</option>
                                 <option value="Managua">Managua</option>
                                 <option value="Ciudad Sandino">Ciudad Sandino</option>
@@ -333,6 +327,7 @@ export const EditarPaciente = () => {
                             </select>
                         </div>
                     </div>
+
                     <div className="col-sm-2">
                         <div className="mb-3">
                             <label className="form-label">Usuaria</label>
@@ -368,3 +363,169 @@ export const EditarPaciente = () => {
         </div>
     )
 }
+
+// import { useState, useEffect } from 'react';
+// import axios from 'axios';
+// import { useParams, useNavigate } from 'react-router-dom';
+// import { notification } from 'antd';
+// import { baseURL } from '../../../api/apiURL';
+
+// export const EditarPaciente = () => {
+//     const { id } = useParams();
+//     const navigate = useNavigate();
+
+//     const [formData, setFormData] = useState({
+//         numExpediente: '',
+//         nuevoNumExpediente: '',
+//         primerNombre: '',
+//         segundoNombre: '',
+//         primerApellido: '',
+//         segundoApellido: '',
+//         cedula: '',
+//         fechaNac: '',
+//         edad: 0,
+//         escolaridad: '',
+//         profesion: '',
+//         sexo: '',
+//         direccion: '',
+//         codDepartamento: 0,
+//         presion: '',
+//         temperatura: 0,
+//         peso: 0,
+//         talla: 0,
+//         imc: 0,
+//         fechaIngreso: '',
+//         centro: '',
+//         usuaria: '',
+//         estado: false
+//     });
+
+//     useEffect(() => {
+//         const fetchData = async () => {
+//             try {
+//                 const response = await axios.get(`${baseURL}/bdtpaciente/buscarpornumexpediente`, {
+//                     params: { NumExpediente: id }
+//                 });
+//                 setFormData({ ...response.data, nuevoNumExpediente: '' });
+//             } catch (error) {
+//                 console.error(error);
+//                 notification.error({
+//                     message: 'Error',
+//                     description: 'No se pudo cargar los datos del paciente.',
+//                 });
+//             }
+//         };
+
+//         fetchData();
+//     }, [id]);
+
+//     const handleChange = (e) => {
+//         const { name, value } = e.target;
+//         setFormData({
+//             ...formData,
+//             [name]: value,
+//         });
+//     };
+
+//     const actualizarNumExpediente = async () => {
+//         if (!formData.nuevoNumExpediente) return; // Validar si el nuevo expediente está vacío
+    
+//         try {
+//             console.log('Entrando'); 
+    
+//             const response = await axios.put(`${baseURL}/bdtpaciente/actualizarNumExpediente`, {
+//                 numExpedienteActual: formData.numExpediente,
+//                 nuevoNumExpediente: formData.nuevoNumExpediente
+//             });
+    
+//             console.log('Respuesta de la API:', response.data);
+            
+//             setFormData((prevData) => ({
+//                 ...prevData,
+//                 numExpediente: formData.nuevoNumExpediente,
+//                 nuevoNumExpediente: '',
+//             }));
+        
+//             notification.success({
+//                 message: 'Éxito',
+//                 description: 'Número de expediente actualizado correctamente.',
+//             });
+    
+//         } catch (error) {
+//             console.error('Error al actualizar el número de expediente:', error.response.data);
+            
+//             if (error.response.data.errors) {
+//                 Object.entries(error.response.data.errors).forEach(([key, value]) => {
+//                     console.error(`${key}: ${value.join(', ')}`);
+//                 });
+//             }
+            
+//             notification.error({
+//                 message: 'Error',
+//                 description: `No se pudo actualizar el número de expediente: ${error.message}`,
+//             });
+//         }   
+//     };    
+    
+//     const handleSubmit = async (e) => {
+//         e.preventDefault();
+
+//         try {
+//             // Llama a la función para actualizar el número de expediente
+//             await actualizarNumExpediente();
+
+//             const response = await axios.put(`${baseURL}/bdtpaciente/actualizar/${id}`, formData);
+//             console.log('Paciente actualizado:', response.data);
+
+//             notification.success({
+//                 message: '¡Éxito!',
+//                 description: `Paciente con No. Expediente ${formData.numExpediente} editado.`,
+//                 duration: 3,
+//             });
+
+//             setTimeout(() => {
+//                 navigate('/buscar-historia-clinica');
+//             }, 1000);
+//         } catch (error) {
+//             console.error('Error al editar el paciente:', error);
+//             notification.error({
+//                 message: 'Error',
+//                 description: `${error.response?.data?.message || 'Error al editar el paciente'}`,
+//                 duration: 3,
+//             });
+//         }
+//     };
+
+//     const handleBack = () => {
+//         navigate('/buscar-historia-clinica');
+//     };
+
+//     return (
+//         <div className='container-fluid'>
+//             <h4>Editar Datos Generales Paciente</h4>
+//             <form onSubmit={handleSubmit} className='mt-4'>
+//                 <div className='row'>
+//                     <div className='col-sm-2'>
+//                         <div className="mb-3">
+//                             <label className="form-label">No. de expediente</label>
+//                             <input type="text" name="numExpediente" value={formData.numExpediente} onChange={handleChange} className="form-control" />
+//                         </div>
+//                     </div>
+//                     <div className='col-sm-2'>
+//                         <div className="mb-3">
+//                             <label className="form-label">Nuevo no. de expediente</label>
+//                             <input type="text" name="nuevoNumExpediente" value={formData.nuevoNumExpediente} onChange={handleChange} className="form-control" />
+//                         </div>
+//                     </div>
+//                     {/* Otros campos aquí */}
+//                 </div>
+//                 <div className='d-grid gap-2 d-md-flex justify-content-md-start mt-5'>
+//                     <button type="submit" className="btn btn-primary">Guardar</button>
+//                     <button type="button" onClick={handleBack} className="btn btn-danger">Cancelar</button>
+//                     <button type="button" onClick={actualizarNumExpediente} className="btn btn-warning">Nuevo</button>
+//                 </div>
+//                 {/* Más secciones del formulario */}
+//             </form>
+//         </div>
+//     );
+// };

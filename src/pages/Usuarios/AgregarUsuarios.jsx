@@ -171,6 +171,7 @@ export const AgregarUsuarios = () => {
                             <option value={1}>Administrador</option>
                             <option value={2}>Doctor</option>
                             <option value={3}>Director</option>
+                            <option value={4}>Admisionista</option>
                         </select>
                         {errors.codRol && <div className="invalid-feedback">{errors.codRol}</div>}
                     </div>

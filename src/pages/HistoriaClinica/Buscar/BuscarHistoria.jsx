@@ -473,7 +473,7 @@ export const BuscarHistoria = () => {
         { title: 'Segundo nombre', dataIndex: 'segundO_NOMBRE', key: 'segundO_NOMBRE' },
         { title: 'Primer apellido', dataIndex: 'primeR_APELLIDO', key: 'primeR_APELLIDO' },
         { title: 'Segundo apellido', dataIndex: 'segundO_APELLIDO', key: 'segundO_APELLIDO' },
-        { title: 'Cédula', dataIndex: 'cedula', key: 'cedula' },
+        { title: 'Identificación', dataIndex: 'cedula', key: 'cedula' },
         { title: 'Expediente', dataIndex: 'nuM_EXPEDIENTE', key: 'nuM_EXPEDIENTE' },
         { title: 'Fecha de Nac.', dataIndex: 'fechA_NAC', key: 'fechA_NAC' },
         { title: 'Edad', dataIndex: 'edad', key: 'edad' },
@@ -1104,7 +1104,7 @@ export const BuscarHistoria = () => {
                     }
 
                     {
-                        user && (user.codRol === 1 || user.codRol === 3) && (
+                        user && (user.codRol === 1 || user.codRol === 3 || user.codRol === 4) && (
                             <BlobProvider document={<MyDocument data={data} />}>
                                 {({ url, blob }) => (
                                     <>
@@ -1185,7 +1185,7 @@ export const BuscarHistoria = () => {
                         <Table className='mt-3 custom-table' columns={columns4} dataSource={[data]} pagination={false} />
 
                         {
-                            user && (user.codRol === 1 || user.codRol === 2) && (
+                            user && (user.codRol === 1 || user.codRol === 2 || user.codRol === 4 ) && (
                                 <div className='container mt-4 d-flex justify-content-end gap-2'>
                                     <button onClick={handleEditPaciente} className='btn btn-warning'>Editar</button>
                                 </div>
@@ -1200,7 +1200,7 @@ export const BuscarHistoria = () => {
                         <Table rowKey="codAntper" className='custom-table mt-3' columns={colum4AntPer} dataSource={[data]} pagination={false} />
 
                         {
-                            user && (user.codRol === 1 || user.codRol === 2) && (
+                            user && (user.codRol === 1 || user.codRol === 2 || user.codRol === 4 ) && (
                                 <div className='container mt-4 d-flex justify-content-end gap-2'>
                                     <button onClick={handleEditAntPersonales} className='btn btn-warning'>Editar</button>
                                 </div>
@@ -1216,7 +1216,7 @@ export const BuscarHistoria = () => {
                         <Table className='mt-3 custom-table' columns={columns4AntPatPer} dataSource={[data]} pagination={false} rowKey="codAntparper" />
 
                         {
-                            user && (user.codRol === 1 || user.codRol === 2) && (
+                            user && (user.codRol === 1 || user.codRol === 2 || user.codRol === 4 ) && (
                                 <div className='container mt-4 d-flex justify-content-end gap-2'>
                                     <button onClick={handleEditAntPatPer} className='btn btn-warning'>Editar</button>
                                 </div>
@@ -1231,7 +1231,7 @@ export const BuscarHistoria = () => {
                         <Table className='custom-table mt-3' columns={columns4AntPatFam} dataSource={[data]} pagination={false} />
 
                         {
-                            user && (user.codRol === 1 || user.codRol === 2) && (
+                            user && (user.codRol === 1 || user.codRol === 2 || user.codRol === 4 ) && (
                                 <div className='container mt-4 d-flex justify-content-end gap-2'>
                                     <button onClick={handleEditAntPatFam} className='btn btn-warning'>Editar</button>
                                 </div>
@@ -1245,7 +1245,7 @@ export const BuscarHistoria = () => {
                         <Table className='custom-table mt-3' columns={columns2Informacion} dataSource={[data]} pagination={false} />
 
                         {
-                            user && (user.codRol === 1 || user.codRol === 2) && (
+                            user && (user.codRol === 1 || user.codRol === 2 || user.codRol === 4 ) && (
                                 <div className='container mt-4 d-flex justify-content-end gap-2'>
                                     <button onClick={handleEditInformacion} className='btn btn-warning'>Editar</button>
                                 </div>

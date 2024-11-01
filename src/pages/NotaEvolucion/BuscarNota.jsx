@@ -110,7 +110,7 @@ export const BuscarNota = () => {
 
             <Table
                 responsive={true}
-                pagination={{ pageSize: 10 }}
+                pagination={{ pageSize: 20 }}
                 className='custom-table'
                 columns={columns}
                 dataSource={filteredNotas}

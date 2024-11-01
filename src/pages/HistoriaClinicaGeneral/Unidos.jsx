@@ -861,7 +861,7 @@ return (
             className="custom-table mt-4"
             columns={column}
             dataSource={unidosExp}
-            pagination={{ pageSize: 7 }}
+            pagination={{ pageSize: 20 }}
             rowKey="uniqueKey"
             onRow={(record) => ({
                 onClick: () => handleUnidoIndividual(record.coD_HOJARIESGO),

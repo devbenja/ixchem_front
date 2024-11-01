@@ -949,7 +949,7 @@ export const HistoriaCentro = () => {
                     }
 
                     {
-                        user && (user.codRol === 1 || user.codRol === 3) && (
+                        user && (user.codRol === 1 || user.codRol === 3 || user.codRol === 4) && (
                             <BlobProvider document={<MyDocument data={data} />}>
                                 {({ url, blob }) => (
                                     <>
@@ -1027,7 +1027,7 @@ export const HistoriaCentro = () => {
                         <Table className='mt-3 custom-table' columns={columns4} dataSource={[data]} pagination={false} />
 
                         {
-                            user && (user.codRol === 1 || user.codRol === 2) && (
+                            user && (user.codRol === 1 || user.codRol === 2 || user.codRol === 4) && (
                                 <div className='container mt-4 d-flex justify-content-end gap-2'>
                                     <button onClick={handleEditPaciente} className='btn btn-warning'>Editar</button>
                                 </div>
@@ -1042,7 +1042,7 @@ export const HistoriaCentro = () => {
                         <Table rowKey="codAntper" className='custom-table mt-3' columns={colum4AntPer} dataSource={[data]} pagination={false} />
 
                         {
-                            user && (user.codRol === 1 || user.codRol === 2) && (
+                            user && (user.codRol === 1 || user.codRol === 2 || user.codRol === 4) && (
                                 <div className='container mt-4 d-flex justify-content-end gap-2'>
                                     <button onClick={handleEditAntPersonales} className='btn btn-warning'>Editar</button>
                                 </div>
@@ -1058,7 +1058,7 @@ export const HistoriaCentro = () => {
                         <Table className='mt-3 custom-table' columns={columns4AntPatPer} dataSource={[data]} pagination={false} rowKey="codAntparper" />
 
                         {
-                            user && (user.codRol === 1 || user.codRol === 2) && (
+                            user && (user.codRol === 1 || user.codRol === 2 || user.codRol === 4) && (
                                 <div className='container mt-4 d-flex justify-content-end gap-2'>
                                     <button onClick={handleEditAntPatPer} className='btn btn-warning'>Editar</button>
                                 </div>
@@ -1073,7 +1073,7 @@ export const HistoriaCentro = () => {
                         <Table className='custom-table mt-3' columns={columns4AntPatFam} dataSource={[data]} pagination={false} />
 
                         {
-                            user && (user.codRol === 1 || user.codRol === 2) && (
+                            user && (user.codRol === 1 || user.codRol === 2 || user.codRol === 4) && (
                                 <div className='container mt-4 d-flex justify-content-end gap-2'>
                                     <button onClick={handleEditAntPatFam} className='btn btn-warning'>Editar</button>
                                 </div>
@@ -1087,7 +1087,7 @@ export const HistoriaCentro = () => {
                         <Table className='custom-table mt-3' columns={columns2Informacion} dataSource={[data]} pagination={false} />
 
                         {
-                            user && (user.codRol === 1 || user.codRol === 2) && (
+                            user && (user.codRol === 1 || user.codRol === 2 || user.codRol === 4) && (
                                 <div className='container mt-4 d-flex justify-content-end gap-2'>
                                     <button onClick={handleEditInformacion} className='btn btn-warning'>Editar</button>
                                 </div>

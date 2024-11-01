@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useEffect } from "react"; // Importamos useEffect para gestionar el intervalo de cambio
+import { useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 
 import { Login } from "./pages/Login/Login";
@@ -68,12 +68,13 @@ const { Header, Sider, Content } = Layout;
 
     // Estado para manejar el mensaje que se muestra
     const [currentMessage, setCurrentMessage] = useState(`BIENVENIDO AL SISTEMA DE IXCHEN, ${user?.nombre ?? ''} ${user?.apellido ?? ''}`);
+    const selectedCentro = localStorage.getItem('selectedCentro') || 'IXCHEN';
 
     // Cambiar el mensaje dinámico cada ciertos segundos
     useEffect(() => {
       const messages = [
         `Bienvenido, ${user?.nombre ?? ''} ${user?.apellido ?? ''}`,
-        "SISTEMA DE EXPEDIENTES CLINICOS DIGITALES IXCHEN"
+        `SISTEMA DE EXPEDIENTES CLINICOS DIGITALES ${selectedCentro}`
     ];
 
     let index = 0;
@@ -122,15 +123,6 @@ const { Header, Sider, Content } = Layout;
                 type="text"
                 icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
               />
-            
-              {/* {isAuth && (
-                <div className="d-flex align-items-center gap-3">
-                  <p className="m-0">BIENVENIDO AL SISTEMA DE IXCHEN, {user.nombre} {user.apellido}</p>
-                  <Button onClick={showModal} style={{ marginRight: '40px', backgroundColor: 'red', color: 'white' }}>
-                    <LogoutOutlined />Cerrar Sesión
-                  </Button>
-                </div>
-              )} */}
 
             {isAuth && (
               <div className="d-flex align-items-center gap-3">
@@ -209,18 +201,6 @@ const { Header, Sider, Content } = Layout;
           <Route exact path="/" element={<Login />} />
         </Routes>
       )}
-
-      {/* Modal de confirmación
-      <Modal
-        title="Confirmar Cierre de Sesión"
-        visible={isModalVisible}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        okText="Sí, Cerrar Sesión"
-        cancelText="Cancelar"
-      >
-        <p>¿Está seguro que desea cerrar sesión?</p>
-      </Modal> */}
 
       <Modal
           title="¿Deseas cerrar sesión?"
